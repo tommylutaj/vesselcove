@@ -2328,6 +2328,7 @@
         <div class="pin-card ok" id="pinNeckCard">
           <span id="pinNeckTitle">24/410 LOCK OK</span>
           <span class="pin-sub" id="pinNeckSub">Filetto e tenuta validati</span>
+          <span class="pin-dim" id="pinNeckDim">Dimensioni: Ø 28 × H 46 mm</span>
         </div>
       </div>
 
@@ -3043,6 +3044,19 @@ function getMaxApplicableSurfaceDimensionsMm(vessel) {
     wrapDimStr: `${maxWmm} × ${maxHmm} mm`,
     bcDimStr: `${bcWmm} × ${bcHmm} mm`
   };
+}
+
+function getClosureRealDimensionsMm(cl) {
+  if (!cl || cl.id === "none") return "";
+  if (cl.neck === "24/410") return `Ø 28 × H ${cl.addH + 16} mm`;
+  if (cl.neck === "28/410") return `Ø 32 × H ${cl.addH + 16} mm`;
+  if (cl.neck === "58/400") return `Ø 62 × H ${cl.addH + 8} mm`;
+  if (cl.neck === "70/400") return `Ø 74 × H ${cl.addH + 8} mm`;
+  if (cl.id === "cork_29") return "Ø 31 × H 54 mm";
+  if (cl.id === "stelvin_29") return "Ø 30 × H 60 mm";
+  if (cl.id === "pourer_29") return "Ø 31 × H 42 mm";
+  if (cl.id === "bartop_29") return "Ø 32 × H 38 mm";
+  return `H ${cl.addH + 14} mm`;
 }
 
 // Barcode sits cleanly in lower region of Sleeve and scales dynamically with sleeve span
@@ -5888,15 +5902,13 @@ function renderCustomGraphicView() {
               <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${l === "it" ? v.it : v.en}</strong> (${v.subIt})</div>
               <div>02 // ${l === "it" ? "Lavorazione:" : "Process:"} <strong>${l === "it" ? processIt : processEn}</strong></div>
               <div>03 // ${l === "it" ? "Materiale:" : "Material:"} <strong>${matName}</strong></div>
-              <div>04 // ${l === "it" ? "Superficie max applicabile:" : "Max applicable size:"} <strong style="color:var(--crimson);">${maxDims.wrapDimStr}</strong></div>
-              <div>05 // ${l === "it" ? "Area riservata EAN-13:" : "Reserved EAN-13 box:"} <strong>${maxDims.bcDimStr}</strong></div>
             </div>
           </div>
 
           <div class="custom-bp-right">
             <div>
               <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA" : "ARTWORK FILE UPLOAD"}</span>
-              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? `Dimensioni max applicabili: ${maxDims.wrapDimStr}` : `Max applicable dimensions: ${maxDims.wrapDimStr}`}</h2>
+              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Dimensioni max applicabili" : "Max applicable dimensions"}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? formatNoteIt : formatNoteEn}</p>
             </div>
 
@@ -7758,6 +7770,7 @@ function updateFastTelemetryUI() {
   const chain = getActiveSupplyChain(phys);
 
   // Update 3D Pin Cards (no CLASH text, no &, no Ladder)
+  const dimLabel = l === "it" ? "Dimensioni" : "Dimensions";
   const pNeckCard = document.getElementById("pinNeckCard");
   pNeckCard.className = "pin-card " + (phys.neckMatch ? "ok" : "err");
   document.getElementById("pinNeckTitle").textContent = phys.isNoCap
@@ -7768,9 +7781,13 @@ function updateFastTelemetryUI() {
     : (phys.neckMatch
         ? (l === "it" ? "Filetto e tenuta validati" : "Thread and seal locked")
         : (l === "it" ? "Filettatura incompatibile" : "Incompatible thread"));
+  const neckDimEl = document.getElementById("pinNeckDim");
+  if (neckDimEl) {
+    neckDimEl.style.display = phys.isNoCap ? "none" : "block";
+    if (!phys.isNoCap) neckDimEl.textContent = `${dimLabel}: ${getClosureRealDimensionsMm(cl)}`;
+  }
 
   const dims = getWrapRealDimensionsMm(v);
-  const dimLabel = l === "it" ? "Dimensioni" : "Dimensions";
   const pSlCard = document.getElementById("pinSleeveCard");
   if (pSlCard && !pouchMode && (state.wrapType === "sleeve" || state.wrapType === "label")) {
     pSlCard.className = "pin-card " + phys.sleeveStatus;

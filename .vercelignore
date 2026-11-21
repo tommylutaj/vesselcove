@@ -1,0 +1,6 @@
+build_demo.py
+server.py
+vendor
+*.pyc
+__pycache__
+.git

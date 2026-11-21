@@ -773,6 +773,16 @@ def main():
     color: var(--slate);
     font-weight: 600;
   }
+  .pin-dim {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-top: 3px;
+    padding-top: 3px;
+    border-top: 1px dashed rgba(18, 17, 16, 0.22);
+  }
 
   /* FLOATING BOTTOM TELEMETRY BAR */
   .floating-hud-bottom {
@@ -1754,18 +1764,7 @@ def main():
     box-shadow: 3px 3px 0 var(--ink);
   }
 
-  /* ==================== AR BUTTON IN TOP HUD & CENTERED QR MODAL IN 3D STUDIO ==================== */
-  .hud-chip.ar-hud-btn {
-    color: var(--crimson);
-    font-weight: 800;
-  }
-  .hud-chip.ar-hud-btn:hover:not(:disabled) {
-    background: var(--crimson-soft);
-    color: var(--crimson-dark);
-  }
-  .viewport-stage.dark-studio .hud-chip.ar-hud-btn {
-    color: #FCA5A5;
-  }
+  /* ==================== CENTERED AR QR MODAL IN 3D STUDIO ==================== */
 
   .ar-qr-overlay {
     position: absolute;
@@ -2301,9 +2300,12 @@ def main():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 7l4-4 4 4"/><path d="M8 17l4 4 4-4"/><rect x="5" y="9" width="14" height="6" rx="1.5"/></svg>
             <span id="ui_tool_sleeve">Sposta Sleeve</span>
           </button>
-          <button class="hud-chip ar-hud-btn" id="btnShowAR" onclick="toggleARModal(true)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z"/><path d="M12 22V12"/><path d="M21 7l-9 5-9-5"/>
+          <button class="hud-chip" id="btnShowAR" onclick="toggleARModal(true)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 8V5a1 1 0 0 1 1-1h3"/><path d="M16 4h3a1 1 0 0 1 1 1v3"/>
+              <path d="M4 16v3a1 1 0 0 0 1 1h3"/><path d="M16 20h3a1 1 0 0 0 1-1v-3"/>
+              <rect x="8.5" y="8.5" width="7" height="7" rx="1"/>
+              <line x1="12" y1="8.5" x2="12" y2="15.5"/><line x1="8.5" y1="12" x2="15.5" y2="12"/>
             </svg>
             <span id="ui_btn_ar">Vedi in AR</span>
           </button>
@@ -2352,15 +2354,17 @@ def main():
 
       <div class="pin-overlay" id="pinSleeve">
         <div class="pin-card ok" id="pinSleeveCard">
-          <span id="pinSlTitle">SLEEVE 3D · GRADE A (TD 12%)</span>
+          <span id="pinSlTitle">SLEEVE 3D · GRADE A</span>
           <span class="pin-sub" id="pinSlSub">Scritte su corpo piano · 0°</span>
+          <span class="pin-dim" id="pinSlDim">Dimensioni: 170 × 82 mm</span>
         </div>
       </div>
 
       <div class="pin-overlay" id="pinBarcode">
         <div class="pin-card ok" id="pinBarcodeCard">
-          <span id="pinBcTitle">EAN-13 · GRADE A (TD 12%)</span>
+          <span id="pinBcTitle">EAN-13 · GRADE A</span>
           <span class="pin-sub" id="pinBcSub">Zona cilindrica piana · 180°</span>
+          <span class="pin-dim" id="pinBcDim">Dimensioni: 37 × 26 mm</span>
         </div>
       </div>
     </main>
@@ -2698,10 +2702,10 @@ const NEUTRAL_SLEEVE_SKIN = {
   product: "FILM NEUTRO TRASPARENTE",
   pouchSub: "FORMATO STANDARD",
   wineSub: "FILM NEUTRO",
-  sub: "SOLO CODICE A BARRE INTEGRATO",
+  sub: "FILM NEUTRO TRASPARENTE",
   previewColors: ["rgba(245,250,255,0.92)", "#CBD5E1", "#94A3B8"],
-  descIt: "Film trasparente neutro · Solo barcode",
-  descEn: "Clear neutral unprinted film · Barcode only",
+  descIt: "Film trasparente neutro",
+  descEn: "Clear neutral unprinted film",
   ean: "8 054192 000018",
   sleeveHeightMul: 1.0,
   labelHeightMul: 1.0,
@@ -2717,10 +2721,10 @@ const NEUTRAL_LABEL_SKIN = {
   product: "ETICHETTA BIANCA NEUTRA",
   pouchSub: "FORMATO STANDARD",
   wineSub: "ETICHETTA BIANCA",
-  sub: "SOLO CODICE A BARRE INTEGRATO",
+  sub: "ETICHETTA BIANCA NEUTRA",
   previewColors: ["#FFFFFF", "#F3F0EA", "#D6D0C5"],
-  descIt: "Etichetta bianca senza scritte · Solo barcode",
-  descEn: "Blank white unprinted label · Barcode only",
+  descIt: "Etichetta bianca senza scritte",
+  descEn: "Blank white unprinted label",
   ean: "8 054192 000018",
   sleeveHeightMul: 1.0,
   labelHeightMul: 1.0,
@@ -3014,6 +3018,44 @@ function getWrapRealDimensionsMm(vessel) {
     wrapDimStr: `${wrapWmm} × ${wrapHmm} mm`,
     bcWmm,
     bcHmm,
+    bcDimStr: `${bcWmm} × ${bcHmm} mm`
+  };
+}
+
+// Maximum physically applicable surface of the container (including yellow/red curvature zones)
+function getMaxApplicableSurfaceDimensionsMm(vessel) {
+  const v = vessel || getVessel();
+  const isCan = v.shape === "alu_can";
+  const isPouch = v.shape === "doypack";
+  const isLabel = isLabelMode();
+  const circMm = v.shape === "square_soft"
+    ? Math.round(2 * (v.wMm + v.dMm) - 12)
+    : Math.round(Math.PI * v.wMm);
+  const bcWmm = v.shape === "jar_lux" ? 32 : 37;
+  const bcHmm = v.shape === "jar_lux" ? 22 : 26;
+
+  if (isPouch) {
+    return {
+      maxWmm: v.wMm,
+      maxHmm: v.hMm,
+      wrapDimStr: `${v.wMm} × ${v.hMm} mm`,
+      bcDimStr: `${bcWmm} × ${bcHmm} mm`
+    };
+  }
+
+  const maxCarrierV = isCan ? 0.95 : (v.shape === "wine_bordeaux" ? 0.76 : (v.shape === "jar_lux" ? 0.80 : 0.84));
+  const minCarrierV = 0.04;
+  const maxHmm = Math.round((maxCarrierV - minCarrierV) * v.hMm);
+  let maxWmm = circMm;
+  if (isLabel) {
+    // Full applicable wrap-around width including corners/margins before self-overlap
+    const maxLabelFrac = isCan ? 0.94 : (v.shape === "jar_lux" ? 0.65 : (v.shape === "square_soft" ? 0.45 : 0.50));
+    maxWmm = Math.round(circMm * maxLabelFrac);
+  }
+  return {
+    maxWmm,
+    maxHmm,
+    wrapDimStr: `${maxWmm} × ${maxHmm} mm`,
     bcDimStr: `${bcWmm} × ${bcHmm} mm`
   };
 }
@@ -5794,7 +5836,7 @@ function renderCustomGraphicView() {
   if (!host || !state.customGraphicMode) return;
   const l = state.lang;
   const v = getVessel();
-  const dims = getWrapRealDimensionsMm(v);
+  const maxDims = getMaxApplicableSurfaceDimensionsMm(v);
   const pouchMode = isDoypack();
   const labelMode = isLabelMode();
   const serigMode = isSerigrafiaMode();
@@ -5817,19 +5859,19 @@ function renderCustomGraphicView() {
         : (labelMode ? getLabelPaper().name : getFilm().name));
 
   const formatNoteIt = pouchMode
-    ? "Fronte + Retro su tracciato fustella busta (+3 mm abbondanza perimetrale)"
+    ? "Area massima applicabile sull'intera facciata della busta (incluse zone di saldatura e zip)"
     : (serigMode
-        ? "Sviluppo cilindrico completo 360° senza giunta verticale"
+        ? "Superficie massima cilindrica 360° applicabile sul corpo lattina (incluse zone di rastrematura)"
         : (labelMode
-            ? "Fustella piana con angoli al vivo + 2 mm abbondanza perimetrale"
-            : "Sviluppo anamorfico 360° + 6 mm sormonto cucitura tubolare laterale"));
+            ? "Area massima di applicazione su corpo e spalle del contenitore (incluse eventuali zone gialle/rosse)"
+            : "Superficie massima applicabile dello sleeve 360° sull'intero corpo e spalla (incluse zone gialle/rosse)"));
   const formatNoteEn = pouchMode
-    ? "Front + Back panels on pouch dieline (+3 mm perimeter bleed)"
+    ? "Maximum applicable surface across full pouch panel (including heat-seals and zip)"
     : (serigMode
-        ? "Full 360° seamless cylindrical wrap layout"
+        ? "Maximum 360° cylindrical surface area across full can wall (including chime taper)"
         : (labelMode
-            ? "Flat die-cut artwork + 2 mm perimeter bleed"
-            : "360° anamorphic wrap + 6 mm vertical overlap seam"));
+            ? "Maximum applicable label envelope across full container surface (including yellow/red warning zones)"
+            : "Maximum 360° shrink-sleeve envelope across full container body and shoulder (including warning/error zones)"));
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
@@ -5847,12 +5889,12 @@ function renderCustomGraphicView() {
         <div class="custom-blueprint-grid">
           <div class="custom-bp-left">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE FORMATO RICHIESTO" : "REQUIRED ARTWORK FORMAT SPECS"}</span>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE SUPERFICIE MASSIMA" : "MAXIMUM APPLICABLE SURFACE SPECS"}</span>
               <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? processIt : processEn}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">
                 ${l === "it"
-                  ? "Prepara il file esecutivo rispettando le dimensioni reali della lavorazione e del materiale selezionati."
-                  : "Prepare your print-ready artwork strictly matching the physical dimensions of the selected wrap and substrate."}
+                  ? "Le dimensioni indicate rappresentano la superficie massima totale di applicazione sul contenitore (comprese le fasce curve in avviso o blocco)."
+                  : "Dimensions indicate the maximum total application area across the container (including curved warning and error zones)."}
               </p>
             </div>
 
@@ -5861,22 +5903,22 @@ function renderCustomGraphicView() {
               <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${l === "it" ? v.it : v.en}</strong> (${v.subIt})</div>
               <div>02 // ${l === "it" ? "Lavorazione:" : "Process:"} <strong>${l === "it" ? processIt : processEn}</strong></div>
               <div>03 // ${l === "it" ? "Materiale:" : "Material:"} <strong>${matName}</strong></div>
-              <div>04 // ${l === "it" ? "Dimensioni tavola:" : "Artwork size:"} <strong style="color:var(--crimson);">${dims.wrapDimStr}</strong></div>
-              <div>05 // ${l === "it" ? "Area riservata EAN-13:" : "Reserved EAN-13 box:"} <strong>${dims.bcDimStr}</strong></div>
+              <div>04 // ${l === "it" ? "Superficie max applicabile:" : "Max applicable size:"} <strong style="color:var(--crimson);">${maxDims.wrapDimStr}</strong></div>
+              <div>05 // ${l === "it" ? "Area riservata EAN-13:" : "Reserved EAN-13 box:"} <strong>${maxDims.bcDimStr}</strong></div>
             </div>
           </div>
 
           <div class="custom-bp-right">
             <div>
               <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA" : "ARTWORK FILE UPLOAD"}</span>
-              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? `Dimensioni esatte file: ${dims.wrapDimStr}` : `Exact file dimensions: ${dims.wrapDimStr}`}</h2>
+              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? `Dimensioni max applicabili: ${maxDims.wrapDimStr}` : `Max applicable dimensions: ${maxDims.wrapDimStr}`}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? formatNoteIt : formatNoteEn}</p>
             </div>
 
             <label class="upload-datasheet-box ${state.customGraphicFile ? "loaded" : ""}" style="min-height:132px; justify-content:center; flex-direction:column; text-align:center;">
-              <div style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--crimson);">${dims.wrapDimStr}</div>
+              <div style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--crimson);">${maxDims.wrapDimStr}</div>
               <div style="font-size:13.5px; font-weight:800; color:var(--ink);">
-                ${state.customGraphicFile ? `✓ ${state.customGraphicFile}` : (l === "it" ? `Carica esecutivo grafica ${dims.wrapDimStr}` : `Upload graphic file ${dims.wrapDimStr}`)}
+                ${state.customGraphicFile ? `✓ ${state.customGraphicFile}` : (l === "it" ? `Carica esecutivo grafica (max ${maxDims.wrapDimStr})` : `Upload graphic file (max ${maxDims.wrapDimStr})`)}
               </div>
               <div style="font-size:11px; color:var(--slate);">
                 ${l === "it" ? "PDF vettoriale, Adobe Illustrator (.ai), TIFF o PNG · 300 DPI · Quadricromia CMYK + Pantone" : "Vector PDF, Adobe Illustrator (.ai), TIFF or PNG · 300 DPI · CMYK + Spot"}
@@ -7743,50 +7785,52 @@ function updateFastTelemetryUI() {
         : (l === "it" ? "Filettatura incompatibile" : "Incompatible thread"));
 
   const dims = getWrapRealDimensionsMm(v);
+  const dimLabel = l === "it" ? "Dimensioni" : "Dimensions";
   const pSlCard = document.getElementById("pinSleeveCard");
   if (pSlCard && !pouchMode && (state.wrapType === "sleeve" || state.wrapType === "label")) {
     pSlCard.className = "pin-card " + phys.sleeveStatus;
     const slTag = phys.sleeveStatus === "err" ? "GRADE F" : (phys.sleeveStatus === "warn" ? "GRADE C" : "GRADE A");
     if (labelMode) {
-      document.getElementById("pinSlTitle").textContent = `ETICHETTA 3D · ${dims.wrapDimStr} · ${slTag}`;
+      document.getElementById("pinSlTitle").textContent = `ETICHETTA 3D · ${slTag}`;
       document.getElementById("pinSlSub").textContent = phys.sleeveStatus === "ok"
         ? (l === "it" ? `Stesura piana ${phys.sleeveTD}% (max ${lp.maxTD}%) · ${lp.id}` : `Flat adhesion ${phys.sleeveTD}% · ${lp.id}`)
         : (phys.sleeveStatus === "warn"
             ? (l === "it" ? `Curva spalla / spigolo (${phys.sleeveTD}%) · ${lp.id}` : `Shoulder / corner warning (${phys.sleeveTD}%)`)
             : (l === "it" ? `Grinze su doppia curvatura (${phys.sleeveTD}%)` : `Creasing on double curve (${phys.sleeveTD}%)`));
     } else {
-      document.getElementById("pinSlTitle").textContent = `SLEEVE 3D · ${dims.wrapDimStr} · ${slTag}`;
+      document.getElementById("pinSlTitle").textContent = `SLEEVE 3D · ${slTag}`;
       document.getElementById("pinSlSub").textContent = phys.sleeveStatus === "ok"
         ? (l === "it" ? `TD ${phys.sleeveTD}% · Corpo piano · ${fm.id}` : `TD ${phys.sleeveTD}% · Flat body · ${fm.id}`)
         : (phys.sleeveStatus === "warn"
             ? (l === "it" ? `TD ${phys.sleeveTD}% · Spalla curva (${fm.id})` : `TD ${phys.sleeveTD}% · Shoulder warp (${fm.id})`)
             : (l === "it" ? `TD ${phys.sleeveTD}% · Oltre limite ${fm.id}` : `TD ${phys.sleeveTD}% · Exceeds ${fm.id} limit`));
     }
+    const slDimEl = document.getElementById("pinSlDim");
+    if (slDimEl) slDimEl.textContent = `${dimLabel}: ${dims.wrapDimStr}`;
   }
 
   const pBcCard = document.getElementById("pinBarcodeCard");
   const bcStateCls = phys.ansiGrade === "F" ? "err" : (phys.ansiGrade === "C" ? "warn" : "ok");
   if (wrapActive) {
     pBcCard.className = "pin-card " + bcStateCls;
+    document.getElementById("pinBcTitle").textContent = `EAN-13 · GRADE ${phys.ansiGrade}`;
     if (pouchMode) {
-      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
       document.getElementById("pinBcSub").textContent = l === "it" ? phys.bcReasonIt : phys.bcReasonEn;
     } else if (serigMode) {
-      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
       document.getElementById("pinBcSub").textContent = `${ink.id} · ${dims.wrapDimStr}`;
     } else if (labelMode) {
-      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
       document.getElementById("pinBcSub").textContent = phys.ansiGrade === "A"
         ? (l === "it" ? `Zona bassa piana (${phys.localTD}%)` : `Flat lower zone (${phys.localTD}%)`)
         : (l === "it" ? `Deformazione barre su curva (${phys.localTD}%)` : `Curve distortion on bars (${phys.localTD}%)`);
     } else {
-      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
       document.getElementById("pinBcSub").textContent = phys.ansiGrade === "F"
         ? (l === "it" ? `TD ${phys.localTD}% · Compressione barre!` : `TD ${phys.localTD}% · Bar compression!`)
         : (phys.ansiGrade === "C"
             ? (l === "it" ? `TD ${phys.localTD}% · Zona vicina a spalla` : `TD ${phys.localTD}% · Approaching shoulder`)
             : (l === "it" ? `TD ${phys.localTD}% · Zona cilindrica piana` : `TD ${phys.localTD}% · Flat cylinder zone`));
     }
+    const bcDimEl = document.getElementById("pinBcDim");
+    if (bcDimEl) bcDimEl.textContent = `${dimLabel}: ${dims.bcDimStr}`;
   }
 
   // Right Traffic Light Header

@@ -1733,54 +1733,17 @@
     box-shadow: 3px 3px 0 var(--ink);
   }
 
-  /* ==================== AR BUTTON & CENTERED QR MODAL IN 3D STUDIO ==================== */
-  .ar-btn-fab {
-    position: absolute;
-    bottom: 14px;
-    left: 14px;
-    z-index: 12;
-    border: 1.5px solid var(--ink);
-    background: rgba(255, 255, 255, 0.96);
-    color: var(--ink);
-    padding: 4px 12px 4px 5px;
-    border-radius: 2px;
-    font-family: var(--sans);
-    font-size: 11px;
+  /* ==================== AR BUTTON IN TOP HUD & CENTERED QR MODAL IN 3D STUDIO ==================== */
+  .hud-chip.ar-hud-btn {
+    color: var(--crimson);
     font-weight: 800;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    cursor: pointer;
-    box-shadow: 3px 3px 0 rgba(18, 17, 16, 0.14);
-    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.14s ease, box-shadow 0.14s ease;
   }
-  .ar-ico-badge {
-    width: 22px;
-    height: 22px;
-    border-radius: 2px;
-    background: var(--crimson);
-    color: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.16s ease, color 0.16s ease;
+  .hud-chip.ar-hud-btn:hover:not(:disabled) {
+    background: var(--crimson-soft);
+    color: var(--crimson-dark);
   }
-  .ar-btn-fab:hover {
-    background: var(--crimson);
-    border-color: var(--ink);
-    color: #FFFFFF;
-    transform: translate(-1px, -1px);
-    box-shadow: 4px 4px 0 var(--ink);
-  }
-  .ar-btn-fab:hover .ar-ico-badge {
-    background: var(--ink);
-    color: #FFFFFF;
-  }
-  .ar-btn-fab svg { width: 13px; height: 13px; flex-shrink: 0; }
-  .viewport-stage.dark-studio .ar-btn-fab {
-    background: rgba(18, 17, 16, 0.94);
-    border-color: rgba(255, 255, 255, 0.45);
-    color: #FFFFFF;
+  .viewport-stage.dark-studio .hud-chip.ar-hud-btn {
+    color: #FCA5A5;
   }
 
   .ar-qr-overlay {
@@ -2096,7 +2059,7 @@
     .dock-scroll { padding: 12px; }
     .hud-chip { padding: 4.5px 6px; font-size: 9.2px; gap: 3px; }
     .hud-chip svg { width: 11px; height: 11px; }
-    .drag-toast { left: calc(50% + 42px); font-size: 9.5px; padding: 5px 10px; }
+    .drag-toast { left: 50%; font-size: 9.5px; padding: 5px 10px; }
     .filiera-locked-red-text { white-space: normal; }
     .fstep-pill { font-size: 10px; padding: 7px 5px; }
     .pillars-portal { padding: 14px 18px 24px 18px; }
@@ -2200,7 +2163,6 @@
     .pin-card { font-size: 9.5px; padding: 3px 6px; }
     .pin-sub { font-size: 8.5px; }
     .drag-toast { display: none; }
-    .ar-btn-fab { bottom: 10px; left: 10px; font-size: 10.5px; padding: 4px 10px 4px 5px; }
     .cat-hero-title { font-size: 24px; }
     .cat-card, .cat-card:only-child {
       grid-template-columns: 1fr;
@@ -2318,9 +2280,11 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 7l4-4 4 4"/><path d="M8 17l4 4 4-4"/><rect x="5" y="9" width="14" height="6" rx="1.5"/></svg>
             <span id="ui_tool_sleeve">Sposta Sleeve</span>
           </button>
-          <button class="hud-chip accent-tool" id="toolBarcode" onclick="setPointerTool('barcode')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h3"/><path d="M17 5h3v2"/><path d="M4 17v2h3"/><path d="M17 19h3v-2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="11" y1="8" x2="11" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
-            <span id="ui_tool_bc">Sposta Barcode</span>
+          <button class="hud-chip ar-hud-btn" id="btnShowAR" onclick="toggleARModal(true)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z"/><path d="M12 22V12"/><path d="M21 7l-9 5-9-5"/>
+            </svg>
+            <span id="ui_btn_ar">Vedi in AR</span>
           </button>
         </div>
 
@@ -2345,15 +2309,6 @@
       </div>
 
       <div class="vessel-info-popover" id="vesselInfoPopover"></div>
-
-      <button class="ar-btn-fab" id="btnShowAR" onclick="toggleARModal(true)">
-        <span class="ar-ico-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z"/><path d="M12 22V12"/><path d="M21 7l-9 5-9-5"/>
-          </svg>
-        </span>
-        <span id="ui_btn_ar">Vedi in AR</span>
-      </button>
 
       <div class="ar-qr-overlay" id="arQrOverlay" onclick="if(event.target===this) toggleARModal(false)">
         <div class="ar-qr-card" id="arQrCard"></div>
@@ -2635,8 +2590,8 @@ const VESSELS = [
     neck: "Zip 220mm",
     shape: "doypack",
     vol: "1000 g",
-    matIt: "Polimero Soft-Touch",
-    matEn: "Soft-Touch Polymer",
+    matIt: "Polimero Bianco Soft-Touch",
+    matEn: "White Soft-Touch Polymer",
     hMm: 310, wMm: 220, dMm: 95,
     weightG: 1050,
     maxShoulderTD: 12,
@@ -2644,8 +2599,8 @@ const VESSELS = [
     defaultWrap: "pouch",
     liquidColor: "#E8D5B7",
     vendor: "FlexPack Lombardia Srl (MI)",
-    it: "Doypack 1000 g in Polimero Soft-Touch",
-    en: "1000 g Doypack in Soft-Touch Polymer",
+    it: "Doypack 1000 g in Polimero Bianco",
+    en: "1000 g Doypack in White Polymer",
     subIt: "220 × 310 × P 95 mm",
     subEn: "220 × 310 × D 95 mm",
     badgeIt: "DOYPACK",
@@ -2664,7 +2619,7 @@ const RIGID_FINISHES = [
 ];
 
 const POUCH_FINISHES = [
-  { id: "matte_pouch", it: "Polimero Soft-Touch", en: "Soft-Touch Polymer", swatch: "linear-gradient(135deg,#2E2C2A,#181716)" },
+  { id: "matte_pouch", it: "Bianco Soft-Touch", en: "White Soft-Touch", swatch: "linear-gradient(135deg,#FFFFFF,#EAE5DC)" },
   { id: "gloss_pouch", it: "Lucido Gloss", en: "High Gloss", swatch: "linear-gradient(135deg,#FFFFFF,#DCE3EA)" },
   { id: "kraft_pouch", it: "Carta Kraft", en: "Kraft Paper", swatch: "linear-gradient(135deg,#CFA87C,#9C7248)" },
   { id: "foil_pouch", it: "Foil ALU", en: "Brushed ALU", swatch: "linear-gradient(135deg,#EAEAEA,#A6ABB0)" }
@@ -2720,6 +2675,44 @@ const POUCH_LAMINATES = [
   { id: "BOPP_STD", name: "BOPP / CPP Standard 85μm", descIt: "Alta macchinabilità su linea verticale", descEn: "High-speed vertical pouch line" }
 ];
 
+const NEUTRAL_SLEEVE_SKIN = {
+  id: "neutral",
+  styleType: "neutral_clear",
+  brand: "NEUTRA",
+  brandSub: "TRASPARENTE",
+  product: "FILM NEUTRO TRASPARENTE",
+  pouchSub: "FORMATO STANDARD",
+  wineSub: "FILM NEUTRO",
+  sub: "SOLO CODICE A BARRE INTEGRATO",
+  previewColors: ["rgba(245,250,255,0.92)", "#CBD5E1", "#94A3B8"],
+  descIt: "Film trasparente neutro · Solo barcode",
+  descEn: "Clear neutral unprinted film · Barcode only",
+  ean: "8 054192 000018",
+  sleeveHeightMul: 1.0,
+  labelHeightMul: 1.0,
+  labelWidthMul: 1.0,
+  labelShape: "arch"
+};
+
+const NEUTRAL_LABEL_SKIN = {
+  id: "neutral",
+  styleType: "neutral_white",
+  brand: "BIANCA",
+  brandSub: "SENZA SCRITTE",
+  product: "ETICHETTA BIANCA NEUTRA",
+  pouchSub: "FORMATO STANDARD",
+  wineSub: "ETICHETTA BIANCA",
+  sub: "SOLO CODICE A BARRE INTEGRATO",
+  previewColors: ["#FFFFFF", "#F3F0EA", "#D6D0C5"],
+  descIt: "Etichetta bianca senza scritte · Solo barcode",
+  descEn: "Blank white unprinted label · Barcode only",
+  ean: "8 054192 000018",
+  sleeveHeightMul: 1.0,
+  labelHeightMul: 1.0,
+  labelWidthMul: 1.0,
+  labelShape: "arch"
+};
+
 const BRAND_SKINS = [
   {
     id: "lumina",
@@ -2731,9 +2724,13 @@ const BRAND_SKINS = [
     wineSub: "RISERVA SPECIALE · LOTTO 01",
     sub: "LINEA ESSENZIALE · CONFEZIONE PRIMARIA",
     previewColors: ["#FCFBF7", "#C2180E", "#161311"],
-    descIt: "Bianco Svizzero · Cremisi e Oro",
-    descEn: "Swiss White · Crimson and Gold",
-    ean: "8 054192 730148"
+    descIt: "Bianco Svizzero · Formato standard",
+    descEn: "Swiss White · Standard shape & length",
+    ean: "8 054192 730148",
+    sleeveHeightMul: 1.0,
+    labelHeightMul: 1.0,
+    labelWidthMul: 1.0,
+    labelShape: "arch"
   },
   {
     id: "nocturne",
@@ -2745,9 +2742,13 @@ const BRAND_SKINS = [
     wineSub: "EDIZIONE NERA · RISERVA SELEZIONE",
     sub: "EDIZIONE SPECIALE · ALTA BARRIERA",
     previewColors: ["#121114", "#D9B263", "#1E3A8A"],
-    descIt: "Nero Ossidiana · Oro e Blu Notte",
-    descEn: "Obsidian Black · Metallic Gold",
-    ean: "8 054192 910441"
+    descIt: "Taglio alto e stretto · Smussatura ottagonale",
+    descEn: "Tall slim cut · Octagonal chamfered plaque",
+    ean: "8 054192 910441",
+    sleeveHeightMul: 1.24,
+    labelHeightMul: 1.24,
+    labelWidthMul: 0.78,
+    labelShape: "octagon"
   },
   {
     id: "botanica",
@@ -2759,9 +2760,13 @@ const BRAND_SKINS = [
     wineSub: "SELEZIONE NATURALE · RISERVA",
     sub: "ORIGINE CERTIFICATA · PICCOLI LOTTI",
     previewColors: ["#0F5C46", "#1D4ED8", "#EA580C"],
-    descIt: "Verde Smeraldo · Blu Cobalto e Corallo",
-    descEn: "Emerald Green · Cobalt and Coral",
-    ean: "8 054192 881024"
+    descIt: "Fascia bassa larga · Scudo ovale panoramico",
+    descEn: "Compact wide band · Panoramic oval shield",
+    ean: "8 054192 881024",
+    sleeveHeightMul: 0.72,
+    labelHeightMul: 0.74,
+    labelWidthMul: 1.24,
+    labelShape: "pill_shield"
   }
 ];
 
@@ -2803,8 +2808,10 @@ const state = {
   bcDoypackSide: "back",  // 'front' | 'back' (starts on back face!)
   bcDoypackX: 0,          // -42..+42 (% across active face)
   infoPopoverOpen: false,
-  // CUSTOM CONTAINER UPLOAD DEMO, AR QR MODAL & USER PROFILE
+  // CUSTOM CONTAINER UPLOAD DEMO, CUSTOM GRAPHIC DEMO, AR QR MODAL & USER PROFILE
   customVesselMode: false,
+  customGraphicMode: false,
+  customGraphicFile: "",
   customDatasheetFile: "",
   customPhotoFiles: ["", "", "", "", "", ""],
   arModalOpen: false,
@@ -2839,7 +2846,20 @@ function getFilm() { return FILMS.find(f => f.id === state.filmId); }
 function getLabelPaper() { return LABEL_PAPERS.find(p => p.id === state.labelMatId); }
 function getSerigrafiaInk() { return SERIGRAFIA_INKS.find(i => i.id === state.serigrafiaInkId); }
 function getPouchLaminate() { return POUCH_LAMINATES.find(m => m.id === state.pouchMatId); }
-function getSkin() { return BRAND_SKINS.find(s => s.id === state.skinId) || null; }
+function getAvailableSkinsForWrap(wt) {
+  const mode = wt || state.wrapType;
+  if (mode === "sleeve") return [NEUTRAL_SLEEVE_SKIN, ...BRAND_SKINS];
+  if (mode === "label") return [NEUTRAL_LABEL_SKIN, ...BRAND_SKINS];
+  return BRAND_SKINS;
+}
+function getSkin() {
+  if (state.skinId === "neutral") {
+    if (state.wrapType === "label") return NEUTRAL_LABEL_SKIN;
+    if (state.wrapType === "sleeve") return NEUTRAL_SLEEVE_SKIN;
+    return BRAND_SKINS[0];
+  }
+  return BRAND_SKINS.find(s => s.id === state.skinId) || null;
+}
 function getPrinter() { return PRINTER_POOL[state.printerIdx % PRINTER_POOL.length]; }
 function isDoypack() { return getVessel().shape === "doypack"; }
 function isPlasticBottle(v) { const vv = v || getVessel(); return vv.id === "serum_250" || vv.id === "square_500"; }
@@ -2910,45 +2930,95 @@ function getNormalizedRadiusAtV(vessel, v) {
 // Compute vertical band [vMin, vMax] for sleeve or adhesive label
 function getSleeveVerticalBand() {
   const vessel = getVessel();
+  const skin = getSkin();
   if (isLabelMode()) {
+    const mul = skin ? (skin.labelHeightMul || 1.0) : 1.0;
     if (vessel.shape === "alu_can") {
-      const bandH = 0.72;
-      const maxStart = 0.93 - bandH - 0.06;
+      const baseH = 0.72;
+      const bandH = Math.min(0.84, Math.max(0.46, baseH * mul));
+      const maxStart = Math.max(0.06, 0.93 - bandH - 0.06);
       const norm = Math.max(0, Math.min(1, (state.sleeveHeightPct - 10) / 76));
       const vMin = 0.06 + norm * maxStart;
       return { vMin, vMax: vMin + bandH };
     }
-    const bandH = vessel.shape === "jar_lux" ? 0.44 : (vessel.shape === "wine_bordeaux" ? 0.38 : 0.42);
+    const baseH = vessel.shape === "jar_lux" ? 0.44 : (vessel.shape === "wine_bordeaux" ? 0.38 : 0.42);
+    const maxAllowedH = vessel.shape === "wine_bordeaux" ? 0.435 : (vessel.shape === "jar_lux" ? 0.54 : 0.56);
+    const bandH = Math.min(maxAllowedH, Math.max(0.24, baseH * mul));
     const maxTop = vessel.shape === "jar_lux" ? 0.74 : (vessel.shape === "wine_bordeaux" ? 0.72 : 0.82);
-    const maxStart = maxTop - bandH;
+    const baseStart = mul > 1.02 ? 0.045 : 0.06;
+    const maxStart = Math.max(0.05, maxTop - bandH);
     const norm = Math.max(0, Math.min(1, (state.sleeveHeightPct - 10) / 76));
-    const vMin = 0.06 + norm * maxStart;
-    return { vMin, vMax: vMin + bandH };
+    const vMin = baseStart + norm * (maxStart - baseStart);
+    return { vMin, vMax: Math.min(maxTop, vMin + bandH) };
   }
-  const bandH = vessel.shape === "alu_can" ? 0.74 : (vessel.shape === "wine_bordeaux" ? 0.42 : (vessel.shape === "jar_lux" ? 0.48 : 0.52));
-  const norm = (state.sleeveHeightPct - 10) / 80;
+  const mul = skin ? (skin.sleeveHeightMul || 1.0) : 1.0;
+  const baseH = vessel.shape === "alu_can" ? 0.74 : (vessel.shape === "wine_bordeaux" ? 0.42 : (vessel.shape === "jar_lux" ? 0.48 : 0.52));
+  const maxAllowedH = vessel.shape === "alu_can" ? 0.86 : (vessel.shape === "wine_bordeaux" ? 0.48 : (vessel.shape === "jar_lux" ? 0.58 : 0.615));
+  const bandH = Math.min(maxAllowedH, Math.max(0.28, baseH * mul));
+  const norm = Math.max(0, Math.min(1, (state.sleeveHeightPct - 10) / 80));
   const maxCarrier = vessel.shape === "alu_can" ? 0.95 : (vessel.shape === "wine_bordeaux" ? 0.76 : 0.84);
-  const vMin = 0.04 + norm * Math.max(0.14, maxCarrier - bandH - 0.04);
+  const travel = Math.max(0.10, maxCarrier - bandH - 0.04);
+  const vMin = 0.04 + norm * travel;
   const vMax = Math.min(maxCarrier, vMin + bandH);
   return { vMin, vMax };
 }
 
-// Barcode height bounds strictly constrained INSIDE active Sleeve surface [vMin, vMax]
+function getLabelWidthMultiplier(vessel) {
+  const skin = getSkin();
+  if (!skin) return 1.0;
+  if (vessel && vessel.shape === "alu_can") {
+    return skin.id === "nocturne" ? 0.78 : (skin.id === "botanica" ? 1.06 : 1.0);
+  }
+  return skin.labelWidthMul || 1.0;
+}
+
+function getWrapRealDimensionsMm(vessel) {
+  const v = vessel || getVessel();
+  const { vMin, vMax } = getSleeveVerticalBand();
+  const isCan = v.shape === "alu_can";
+  const isPouch = v.shape === "doypack";
+  const isLabel = isLabelMode();
+  const circMm = v.shape === "square_soft"
+    ? Math.round(2 * (v.wMm + v.dMm) - 12)
+    : Math.round(Math.PI * v.wMm);
+  const spanH = isPouch ? 0.74 : (vMax - vMin);
+  const wrapHmm = isPouch ? 230 : (isSerigrafiaMode() ? Math.round(v.hMm * 0.86) : Math.max(24, Math.round(spanH * v.hMm)));
+  const wMul = getLabelWidthMultiplier(v);
+  let wrapWmm = circMm;
+  if (isPouch) {
+    wrapWmm = 180;
+  } else if (isLabel) {
+    const baseFrac = isCan ? 0.85 : (v.shape === "jar_lux" ? 0.40 : (v.shape === "square_soft" ? 0.22 : (v.shape === "wine_bordeaux" ? 0.225 : 0.235)));
+    wrapWmm = Math.round(circMm * baseFrac * wMul);
+  }
+  const bcWmm = v.shape === "jar_lux" ? 32 : 37;
+  const bcHmm = v.shape === "jar_lux" ? 22 : 26;
+  return {
+    wrapWmm,
+    wrapHmm,
+    wrapDimStr: `${wrapWmm} × ${wrapHmm} mm`,
+    bcWmm,
+    bcHmm,
+    bcDimStr: `${bcWmm} × ${bcHmm} mm`
+  };
+}
+
+// Barcode sits cleanly in lower region of Sleeve and scales dynamically with sleeve span
 function getSleeveBarcodeHeightBounds() {
   const vessel = getVessel();
   if (vessel.shape === "doypack") return { minPct: 10, maxPct: 86 };
   if (isSerigrafiaMode()) return { minPct: 12, maxPct: 88 };
   const sSpan = vessel.shape === "wine_bordeaux" ? 0.74 : (vessel.shape === "alu_can" ? 0.90 : 0.80);
   const { vMin, vMax } = getSleeveVerticalBand();
-  const minPct = Math.max(8, Math.round(((vMin + 0.055 - 0.04) / sSpan) * 100));
-  const maxPct = Math.min(92, Math.round(((vMax - 0.055 - 0.04) / sSpan) * 100));
-  return { minPct, maxPct: Math.max(minPct + 4, maxPct) };
+  const fixedBcV = vMin + Math.min(0.11, (vMax - vMin) * 0.22);
+  const pct = Math.max(8, Math.min(92, Math.round(((fixedBcV - 0.04) / sSpan) * 100)));
+  return { minPct: pct, maxPct: pct };
 }
 
 function clampBarcodeToSleeve() {
   if (!isDoypack() && state.wrapType === "sleeve") {
     const b = getSleeveBarcodeHeightBounds();
-    state.bcHeightPct = Math.max(b.minPct, Math.min(b.maxPct, state.bcHeightPct));
+    state.bcHeightPct = b.minPct;
   }
 }
 
@@ -3124,10 +3194,14 @@ function evaluateLivePhysics() {
   if (isLabel) {
     const rTop = getNormalizedRadiusAtV(v, vMax);
     const rBot = getNormalizedRadiusAtV(v, vMin);
+    const wMul = getLabelWidthMultiplier(v);
     let cornerStress = 0;
     if (v.shape === "square_soft") {
       const thS = (state.sleeveAngleDeg * Math.PI) / 180;
-      cornerStress = Math.round(Math.abs(Math.sin(2 * thS)) * 26);
+      const excessAngle = Math.max(0, 0.58 * wMul - 0.62);
+      const cCenter = Math.abs(Math.sin(2 * thS));
+      const cEdge = excessAngle > 0 ? Math.max(Math.abs(Math.sin(2 * (thS - excessAngle))), Math.abs(Math.sin(2 * (thS + excessAngle)))) * 0.35 : 0;
+      cornerStress = Math.round(Math.max(cCenter, cEdge) * 26);
     }
     const rawScale = v.shape === "alu_can" ? 235 : 100;
     const topStress = Math.round((1 - rTop) * rawScale);
@@ -3137,10 +3211,24 @@ function evaluateLivePhysics() {
     if (labelCurvePct >= lp.errTD || labelCurvePct > lp.maxTD) labelStatus = "err";
     else if (labelCurvePct >= lp.warnTD) labelStatus = "warn";
 
-    const ansiGrade = labelStatus === "err" ? "F" : (labelStatus === "warn" ? "C" : "A");
+    // Independent local evaluation strictly at the EAN-13 barcode zone (lower band of the label)
+    const isJar = v.shape === "jar_lux";
+    const bcCenterV = isJar ? (vMin + vMax) * 0.5 : (vMin + Math.min(0.11, (vMax - vMin) * 0.22));
+    const bcVTop = Math.min(vMax, bcCenterV + 0.045);
+    const bcVBot = Math.max(0.04, bcCenterV - 0.045);
+    const bcTopStress = Math.round((1 - getNormalizedRadiusAtV(v, bcVTop)) * rawScale);
+    const bcBotStress = Math.round((1 - getNormalizedRadiusAtV(v, bcVBot)) * rawScale * 0.85);
+    const bcCornerStress = v.shape === "square_soft"
+      ? Math.round(Math.abs(Math.sin(2 * ((state.sleeveAngleDeg * Math.PI) / 180))) * 22)
+      : 0;
+    const bcCurvePct = Math.min(68, Math.max(bcTopStress, bcBotStress) + bcCornerStress);
+    let ansiGrade = "A";
+    if (bcCurvePct >= lp.errTD || bcCurvePct > lp.maxTD) ansiGrade = "F";
+    else if (bcCurvePct >= lp.warnTD) ansiGrade = "C";
+
     let status = "g";
-    if (!neckMatch || labelStatus === "err") status = "r";
-    else if (labelStatus === "warn") status = "y";
+    if (!neckMatch || labelStatus === "err" || ansiGrade === "F") status = "r";
+    else if (labelStatus === "warn" || ansiGrade === "C") status = "y";
 
     return {
       isDoypack: false,
@@ -3148,8 +3236,8 @@ function evaluateLivePhysics() {
       noWrap: false,
       isNoCap,
       neckMatch,
-      localTD: labelCurvePct,
-      effectiveBarcodeTD: labelCurvePct,
+      localTD: bcCurvePct,
+      effectiveBarcodeTD: bcCurvePct,
       ansiGrade,
       sleeveTD: labelCurvePct,
       labelTopStress: topStress,
@@ -3161,18 +3249,19 @@ function evaluateLivePhysics() {
     };
   }
 
-  // SHRINK SLEEVE MODE ON RIGID VESSEL
+  // SHRINK SLEEVE MODE ON RIGID VESSEL (barcode moves with lower sleeve zone, independent of upper sleeve shoulder)
   const bcSpan = v.shape === "jar_lux" ? 0.71 : (v.shape === "wine_bordeaux" ? 0.74 : (v.shape === "alu_can" ? 0.90 : 0.80));
   const bcV = 0.04 + (state.bcHeightPct / 100) * bcSpan;
-  const bcTopV = Math.min(0.95, bcV + 0.085);
+  const bcTopV = Math.min(0.95, bcV + 0.075);
   const rAtBarcode = Math.min(getNormalizedRadiusAtV(v, bcV), getNormalizedRadiusAtV(v, bcTopV));
   let bcCornerPenalty = 0;
+  const effBcDeg = state.sleeveAngleDeg >= 0 ? state.sleeveAngleDeg - 180 : state.sleeveAngleDeg + 180;
   if (v.shape === "square_soft") {
-    const th = (state.bcAngleDeg * Math.PI) / 180;
+    const th = (effBcDeg * Math.PI) / 180;
     bcCornerPenalty = Math.round(Math.abs(Math.sin(2 * th)) * 10);
   }
   const localTD = Math.min(72, Math.round((1 - (rAtBarcode / 1.14)) * 100) + bcCornerPenalty);
-  const effectiveBarcodeTD = state.bcLadder ? Math.round(localTD * 0.45) : localTD;
+  const effectiveBarcodeTD = localTD;
 
   const filmOkBc = localTD <= fm.maxTD && localTD < fm.errTD + 6;
   const bcWarnThr = Math.max(18, fm.warnTD - 2);
@@ -3275,16 +3364,48 @@ function renderDoypackUVTexture(skin, phys) {
   const w = texCanvas.width, h = texCanvas.height;
   texCtx.clearRect(0, 0, w, h);
 
-  // Bare Soft-Touch Doypack when no brand print is selected yet
+  // Bare White Soft-Touch Doypack when no brand print is selected yet
   if (!skin || state.wrapType === "none") {
+    const isKraft = state.finishId === "kraft_pouch";
+    const isFoil = state.finishId === "foil_pouch";
     const bareGrad = texCtx.createLinearGradient(0, 0, 0, h);
-    bareGrad.addColorStop(0, "#242220");
-    bareGrad.addColorStop(0.55, "#191716");
-    bareGrad.addColorStop(1, "#121110");
+    if (isKraft) {
+      bareGrad.addColorStop(0, "#CFA87C");
+      bareGrad.addColorStop(0.55, "#BE9568");
+      bareGrad.addColorStop(1, "#A87E52");
+    } else if (isFoil) {
+      bareGrad.addColorStop(0, "#EBEEF2");
+      bareGrad.addColorStop(0.55, "#D0D5DC");
+      bareGrad.addColorStop(1, "#B4BBC4");
+    } else {
+      bareGrad.addColorStop(0, "#FFFFFF");
+      bareGrad.addColorStop(0.55, "#F6F3EC");
+      bareGrad.addColorStop(1, "#EAE5DC");
+    }
     texCtx.fillStyle = bareGrad;
     texCtx.fillRect(0, 0, w, h);
-    texCtx.fillStyle = "rgba(255,255,255,0.04)";
-    texCtx.fillRect(0, 128, w, 4);
+    if (!isKraft && !isFoil) {
+      // Delicate soft-touch seam & heat-seal contour shading so white Doypack pops crisply against studio background
+      texCtx.fillStyle = "rgba(18,17,16,0.06)";
+      texCtx.fillRect(0, 0, w, 128);
+      texCtx.fillStyle = "rgba(18,17,16,0.16)";
+      texCtx.fillRect(0, 126, w, 6);
+      texCtx.fillRect(0, 146, w, 3);
+      [0.25, 0.75].forEach(uSeam => {
+        const sx = uSeam * w;
+        const sg = texCtx.createLinearGradient(sx - 44, 0, sx + 44, 0);
+        sg.addColorStop(0, "rgba(18,17,16,0)");
+        sg.addColorStop(0.5, "rgba(18,17,16,0.10)");
+        sg.addColorStop(1, "rgba(18,17,16,0)");
+        texCtx.fillStyle = sg;
+        texCtx.fillRect(sx - 44, 0, 88, h);
+      });
+    } else {
+      texCtx.fillStyle = "rgba(18,17,16,0.10)";
+      texCtx.fillRect(0, 128, w, 4);
+      texCtx.fillStyle = "rgba(18,17,16,0.05)";
+      texCtx.fillRect(0, 0, w, 128);
+    }
     if (state.heatmap) {
       texCtx.fillStyle = "rgba(194,24,14,0.45)";
       texCtx.fillRect(0, 0, w, 175);
@@ -3295,13 +3416,15 @@ function renderDoypackUVTexture(skin, phys) {
     return;
   }
 
-  let baseTop = "#1C1A18", baseBot = "#11100E", accent = "#D9B263", pill = "#C2180E", txtCol = "#FAF7F2";
+  let baseTop = "#FFFFFF", baseBot = "#EAE5DC", accent = "#C2180E", pill = "#C2180E", txtCol = "#141210";
   if (state.finishId === "kraft_pouch") {
     baseTop = "#CFA87C"; baseBot = "#AD8255"; txtCol = "#1C140C"; accent = "#0F5C46"; pill = "#C2180E";
   } else if (state.finishId === "foil_pouch") {
     baseTop = "#E5E7EB"; baseBot = "#B8BFC7"; txtCol = "#141619"; accent = "#1D4ED8"; pill = "#C2180E";
+  } else if (skin.styleType === "black_gold") {
+    baseTop = "#1C1A18"; baseBot = "#11100E"; accent = "#D9B263"; pill = "#C2180E"; txtCol = "#FAF7F2";
   } else if (skin.styleType === "white_swiss") {
-    baseTop = "#FBF9F4"; baseBot = "#EBE5DA"; txtCol = "#141210"; accent = "#C2180E"; pill = "#C2180E";
+    baseTop = "#FFFFFF"; baseBot = "#ECE7DD"; txtCol = "#141210"; accent = "#C2180E"; pill = "#C2180E";
   } else if (skin.styleType === "emerald_cobalt") {
     baseTop = "#0F5C46"; baseBot = "#083A2C"; txtCol = "#FAF7F0"; accent = "#EA580C"; pill = "#1D4ED8";
   }
@@ -3493,17 +3616,60 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
   [-w, 0, w].forEach(seamOff => {
     const cx = w * 0.5 + slOffsetPx + seamOff;
     const isCan = vessel.shape === "alu_can";
-    const lw = isCan ? Math.round(w * 0.85) : (vessel.shape === "jar_lux" ? 820 : (vessel.shape === "square_soft" ? 450 : (vessel.shape === "wine_bordeaux" ? 460 : 480)));
+    const lwBase = isCan ? Math.round(w * 0.85) : (vessel.shape === "jar_lux" ? 820 : (vessel.shape === "square_soft" ? 450 : (vessel.shape === "wine_bordeaux" ? 460 : 480)));
+    const lw = Math.min(Math.round(w * 0.90), Math.round(lwBase * getLabelWidthMultiplier(vessel)));
     const labelCenter = isCan ? (cx - 540) : cx;
     const labelLeft = labelCenter - lw / 2;
     const labelRight = labelCenter + lw / 2;
     if (labelRight < -100 || labelLeft > w + 100) return;
     const lh = syH;
+    const lShape = skin.labelShape || "arch";
+    const isNeutralWhite = skin.styleType === "neutral_white";
 
     function buildLabelPath() {
       texCtx.beginPath();
       if (isCan) {
-        texCtx.roundRect(labelLeft, syTop + 6, lw, lh - 12, 12);
+        if (lShape === "octagon") {
+          const ch = 26;
+          texCtx.moveTo(labelLeft + ch, syTop + 6);
+          texCtx.lineTo(labelRight - ch, syTop + 6);
+          texCtx.lineTo(labelRight, syTop + 6 + ch);
+          texCtx.lineTo(labelRight, syBot - 6 - ch);
+          texCtx.lineTo(labelRight - ch, syBot - 6);
+          texCtx.lineTo(labelLeft + ch, syBot - 6);
+          texCtx.lineTo(labelLeft, syBot - 6 - ch);
+          texCtx.lineTo(labelLeft, syTop + 6 + ch);
+          texCtx.closePath();
+        } else if (lShape === "pill_shield") {
+          texCtx.roundRect(labelLeft, syTop + 10, lw, lh - 20, Math.min(68, (lh - 20) * 0.42));
+        } else {
+          texCtx.roundRect(labelLeft, syTop + 6, lw, lh - 12, 12);
+        }
+      } else if (lShape === "octagon") {
+        // Tall octagonal emerald-cut plaque for Nocturne Nobile
+        const ch = Math.min(44, Math.round(lw * 0.14));
+        const crown = 16;
+        texCtx.moveTo(cx - lw / 2 + ch, syTop + 10);
+        texCtx.lineTo(cx, syTop - crown);
+        texCtx.lineTo(cx + lw / 2 - ch, syTop + 10);
+        texCtx.lineTo(cx + lw / 2, syTop + 10 + ch);
+        texCtx.lineTo(cx + lw / 2, syBot - 10 - ch);
+        texCtx.lineTo(cx + lw / 2 - ch, syBot - 10);
+        texCtx.lineTo(cx - lw / 2 + ch, syBot - 10);
+        texCtx.lineTo(cx - lw / 2, syBot - 10 - ch);
+        texCtx.lineTo(cx - lw / 2, syTop + 10 + ch);
+        texCtx.closePath();
+      } else if (lShape === "pill_shield") {
+        // Panoramic oval-pill shield for Verde Botanica
+        const rad = Math.min(92, Math.round(lh * 0.42));
+        texCtx.moveTo(cx - lw / 2 + rad, syTop + 12);
+        texCtx.quadraticCurveTo(cx, syTop - 22, cx + lw / 2 - rad, syTop + 12);
+        texCtx.quadraticCurveTo(cx + lw / 2, syTop + 12, cx + lw / 2, cy);
+        texCtx.quadraticCurveTo(cx + lw / 2, syBot - 12, cx + lw / 2 - rad, syBot - 12);
+        texCtx.quadraticCurveTo(cx, syBot + 8, cx - lw / 2 + rad, syBot - 12);
+        texCtx.quadraticCurveTo(cx - lw / 2, syBot - 12, cx - lw / 2, cy);
+        texCtx.quadraticCurveTo(cx - lw / 2, syTop + 12, cx - lw / 2 + rad, syTop + 12);
+        texCtx.closePath();
       } else if (vessel.shape === "wine_bordeaux") {
         texCtx.moveTo(cx - lw / 2, syTop + 44);
         texCtx.quadraticCurveTo(cx, syTop - 16, cx + lw / 2, syTop + 44);
@@ -3527,12 +3693,13 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
 
     const darkVessel = vessel.shape === "wine_bordeaux";
     const lFill = isClear
-      ? (skin.styleType === "black_gold" ? "rgba(18, 16, 20, 0.22)" : (skin.styleType === "emerald_cobalt" ? "rgba(15, 92, 70, 0.20)" : "rgba(255, 255, 255, 0.18)"))
-      : (skin.styleType === "black_gold" ? "#151418" : (skin.styleType === "emerald_cobalt" ? "#0F5C46" : (lp.laidTexture ? "#F8F3E8" : "#FCFBF8")));
+      ? (skin.styleType === "black_gold" ? "rgba(18, 16, 20, 0.22)" : (skin.styleType === "emerald_cobalt" ? "rgba(15, 92, 70, 0.20)" : "rgba(255, 255, 255, 0.22)"))
+      : (skin.styleType === "black_gold" ? "#151418" : (skin.styleType === "emerald_cobalt" ? "#0F5C46" : (lp.laidTexture ? "#F8F3E8" : "#FFFFFF")));
     const lText = isClear
       ? (darkVessel ? "#FAF7F0" : (skin.styleType === "black_gold" ? "#161311" : (skin.styleType === "emerald_cobalt" ? "#0B4333" : "#161311")))
-      : (skin.styleType === "white_swiss" ? "#161311" : "#FAF7F0");
-    const lAccent = skin.styleType === "black_gold" ? "#C99F45" : (skin.styleType === "emerald_cobalt" ? "#EA580C" : "#C2180E");
+      : ((skin.styleType === "white_swiss" || isNeutralWhite) ? "#161311" : "#FAF7F0");
+    const lAccent = isNeutralWhite ? "#B8B0A4" : (skin.styleType === "black_gold" ? "#C99F45" : (skin.styleType === "emerald_cobalt" ? "#EA580C" : "#C2180E"));
+    const bcStatCol = phys.ansiGrade === "F" ? "#C2180E" : (phys.ansiGrade === "C" ? "#E5A000" : "#147A3B");
 
     texCtx.save();
     // Physical die-cut drop shadow underneath the adhesive sticker (grows stronger as corners lift!)
@@ -3558,7 +3725,7 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
     // 1) Substrate-specific surface grain / sheen
     if (lp.laidTexture) {
       // Fine horizontal vergata laid-cotton paper lines
-      texCtx.fillStyle = skin.styleType === "white_swiss" ? "rgba(110, 92, 68, 0.055)" : "rgba(255, 250, 240, 0.045)";
+      texCtx.fillStyle = (skin.styleType === "white_swiss" || isNeutralWhite) ? "rgba(110, 92, 68, 0.055)" : "rgba(255, 250, 240, 0.045)";
       for (let ly = syTop; ly < syBot; ly += 7) {
         texCtx.fillRect(labelLeft, ly, lw, 1.8);
       }
@@ -3583,11 +3750,23 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
       texCtx.fillRect(labelLeft, syTop, lw, lh);
     }
 
+    // Inner die-cut gold/white accent frame for octagon & pill shapes (adds distinctive craft detail)
+    if (!isNeutralWhite && lShape === "octagon") {
+      texCtx.strokeStyle = "rgba(217, 178, 99, 0.55)";
+      texCtx.lineWidth = 2.5;
+      texCtx.strokeRect(labelLeft + 20, syTop + 26, lw - 40, lh - 52);
+    }
+
     // Subtle upper graphic warp when label creases on curved shoulder
     const topPinch = stressNorm > 0.35 ? Math.max(0.76, 1 - (stressNorm - 0.35) * 0.24 * lp.stiffness) : 1.0;
 
     texCtx.textAlign = "center";
-    if (isCan) {
+    if (isNeutralWhite) {
+      // Blank white unprinted die-cut label: ONLY integrated EAN-13 barcode, zero brand copy!
+      const bcXPos = isCan ? (cx - 90) : (vessel.shape === "jar_lux" ? cx : cx);
+      const bcYPos = vessel.shape === "jar_lux" ? cy : (syBot - Math.min(92, Math.round(lh * 0.26)));
+      drawEAN13Graphic(texCtx, bcXPos, bcYPos, Math.min(230, lw - 38), Math.min(108, lh - 38), skin.ean, bcStatCol, `EAN-13 · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
+    } else if (isCan) {
       texCtx.fillStyle = lAccent;
       texCtx.fillRect(labelLeft, syTop + 18, lw, 12);
       texCtx.fillRect(labelLeft, syBot - 26, lw, 12);
@@ -3614,51 +3793,59 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
       texCtx.restore();
 
       const lx = labelLeft + 340;
-      texCtx.strokeStyle = lAccent;
-      texCtx.lineWidth = 3;
-      texCtx.strokeRect(lx - 150, syTop + 120, 300, lh - 220);
-      texCtx.fillStyle = lText;
-      texCtx.font = "800 22px 'Inter', sans-serif";
-      texCtx.fillText("SPECIFICHE LATTINA", lx, syTop + 170);
-      texCtx.font = "600 19px 'JetBrains Mono', monospace";
-      ["Formato: 330 ml Sleek", "Corpo: Alluminio ALU 41", "Riciclo: 100% Riciclabile", "Fondo: SOT 202 Ermetico"].forEach((row, i) => {
-        texCtx.fillText(row, lx, syTop + 228 + i * 48);
-      });
+      if (lw > 1200) {
+        texCtx.strokeStyle = lAccent;
+        texCtx.lineWidth = 3;
+        texCtx.strokeRect(lx - 150, syTop + 120, 300, lh - 220);
+        texCtx.fillStyle = lText;
+        texCtx.font = "800 22px 'Inter', sans-serif";
+        texCtx.fillText("SPECIFICHE LATTINA", lx, syTop + 170);
+        texCtx.font = "600 19px 'JetBrains Mono', monospace";
+        ["Formato: 330 ml Sleek", "Corpo: Alluminio ALU 41", "Riciclo: 100% Riciclabile", "Fondo: SOT 202 Ermetico"].forEach((row, i) => {
+          texCtx.fillText(row, lx, syTop + 228 + i * 48);
+        });
+      }
 
-      drawEAN13Graphic(texCtx, fx, syBot - 110, 236, 110, skin.ean, statusCol, `EAN-13 INTEGRATO · GRADE ${phys.ansiGrade}`, false, phys.sleeveStatus === "err");
+      drawEAN13Graphic(texCtx, fx, syBot - 110, 236, 110, skin.ean, bcStatCol, `EAN-13 · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
     } else if (vessel.shape === "jar_lux") {
       texCtx.save();
-      texCtx.translate(cx - 140, cy);
+      texCtx.translate(cx - Math.min(130, lw * 0.17), cy);
       texCtx.scale(topPinch, 1.0);
       texCtx.fillStyle = lText;
-      texCtx.font = "900 46px 'Inter', sans-serif";
-      texCtx.fillText(skin.brand + " " + skin.brandSub, 0, -28);
+      texCtx.font = lShape === "octagon" ? "900 38px Georgia, serif" : "900 44px 'Inter', sans-serif";
+      texCtx.fillText(skin.brand + " " + skin.brandSub, 0, -24);
       texCtx.fillStyle = lAccent;
-      texCtx.font = "700 22px 'Inter', sans-serif";
-      texCtx.fillText("EDIZIONE CLASSICA · " + lp.name, 0, 16);
+      texCtx.font = "700 20px 'Inter', sans-serif";
+      texCtx.fillText(lp.name, 0, 18);
       texCtx.restore();
-      drawEAN13Graphic(texCtx, cx + 225, cy, 220, 118, skin.ean, statusCol, `ETIC. ADESIVA · ${state.labelMatId}`, false, phys.sleeveStatus === "err");
+      drawEAN13Graphic(texCtx, cx + Math.min(220, lw * 0.25), cy, Math.min(220, lw * 0.34), Math.min(112, lh * 0.42), skin.ean, bcStatCol, `EAN-13 · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
     } else {
       const subTitle = vessel.shape === "wine_bordeaux" ? skin.wineSub : skin.product;
+      const wScale = Math.min(1.0, lw / 470);
+      const hScale = Math.min(1.0, lh / 320);
+      const tScale = Math.min(wScale, hScale);
+      const topYFrac = lShape === "pill_shield" ? 0.36 : 0.34;
       texCtx.save();
-      texCtx.translate(cx, syTop + lh * 0.34);
-      texCtx.scale(topPinch, 1.0);
+      texCtx.translate(cx, syTop + lh * topYFrac);
+      texCtx.scale(topPinch * tScale, tScale);
       texCtx.fillStyle = lAccent;
       texCtx.font = "800 18px 'Inter', sans-serif";
-      texCtx.fillText(`ETICHETTA ${lp.id}`, 0, -lh * 0.34 + 64);
+      texCtx.fillText(`ETICHETTA ${lp.id}`, 0, lShape === "pill_shield" ? -68 : -82);
 
       texCtx.fillStyle = lText;
-      texCtx.font = vessel.shape === "wine_bordeaux" ? "800 50px Georgia, serif" : "900 54px 'Inter', sans-serif";
+      texCtx.font = (vessel.shape === "wine_bordeaux" || lShape === "octagon") ? "800 50px Georgia, serif" : "900 54px 'Inter', sans-serif";
       texCtx.fillText(skin.brand, 0, -4);
       texCtx.fillStyle = lAccent;
       texCtx.font = "700 26px 'Inter', sans-serif";
-      texCtx.fillText(skin.brandSub, 0, lh * 0.10);
+      texCtx.fillText(skin.brandSub, 0, 34);
       texCtx.fillStyle = lText;
-      texCtx.font = "700 20px 'Inter', sans-serif";
-      texCtx.fillText(subTitle, 0, lh * 0.22);
+      texCtx.font = "700 19px 'Inter', sans-serif";
+      texCtx.fillText(subTitle, 0, 70);
       texCtx.restore();
 
-      drawEAN13Graphic(texCtx, cx, syBot - 92, 240, 114, skin.ean, statusCol, `EAN-13 INTEGRATO · GRADE ${phys.ansiGrade}`, false, phys.sleeveStatus === "err");
+      const bcW = Math.min(240, lw - 44);
+      const bcH = Math.min(114, Math.round(lh * (lShape === "pill_shield" ? 0.31 : 0.34)));
+      drawEAN13Graphic(texCtx, cx, syBot - Math.round(bcH * 0.56) - 18, bcW, bcH, skin.ean, bcStatCol, `EAN-13 · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
     }
 
     // 2) PHOTOREALISTIC MOVEMENT-DRIVEN ADHESIVE LABEL PHYSICS (creases, dog-ear lift, air blisters, silvering)
@@ -3911,7 +4098,7 @@ function renderSleeveUVTexture() {
   const { vMin, vMax } = getSleeveVerticalBand();
   const syTop = vesselVtoY(vMax);
   const syBot = vesselVtoY(vMin);
-  const syH = Math.max(240, syBot - syTop);
+  const syH = Math.max(190, syBot - syTop);
   const slOffsetPx = (state.sleeveAngleDeg / 360) * w;
 
   [-w, 0, w].forEach(seamOff => {
@@ -3923,7 +4110,36 @@ function renderSleeveUVTexture() {
     texCtx.rect(0, syTop, w, syH);
     texCtx.clip();
 
-    if (skin.styleType === "white_swiss") {
+    if (skin.styleType === "neutral_clear") {
+      // Clear unprinted transparent shrink sleeve film (lets underlying bottle & liquid show cleanly through!)
+      const gClear = texCtx.createLinearGradient(0, syTop, 0, syBot);
+      gClear.addColorStop(0.0, "rgba(244, 249, 255, 0.30)");
+      gClear.addColorStop(0.5, "rgba(232, 242, 252, 0.16)");
+      gClear.addColorStop(1.0, "rgba(222, 234, 246, 0.28)");
+      texCtx.fillStyle = gClear;
+      texCtx.fillRect(centerX - w / 2, syTop, w, syH);
+
+      // Vertical cylindrical film specular streaks so transparent shrink film is visibly mounted & moving
+      [0.22, 0.38, 0.64, 0.81].forEach(uFrac => {
+        const sx = centerX - w / 2 + uFrac * w;
+        const gSheen = texCtx.createLinearGradient(sx - 28, 0, sx + 28, 0);
+        gSheen.addColorStop(0, "rgba(255,255,255,0)");
+        gSheen.addColorStop(0.5, "rgba(255,255,255,0.34)");
+        gSheen.addColorStop(1, "rgba(255,255,255,0)");
+        texCtx.fillStyle = gSheen;
+        texCtx.fillRect(sx - 28, syTop, 56, syH);
+      });
+
+      // Top & bottom transparent film cut-rim borders (shows live shrink contour height)
+      const rimCol = phys.sleeveStatus === "err" ? "rgba(194, 24, 14, 0.82)" : (phys.sleeveStatus === "warn" ? "rgba(217, 119, 6, 0.82)" : "rgba(71, 85, 105, 0.45)");
+      texCtx.fillStyle = rimCol;
+      texCtx.fillRect(centerX - w / 2, syTop, w, 5);
+      texCtx.fillRect(centerX - w / 2, syBot - 5, w, 5);
+      texCtx.fillStyle = "rgba(255, 255, 255, 0.72)";
+      texCtx.fillRect(centerX - w / 2, syTop + 5, w, 3);
+      texCtx.fillRect(centerX - w / 2, syBot - 8, w, 3);
+
+    } else if (skin.styleType === "white_swiss") {
       const g = texCtx.createLinearGradient(0, syTop, 0, syBot);
       g.addColorStop(0, "#FDFCF9");
       g.addColorStop(1, "#EFEBE2");
@@ -4123,7 +4339,8 @@ function renderSleeveUVTexture() {
     drawSynchronizedTDHeatmap(texCtx, w, h, vessel, sSpan, false, true);
   }
 
-  const uNorm = (((0.5 + (state.bcAngleDeg / 360)) % 1) + 1) % 1;
+  const effBcDeg = state.sleeveAngleDeg >= 0 ? state.sleeveAngleDeg - 180 : state.sleeveAngleDeg + 180;
+  const uNorm = (((0.5 + (effBcDeg / 360)) % 1) + 1) % 1;
   const vBcPos = 0.04 + (state.bcHeightPct / 100) * sSpan;
   const bcX = uNorm * w;
   const bcY = Math.max(82, Math.min(h - 82, vesselVtoY(vBcPos)));
@@ -4131,11 +4348,11 @@ function renderSleeveUVTexture() {
 
   [bcX - w, bcX, bcX + w].forEach(drawX => {
     if (drawX < -300 || drawX > w + 300) return;
-    const warpX = (!state.bcLadder && phys.localTD >= 24) ? Math.max(0.60, 1 - (phys.localTD - 22) / 92) : 1.0;
+    const warpX = (phys.localTD >= 24) ? Math.max(0.60, 1 - (phys.localTD - 22) / 92) : 1.0;
     texCtx.save();
     texCtx.translate(drawX, bcY);
     texCtx.scale(warpX, 1.0);
-    drawEAN13Graphic(texCtx, 0, 0, 248, 136, skin.ean, bcStatCol, `EAN-13 · TD ${phys.localTD}% · GRADE ${phys.ansiGrade}`, state.bcLadder, phys.ansiGrade === "F" && !state.bcLadder);
+    drawEAN13Graphic(texCtx, 0, 0, 248, 136, skin.ean, bcStatCol, `EAN-13 · TD ${phys.localTD}% · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
     texCtx.restore();
   });
 
@@ -4373,7 +4590,8 @@ function applyDynamicWrapMeshDeformation(geo, vessel) {
     const slTheta = (state.sleeveAngleDeg / 360) * Math.PI * 2;
     const isCan = vessel.shape === "alu_can";
     const centerTheta = isCan ? (slTheta - (540 / 2048) * Math.PI * 2) : slTheta;
-    const labelHalfRad = isCan ? 2.67 : (vessel.shape === "jar_lux" ? 1.26 : (vessel.shape === "square_soft" ? 0.69 : (vessel.shape === "wine_bordeaux" ? 0.71 : 0.74)));
+    const labelHalfRadBase = isCan ? 2.67 : (vessel.shape === "jar_lux" ? 1.26 : (vessel.shape === "square_soft" ? 0.69 : (vessel.shape === "wine_bordeaux" ? 0.71 : 0.74)));
+    const labelHalfRad = Math.min(Math.PI * 0.90, labelHalfRadBase * getLabelWidthMultiplier(vessel));
 
     for (let i = 0; i < meta.length; i++) {
       const m = meta[i];
@@ -4939,11 +5157,13 @@ function rebuild3DProduct() {
     const fmCur = getFilm();
     const isLabelCur = isLabelMode();
     const isSleeveOnly = state.wrapType === "sleeve";
+    const isNeutralClearSleeve = isSleeveOnly && state.skinId === "neutral";
     const sMat = new THREE.MeshPhysicalMaterial({
       map: sleeveTexture,
       transparent: true,
       alphaTest: 0.01,
-      opacity: isLabelCur ? 1.0 : 0.98,
+      depthWrite: !(isNeutralClearSleeve || (isLabelCur && lpCur.transparentBg)),
+      opacity: isLabelCur ? 1.0 : (isNeutralClearSleeve ? 0.94 : 0.98),
       roughness: isLabelCur ? lpCur.roughness : (isSleeveOnly ? fmCur.roughness : 0.18),
       metalness: 0.04,
       clearcoat: isLabelCur ? lpCur.clearcoat : (isSleeveOnly ? fmCur.clearcoat : 0.85),
@@ -5068,42 +5288,9 @@ function setupViewportInteractions(canvas) {
     return (hits.length > 0 && hits[0].uv) ? hits[0].uv : null;
   }
 
-  function applyRaycastToBarcode(e) {
-    if (isLabelMode()) return false;
-    const uv = intersectBottleUV(e);
-    if (!uv) return false;
-    if (isDoypack()) {
-      if (uv.x >= 0.25 && uv.x <= 0.75) {
-        state.bcDoypackSide = "front";
-        state.bcDoypackX = Math.max(-42, Math.min(42, Math.round(((uv.x - 0.5) / 0.46) * 100)));
-      } else {
-        state.bcDoypackSide = "back";
-        const xOff = uv.x < 0.25 ? uv.x : (uv.x - 1.0);
-        state.bcDoypackX = Math.max(-42, Math.min(42, Math.round((xOff / 0.46) * 100)));
-      }
-      state.bcHeightPct = Math.max(10, Math.min(86, Math.round(uv.y * 100)));
-    } else {
-      let deg = Math.round((uv.x - 0.5) * 360);
-      if (deg < -180) deg += 360;
-      if (deg > 180) deg -= 360;
-      state.bcAngleDeg = deg;
-      const bBounds = getSleeveBarcodeHeightBounds();
-      state.bcHeightPct = Math.max(bBounds.minPct, Math.min(bBounds.maxPct, Math.round(uv.y * 100)));
-    }
-    renderSleeveUVTexture();
-    updateFastTelemetryUI();
-    return true;
-  }
-
   canvas.addEventListener("pointerdown", e => {
     prevPtr = { x: e.clientX, y: e.clientY };
-    if (state.pointerTool === "barcode" && !isLabelMode()) {
-      if (applyRaycastToBarcode(e)) {
-        activeDragMode = "barcode";
-        canvas.style.cursor = "grabbing";
-        return;
-      }
-    } else if (state.pointerTool === "sleeve" && !isDoypack() && !isSerigrafiaMode()) {
+    if (state.pointerTool === "sleeve" && !isDoypack() && !isSerigrafiaMode()) {
       if (intersectBottleUV(e)) {
         activeDragMode = "sleeve";
         canvas.style.cursor = "grabbing";
@@ -5115,10 +5302,6 @@ function setupViewportInteractions(canvas) {
   });
 
   window.addEventListener("pointermove", e => {
-    if (activeDragMode === "barcode") {
-      applyRaycastToBarcode(e);
-      return;
-    }
     if (activeDragMode === "sleeve") {
       const dx = e.clientX - prevPtr.x;
       const dy = e.clientY - prevPtr.y;
@@ -5142,7 +5325,7 @@ function setupViewportInteractions(canvas) {
     }
     const targetMesh = isDoypack() ? vesselMesh : sleeveMesh;
     if (state.mainView === "studio" && targetMesh) {
-      if ((state.pointerTool === "barcode" && !isLabelMode()) || (state.pointerTool === "sleeve" && !isDoypack() && !isSerigrafiaMode())) {
+      if (state.pointerTool === "sleeve" && !isDoypack() && !isSerigrafiaMode()) {
         canvas.style.cursor = intersectBottleUV(e) ? "crosshair" : "grab";
       } else {
         canvas.style.cursor = "grab";
@@ -5151,7 +5334,7 @@ function setupViewportInteractions(canvas) {
   });
 
   window.addEventListener("pointerup", () => {
-    if (activeDragMode === "barcode" || activeDragMode === "sleeve") {
+    if (activeDragMode === "sleeve") {
       activeDragMode = null;
       renderInspector();
     }
@@ -5269,29 +5452,29 @@ function update3DPinOverlays() {
     pinNeck.style.top = `${Math.min(Math.max(neckScr.y - 6, isCompactStage ? 92 : 88), stageH - 54)}px`;
   }
 
-  // 2) Floating Sleeve Shrink Pin (left of bottle ONLY in Sleeve mode)
+  // 2) Floating Sleeve / Label Wrap Pin (left of bottle for BOTH Sleeve AND Adhesive Label!)
   const pinSl = document.getElementById("pinSleeve");
   if (pinSl) {
-    if (pouchMode || state.wrapType !== "sleeve") {
+    if (pouchMode || (state.wrapType !== "sleeve" && state.wrapType !== "label")) {
       pinSl.style.display = "none";
     } else {
       pinSl.style.display = "block";
       const thetaSl = (state.sleeveAngleDeg / 360) * Math.PI * 2;
-      const { vMax } = getSleeveVerticalBand();
+      const { vMin, vMax } = getSleeveVerticalBand();
       const vSl = Math.max(0.18, vMax - 0.07);
       const rNormSl = getNormalizedRadiusAtV(vessel, vSl) * baseScale;
       const rEnvSl = getRadialEnvelopeFactor(vessel, vSl, thetaSl, rNormSl);
       const slWorld = new THREE.Vector3(rEnvSl * Math.sin(thetaSl), -1.25 + vSl * totalH, rEnvSl * Math.cos(thetaSl));
       const slScr = projectWorldToScreen(slWorld);
       const sxOff = isCompactStage ? 92 : 195;
-      const sMinX = isCompactStage ? 90 : 118;
+      const sMinX = isCompactStage ? 90 : 122;
       const sMaxX = Math.max(sMinX, stageW - (isCompactStage ? 95 : 140));
       pinSl.style.left = `${Math.min(Math.max(slScr.x - sxOff, sMinX), sMaxX)}px`;
       pinSl.style.top = `${Math.min(Math.max(slScr.y - 12, isCompactStage ? 96 : 96), stageH - 64)}px`;
     }
   }
 
-  // 3) Barcode or Adhesive Label Pin (ONLY visible when facing camera & wrap is active!)
+  // 3) Independent Barcode Pin (always separate from #pinSleeve — at bottom/right on Label or rear/center on Sleeve!)
   const pinBc = document.getElementById("pinBarcode");
   if (!hasWrap()) {
     pinBc.style.display = "none";
@@ -5309,7 +5492,16 @@ function update3DPinOverlays() {
     } else if (labelMode) {
       const theta = (state.sleeveAngleDeg / 360) * Math.PI * 2;
       const { vMin, vMax } = getSleeveVerticalBand();
-      const vNorm = (vMin + vMax) * 0.5;
+      const vNorm = vessel.shape === "jar_lux" ? (vMin + vMax) * 0.5 : (vMin + Math.min(0.11, (vMax - vMin) * 0.22));
+      const rNormBase = getNormalizedRadiusAtV(vessel, vNorm) * baseScale;
+      const rEnv = getRadialEnvelopeFactor(vessel, vNorm, theta, rNormBase);
+      bcWorld = new THREE.Vector3(rEnv * Math.sin(theta), -1.25 + vNorm * totalH, rEnv * Math.cos(theta));
+      bcFacingCam = (Math.sin(theta) * camXZ.x + Math.cos(theta) * camXZ.y) >= -0.05;
+    } else if (state.wrapType === "sleeve") {
+      const effBcDeg = state.sleeveAngleDeg >= 0 ? state.sleeveAngleDeg - 180 : state.sleeveAngleDeg + 180;
+      const theta = (effBcDeg / 360) * Math.PI * 2;
+      const sMaxV = vessel.shape === "wine_bordeaux" ? 0.76 : (vessel.shape === "alu_can" ? 0.95 : 0.84);
+      const vNorm = 0.04 + (state.bcHeightPct / 100) * (sMaxV - 0.04);
       const rNormBase = getNormalizedRadiusAtV(vessel, vNorm) * baseScale;
       const rEnv = getRadialEnvelopeFactor(vessel, vNorm, theta, rNormBase);
       bcWorld = new THREE.Vector3(rEnv * Math.sin(theta), -1.25 + vNorm * totalH, rEnv * Math.cos(theta));
@@ -5325,11 +5517,11 @@ function update3DPinOverlays() {
     }
     pinBc.style.opacity = bcFacingCam ? "1" : "0";
     const bcScr = projectWorldToScreen(bcWorld);
-    const bcOffsetX = isCompactStage ? 72 : (labelMode ? 185 : 115);
+    const bcOffsetX = isCompactStage ? 72 : (labelMode ? 185 : 135);
     const bMinX = isCompactStage ? 88 : 120;
-    const bMaxX = Math.max(bMinX, stageW - (isCompactStage ? 92 : 120));
+    const bMaxX = Math.max(bMinX, stageW - (isCompactStage ? 92 : 130));
     pinBc.style.left = `${Math.min(Math.max(bcScr.x + bcOffsetX, bMinX), bMaxX)}px`;
-    pinBc.style.top = `${Math.min(Math.max(bcScr.y + (labelMode ? 24 : 0), 100), stageH - 58)}px`;
+    pinBc.style.top = `${Math.min(Math.max(bcScr.y + (labelMode ? 22 : 0), 100), stageH - 58)}px`;
   }
 }
 
@@ -5362,6 +5554,8 @@ function resetVesselConfigState(vid) {
   camTargetTheta = null;
   state.infoPopoverOpen = false;
   state.customVesselMode = false;
+  state.customGraphicMode = false;
+  state.customGraphicFile = "";
   state.arModalOpen = false;
   state.boxMode = "grid";
   state.boxQty = 1;
@@ -5388,6 +5582,7 @@ function resetVesselConfigState(vid) {
 
 function selectVesselFromMarketplace(vid) {
   state.customVesselMode = false;
+  state.customGraphicMode = false;
   resetVesselConfigState(vid);
   switchMainView("studio");
   rebuild3DProduct();
@@ -5408,6 +5603,10 @@ function goStepBack() {
     rebuild3DProduct();
     renderAllUI();
   } else if (state.mainView === "studio") {
+    if (state.customGraphicMode) {
+      closeCustomGraphicStudio();
+      return;
+    }
     state.customVesselMode = false;
     resetVesselConfigState(state.vesselId);
     switchMainView("catalog");
@@ -5424,7 +5623,7 @@ function setDoypackPrintType(pt) {
   } else {
     state.wrapType = "pouch";
     state.pouchPrintType = pt;
-    if (state.skinId === "none") state.skinId = "lumina";
+    if (state.skinId === "none" || state.skinId === "neutral") state.skinId = "lumina";
   }
   state.selectedSuppliers = { container: 0 };
   state.filieraStep = 1;
@@ -5441,15 +5640,18 @@ function setWrapType(wt) {
     state.skinId = "none";
     state.pointerTool = "orbit";
   } else {
-    if (state.wrapType === "none" && (wt === "sleeve" || wt === "label")) {
+    if (wt === "sleeve" || wt === "label") {
       state.sleeveHeightPct = 18;
       state.sleeveAngleDeg = 0;
     }
     state.wrapType = wt;
-    if (state.skinId === "none") state.skinId = "lumina";
-    if (wt === "label" && state.pointerTool === "barcode") {
-      state.pointerTool = "orbit";
-    } else if (wt === "serigrafia" && state.pointerTool === "sleeve") {
+    if (wt === "sleeve" || wt === "label") {
+      // Sleeve defaults initially to Neutra Trasparente; Adhesive Label defaults initially to Bianca Senza Scritte
+      state.skinId = "neutral";
+    } else if (state.skinId === "none" || state.skinId === "neutral") {
+      state.skinId = "lumina";
+    }
+    if (wt === "serigrafia" && state.pointerTool === "sleeve") {
       state.pointerTool = "orbit";
     }
   }
@@ -5470,9 +5672,16 @@ function selectSkin(sid) {
     renderAllUI();
     return;
   }
+  const prevSkin = state.skinId;
   state.skinId = sid;
-  renderSleeveUVTexture();
+  if ((prevSkin === "neutral") !== (sid === "neutral")) {
+    rebuild3DProduct();
+  } else {
+    if (sleeveMesh && sleeveMesh.geometry) applyDynamicWrapMeshDeformation(sleeveMesh.geometry, getVessel());
+    renderSleeveUVTexture();
+  }
   renderInspector();
+  updateFastTelemetryUI();
 }
 
 function flipDoypackSide(targetSide) {
@@ -5528,19 +5737,158 @@ function switchMainView(v) {
   const gridMain = document.getElementById("studioGridMain");
   const customStage = document.getElementById("customVesselStage");
   if (gridMain && customStage) {
-    const showCustom = (v === "studio" && state.customVesselMode);
+    const showCustom = (v === "studio" && (state.customVesselMode || state.customGraphicMode));
     gridMain.style.display = showCustom ? "none" : "";
     customStage.style.display = showCustom ? "block" : "none";
   }
 
-  if (v === "studio" && !state.customVesselMode) setTimeout(resizeWebGL, 25);
+  if (v === "studio" && !state.customVesselMode && !state.customGraphicMode) setTimeout(resizeWebGL, 25);
   renderAllUI();
 }
 
-// ==================== CUSTOM CONTAINER UPLOAD DEMO (UNDER 02 STUDIO 3D) ====================
+// ==================== CUSTOM CONTAINER UPLOAD & CUSTOM GRAPHIC UPLOAD DEMO (UNDER 02 STUDIO 3D) ====================
 function openCustomVesselStudio() {
+  state.customGraphicMode = false;
   state.customVesselMode = true;
   switchMainView("studio");
+}
+
+function openCustomGraphicStudio() {
+  state.customVesselMode = false;
+  state.customGraphicMode = true;
+  state.customGraphicFile = "";
+  switchMainView("studio");
+}
+
+function closeCustomGraphicStudio() {
+  state.customGraphicMode = false;
+  switchMainView("studio");
+  rebuild3DProduct();
+  renderAllUI();
+}
+
+function handleCustomGraphicUpload(inputEl) {
+  const file = inputEl && inputEl.files && inputEl.files[0];
+  if (!file) return;
+  state.customGraphicFile = file.name;
+  renderCustomGraphicView();
+}
+
+function renderCustomGraphicView() {
+  const host = document.getElementById("customVesselStage");
+  if (!host || !state.customGraphicMode) return;
+  const l = state.lang;
+  const v = getVessel();
+  const dims = getWrapRealDimensionsMm(v);
+  const pouchMode = isDoypack();
+  const labelMode = isLabelMode();
+  const serigMode = isSerigrafiaMode();
+
+  const processIt = pouchMode
+    ? (state.pouchPrintType === "flexo" ? "Stampa Flessografica su Doypack" : "Stampa Digitale su Doypack")
+    : (serigMode
+        ? "Serigrafia Diretta 360° su Alluminio"
+        : (labelMode ? "Etichetta Adesiva Fustellata" : "Sleeve Termoretraibile 360°"));
+  const processEn = pouchMode
+    ? (state.pouchPrintType === "flexo" ? "Flexographic Pouch Printing" : "Digital Pouch Printing")
+    : (serigMode
+        ? "360° Direct-to-Can Silk Screen"
+        : (labelMode ? "Die-Cut Adhesive Label" : "360° Heat-Shrink Sleeve"));
+
+  const matName = pouchMode
+    ? (l === "it" ? (POUCH_FINISHES.find(f => f.id === state.finishId)?.it || "Bianco Soft-Touch") : (POUCH_FINISHES.find(f => f.id === state.finishId)?.en || "White Soft-Touch"))
+    : (serigMode
+        ? getSerigrafiaInk().name
+        : (labelMode ? getLabelPaper().name : getFilm().name));
+
+  const formatNoteIt = pouchMode
+    ? "Fronte + Retro su tracciato fustella busta (+3 mm abbondanza perimetrale)"
+    : (serigMode
+        ? "Sviluppo cilindrico completo 360° senza giunta verticale"
+        : (labelMode
+            ? "Fustella piana con angoli al vivo + 2 mm abbondanza perimetrale"
+            : "Sviluppo anamorfico 360° + 6 mm sormonto cucitura tubolare laterale"));
+  const formatNoteEn = pouchMode
+    ? "Front + Back panels on pouch dieline (+3 mm perimeter bleed)"
+    : (serigMode
+        ? "Full 360° seamless cylindrical wrap layout"
+        : (labelMode
+            ? "Flat die-cut artwork + 2 mm perimeter bleed"
+            : "360° anamorphic wrap + 6 mm vertical overlap seam"));
+
+  host.innerHTML = `
+    <div class="custom-vessel-inner">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--ink); padding-bottom:12px; gap:12px; flex-wrap:wrap;">
+        <div>
+          <div style="font-size:11px; font-weight:800; color:var(--crimson); letter-spacing:0.12em;">${l === "it" ? "CARICAMENTO GRAFICA ESECUTIVA DI STAMPA" : "CUSTOM PRINT ARTWORK UPLOAD"}</div>
+          <h1 style="font-size:24px; font-weight:800; margin-top:2px;">${l === "it" ? "Inserisci il file della tua grafica" : "Upload your custom graphic file"}</h1>
+        </div>
+        <button class="cta-btn white" style="width:auto; padding:0 18px; height:36px;" onclick="closeCustomGraphicStudio()">
+          ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
+        </button>
+      </div>
+
+      <div class="custom-panel-card">
+        <div class="custom-blueprint-grid">
+          <div class="custom-bp-left">
+            <div>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE FORMATO RICHIESTO" : "REQUIRED ARTWORK FORMAT SPECS"}</span>
+              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? processIt : processEn}</h2>
+              <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">
+                ${l === "it"
+                  ? "Prepara il file esecutivo rispettando le dimensioni reali della lavorazione e del materiale selezionati."
+                  : "Prepare your print-ready artwork strictly matching the physical dimensions of the selected wrap and substrate."}
+              </p>
+            </div>
+
+            <div class="custom-spec-checklist">
+              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI ATTIVI IN STUDIO 3D" : "ACTIVE 3D STUDIO PARAMETERS"}</div>
+              <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${l === "it" ? v.it : v.en}</strong> (${v.subIt})</div>
+              <div>02 // ${l === "it" ? "Lavorazione:" : "Process:"} <strong>${l === "it" ? processIt : processEn}</strong></div>
+              <div>03 // ${l === "it" ? "Materiale:" : "Material:"} <strong>${matName}</strong></div>
+              <div>04 // ${l === "it" ? "Dimensioni tavola:" : "Artwork size:"} <strong style="color:var(--crimson);">${dims.wrapDimStr}</strong></div>
+              <div>05 // ${l === "it" ? "Area riservata EAN-13:" : "Reserved EAN-13 box:"} <strong>${dims.bcDimStr}</strong></div>
+            </div>
+          </div>
+
+          <div class="custom-bp-right">
+            <div>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA" : "ARTWORK FILE UPLOAD"}</span>
+              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? `Dimensioni esatte file: ${dims.wrapDimStr}` : `Exact file dimensions: ${dims.wrapDimStr}`}</h2>
+              <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? formatNoteIt : formatNoteEn}</p>
+            </div>
+
+            <label class="upload-datasheet-box ${state.customGraphicFile ? "loaded" : ""}" style="min-height:132px; justify-content:center; flex-direction:column; text-align:center;">
+              <div style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--crimson);">${dims.wrapDimStr}</div>
+              <div style="font-size:13.5px; font-weight:800; color:var(--ink);">
+                ${state.customGraphicFile ? `✓ ${state.customGraphicFile}` : (l === "it" ? `Carica esecutivo grafica ${dims.wrapDimStr}` : `Upload graphic file ${dims.wrapDimStr}`)}
+              </div>
+              <div style="font-size:11px; color:var(--slate);">
+                ${l === "it" ? "PDF vettoriale, Adobe Illustrator (.ai), TIFF o PNG · 300 DPI · Quadricromia CMYK + Pantone" : "Vector PDF, Adobe Illustrator (.ai), TIFF or PNG · 300 DPI · CMYK + Spot"}
+              </div>
+              <span class="spec-tag ${state.customGraphicFile ? "ok" : ""}">${state.customGraphicFile ? (l === "it" ? "CARICATO ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
+              <input type="file" accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg,.tif,.tiff" style="display:none;" onchange="handleCustomGraphicUpload(this)">
+            </label>
+          </div>
+        </div>
+
+        <p class="demo-red-text">
+          ${l === "it"
+            ? "Anteprima dimostrativa: funzione ancora in fase di sviluppo"
+            : "Demonstrative preview: feature still in development"}
+        </p>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; border-top:1.5px solid var(--border); padding-top:12px;">
+          <button class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="closeCustomGraphicStudio()">
+            ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
+          </button>
+          <button class="cta-btn" id="btnCustomGraphicProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" disabled>
+            ${l === "it" ? "Applica grafica nello Studio 3D" : "Apply graphic in 3D Studio"}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function handleCustomUpload(type, idx, inputEl) {
@@ -5967,33 +6315,19 @@ function getHudCapabilityFlags() {
   const serigMode = isSerigrafiaMode();
   const wrapActive = hasWrap();
   const canDragSleeve = wrapActive && !pouchMode && !serigMode;
-  const canDragBarcode = wrapActive && !labelMode;
   const canExplode = !phys.isNoCap && phys.neckMatch;
   const canHeatmap = wrapActive && !pouchMode && (state.wrapType === "sleeve" || state.wrapType === "label");
-  return { phys, pouchMode, labelMode, serigMode, wrapActive, canDragSleeve, canDragBarcode, canExplode, canHeatmap };
+  return { phys, pouchMode, labelMode, serigMode, wrapActive, canDragSleeve, canExplode, canHeatmap };
 }
 
-// Mutually exclusive pointer tool ('orbit' | 'sleeve' | 'barcode')
+// Mutually exclusive pointer tool ('orbit' | 'sleeve')
 function setPointerTool(t) {
-  const { canDragSleeve, canDragBarcode } = getHudCapabilityFlags();
+  const { canDragSleeve } = getHudCapabilityFlags();
   if (t === "sleeve" && !canDragSleeve) return;
-  if (t === "barcode" && !canDragBarcode) return;
+  if (t !== "orbit" && t !== "sleeve") t = "orbit";
   state.pointerTool = t;
-  // Smoothly turn camera toward the barcode if user activates Sposta Barcode while looking at the opposite face
-  if (t === "barcode") {
-    const targetTheta = isDoypack()
-      ? (state.bcDoypackSide === "back" ? Math.PI + 0.22 : 0.22)
-      : ((state.bcAngleDeg / 180) * Math.PI);
-    let angDiff = targetTheta - camSpherical.theta;
-    while (angDiff > Math.PI) angDiff -= Math.PI * 2;
-    while (angDiff < -Math.PI) angDiff += Math.PI * 2;
-    if (Math.abs(angDiff) > Math.PI * 0.48) {
-      camTargetTheta = targetTheta;
-    }
-  }
   document.getElementById("toolOrbit").classList.toggle("active", t === "orbit");
   document.getElementById("toolSleeve").classList.toggle("active", t === "sleeve");
-  document.getElementById("toolBarcode").classList.toggle("active", t === "barcode");
 
   const tr = TXT[state.lang];
   const toastEl = document.getElementById("ui_drag_toast");
@@ -6151,12 +6485,12 @@ function selectClosure(cid) {
 // ==================== RENDER ALL UI PANELS ====================
 function renderAllUI() {
   const t = TXT[state.lang];
-  const { phys, labelMode, canDragSleeve, canDragBarcode, canExplode, canHeatmap } = getHudCapabilityFlags();
+  const { phys, labelMode, canDragSleeve, canExplode, canHeatmap } = getHudCapabilityFlags();
   if (phys.isNoCap) state.exploded = false;
   else if (!phys.neckMatch) state.exploded = true;
   if (!canHeatmap) state.heatmap = false;
   if (state.pointerTool === "sleeve" && !canDragSleeve) state.pointerTool = "orbit";
-  if (state.pointerTool === "barcode" && !canDragBarcode) state.pointerTool = "orbit";
+  if (state.pointerTool !== "orbit" && state.pointerTool !== "sleeve") state.pointerTool = "orbit";
 
   document.getElementById("ui_nav_catalog").textContent = t.navCatalog;
   document.getElementById("ui_nav_studio").textContent = t.navStudio;
@@ -6190,21 +6524,14 @@ function renderAllUI() {
   }
 
   const btnSl = document.getElementById("toolSleeve");
-  const btnBc = document.getElementById("toolBarcode");
   if (btnSl) {
     btnSl.style.display = isDoypack() ? "none" : "";
     btnSl.disabled = !canDragSleeve;
     btnSl.classList.toggle("disabled", !canDragSleeve);
   }
-  if (btnBc) {
-    btnBc.style.display = "";
-    btnBc.disabled = !canDragBarcode;
-    btnBc.classList.toggle("disabled", !canDragBarcode);
-  }
 
   document.getElementById("ui_tool_orbit").textContent = t.toolOrbit;
   document.getElementById("ui_tool_sleeve").textContent = labelMode ? t.toolLabel : t.toolSleeve;
-  document.getElementById("ui_tool_bc").textContent = t.toolBc;
   document.getElementById("ui_btn_explode").textContent = (phys.isNoCap || phys.neckMatch) ? t.btnExplode : t.btnExplodeLocked;
   document.getElementById("ui_btn_heat").textContent = t.btnHeat;
   document.getElementById("ui_btn_wire").textContent = t.btnWire;
@@ -6212,7 +6539,6 @@ function renderAllUI() {
 
   document.getElementById("toolOrbit").classList.toggle("active", state.pointerTool === "orbit");
   document.getElementById("toolSleeve").classList.toggle("active", state.pointerTool === "sleeve");
-  document.getElementById("toolBarcode").classList.toggle("active", state.pointerTool === "barcode");
 
   const btnExpl = document.getElementById("btnExplode");
   btnExpl.classList.toggle("active", state.exploded);
@@ -6239,6 +6565,8 @@ function renderAllUI() {
   renderVesselInfoPopover();
   if (state.mainView === "studio" && state.customVesselMode) {
     renderCustomVesselView();
+  } else if (state.mainView === "studio" && state.customGraphicMode) {
+    renderCustomGraphicView();
   } else {
     renderInspector();
     updateFastTelemetryUI();
@@ -6287,38 +6615,36 @@ function renderInspector() {
       </div>
     `;
   } else if (state.inspTab === 2) {
-    const skinPills = BRAND_SKINS.map(s => `
-      <button class="prod-item ${s.id === state.skinId && hasWrap() ? "active" : ""}" onclick="selectSkin('${s.id}')">
-        <div style="display:flex; align-items:center; gap:9px;">
-          <div style="display:flex; flex-direction:column; width:22px; height:28px; border-radius:3px; overflow:hidden; border:1px solid var(--border); flex-shrink:0;">
+    const availSkins = getAvailableSkinsForWrap(state.wrapType);
+    const skinPills = availSkins.map(s => {
+      const swatchHtml = s.id === "neutral" && s.styleType === "neutral_clear"
+        ? `<div style="width:22px; height:28px; border-radius:3px; border:1px dashed var(--slate); background:repeating-linear-gradient(45deg, #F8FAFC, #F8FAFC 4px, #E2E8F0 4px, #E2E8F0 8px); flex-shrink:0;"></div>`
+        : `<div style="display:flex; flex-direction:column; width:22px; height:28px; border-radius:3px; overflow:hidden; border:1px solid var(--border); flex-shrink:0;">
             <span style="flex:2; background:${s.previewColors[0]};"></span>
             <span style="flex:1; background:${s.previewColors[1]};"></span>
             <span style="flex:1; background:${s.previewColors[2]};"></span>
+          </div>`;
+      const sTitle = s.id === "neutral"
+        ? (s.styleType === "neutral_clear" ? (l === "it" ? "Neutra Trasparente" : "Clear Neutral") : (l === "it" ? "Bianca Senza Scritte" : "Blank White"))
+        : `${s.brand} ${s.brandSub}`;
+      return `
+        <button class="prod-item ${s.id === state.skinId && hasWrap() ? "active" : ""}" onclick="selectSkin('${s.id}')">
+          <div style="display:flex; align-items:center; gap:9px;">
+            ${swatchHtml}
+            <div>
+              <div class="prod-title">${sTitle}</div>
+              <div class="prod-meta">${l === "it" ? s.descIt : s.descEn}</div>
+            </div>
           </div>
-          <div>
-            <div class="prod-title">${s.brand} ${s.brandSub}</div>
-            <div class="prod-meta">${l === "it" ? s.descIt : s.descEn}</div>
-          </div>
-        </div>
-      </button>
-    `).join("");
+        </button>
+      `;
+    }).join("");
 
-    const bcOrientBlock = `
-      <div class="sec-block${animCls}">
-        <div class="sec-hdr">
-          <span>${l === "it" ? "ORIENTAMENTO BARCODE" : "BARCODE ORIENTATION"}</span>
-        </div>
-        <div class="grid-2">
-          <button class="opt-pill ${!state.bcLadder ? "active" : ""}" onclick="state.bcLadder=false; renderSleeveUVTexture(); renderAllUI();">
-            ${l === "it" ? "Orizzontale" : "Horizontal"}
-            <small>${l === "it" ? "Standard fronte/retro" : "Standard orientation"}</small>
-          </button>
-          <button class="opt-pill ${state.bcLadder ? "active" : ""}" onclick="state.bcLadder=true; renderSleeveUVTexture(); renderAllUI();">
-            ${l === "it" ? "Verticale" : "Vertical"}
-            <small>${l === "it" ? "Ruotato di 90°" : "Rotated 90°"}</small>
-          </button>
-        </div>
-      </div>
+    const addCustomGraphicBtn = `
+      <button class="cta-btn white" id="btnAddCustomGraphic" style="margin-top:8px; height:36px; font-size:11.5px; gap:6px;" onclick="openCustomGraphicStudio()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+        <span>${l === "it" ? "Aggiungi grafica" : "Add graphic"}</span>
+      </button>
     `;
 
     if (isDoypack()) {
@@ -6356,26 +6682,9 @@ function renderInspector() {
         ${pouchPrintSwitchHtml}
 
         <div class="sec-block${animCls}">
-          <div class="sec-hdr">
-            <span>${l === "it" ? "FACCIATA BARCODE DOYPACK" : "DOYPACK BARCODE FACE"}</span>
-          </div>
-          <div class="grid-2">
-            <button class="opt-pill ${state.bcDoypackSide === "front" ? "active" : ""}" onclick="flipDoypackSide('front')">
-              ${l === "it" ? "Fronte" : "Front"}
-              <small>${l === "it" ? "Facciata principale" : "Primary pouch face"}</small>
-            </button>
-            <button class="opt-pill ${state.bcDoypackSide === "back" ? "active" : ""}" onclick="flipDoypackSide('back')">
-              ${l === "it" ? "Retro 180°" : "Back 180°"}
-              <small>${l === "it" ? "Lato posteriore" : "Rear panel"}</small>
-            </button>
-          </div>
-        </div>
-
-        ${bcOrientBlock}
-
-        <div class="sec-block${animCls}">
           <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
           <div class="prod-list">${skinPills}</div>
+          ${addCustomGraphicBtn}
         </div>
       `;
       return;
@@ -6431,7 +6740,6 @@ function renderInspector() {
 
       box.innerHTML = `
         ${wrapSwitchHtml}
-        ${bcOrientBlock}
         <div class="sec-block${animCls}">
           <div class="sec-hdr"><span>${l === "it" ? "INCHIOSTRI SERIGRAFIA DIRETTA SU LATTINA" : "DIRECT-TO-CAN SCREEN INKS"}</span></div>
           <div class="grid-2">${inkPills}</div>
@@ -6440,6 +6748,7 @@ function renderInspector() {
         <div class="sec-block${animCls}">
           <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
           <div class="prod-list">${skinPills}</div>
+          ${addCustomGraphicBtn}
         </div>
       `;
       return;
@@ -6464,6 +6773,7 @@ function renderInspector() {
         <div class="sec-block${animCls}">
           <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
           <div class="prod-list">${skinPills}</div>
+          ${addCustomGraphicBtn}
         </div>
       `;
       return;
@@ -6479,7 +6789,6 @@ function renderInspector() {
 
     box.innerHTML = `
       ${wrapSwitchHtml}
-      ${bcOrientBlock}
       <div class="sec-block${animCls}">
         <div class="sec-hdr"><span>${l === "it" ? "MATERIALE FILM TERMORETRAIBILE" : "SHRINK SLEEVE FILM MATERIAL"}</span></div>
         <div class="grid-2">${filmPills}</div>
@@ -6487,6 +6796,7 @@ function renderInspector() {
       <div class="sec-block${animCls}">
         <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
         <div class="prod-list">${skinPills}</div>
+        ${addCustomGraphicBtn}
       </div>
     `;
   } else {
@@ -7417,16 +7727,26 @@ function updateFastTelemetryUI() {
         ? (l === "it" ? "Filetto e tenuta validati" : "Thread and seal locked")
         : (l === "it" ? "Filettatura incompatibile" : "Incompatible thread"));
 
+  const dims = getWrapRealDimensionsMm(v);
   const pSlCard = document.getElementById("pinSleeveCard");
-  if (pSlCard && !pouchMode && state.wrapType === "sleeve") {
+  if (pSlCard && !pouchMode && (state.wrapType === "sleeve" || state.wrapType === "label")) {
     pSlCard.className = "pin-card " + phys.sleeveStatus;
     const slTag = phys.sleeveStatus === "err" ? "GRADE F" : (phys.sleeveStatus === "warn" ? "GRADE C" : "GRADE A");
-    document.getElementById("pinSlTitle").textContent = `SLEEVE 3D · ${slTag} (TD ${phys.sleeveTD}%)`;
-    document.getElementById("pinSlSub").textContent = phys.sleeveStatus === "ok"
-      ? (l === "it" ? `Grafica su corpo piano · ${fm.id}` : `Flat body copy OK · ${fm.id}`)
-      : (phys.sleeveStatus === "warn"
-          ? (l === "it" ? `Spalla curva: pre-distorsione (${fm.id})` : `Shoulder curve: pre-warp (${fm.id})`)
-          : (l === "it" ? `Oltre limite ${fm.id}: deformazione grafica` : `Exceeds ${fm.id} limit: graphic distortion`));
+    if (labelMode) {
+      document.getElementById("pinSlTitle").textContent = `ETICHETTA 3D · ${dims.wrapDimStr} · ${slTag}`;
+      document.getElementById("pinSlSub").textContent = phys.sleeveStatus === "ok"
+        ? (l === "it" ? `Stesura piana ${phys.sleeveTD}% (max ${lp.maxTD}%) · ${lp.id}` : `Flat adhesion ${phys.sleeveTD}% · ${lp.id}`)
+        : (phys.sleeveStatus === "warn"
+            ? (l === "it" ? `Curva spalla / spigolo (${phys.sleeveTD}%) · ${lp.id}` : `Shoulder / corner warning (${phys.sleeveTD}%)`)
+            : (l === "it" ? `Grinze su doppia curvatura (${phys.sleeveTD}%)` : `Creasing on double curve (${phys.sleeveTD}%)`));
+    } else {
+      document.getElementById("pinSlTitle").textContent = `SLEEVE 3D · ${dims.wrapDimStr} · ${slTag}`;
+      document.getElementById("pinSlSub").textContent = phys.sleeveStatus === "ok"
+        ? (l === "it" ? `TD ${phys.sleeveTD}% · Corpo piano · ${fm.id}` : `TD ${phys.sleeveTD}% · Flat body · ${fm.id}`)
+        : (phys.sleeveStatus === "warn"
+            ? (l === "it" ? `TD ${phys.sleeveTD}% · Spalla curva (${fm.id})` : `TD ${phys.sleeveTD}% · Shoulder warp (${fm.id})`)
+            : (l === "it" ? `TD ${phys.sleeveTD}% · Oltre limite ${fm.id}` : `TD ${phys.sleeveTD}% · Exceeds ${fm.id} limit`));
+    }
   }
 
   const pBcCard = document.getElementById("pinBarcodeCard");
@@ -7434,23 +7754,23 @@ function updateFastTelemetryUI() {
   if (wrapActive) {
     pBcCard.className = "pin-card " + bcStateCls;
     if (pouchMode) {
-      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${state.bcDoypackSide.toUpperCase()} · GRADE ${phys.ansiGrade}`;
+      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
       document.getElementById("pinBcSub").textContent = l === "it" ? phys.bcReasonIt : phys.bcReasonEn;
     } else if (serigMode) {
-      document.getElementById("pinBcTitle").textContent = `SERIGRAFIA + EAN-13 · GRADE ${phys.ansiGrade}`;
-      document.getElementById("pinBcSub").textContent = `${ink.id} · ${state.bcAngleDeg}°`;
+      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
+      document.getElementById("pinBcSub").textContent = `${ink.id} · ${dims.wrapDimStr}`;
     } else if (labelMode) {
-      document.getElementById("pinBcTitle").textContent = `ETICHETTA + EAN-13 · GRADE ${phys.ansiGrade}`;
-      document.getElementById("pinBcSub").textContent = l === "it"
-        ? `Curvatura ${phys.sleeveTD}% (max ${lp.maxTD}%)`
-        : `Curve stress ${phys.sleeveTD}% (max ${lp.maxTD}%)`;
+      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
+      document.getElementById("pinBcSub").textContent = phys.ansiGrade === "A"
+        ? (l === "it" ? `Zona bassa piana (${phys.localTD}%)` : `Flat lower zone (${phys.localTD}%)`)
+        : (l === "it" ? `Deformazione barre su curva (${phys.localTD}%)` : `Curve distortion on bars (${phys.localTD}%)`);
     } else {
-      document.getElementById("pinBcTitle").textContent = `EAN-13 · GRADE ${phys.ansiGrade} (TD ${phys.localTD}%)`;
-      document.getElementById("pinBcSub").textContent = state.bcLadder
-        ? `${l === "it" ? "Verticale" : "Vertical"} · ${state.bcAngleDeg}°`
-        : (phys.localTD >= Math.max(28, fm.errTD - 3)
-            ? (l === "it" ? "Spalla curva: compressione!" : "Shoulder squeeze!")
-            : (l === "it" ? `Orizzontale · ${state.bcAngleDeg}°` : `Horizontal · ${state.bcAngleDeg}°`));
+      document.getElementById("pinBcTitle").textContent = `EAN-13 · ${dims.bcDimStr} · GRADE ${phys.ansiGrade}`;
+      document.getElementById("pinBcSub").textContent = phys.ansiGrade === "F"
+        ? (l === "it" ? `TD ${phys.localTD}% · Compressione barre!` : `TD ${phys.localTD}% · Bar compression!`)
+        : (phys.ansiGrade === "C"
+            ? (l === "it" ? `TD ${phys.localTD}% · Zona vicina a spalla` : `TD ${phys.localTD}% · Approaching shoulder`)
+            : (l === "it" ? `TD ${phys.localTD}% · Zona cilindrica piana` : `TD ${phys.localTD}% · Flat cylinder zone`));
     }
   }
 
@@ -7508,22 +7828,20 @@ function updateFastTelemetryUI() {
   const bcTitle = !wrapActive
     ? (l === "it" ? "Nessun codice a barre" : "No barcode")
     : (pouchMode
-        ? `${state.bcDoypackSide === "front" ? (l === "it" ? "Facciata Fronte" : "Front Face") : (l === "it" ? "Facciata Retro" : "Back Face")} · ${state.bcLadder ? (l === "it" ? "Verticale" : "Vertical") : (l === "it" ? "Orizzontale" : "Horizontal")}`
+        ? `${l === "it" ? "EAN-13 Busta" : "Pouch EAN-13"} · ${dims.bcDimStr}`
         : (labelMode
-            ? (l === "it" ? `Integrato nella fustella (${state.sleeveAngleDeg}°)` : `Die-cut integrated (${state.sleeveAngleDeg}°)`)
-            : (state.bcLadder ? (l === "it" ? "Verticale (ruotato di 90°)" : "Vertical (rotated 90°)") : (l === "it" ? "Orizzontale" : "Horizontal"))));
+            ? `${l === "it" ? "Integrato in fustella" : "Die-cut integrated"} · ${dims.bcDimStr}`
+            : `EAN-13 · ${dims.bcDimStr} (TD ${phys.localTD}%)`));
 
   const bcSubText = !wrapActive
     ? (l === "it" ? "Viene generato e controllato automaticamente applicando un rivestimento grafico." : "Generated and verified automatically once a graphic wrap is applied.")
     : (pouchMode
         ? (l === "it" ? phys.bcReasonIt : phys.bcReasonEn)
         : (bcStateCls === "ok"
-            ? (l === "it" ? "Leggibilità ottimale per gli scanner cassa GDO nella posizione attuale." : "Optimal retail scanner readability at current placement.")
+            ? (l === "it" ? "Leggibilità ottimale GS1 sulla zona bassa piana nella posizione attuale." : "Optimal GS1 retail readability on the flat lower zone.")
             : (bcStateCls === "warn"
-                ? (l === "it" ? "Vicino a una zona curva: consigliata verifica in prestampa o spostamento in basso." : "Near curved zone: prepress check or lower placement advised.")
-                : (labelMode
-                    ? (l === "it" ? "Deformazione eccessiva sull'etichetta: sposta l'etichetta verso una zona piana." : "Excessive label distortion: move the label onto a flat zone.")
-                    : (l === "it" ? "Deformazione eccessiva sulla curvatura: sposta il codice sul corpo piano o ruotalo di 90°." : "Excessive curve distortion: move to flat body or rotate 90°.")))));
+                ? (l === "it" ? "Zona barcode vicina a una curvatura o spigolo: consigliata verifica in prestampa." : "Barcode zone near curve or edge: prepress check advised.")
+                : (l === "it" ? "Deformazione eccessiva sulle barre: sposta il rivestimento verso la zona piana." : "Excessive bar distortion: move wrap onto flat zone."))));
 
   const rowData = [];
   if (hasClosure) {
@@ -7623,9 +7941,10 @@ function updateFastTelemetryUI() {
 function renderCatalogThumbSVG(v) {
   if (v.shape === "doypack") {
     return `<svg width="96" height="126" viewBox="0 0 96 126">
-      <path d="M18,16 L78,16 L82,110 Q48,118 14,110 Z" fill="#1F1D1B" stroke="#121110" stroke-width="2"/>
-      <line x1="18" y1="28" x2="78" y2="28" stroke="#44403C" stroke-width="1.2"/>
-      <path d="M26,42 Q32,76 28,104" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M18,16 L78,16 L82,110 Q48,118 14,110 Z" fill="#FAF8F4" stroke="#121110" stroke-width="2"/>
+      <line x1="18" y1="28" x2="78" y2="28" stroke="#D5CFC4" stroke-width="1.4"/>
+      <ellipse cx="48" cy="110" rx="28" ry="3.5" fill="#EAE4D8" stroke="#121110" stroke-width="1.2"/>
+      <path d="M26,42 Q32,76 28,102" fill="none" stroke="rgba(18,17,16,0.08)" stroke-width="3" stroke-linecap="round"/>
     </svg>`;
   }
   if (v.shape === "wine_bordeaux") {
@@ -8200,10 +8519,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const qs = new URLSearchParams(window.location.search);
   resetVesselConfigState(qs.get("vessel") || "serum_250");
   if (qs.get("custom") === "1") state.customVesselMode = true;
+  if (qs.get("customgraphic") === "1") state.customGraphicMode = true;
   if (qs.get("wrap")) {
     state.wrapType = qs.get("wrap");
     if (state.wrapType === "pouch" && state.pouchPrintType === "none") state.pouchPrintType = qs.get("pouchprint") || "digital";
-    if (state.wrapType !== "none" && state.skinId === "none") state.skinId = qs.get("skin") || "lumina";
+    if (state.wrapType !== "none" && state.skinId === "none") {
+      state.skinId = qs.get("skin") || ((state.wrapType === "sleeve" || state.wrapType === "label") ? "neutral" : "lumina");
+    }
   }
   if (qs.get("skin")) {
     state.skinId = qs.get("skin");
@@ -8219,7 +8541,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   if (qs.get("bcx")) state.bcDoypackX = Number(qs.get("bcx"));
   if (qs.get("closure")) state.closureId = qs.get("closure");
-  if (qs.get("tool")) state.pointerTool = qs.get("tool");
+  if (qs.get("tool") && qs.get("tool") !== "barcode") state.pointerTool = qs.get("tool");
   if (qs.get("slh")) state.sleeveHeightPct = Number(qs.get("slh"));
   if (qs.get("bch")) state.bcHeightPct = Number(qs.get("bch"));
   if (qs.get("boxmode") === "bulk" && isPlasticBottle(getVessel())) state.boxMode = "bulk";

@@ -526,6 +526,9 @@
     width: 100%;
     height: 100%;
     display: block;
+    touch-action: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
   }
 
   /* FLOATING TOP STUDIO TOOLBAR (SWISS CAD INSTRUMENT BEZELS) */
@@ -2886,48 +2889,59 @@
 
   @media (max-width: 1024px) {
     html, body {
-      height: auto;
-      min-height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-y: auto !important;
+      overflow-x: clip !important;
     }
     .app-header {
-      position: sticky;
-      top: 0;
-      height: auto;
-      min-height: 58px;
-      padding: 8px 14px;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: 58px !important;
+      min-height: 58px !important;
+      padding: 8px 14px !important;
       grid-template-columns: auto 1fr auto;
       gap: 8px;
+      z-index: 1200 !important;
+    }
+    body {
+      padding-top: 58px !important;
     }
     .view-container {
-      height: auto;
-      min-height: calc(100vh - 58px);
+      height: auto !important;
+      min-height: calc(100vh - 58px) !important;
+      width: 100% !important;
     }
     .studio-grid {
-      height: auto;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 460px auto;
+      height: auto !important;
+      width: 100% !important;
+      grid-template-columns: 1fr 1fr !important;
+      grid-template-rows: 460px auto !important;
     }
     .viewport-stage {
       grid-column: 1 / -1;
       grid-row: 1;
       height: 460px;
+      width: 100% !important;
     }
     .dock-left {
       grid-column: 1;
       grid-row: 2;
-      height: auto;
-      overflow: visible;
+      height: auto !important;
+      overflow: visible !important;
     }
     .dock-right {
       grid-column: 2;
       grid-row: 2;
-      height: auto;
-      overflow: visible;
+      height: auto !important;
+      overflow: visible !important;
     }
-    .dock-scroll, .diag-scroll { overflow-y: visible; }
-    .checkout-footer { height: auto; gap: 10px; }
+    .dock-scroll, .diag-scroll { overflow-y: visible !important; }
+    .diag-row { flex: none !important; min-height: 86px !important; height: auto !important; }
+    .checkout-footer { height: auto !important; gap: 10px; }
     .cat-grid { grid-template-columns: 1fr !important; }
     .fav-prof-grid { grid-template-columns: 1fr !important; }
     .profile-grid { grid-template-columns: 1fr; }
@@ -2937,62 +2951,181 @@
     .fstep-pill { flex: 1 1 calc(33% - 8px); }
     .summary-strip-3 { flex-wrap: wrap; }
     .upload-slot-grid { grid-template-columns: repeat(2, 1fr); }
-    .catalog-view, .pillars-portal, .profile-view, .custom-vessel-stage { height: auto; overflow-y: visible; }
+    .catalog-view, .pillars-portal, .profile-view, .custom-vessel-stage { height: auto !important; overflow-y: visible !important; }
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 768px) {
+    body {
+      padding-top: 56px !important;
+    }
     .app-header {
-      grid-template-columns: 1fr auto;
-      grid-template-rows: auto auto;
-      padding: 8px 12px;
-      gap: 8px;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: 56px !important;
+      min-height: 56px !important;
+      padding: 0 14px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      gap: 10px !important;
+      z-index: 1200 !important;
     }
-    .brand-area { grid-column: 1; grid-row: 1; }
-    .brand-area img { height: 22px; }
-    .hdr-right { grid-column: 2; grid-row: 1; }
-    .profile-hdr-name { display: none; }
-    .profile-hdr-btn { padding: 3px 6px 3px 3px; gap: 5px; }
-    .nav-tabs {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      width: 100%;
-      justify-content: space-between;
-      overflow-x: auto;
+    .brand-area { margin: 0 !important; }
+    .brand-area img { height: 22px !important; }
+    .nav-tabs { display: none !important; }
+    .hdr-right { margin-left: auto !important; }
+    .profile-hdr-name,
+    .profile-req-badge { display: none !important; }
+    .profile-hdr-btn {
+      padding: 0 !important;
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      border-radius: 999px !important;
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
-    .nav-tab { padding: 0 8px; font-size: 10.5px; gap: 4px; flex: 1; justify-content: center; }
-    .studio-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: 370px auto auto;
+    .profile-hdr-btn:hover {
+      background: transparent !important;
+      border-color: transparent !important;
     }
-    .viewport-stage { grid-column: 1; grid-row: 1; height: 370px; }
-    .dock-left { grid-column: 1; grid-row: 2; }
-    .dock-right { grid-column: 1; grid-row: 3; }
-    .floating-hud-top {
-      top: 8px; left: 8px; right: 8px;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 5px;
+    .profile-avatar {
+      width: 34px !important;
+      height: 34px !important;
+      font-size: 12px !important;
     }
-    .hud-group { flex-wrap: wrap; justify-content: flex-start; border-radius: 999px; }
-    .vessel-info-popover { width: calc(100% - 16px) !important; left: 8px; top: 82px; }
-    .pin-card { font-size: 9.5px; padding: 3px 6px; }
-    .pin-sub { font-size: 8.5px; }
-    .drag-toast { display: none; }
-    .cat-hero-title { font-size: 24px; }
+
+    /* Marketplace mobile: clear separation of Custom Container CTA + vertical portrait stage */
+    .catalog-view,
+    .pillars-portal,
+    .profile-view,
+    .custom-vessel-inner {
+      padding: 14px 12px 28px 12px !important;
+    }
+    .cat-toolbar-minimal {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      margin-bottom: 14px !important;
+    }
+    .p-pill.red-cta {
+      width: 100% !important;
+      margin-left: 0 !important;
+      background: var(--crimson) !important;
+      color: #FFFFFF !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.34) !important;
+      border-radius: 12px !important;
+      padding: 11px 16px !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      text-align: center !important;
+      justify-content: center !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22) !important;
+    }
     .cat-card, .cat-card:only-child, .fav-prof-card {
-      grid-template-columns: 118px 1fr !important;
+      grid-template-columns: 122px 1fr !important;
+      align-items: stretch !important;
       gap: 12px !important;
     }
     .cat-stage, .fav-prof-stage {
-      width: 118px !important;
-      height: 118px !important;
-      min-height: 118px !important;
+      width: 122px !important;
+      height: auto !important;
+      min-height: 198px !important;
+      aspect-ratio: auto !important;
+      align-self: stretch !important;
+      padding: 8px 6px !important;
     }
     .cat-thumb { width: 100%; height: 148px; min-height: 148px; border-right: none; border-bottom: 1.5px solid var(--ink); }
     .cat-card-header-flex { flex-direction: column !important; }
     .cat-filter-bar { flex-direction: column; align-items: stretch; }
-    .p-pill.red-cta { margin-left: 0; text-align: center; justify-content: center; }
-    .fstep-pill { flex: 1 1 calc(50% - 6px); }
+
+    /* Studio 3D mobile: full width, zero right brown strip, taller 440px stage, centered compact top HUD */
+    .studio-grid {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      padding: 10px 12px 24px 12px !important;
+      gap: 12px !important;
+    }
+    .viewport-stage {
+      order: 1 !important;
+      width: 100% !important;
+      height: 440px !important;
+      min-height: 440px !important;
+      flex-shrink: 0 !important;
+    }
+    .dock-left {
+      order: 2 !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    .dock-right {
+      order: 3 !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    .floating-hud-top {
+      top: 10px !important;
+      left: 10px !important;
+      right: 10px !important;
+      flex-direction: row !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 0 !important;
+    }
+    .floating-hud-top .hud-group:nth-child(2),
+    #btnShowAR {
+      display: none !important;
+    }
+    .floating-hud-top .hud-group:first-child {
+      margin: 0 auto !important;
+      justify-content: center !important;
+      flex-wrap: nowrap !important;
+      width: auto !important;
+    }
+    .vessel-info-popover {
+      width: calc(100% - 20px) !important;
+      left: 10px !important;
+      right: 10px !important;
+      top: 56px !important;
+    }
+    .traffic-banner {
+      height: auto !important;
+      min-height: 76px !important;
+      max-height: none !important;
+    }
+    .tl-desc {
+      height: auto !important;
+      min-height: 24px !important;
+      max-height: none !important;
+    }
+    .pin-card { font-size: 9.5px; padding: 3px 6px; }
+    .pin-sub { font-size: 8.5px; }
+    .drag-toast { display: none; }
+    .cat-hero-title { font-size: 24px; }
+
+    /* Filiera mobile: left-aligned top total, left-aligned step pills, left-aligned final total above centered CTA buttons */
+    .brown-hdr-total-wrap {
+      width: 100% !important;
+      text-align: left !important;
+    }
+    .fstep-pill {
+      flex: 1 1 calc(50% - 6px) !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
+      padding: 8px 10px !important;
+    }
     .supplier-rich-opt { flex-direction: column; align-items: flex-start; }
     .supplier-rich-right { flex-direction: row; align-items: center; justify-content: space-between; width: 100%; }
     .filling-mode-grid { grid-template-columns: 1fr; }
@@ -3000,10 +3133,34 @@
     .summary-grid-2 { grid-template-columns: 1fr !important; }
     .filiera-nav-row { flex-direction: column-reverse; align-items: stretch; }
     .filiera-nav-row .cta-btn { width: 100% !important; min-width: 0 !important; }
+    .filiera-final-nav-row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 14px !important;
+    }
+    .filiera-final-total-box {
+      width: 100% !important;
+      text-align: left !important;
+      align-items: flex-start !important;
+    }
+    .filiera-final-actions {
+      width: 100% !important;
+      margin-left: 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 10px !important;
+      flex-wrap: nowrap !important;
+    }
+    .filiera-final-actions .cta-btn {
+      width: auto !important;
+      min-width: 136px !important;
+      flex: 0 1 auto !important;
+      padding: 0 18px !important;
+    }
     .summary-strip-3 > div:last-child { width: 100%; flex-direction: column-reverse; }
     .summary-strip-3 .cta-btn { width: 100% !important; min-width: 0 !important; }
     .upload-slot-grid { grid-template-columns: 1fr; }
-    .profile-view, .custom-vessel-stage, .pillars-portal, .catalog-view { padding: 14px 12px 28px 12px; }
     .modal-card { padding: 16px; }
   }
 </style>
@@ -6222,6 +6379,13 @@ function setupViewportInteractions(canvas) {
     const zb = getZoomBounds(getVessel());
     camTargetRadius = Math.max(zb.min, Math.min(zb.max, camTargetRadius + step));
   }, { passive: false });
+
+  canvas.addEventListener("touchstart", e => {
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener("touchmove", e => {
+    e.preventDefault();
+  }, { passive: false });
 }
 
 function resizeWebGL() {
@@ -6586,6 +6750,107 @@ function setLanguage(l) {
   renderAllUI();
 }
 
+let isApplyingHistoryState = false;
+
+function getRouteKey() {
+  if (state.mainView === "studio" && state.customVesselMode) return "custom-vessel";
+  if (state.mainView === "studio" && state.customGraphicMode) return `custom-graphic:${state.vesselId}`;
+  if (state.mainView === "studio") return `studio:${state.vesselId}`;
+  if (state.mainView === "pillars") return `pillars:${state.vesselId}:${state.filieraStep || 1}`;
+  if (state.mainView === "profile") return "profile";
+  return "catalog";
+}
+
+function buildHistoryStateSnapshot() {
+  return {
+    routeKey: getRouteKey(),
+    mainView: state.mainView,
+    customVesselMode: !!state.customVesselMode,
+    customGraphicMode: !!state.customGraphicMode,
+    vesselId: state.vesselId,
+    filieraStep: state.filieraStep || 1
+  };
+}
+
+function buildHistoryUrl(snap) {
+  if (window.location.protocol === "file:") return null;
+  try {
+    const u = new URL(window.location.href);
+    u.search = "";
+    if (snap.customVesselMode && snap.mainView === "studio") {
+      u.searchParams.set("view", "custom-vessel");
+    } else if (snap.customGraphicMode && snap.mainView === "studio") {
+      u.searchParams.set("view", "custom-graphic");
+      u.searchParams.set("vessel", snap.vesselId);
+    } else {
+      u.searchParams.set("view", snap.mainView || "catalog");
+      if (snap.mainView === "studio") {
+        u.searchParams.set("vessel", snap.vesselId);
+      } else if (snap.mainView === "pillars") {
+        u.searchParams.set("vessel", snap.vesselId);
+        u.searchParams.set("fstep", String(snap.filieraStep || 1));
+      }
+    }
+    return u.pathname + u.search;
+  } catch (e) {
+    return null;
+  }
+}
+
+function syncBrowserHistory(forceReplace) {
+  if (isApplyingHistoryState || !window.history || !window.history.pushState) return;
+  try {
+    const snap = buildHistoryStateSnapshot();
+    const urlArg = buildHistoryUrl(snap);
+    if (forceReplace) {
+      window.history.replaceState(snap, "", urlArg);
+    } else if (!window.history.state || window.history.state.routeKey !== snap.routeKey) {
+      window.history.pushState(snap, "", urlArg);
+    }
+  } catch (e) {}
+}
+
+window.addEventListener("popstate", e => {
+  const modal = document.getElementById("checkoutModal");
+  if (modal) modal.classList.remove("open");
+  let snap = e.state;
+  if (!snap || !snap.mainView) {
+    const qs = new URLSearchParams(window.location.search);
+    const vParam = qs.get("view") || "catalog";
+    snap = {
+      mainView: (vParam === "custom-vessel" || vParam === "custom-graphic") ? "studio" : vParam,
+      customVesselMode: vParam === "custom-vessel",
+      customGraphicMode: vParam === "custom-graphic",
+      vesselId: qs.get("vessel") || state.vesselId || "serum_250",
+      filieraStep: Number(qs.get("fstep")) || 1
+    };
+  }
+  isApplyingHistoryState = true;
+  try {
+    if (snap.vesselId && VESSELS.some(v => v.id === snap.vesselId) && snap.vesselId !== state.vesselId) {
+      resetVesselConfigState(snap.vesselId);
+    }
+    state.customVesselMode = !!snap.customVesselMode;
+    state.customGraphicMode = !!snap.customGraphicMode;
+    if (snap.mainView === "pillars") {
+      const targetStep = Math.max(1, Number(snap.filieraStep) || 1);
+      const previewSteps = buildSupplyChainSteps(evaluateLivePhysics());
+      previewSteps.slice(0, Math.max(0, targetStep - 1)).forEach(s => {
+        if (!s.lockedFixed && state.selectedSuppliers[s.key] === undefined) {
+          state.selectedSuppliers[s.key] = 0;
+        }
+      });
+      state.filieraStep = targetStep;
+    }
+    if (snap.mainView === "studio" && !state.customVesselMode && !state.customGraphicMode) {
+      rebuild3DProduct();
+    }
+    switchMainView(snap.mainView || "catalog");
+  } finally {
+    isApplyingHistoryState = false;
+  }
+});
+
 function switchMainView(v) {
   if (v !== "profile" && state.mainView !== "profile") {
     state.prevViewBeforeProfile = v;
@@ -6617,7 +6882,9 @@ function switchMainView(v) {
   }
 
   if (v === "studio" && !state.customVesselMode && !state.customGraphicMode) setTimeout(resizeWebGL, 25);
+  syncBrowserHistory(false);
   renderAllUI();
+  if (window.scrollY !== 0) window.scrollTo(0, 0);
 }
 
 // ==================== CUSTOM CONTAINER UPLOAD & CUSTOM GRAPHIC UPLOAD DEMO (UNDER 02 STUDIO 3D) ====================
@@ -6697,9 +6964,6 @@ function renderCustomGraphicView() {
           <div class="brown-hdr-kicker">${l === "it" ? "CARICAMENTO GRAFICA ESECUTIVA DI STAMPA" : "CUSTOM PRINT ARTWORK UPLOAD"}</div>
           <h1 class="brown-hdr-title">${l === "it" ? "Inserisci il file della tua grafica" : "Upload your custom graphic file"}</h1>
         </div>
-        <button class="cta-btn white" style="width:auto; padding:0 18px; height:38px;" onclick="closeCustomGraphicStudio()">
-          ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
-        </button>
       </div>
 
       <div class="custom-panel-card">
@@ -6795,9 +7059,6 @@ function renderCustomVesselView() {
           <div class="brown-hdr-kicker">${l === "it" ? "DIGITALIZZAZIONE CONTENITORE PERSONALIZZATO" : "CUSTOM CONTAINER 3D DIGITIZATION"}</div>
           <h1 class="brown-hdr-title">${l === "it" ? "Ricrea il tuo contenitore nello Studio 3D" : "Recreate your container in the 3D Studio"}</h1>
         </div>
-        <button class="cta-btn white" style="width:auto; padding:0 18px; height:38px;" onclick="state.customVesselMode=false; switchMainView('catalog');">
-          ${l === "it" ? "Torna al Marketplace" : "Back to Marketplace"}
-        </button>
       </div>
 
       <div class="custom-panel-card">
@@ -8129,6 +8390,8 @@ function nextFilieraStep() {
   if (state.filieraStep < Math.min(totalSteps, maxUnlocked)) {
     state.filieraStep += 1;
     renderPillarsView();
+    syncBrowserHistory(false);
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
   }
 }
 
@@ -8144,6 +8407,8 @@ function prevFilieraStep() {
     state.filieraStep = newCur;
     renderPillarsView();
     updateFastTelemetryUI();
+    syncBrowserHistory(false);
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
   }
 }
 
@@ -9550,7 +9815,7 @@ function renderPillarsView() {
           <button class="${cls}" onclick="selectStepSupplier('${step.key}', ${oIdx})">
             <div style="flex:1;">
               <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                ${opt.sponsored ? `<span class="sponsored-badge">★ ${l === "it" ? "SPONSORIZZATO" : "SPONSORED"}</span>` : ""}
+                ${opt.sponsored ? `<span class="sponsored-badge">${l === "it" ? "SPONSORIZZATO" : "SPONSORED"}</span>` : ""}
                 ${isLowest ? `<span class="lowest-price-badge">${l === "it" ? "PREZZO PIÙ BASSO" : "LOWEST PRICE"}</span>` : ""}
                 <span class="sup-name" style="font-size:15px; font-weight:800; color:var(--ink);">${opt.name}</span>
                 <span class="rating-pill"><span class="rating-stars">★★★★★</span> ${opt.rating} <span class="rating-rev" style="font-weight:500; color:var(--slate);">(${opt.reviews} ${l === "it" ? "recensioni" : "reviews"})</span></span>
@@ -9706,14 +9971,14 @@ function renderPillarsView() {
 
         ${fillingControlsHtml}
 
-        <div class="filiera-nav-row" style="align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
-          <div style="display:flex; flex-direction:column; gap:2px;">
+        <div class="filiera-nav-row filiera-final-nav-row" style="align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+          <div class="filiera-final-total-box" style="display:flex; flex-direction:column; gap:2px;">
             <span style="font-size:10px; font-weight:800; color:var(--slate); letter-spacing:0.06em;">${l === "it" ? "TOTALE LOTTO PROVA · SPEDIZIONI ESCLUSE" : "TRIAL BATCH TOTAL · SHIPPING EXCLUDED"}</span>
             <div style="font-size:16px; font-weight:800; color:var(--ink); font-family:var(--mono);">
               ${formatEuro(chain.totalCost)} <span style="font-size:12px; color:var(--crimson); font-weight:700;">(${formatEuro(chain.vcFee)} fee)</span>
             </div>
           </div>
-          <div style="display:flex; align-items:center; gap:10px; margin-left:auto;">
+          <div class="filiera-final-actions" style="display:flex; align-items:center; gap:10px; margin-left:auto;">
             <button id="btnFilieraPrev" class="cta-btn white" style="width:auto; min-width:180px; padding:0 22px;" onclick="prevFilieraStep()">${l === "it" ? "Torna indietro" : "Go back"}</button>
             <button id="btnOpenCheckout" class="cta-btn" style="width:auto; min-width:220px; padding:0 24px;" ${canOrder ? "" : "disabled"} onclick="submitTrialRequest()">
               ${phys.status === "r"
@@ -9732,7 +9997,7 @@ function renderPillarsView() {
         <h1 class="brown-hdr-title">${l === "it" ? "Selezione Passo-Passo Fornitori" : "Step-by-Step Supplier Selection"}</h1>
         <p class="cat-sub-minimal">${l === "it" ? "Componi la filiera desiderata per richiedere la prova" : "Compose your desired supply chain to request a trial"}</p>
       </div>
-      <div style="text-align:right;">
+      <div class="brown-hdr-total-wrap" style="text-align:right;">
         <div class="brown-hdr-muted">${l === "it" ? "TOTALE LOTTO IN CORSO" : "LIVE TRIAL TOTAL"}</div>
         <div id="filieraTopTotal" class="brown-hdr-total">${formatEuro(chain.totalCost)}</div>
       </div>
@@ -9915,7 +10180,15 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     state.filieraStep = fTarget;
   }
-  const initialView = qs.get("view") || "catalog";
+  const rawView = qs.get("view") || "catalog";
+  let initialView = rawView;
+  if (rawView === "custom-vessel") {
+    state.customVesselMode = true;
+    initialView = "studio";
+  } else if (rawView === "custom-graphic") {
+    state.customGraphicMode = true;
+    initialView = "studio";
+  }
   document.addEventListener("click", e => {
     if (!state.infoPopoverOpen) return;
     const pop = document.getElementById("vesselInfoPopover");
@@ -9926,7 +10199,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
   rebuild3DProduct();
+  isApplyingHistoryState = true;
   switchMainView(initialView);
+  isApplyingHistoryState = false;
+  syncBrowserHistory(true);
   if (qs.get("modal") === "1") openCheckoutModal();
   animateWebGL();
 });

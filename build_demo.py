@@ -33,31 +33,31 @@ def main():
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-ivory: #F6F3EC;
-    --bg-stone: #EDE8DF;
+    --bg-ivory: #F5F6F8;
+    --bg-stone: #F1F3F6;
     --bg-panel: #FFFFFF;
-    --bg-subtle: #F9F7F3;
-    --ink: #121110;
-    --espresso: #261811;
-    --charcoal: #3A3532;
-    --slate: #69635D;
-    --muted: #948E86;
-    --border: #DDD7CC;
-    --border-light: #EAE5DC;
+    --bg-subtle: #F4F4F6;
+    --ink: #18181B;
+    --espresso: #27272A;
+    --charcoal: #3F3F46;
+    --slate: #64748B;
+    --muted: #94A3B8;
+    --border: #E5E7EB;
+    --border-light: #EEF0F3;
     --crimson: #C2180E;
-    --crimson-dark: #961008;
-    --crimson-soft: #FDF2F1;
+    --crimson-dark: #9E130B;
+    --crimson-soft: #FEF2F2;
     --green: #147A3B;
-    --green-soft: #EDFBF2;
+    --green-soft: #ECFDF3;
     --amber: #B87D00;
     --amber-dot: #E5A000;
     --amber-soft: #FFFBEB;
-    --display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --display: 'Plus Jakarta Sans', 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
     --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --mono: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
-    --shadow-sm: 2px 2px 0 rgba(18, 17, 16, 0.08);
-    --shadow-md: 4px 4px 0 rgba(18, 17, 16, 0.12);
-    --shadow-lg: 8px 8px 0 rgba(18, 17, 16, 0.18);
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 18px 44px rgba(15, 23, 42, 0.12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-variant-numeric: tabular-nums; scrollbar-width: thin; scrollbar-color: #B8B0A4 transparent; }
   *::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -79,14 +79,14 @@ def main():
 
   /* ==================== TOP ARCHITECTURAL COMMAND HEADER ==================== */
   .app-header {
-    height: 60px;
-    background: var(--bg-panel);
-    border-bottom: 1.5px solid var(--ink);
-    padding: 0 24px;
+    height: 66px;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     z-index: 50;
     position: relative;
   }
@@ -102,14 +102,14 @@ def main():
 
   .nav-tabs {
     display: flex;
-    align-items: stretch;
-    background: var(--bg-stone);
-    padding: 0;
-    border-radius: 2px;
-    border: 1.5px solid var(--ink);
-    box-shadow: 2px 2px 0 rgba(18, 17, 16, 0.10);
+    align-items: center;
+    background: #F4F4F6;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid #EAECEF;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
     justify-self: center;
-    gap: 0;
+    gap: 4px;
     overflow: hidden;
   }
   .nav-back-btn {
@@ -1748,20 +1748,23 @@ def main():
   .profile-req-badge.visible { display: inline-flex; }
 
   .p-pill.red-cta {
-    background: var(--crimson);
-    border: 1.5px solid var(--ink);
-    border-radius: 2px;
+    background: #18181B;
+    border: 1px solid #18181B;
+    border-radius: 999px;
     color: #FFFFFF;
     font-weight: 700;
+    font-size: 12.5px;
+    padding: 9px 18px;
     margin-left: auto;
-    box-shadow: 2px 2px 0 var(--ink);
+    box-shadow: 0 2px 10px rgba(24, 24, 27, 0.10);
+    transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
   }
   .p-pill.red-cta:hover {
-    background: var(--crimson-dark);
-    border-color: var(--ink);
+    background: var(--crimson);
+    border-color: var(--crimson);
     color: #FFFFFF;
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 var(--ink);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(194, 24, 14, 0.22);
   }
 
   /* ==================== CENTERED AR QR MODAL IN 3D STUDIO ==================== */
@@ -1769,7 +1772,8 @@ def main():
   .ar-qr-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(18, 17, 16, 0.56);
+    background: rgba(15, 23, 42, 0.42);
+    backdrop-filter: blur(4px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1779,26 +1783,25 @@ def main():
   .ar-qr-overlay.open { display: flex; }
   .ar-qr-card {
     background: #FFFFFF;
-    border: 2px solid var(--ink);
-    border-top: 5px solid var(--crimson);
-    border-radius: 2px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
     width: 100%;
-    max-width: 378px;
-    padding: 22px 24px;
+    max-width: 390px;
+    padding: 24px 26px;
     box-shadow: var(--shadow-lg);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     animation: modalPop 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   .ar-qr-card h3 { font-family: var(--display); }
   .ar-qr-frame {
     background: #FFFFFF;
-    border: 1.5px solid var(--ink);
-    border-radius: 2px;
-    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
     box-shadow: var(--shadow-sm);
   }
   .demo-red-text {
@@ -1814,11 +1817,11 @@ def main():
     line-height: 1.4;
   }
 
-  /* ==================== CUSTOM CONTAINER UPLOAD DEMO (ASYMMETRIC CAD BLUEPRINT) ==================== */
+  /* ==================== CUSTOM CONTAINER UPLOAD DEMO ==================== */
   .custom-vessel-stage {
     height: 100%;
     overflow-y: auto;
-    padding: 24px 32px 36px 32px;
+    padding: 26px 32px 42px 32px;
     background: transparent;
   }
   .custom-vessel-inner {
@@ -1826,33 +1829,32 @@ def main():
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
     animation: stageSlide 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  .custom-vessel-inner h1 { font-family: var(--display); letter-spacing: -0.02em; }
+  .custom-vessel-inner h1 { font-family: var(--display); letter-spacing: -0.025em; }
   .custom-panel-card {
-    background: var(--bg-panel);
-    border: 1.5px solid var(--ink);
-    border-top: 4px solid var(--crimson);
-    border-radius: 2px;
-    padding: 22px 24px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px 26px;
     box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
   .custom-blueprint-grid {
     display: grid;
     grid-template-columns: 0.9fr 1.35fr;
-    gap: 20px;
+    gap: 24px;
     align-items: start;
   }
   .custom-bp-left {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    border-right: 1.5px solid var(--border);
-    padding-right: 20px;
+    border-right: 1px solid var(--border-light);
+    padding-right: 22px;
   }
   .custom-bp-right {
     display: flex;
@@ -1860,21 +1862,22 @@ def main():
     gap: 12px;
   }
   .custom-spec-checklist {
-    border: 1px solid var(--border);
-    background: var(--bg-subtle);
-    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    background: #F8F9FA;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 11px;
     color: var(--charcoal);
   }
   .upload-datasheet-box {
-    border: 1.5px dashed var(--ink);
-    border-radius: 2px;
-    background: var(--bg-subtle);
-    padding: 15px 16px;
+    border: 1.5px dashed #CBD5E1;
+    border-radius: 14px;
+    background: #F8FAFC;
+    padding: 16px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1888,13 +1891,13 @@ def main():
   .upload-slot-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 9px;
+    gap: 10px;
   }
   .upload-slot {
-    border: 1.5px dashed var(--border);
-    border-radius: 2px;
-    background: var(--bg-subtle);
-    padding: 13px 10px;
+    border: 1.5px dashed #D5DAE2;
+    border-radius: 14px;
+    background: #F8FAFC;
+    padding: 14px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1902,12 +1905,12 @@ def main():
     text-align: center;
     gap: 5px;
     cursor: pointer;
-    min-height: 108px;
-    transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.14s ease, box-shadow 0.14s ease;
+    min-height: 110px;
+    transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
     position: relative;
     overflow: hidden;
   }
-  .upload-slot:hover { border-color: var(--ink); background: var(--crimson-soft); transform: translate(-1px, -1px); box-shadow: var(--shadow-sm); }
+  .upload-slot:hover { border-color: var(--ink); background: #F1F5F9; transform: translateY(-2px); box-shadow: var(--shadow-sm); }
   .upload-slot.loaded { border-style: solid; border-color: var(--green); background: var(--green-soft); }
   .upload-slot-num {
     font-family: var(--mono);
@@ -1917,118 +1920,115 @@ def main():
     letter-spacing: 0.08em;
   }
   .upload-slot.loaded .upload-slot-num { color: var(--green); }
-  .upload-slot-title { font-size: 12px; font-weight: 800; color: var(--ink); }
+  .upload-slot-title { font-size: 12px; font-weight: 700; color: var(--ink); }
   .upload-slot-sub { font-size: 10.5px; color: var(--slate); }
 
-  /* ==================== USER PROFILE VIEW ==================== */
+  /* ==================== USER PROFILE & FAVORITES VIEW ==================== */
   .profile-view {
     height: 100%;
     overflow-y: auto;
-    padding: 22px 32px 44px 32px;
+    padding: 26px 32px 48px 32px;
     max-width: 1280px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
   }
-  .profile-view h1, .profile-view h2 { font-family: var(--display); letter-spacing: -0.02em; }
+  .profile-view h1, .profile-view h2 { font-family: var(--display); letter-spacing: -0.025em; }
   .profile-grid {
     display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 18px;
+    grid-template-columns: 330px 1fr;
+    gap: 20px;
     align-items: start;
   }
   .profile-card {
-    background: var(--bg-panel);
-    border: 1.5px solid var(--ink);
-    border-top: 4px solid var(--crimson);
-    border-radius: 2px;
-    padding: 20px 22px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 24px;
     box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
   .profile-avatar-lg {
     width: 54px;
     height: 54px;
-    border-radius: 2px;
-    background: var(--espresso);
+    border-radius: 999px;
+    background: #18181B;
     color: #FFFFFF;
     font-family: var(--mono);
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 800;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: 1.5px solid var(--ink);
-    box-shadow: var(--shadow-sm);
+    border: 1px solid #18181B;
   }
   .profile-info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    padding: 8px 0;
+    padding: 9px 0;
     border-bottom: 1px solid var(--border-light);
-    font-size: 12px;
+    font-size: 12.5px;
   }
   .profile-info-row:last-child { border-bottom: none; }
   .req-card {
-    background: var(--bg-panel);
-    border: 1.5px solid var(--ink);
-    border-radius: 2px;
-    padding: 16px 18px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
   .req-sent-badge {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
-    color: var(--espresso);
-    background: var(--bg-stone);
-    border: 1px solid var(--ink);
-    padding: 3px 9px;
-    border-radius: 2px;
+    color: var(--charcoal);
+    background: #F4F4F6;
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 999px;
     white-space: nowrap;
   }
   .req-spec-line {
     font-size: 12px;
     font-weight: 600;
     color: var(--charcoal);
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 6px 10px;
-    margin-top: 7px;
-    line-height: 1.35;
+    background: #F8F9FA;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    line-height: 1.4;
   }
   .req-cancel-btn {
-    border: 1.5px solid var(--crimson);
-    background: #FFFFFF;
+    border: 1px solid rgba(194, 24, 14, 0.30);
+    background: var(--crimson-soft);
     color: var(--crimson);
     font-family: var(--sans);
     font-size: 11px;
-    font-weight: 800;
-    padding: 5px 11px;
-    border-radius: 2px;
+    font-weight: 700;
+    padding: 6px 13px;
+    border-radius: 999px;
     cursor: pointer;
     white-space: nowrap;
-    box-shadow: 2px 2px 0 rgba(194, 24, 14, 0.18);
     transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.14s ease;
   }
   .req-cancel-btn:hover {
     background: var(--crimson);
     color: #FFFFFF;
-    border-color: var(--ink);
-    transform: translate(-1px, -1px);
+    border-color: var(--crimson);
+    transform: translateY(-1px);
   }
   .req-sup-row {
     display: flex;
@@ -2036,33 +2036,686 @@ def main():
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 9px 12px;
+    background: #F8F9FA;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 10px 14px;
     font-size: 12px;
   }
   .req-status-pill {
     font-family: var(--mono);
     font-size: 9.5px;
     font-weight: 800;
-    padding: 3px 7px;
-    border-radius: 2px;
+    padding: 4px 9px;
+    border-radius: 999px;
     background: var(--amber-soft);
     color: #92400E;
-    border: 1px solid #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.35);
     white-space: nowrap;
   }
   .req-deadline-pill {
     font-family: var(--mono);
     font-size: 9.5px;
     font-weight: 700;
-    padding: 3px 7px;
-    border-radius: 2px;
+    padding: 4px 9px;
+    border-radius: 999px;
     background: var(--crimson-soft);
     color: var(--crimson-dark);
-    border: 1px solid rgba(194,24,14,0.34);
+    border: 1px solid rgba(194,24,14,0.22);
     white-space: nowrap;
+  }
+
+  /* ==================== V25 SELLORA + ESTORE MINIMAL MODERN DESIGN SYSTEM ==================== */
+  html, body {
+    background: #F5F6F8 !important;
+    background-image: none !important;
+  }
+  .view-container {
+    background: #F5F6F8;
+  }
+  .nav-back-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px !important;
+    border: none !important;
+    background: #FFFFFF;
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 13px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+    margin: 0 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-back-btn:hover { background: #E4E4E7; color: var(--ink); }
+  .nav-tab {
+    border: none !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #64748B !important;
+    height: 36px !important;
+    padding: 0 16px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    gap: 7px !important;
+    box-shadow: none !important;
+  }
+  .nav-tab:hover { color: #18181B !important; background: rgba(255,255,255,0.65) !important; }
+  .nav-tab.active {
+    background: #18181B !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(24,24,27,0.16) !important;
+  }
+  .nav-tab .step-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0.55;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .nav-tab.active .step-tag { opacity: 0.72; color: #FFFFFF; }
+
+  .hdr-right { display: flex; align-items: center; justify-content: flex-end; gap: 10px; justify-self: end; }
+  .fav-hdr-btn {
+    position: relative;
+    height: 38px;
+    min-width: 38px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #FFFFFF;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.14s ease, box-shadow 0.16s ease;
+  }
+  .fav-hdr-btn:hover {
+    border-color: var(--crimson);
+    background: var(--crimson-soft);
+    color: var(--crimson);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .fav-hdr-btn.has-items svg { color: var(--crimson); fill: var(--crimson); }
+  .fav-hdr-badge {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--crimson);
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: var(--mono);
+  }
+  .fav-hdr-badge.visible { display: inline-flex; }
+
+  .profile-hdr-btn {
+    height: 38px;
+    padding: 0 12px 0 5px;
+    border-radius: 999px !important;
+    border: 1px solid var(--border) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    gap: 8px;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.14s ease;
+  }
+  .profile-hdr-btn:hover {
+    border-color: #CBD5E1 !important;
+    box-shadow: var(--shadow-sm) !important;
+    transform: translateY(-1px);
+  }
+  .profile-avatar {
+    border-radius: 999px !important;
+    background: #18181B !important;
+    color: #FFFFFF !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 11px !important;
+  }
+  .profile-req-badge { border-radius: 999px !important; }
+
+  /* Minimal Sellora + ESTORE Marketplace */
+  .catalog-view {
+    max-width: 1380px !important;
+    padding: 18px 32px 42px 32px !important;
+  }
+  .cat-header-minimal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .cat-title-minimal {
+    font-family: var(--display);
+    font-size: 25px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0;
+  }
+  .cat-sub-minimal {
+    font-size: 13px;
+    color: var(--slate);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+  .cat-toolbar-minimal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 0 16px 0;
+    padding: 0;
+    background: transparent !important;
+    border: none !important;
+  }
+  .pillar-pills { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .p-pill {
+    border-radius: 999px !important;
+    border: 1px solid #E2E5EB !important;
+    background: #FFFFFF !important;
+    color: #475569 !important;
+    padding: 8px 16px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    transition: all 0.16s ease !important;
+  }
+  .p-pill:hover {
+    border-color: #CBD5E1 !important;
+    color: #18181B !important;
+    background: #F8FAFC !important;
+  }
+  .p-pill.active {
+    background: #18181B !important;
+    border-color: #18181B !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 10px rgba(24,24,27,0.14) !important;
+  }
+
+  .cat-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+  }
+  .cat-card {
+    grid-column: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #FFFFFF !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 20px !important;
+    padding: 13px !important;
+    gap: 12px !important;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.035) !important;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, border-color 0.2s ease !important;
+  }
+  .cat-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08) !important;
+    border-color: #D1D5DB !important;
+  }
+  .cat-card.selected {
+    border-color: var(--crimson) !important;
+    box-shadow: 0 8px 24px rgba(194, 24, 14, 0.10) !important;
+  }
+  .cat-stage {
+    position: relative;
+    background: linear-gradient(180deg, #F0F2F5 0%, #E5E8EE 100%);
+    border-radius: 14px;
+    height: 194px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8px;
+  }
+  .cat-real-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 12px 18px rgba(15, 23, 42, 0.12));
+  }
+  .cat-card:hover .cat-real-img {
+    transform: scale(1.035) translateY(-2px);
+  }
+  .cat-stage-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    color: var(--ink);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(15,23,42,0.06);
+    letter-spacing: 0.02em;
+  }
+  .fav-heart-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    background: #FFFFFF;
+    color: #94A3B8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+    transition: transform 0.16s ease, color 0.16s ease, background-color 0.16s ease, border-color 0.16s ease;
+    z-index: 4;
+  }
+  .fav-heart-btn:hover {
+    transform: scale(1.08);
+    color: var(--crimson);
+    border-color: rgba(194, 24, 14, 0.25);
+  }
+  .fav-heart-btn.active {
+    color: var(--crimson);
+    background: #FFF5F5;
+    border-color: rgba(194, 24, 14, 0.28);
+  }
+  .fav-heart-btn.active svg {
+    fill: var(--crimson);
+    stroke: var(--crimson);
+  }
+  .cat-meta-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 4px 4px 4px;
+    flex: 1;
+  }
+  .cat-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .cat-meta-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--slate);
+    letter-spacing: 0.02em;
+  }
+  .cat-meta-vol {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .cat-meta-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .cat-meta-sub {
+    font-size: 11.5px;
+    color: var(--slate);
+    line-height: 1.35;
+  }
+  .cat-meta-footer {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .cat-pill-mat {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--green-soft);
+    color: var(--green);
+    border: 1px solid rgba(20, 122, 59, 0.14);
+  }
+  .cat-select-btn {
+    border: 1px solid #E2E5EB;
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+  .cat-card:hover .cat-select-btn {
+    background: #18181B;
+    border-color: #18181B;
+    color: #FFFFFF;
+  }
+  .cat-card.selected .cat-select-btn {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: #FFFFFF;
+  }
+
+  /* Minimal Profile Favorites Section */
+  .fav-prof-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .fav-prof-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .fav-prof-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .fav-prof-stage {
+    position: relative;
+    background: #F4F4F6;
+    border-radius: 12px;
+    height: 148px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  /* Studio 3D Modern Rounded Surfaces */
+  .studio-grid {
+    background: #F5F6F8 !important;
+    grid-template-columns: 300px minmax(460px, 1fr) 304px !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+  .dock-left, .dock-right {
+    background: #FFFFFF !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 20px !important;
+    box-shadow: var(--shadow-sm) !important;
+    overflow: hidden !important;
+  }
+  .dock-left .dock-header, .dock-right .dock-header {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid var(--border-light) !important;
+  }
+  .viewport-stage {
+    background: radial-gradient(circle at 50% 44%, #FFFFFF 0%, #F4F4F6 68%, #ECEEF2 100%) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 20px !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+  .viewport-stage.dark {
+    background: radial-gradient(circle at 50% 42%, #23252C 0%, #141519 72%, #0B0C0F 100%) !important;
+  }
+  .inspector-tabs {
+    background: #F4F4F6 !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    padding: 6px !important;
+    gap: 6px !important;
+  }
+  .itab {
+    border: none !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: var(--slate) !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    padding: 7px 10px !important;
+  }
+  .itab.active {
+    background: #18181B !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 6px rgba(24,24,27,0.12) !important;
+  }
+  .prod-item {
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.14s ease !important;
+  }
+  .prod-item:hover {
+    border-color: #CBD5E1 !important;
+    background: #FAFAFB !important;
+  }
+  .prod-item.selected {
+    background: var(--crimson-soft) !important;
+    border: 1.5px solid var(--crimson) !important;
+    box-shadow: 0 2px 10px rgba(194, 24, 14, 0.08) !important;
+  }
+  .spec-tag {
+    border-radius: 999px !important;
+    padding: 3px 10px !important;
+    font-weight: 700 !important;
+  }
+  .opt-pill {
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    padding: 9px 12px !important;
+    background: #FFFFFF !important;
+    color: var(--ink) !important;
+    box-shadow: none !important;
+    transition: all 0.16s ease !important;
+  }
+  .opt-pill:hover {
+    border-color: #CBD5E1 !important;
+    background: #F8FAFC !important;
+  }
+  .opt-pill.selected, .opt-pill.active {
+    background: var(--crimson) !important;
+    border-color: var(--crimson) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 3px 12px rgba(194, 24, 14, 0.18) !important;
+  }
+  .opt-pill.selected *, .opt-pill.active * {
+    color: #FFFFFF !important;
+  }
+  .swatch-btn {
+    border-radius: 12px !important;
+    border: 1px solid var(--border) !important;
+  }
+  .swatch-btn.selected {
+    border: 2px solid var(--crimson) !important;
+    box-shadow: 0 2px 8px rgba(194,24,14,0.15) !important;
+  }
+  .floating-hud-top {
+    left: 10px !important;
+    right: 10px !important;
+    padding: 0 !important;
+    gap: 5px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+  .floating-hud-top .hud-group {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(229, 231, 235, 0.95) !important;
+    border-radius: 999px !important;
+    padding: 3px !important;
+    gap: 2px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  }
+  .hud-chip {
+    border-radius: 999px !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--ink) !important;
+    padding: 4.5px 7px !important;
+    font-size: 9.8px !important;
+    gap: 3.5px !important;
+  }
+  .hud-chip:hover { background: #F4F4F6 !important; }
+  .hud-chip.active {
+    background: #18181B !important;
+    color: #FFFFFF !important;
+  }
+  .hud-chip.active-green { background: var(--green) !important; color: #FFFFFF !important; }
+  .hud-chip.active-amber { background: var(--amber) !important; color: #FFFFFF !important; }
+  .hud-chip.active-red { background: var(--crimson) !important; color: #FFFFFF !important; }
+  .pin-card {
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  }
+  .vessel-info-popover {
+    border: 1px solid var(--border) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--shadow-lg) !important;
+  }
+  .drag-toast {
+    border-radius: 999px !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16) !important;
+  }
+  .traffic-banner {
+    margin: 12px 12px 0 12px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(20, 122, 59, 0.22) !important;
+    box-shadow: none !important;
+  }
+  .traffic-banner.warn { border-color: rgba(229, 160, 0, 0.35) !important; }
+  .traffic-banner.err { border-color: rgba(194, 24, 14, 0.30) !important; }
+  .diag-scroll {
+    padding: 10px 12px !important;
+    gap: 10px !important;
+  }
+  .diag-board {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  .diag-row {
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03) !important;
+    overflow: hidden !important;
+  }
+  .checkout-footer {
+    border-top: 1px solid var(--border-light) !important;
+    background: #FFFFFF !important;
+    padding: 12px 14px !important;
+  }
+  .checkout-footer .sec-hdr {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    gap: 2px 8px !important;
+    font-size: 9.5px !important;
+  }
+  .cta-btn {
+    border-radius: 999px !important;
+    border: 1px solid var(--crimson) !important;
+    box-shadow: 0 4px 14px rgba(194, 24, 14, 0.16) !important;
+    font-weight: 700 !important;
+  }
+  .cta-btn.white {
+    background: #FFFFFF !important;
+    border: 1px solid var(--border) !important;
+    color: var(--ink) !important;
+    box-shadow: none !important;
+  }
+  .cta-btn.white:hover { background: #F4F4F6 !important; border-color: #CBD5E1 !important; }
+
+  /* Filiera & Modals Rounded Minimal */
+  .filiera-stepper {
+    background: #FFFFFF !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 999px !important;
+    padding: 5px !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+  .fstep-pill {
+    border-radius: 999px !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  .fstep-pill.active {
+    background: #18181B !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(24,24,27,0.16) !important;
+  }
+  .fstep-pill.active .fstep-num {
+    background: rgba(255,255,255,0.22) !important;
+    color: #FFFFFF !important;
+  }
+  .fstep-pill.done {
+    background: var(--green-soft) !important;
+    color: var(--green) !important;
+  }
+  .meta-tag, .rating-pill {
+    border-radius: 999px !important;
+    padding: 3px 10px !important;
+  }
+  .filiera-confirmed-bar, .filiera-stage-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 20px !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+  .supplier-rich-opt, .filling-mode-card {
+    border: 1px solid var(--border) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+  }
+  .supplier-rich-opt.selected, .filling-mode-card.selected {
+    background: var(--crimson-soft) !important;
+    border: 1.5px solid var(--crimson) !important;
+  }
+  .summary-strip-3 > div, .cost-pill-card {
+    border-radius: 14px !important;
+    border: 1px solid var(--border-light) !important;
+  }
+  .modal-card {
+    border: 1px solid var(--border) !important;
+    border-radius: 22px !important;
+    box-shadow: var(--shadow-lg) !important;
   }
 
   /* ==================== RESPONSIVE: NON-FULLSCREEN CHROME, TABLET & MOBILE ==================== */
@@ -2074,18 +2727,17 @@ def main():
     .studio-grid {
       grid-template-columns: 300px minmax(340px, 1fr) 310px;
     }
-    .app-header { padding: 0 14px; }
-    .nav-tab { padding: 0 11px; font-size: 11px; }
+    .app-header { padding: 0 18px; }
+    .nav-tab { padding: 0 12px !important; font-size: 11.5px !important; }
     .dock-scroll { padding: 12px; }
-    .hud-chip { padding: 4.5px 6px; font-size: 9.2px; gap: 3px; }
+    .hud-chip { padding: 5px 8px !important; font-size: 9.5px; gap: 3px; }
     .hud-chip svg { width: 11px; height: 11px; }
     .drag-toast { left: 50%; font-size: 9.5px; padding: 5px 10px; }
     .filiera-locked-red-text { white-space: normal; }
     .fstep-pill { font-size: 10px; padding: 7px 5px; }
     .pillars-portal { padding: 14px 18px 24px 18px; }
-    .catalog-view { padding: 18px 18px 32px 18px; }
-    .cat-card:nth-child(n) { grid-column: span 6; }
-    .cat-card:only-child { grid-column: span 12; }
+    .catalog-view { padding: 20px 22px 36px 22px !important; }
+    .cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   }
 
   @media (max-width: 1024px) {
@@ -2099,7 +2751,7 @@ def main():
       position: sticky;
       top: 0;
       height: auto;
-      min-height: 56px;
+      min-height: 58px;
       padding: 8px 14px;
       grid-template-columns: auto 1fr auto;
       gap: 8px;
@@ -2132,13 +2784,12 @@ def main():
     }
     .dock-scroll, .diag-scroll { overflow-y: visible; }
     .checkout-footer { height: auto; gap: 10px; }
-    .catalog-hero-card { grid-template-columns: 1fr; }
-    .cat-hero-main { border-right: none; border-bottom: 1.5px solid var(--ink); }
-    .cat-card:nth-child(n) { grid-column: span 12; }
+    .cat-grid { grid-template-columns: 1fr !important; }
+    .fav-prof-grid { grid-template-columns: 1fr !important; }
     .profile-grid { grid-template-columns: 1fr; }
     .custom-blueprint-grid { grid-template-columns: 1fr; }
-    .custom-bp-left { border-right: none; border-bottom: 1.5px solid var(--border); padding-right: 0; padding-bottom: 16px; }
-    .filiera-stepper { flex-wrap: wrap; }
+    .custom-bp-left { border-right: none; border-bottom: 1px solid var(--border-light); padding-right: 0; padding-bottom: 16px; }
+    .filiera-stepper { flex-wrap: wrap; border-radius: 16px !important; }
     .fstep-pill { flex: 1 1 calc(33% - 8px); }
     .summary-strip-3 { flex-wrap: wrap; }
     .upload-slot-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2230,6 +2881,10 @@ def main():
   </nav>
 
   <div class="hdr-right">
+    <button class="fav-hdr-btn" id="btnHeaderFavs" type="button" onclick="openProfileView('favorites')" title="Preferiti">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span class="fav-hdr-badge" id="headerFavBadge">0</span>
+    </button>
     <button class="profile-hdr-btn" id="btnProfile" onclick="openProfileView()" title="Profilo">
       <span class="profile-avatar">TL</span>
       <span class="profile-hdr-name" id="ui_profile_name">Thomas Lutaj</span>
@@ -2241,18 +2896,14 @@ def main():
 <!-- ==================== VIEW 01: CONTAINER MARKETPLACE ==================== -->
 <div class="view-container active" id="viewCatalog">
   <div class="catalog-view">
-    <div class="catalog-hero-card">
-      <div class="cat-hero-main">
-        <div class="cat-hero-eye" id="ui_cat_eye">SELEZIONE CONTENITORE CERTIFICATO DAI PRODUTTORI EUROPEI</div>
-        <h1 class="cat-hero-title" id="ui_cat_title">Marketplace Contenitori Primari B2B</h1>
-      </div>
-      <div class="cat-hero-aside">
-        <div class="cat-hero-code" id="ui_cat_code">CAD DOSSIER // 06 ARCHETIPI PRIMARI · QUOTE 1:1</div>
-        <div class="cat-hero-stat" id="ui_cat_stat">Scegli il contenitore per avviare lo Studio 3D</div>
+    <div class="cat-header-minimal">
+      <div>
+        <h1 class="cat-title-minimal" id="ui_cat_title">Marketplace Contenitori</h1>
+        <p class="cat-sub-minimal" id="ui_cat_stat">Scegli il contenitore per avviare lo Studio 3D</p>
       </div>
     </div>
 
-    <div class="cat-filter-bar">
+    <div class="cat-toolbar-minimal">
       <div class="pillar-pills" id="catPillarPills"></div>
       <button class="p-pill red-cta" id="btnCustomVessel" onclick="openCustomVesselStudio()">Continua con il mio contenitore</button>
     </div>
@@ -2837,6 +3488,7 @@ const state = {
   arModalOpen: false,
   prevViewBeforeProfile: "catalog",
   submittedRequests: [],
+  favoriteVessels: [],
   // STEP 03 MULTI-PACK BOX CONFIGURATOR
   boxMode: "grid",        // 'grid' | 'bulk' (bulk for plastic bottles only)
   boxQty: 1,              // 1, 2, 3, 6, 12
@@ -6179,9 +6831,52 @@ function toggleARModal(openVal) {
   `;
 }
 
-// ==================== USER PROFILE & SUBMITTED REQUESTS PERSISTENCE ====================
+// ==================== USER PROFILE, FAVORITES & SUBMITTED REQUESTS PERSISTENCE ====================
 const REQUEST_STORAGE_KEY = "vesselcove_submitted_requests_v19";
+const FAVORITES_STORAGE_KEY = "vesselcove_favorite_vessels_v25";
 const ACCEPTANCE_DEADLINE_DAYS = 3;
+
+function loadFavoriteVessels() {
+  try {
+    const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) state.favoriteVessels = parsed;
+    }
+  } catch {}
+}
+
+function saveFavoriteVessels() {
+  try {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(state.favoriteVessels));
+  } catch {}
+}
+
+function isVesselFavorite(vid) {
+  return Array.isArray(state.favoriteVessels) && state.favoriteVessels.includes(vid);
+}
+
+function updateFavoritesBadges() {
+  const count = Array.isArray(state.favoriteVessels) ? state.favoriteVessels.length : 0;
+  const badge = document.getElementById("headerFavBadge");
+  const btn = document.getElementById("btnHeaderFavs");
+  if (badge) {
+    badge.textContent = String(count);
+    badge.classList.toggle("visible", count > 0);
+  }
+  if (btn) btn.classList.toggle("has-items", count > 0);
+}
+
+function toggleFavoriteVessel(vid, evt) {
+  if (evt && typeof evt.stopPropagation === "function") evt.stopPropagation();
+  const idx = state.favoriteVessels.indexOf(vid);
+  if (idx >= 0) state.favoriteVessels.splice(idx, 1);
+  else state.favoriteVessels.push(vid);
+  saveFavoriteVessels();
+  updateFavoritesBadges();
+  if (state.mainView === "catalog") renderCatalogView();
+  if (state.mainView === "profile") renderProfileView();
+}
 
 function loadSubmittedRequests() {
   try {
@@ -6207,13 +6902,21 @@ function updateProfileBadge() {
   badge.classList.toggle("visible", count > 0);
 }
 
-function openProfileView() {
-  if (state.mainView === "profile") {
+function openProfileView(focusSection) {
+  if (state.mainView === "profile" && !focusSection) {
     goStepBack();
     return;
   }
-  state.prevViewBeforeProfile = state.mainView;
+  if (state.mainView !== "profile") state.prevViewBeforeProfile = state.mainView;
   switchMainView("profile");
+  requestAnimationFrame(() => {
+    const pv = document.querySelector("#viewProfile .profile-view");
+    if (pv) pv.scrollTop = 0;
+    if (focusSection === "favorites" && window.innerWidth <= 1024) {
+      const el = document.getElementById("profileFavoritesCard");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
 }
 
 function returnToMarketplaceAfterSubmit(skipReset) {
@@ -6236,11 +6939,56 @@ function renderProfileView() {
   if (!host) return;
   const l = state.lang;
   const reqs = state.submittedRequests;
+  const favIds = Array.isArray(state.favoriteVessels) ? state.favoriteVessels : [];
+  const favVessels = favIds.map(id => VESSELS.find(v => v.id === id)).filter(Boolean);
+
+  const favsHtml = favVessels.length === 0
+    ? `
+      <div style="text-align:center; padding:26px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
+        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessun contenitore nei preferiti" : "No favorite containers yet"}</div>
+        <p style="font-size:12px; color:var(--slate); margin-top:5px;">
+          ${l === "it"
+            ? "Clicca sull'icona del cuore sui contenitori del Marketplace per salvarli rapidamente in questa sezione."
+            : "Click the heart icon on any Marketplace container to save it here for quick access."}
+        </p>
+        <button class="cta-btn white" style="width:auto; padding:0 20px; height:36px; margin:12px auto 0 auto;" onclick="returnToMarketplaceAfterSubmit(true)">
+          ${l === "it" ? "Esplora il Marketplace" : "Explore Marketplace"}
+        </button>
+      </div>
+    `
+    : `
+      <div class="fav-prof-grid">
+        ${favVessels.map(v => `
+          <div class="fav-prof-card" onclick="selectVesselFromMarketplace('${v.id}')" style="cursor:pointer;">
+            <div class="fav-prof-stage">
+              <img class="cat-real-img" src="${getVesselRealisticThumb(v)}" alt="${l === "it" ? v.it : v.en}">
+              <button type="button" class="fav-heart-btn active" data-fav-vid="${v.id}" onclick="toggleFavoriteVessel('${v.id}', event)" title="${l === "it" ? "Rimuovi dai preferiti" : "Remove from favorites"}" aria-label="${l === "it" ? "Rimuovi dai preferiti" : "Remove from favorites"}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; padding:0 2px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                <span style="font-size:10.5px; font-weight:700; color:var(--slate);">${l === "it" ? v.badgeIt : v.badgeEn}</span>
+                <span style="font-family:var(--mono); font-size:11px; font-weight:800; color:var(--ink);">${v.vol}</span>
+              </div>
+              <div style="font-size:13.5px; font-weight:700; color:var(--ink); line-height:1.25;">${l === "it" ? v.it : v.en}</div>
+              <div style="font-size:11px; color:var(--slate);">${l === "it" ? v.subIt : v.subEn}</div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:auto; padding-top:4px;">
+              <span class="cat-pill-mat">${l === "it" ? v.matIt : v.matEn}</span>
+              <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); selectVesselFromMarketplace('${v.id}')">
+                ${l === "it" ? "Seleziona" : "Select"}
+              </button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
 
   const reqsHtml = reqs.length === 0
     ? `
-      <div style="text-align:center; padding:32px 18px; border:1.5px dashed var(--border); border-radius:10px; background:var(--bg-subtle);">
-        <div style="font-size:14px; font-weight:800; color:var(--ink);">${l === "it" ? "Nessuna richiesta inviata al momento" : "No requests submitted yet"}</div>
+      <div style="text-align:center; padding:32px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
+        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessuna richiesta inviata al momento" : "No requests submitted yet"}</div>
         <p style="font-size:12px; color:var(--slate); margin-top:5px;">
           ${l === "it"
             ? "Configura un contenitore nello Studio 3D, scegli i fornitori in Filiera e clicca su Invia richiesta per monitorare qui lo stato di accettazione."
@@ -6294,12 +7042,12 @@ function renderProfileView() {
     `).join("");
 
   host.innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--ink); padding-bottom:12px; gap:12px; flex-wrap:wrap;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:1px solid var(--border); padding-bottom:14px; gap:12px; flex-wrap:wrap;">
       <div>
         <div style="font-size:11px; font-weight:800; color:var(--crimson); letter-spacing:0.12em;">${l === "it" ? "AREA PERSONALE BRAND" : "BRAND PERSONAL AREA"}</div>
-        <h1 style="font-size:25px; font-weight:800; margin-top:2px;">${l === "it" ? "Profilo e Richieste Pre-Serie" : "Profile and Pre-Series Requests"}</h1>
+        <h1 style="font-size:25px; font-weight:800; margin-top:2px;">${l === "it" ? "Account, Preferiti e Richieste" : "Account, Favorites & Requests"}</h1>
       </div>
-      <button class="cta-btn white" style="width:auto; padding:0 18px; height:36px;" onclick="returnToMarketplaceAfterSubmit(true)">
+      <button class="cta-btn white" style="width:auto; padding:0 18px; height:38px;" onclick="returnToMarketplaceAfterSubmit(true)">
         ${l === "it" ? "Torna al Marketplace" : "Back to Marketplace"}
       </button>
     </div>
@@ -6346,23 +7094,43 @@ function renderProfileView() {
         </div>
       </div>
 
-      <div class="profile-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-          <div>
-            <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "MONITORAGGIO FILIERA" : "SUPPLY CHAIN TRACKING"}</span>
-            <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Richieste Inviate ai Fornitori" : "Requests Sent to Suppliers"}</h2>
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div class="profile-card" id="profileFavoritesCard">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "I TUOI PREFERITI" : "SAVED FAVORITES"}</span>
+              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Contenitori Preferiti" : "Favorite Containers"}</h2>
+            </div>
+            <span class="spec-tag">${favVessels.length} ${favVessels.length === 1 ? (l === "it" ? "SALVATO" : "SAVED") : (l === "it" ? "SALVATI" : "SAVED")}</span>
           </div>
-          <span class="spec-tag">${reqs.length} ${reqs.length === 1 ? (l === "it" ? "RICHIESTA" : "REQUEST") : (l === "it" ? "RICHIESTE" : "REQUESTS")}</span>
+
+          <p style="font-size:12px; color:var(--slate); line-height:1.4; margin:0;">
+            ${l === "it"
+              ? "Raccolta dei contenitori selezionati con l'icona cuore nel Marketplace."
+              : "Collection of containers bookmarked with the heart icon in the Marketplace."}
+          </p>
+
+          ${favsHtml}
         </div>
 
-        <p style="font-size:12px; color:var(--slate); line-height:1.4;">
-          ${l === "it"
-            ? `Ogni fornitore dispone di ${ACCEPTANCE_DEADLINE_DAYS} giorni per accettare o rifiutare la lavorazione. Il pagamento verrà richiesto solo dopo la conferma di tutta la filiera.`
-            : `Every supplier has ${ACCEPTANCE_DEADLINE_DAYS} days to accept or decline the order. Payment will be requested only after all suppliers confirm.`}
-        </p>
+        <div class="profile-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "MONITORAGGIO FILIERA" : "SUPPLY CHAIN TRACKING"}</span>
+              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Richieste Inviate ai Fornitori" : "Requests Sent to Suppliers"}</h2>
+            </div>
+            <span class="spec-tag">${reqs.length} ${reqs.length === 1 ? (l === "it" ? "RICHIESTA" : "REQUEST") : (l === "it" ? "RICHIESTE" : "REQUESTS")}</span>
+          </div>
 
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          ${reqsHtml}
+          <p style="font-size:12px; color:var(--slate); line-height:1.4; margin:0;">
+            ${l === "it"
+              ? `Ogni fornitore dispone di ${ACCEPTANCE_DEADLINE_DAYS} giorni per accettare o rifiutare la lavorazione. Il pagamento verrà richiesto solo dopo la conferma di tutta la filiera.`
+              : `Every supplier has ${ACCEPTANCE_DEADLINE_DAYS} days to accept or decline the order. Payment will be requested only after all suppliers confirm.`}
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            ${reqsHtml}
+          </div>
         </div>
       </div>
     </div>
@@ -8068,10 +8836,330 @@ function renderCatalogThumbSVG(v) {
   </svg>`;
 }
 
+const VESSEL_REALISTIC_THUMBS = {};
+
+function createPackshotEnvironment(offRenderer) {
+  const pmrem = new THREE.PMREMGenerator(offRenderer);
+  pmrem.compileEquirectangularShader();
+  const envScene = new THREE.Scene();
+  // Dark studio room with bright softbox vertical diffusers gives crystal glass, clear PET, brushed aluminum & satin HDPE strong realistic Fresnel edge contrast
+  envScene.background = new THREE.Color(0x232933);
+
+  const boxGeo = new THREE.BoxGeometry(1, 1, 1);
+  const addCard = (col, sx, sy, sz, px, py, pz) => {
+    const m = new THREE.Mesh(boxGeo, new THREE.MeshBasicMaterial({ color: col }));
+    m.scale.set(sx, sy, sz);
+    m.position.set(px, py, pz);
+    envScene.add(m);
+  };
+  addCard(0xFFFFFF, 8.5, 0.25, 8.5, 0, 7.0, 0);      // Overhead studio scrim
+  addCard(0xFFFFFF, 0.3, 9.5, 3.0, -5.0, 1.5, 3.8);  // Key vertical softbox left
+  addCard(0xF8FAFC, 0.3, 9.5, 2.2, 5.2, 1.8, 3.2);   // Secondary softbox right
+  addCard(0x0B0E14, 0.3, 10.5, 4.5, -5.4, 0.5, -1.5);// Crisp black negative fill left
+  addCard(0x0B0E14, 0.3, 10.5, 4.5, 5.4, 0.5, -1.5); // Crisp black negative fill right
+  addCard(0x94A3B8, 12, 0.25, 12, 0, -5.0, 0);       // Cool studio floor bounce
+
+  const tex = pmrem.fromScene(envScene, 0.024).texture;
+  pmrem.dispose();
+  return tex;
+}
+
+function createThumbDoypackTexture() {
+  const c = document.createElement("canvas");
+  c.width = 512;
+  c.height = 512;
+  const ctx = c.getContext("2d");
+  const g = ctx.createLinearGradient(0, 0, 0, 512);
+  g.addColorStop(0, "#FAFAFB");
+  g.addColorStop(0.50, "#ECEFF3");
+  g.addColorStop(1, "#D8DDE6");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 512, 512);
+
+  // Subtle side heat-seal border sheen + dark zip groove
+  ctx.fillStyle = "rgba(15, 23, 42, 0.08)";
+  ctx.fillRect(0, 0, 512, 66);
+  ctx.fillStyle = "rgba(15, 23, 42, 0.24)";
+  ctx.fillRect(0, 64, 512, 5);
+  ctx.fillRect(0, 74, 512, 3);
+
+  [0.25, 0.75].forEach(u => {
+    const sx = u * 512;
+    const sg = ctx.createLinearGradient(sx - 20, 0, sx + 20, 0);
+    sg.addColorStop(0, "rgba(15, 23, 42, 0)");
+    sg.addColorStop(0.5, "rgba(15, 23, 42, 0.16)");
+    sg.addColorStop(1, "rgba(15, 23, 42, 0)");
+    ctx.fillStyle = sg;
+    ctx.fillRect(sx - 20, 0, 40, 512);
+  });
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.encoding = THREE.sRGBEncoding;
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.ClampToEdgeWrapping;
+  return tex;
+}
+
+function generatePhotorealisticVesselThumbnails() {
+  if (typeof THREE === "undefined") return;
+  try {
+    const W = 520, H = 440;
+    const offCanvas = document.createElement("canvas");
+    offCanvas.width = W;
+    offCanvas.height = H;
+    const offRenderer = new THREE.WebGLRenderer({ canvas: offCanvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+    offRenderer.setPixelRatio(1);
+    offRenderer.setSize(W, H, false);
+    offRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    offRenderer.toneMappingExposure = 1.08;
+    offRenderer.outputEncoding = THREE.sRGBEncoding;
+
+    const offScene = new THREE.Scene();
+    offScene.environment = createPackshotEnvironment(offRenderer);
+
+    // Sculptural studio key/rim ratio (low ambient preserves deep 3D edge shading on white HDPE & Doypack!)
+    const amb = new THREE.AmbientLight(0xF1F5F9, 0.20);
+    offScene.add(amb);
+    const key = new THREE.DirectionalLight(0xFFFFFF, 1.32);
+    key.position.set(4.8, 6.2, 5.2);
+    offScene.add(key);
+    const fillLeft = new THREE.DirectionalLight(0x94A3B8, 0.42);
+    fillLeft.position.set(-5.2, 1.8, 2.4);
+    offScene.add(fillLeft);
+    const rim = new THREE.DirectionalLight(0xE2E8F0, 0.92);
+    rim.position.set(-4.5, 4.2, -5.0);
+    offScene.add(rim);
+
+    // Grounded contact shadow beneath vessel
+    const shC = document.createElement("canvas");
+    shC.width = 256; shC.height = 256;
+    const shCtx = shC.getContext("2d");
+    const shG = shCtx.createRadialGradient(128, 128, 12, 128, 128, 120);
+    shG.addColorStop(0, "rgba(15, 23, 42, 0.34)");
+    shG.addColorStop(0.55, "rgba(15, 23, 42, 0.11)");
+    shG.addColorStop(1, "rgba(15, 23, 42, 0)");
+    shCtx.fillStyle = shG;
+    shCtx.fillRect(0, 0, 256, 256);
+    const shTex = new THREE.CanvasTexture(shC);
+    const shPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.5, 2.1),
+      new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false })
+    );
+    shPlane.rotation.x = -Math.PI / 2;
+    shPlane.position.y = -1.26;
+    offScene.add(shPlane);
+
+    const offCam = new THREE.PerspectiveCamera(28, W / H, 0.1, 40);
+    const doypackTex = createThumbDoypackTexture();
+
+    VESSELS.forEach(v => {
+      const grp = new THREE.Group();
+      const totalH = getVesselTotalHeight(v);
+      const pouchMode = v.shape === "doypack";
+      const vGeo = createParametricVesselGeometry(v, pouchMode ? 112 : 96, pouchMode ? 84 : 110, 0.0, 1.0, 1.0, false);
+
+      function addStudioFresnelRim(mat, rimHex, strength, rimOpacityBoost) {
+        mat.onBeforeCompile = shader => {
+          shader.uniforms.uRimColor = { value: new THREE.Color(rimHex) };
+          shader.uniforms.uRimStrength = { value: strength };
+          shader.uniforms.uRimAlpha = { value: rimOpacityBoost };
+          shader.fragmentShader = shader.fragmentShader
+            .replace(
+              "#include <common>",
+              `#include <common>
+uniform vec3 uRimColor;
+uniform float uRimStrength;
+uniform float uRimAlpha;`
+            )
+            .replace(
+              "#include <dithering_fragment>",
+              `vec3 _vN = normalize(vNormal);
+vec3 _vV = normalize(vViewPosition);
+float _fr = pow(1.0 - clamp(abs(dot(_vN, _vV)), 0.0, 1.0), 1.9);
+gl_FragColor.rgb = mix(gl_FragColor.rgb, uRimColor, _fr * uRimStrength);
+gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
+#include <dithering_fragment>`
+            );
+        };
+      }
+
+      let vMat;
+      if (pouchMode) {
+        vMat = new THREE.MeshPhysicalMaterial({
+          map: doypackTex,
+          color: 0xECEFF4,
+          roughness: 0.58,
+          metalness: 0.02,
+          clearcoat: 0.16,
+          envMapIntensity: 0.68,
+          side: THREE.DoubleSide
+        });
+        addStudioFresnelRim(vMat, 0x475569, 0.42, 0.0);
+      } else if (v.defaultFinish === "pet_gloss") {
+        vMat = new THREE.MeshPhysicalMaterial({
+          color: 0xD2E4F3,
+          transparent: true,
+          opacity: 0.72,
+          roughness: 0.05,
+          metalness: 0.05,
+          reflectivity: 1.0,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.03,
+          envMapIntensity: 1.15,
+          side: THREE.DoubleSide
+        });
+        addStudioFresnelRim(vMat, 0x334155, 0.68, 0.28);
+      } else if (v.defaultFinish === "hdpe_white") {
+        vMat = new THREE.MeshPhysicalMaterial({
+          color: 0xEDF0F5,
+          roughness: 0.44,
+          metalness: 0.03,
+          clearcoat: 0.22,
+          clearcoatRoughness: 0.26,
+          envMapIntensity: 0.58
+        });
+        addStudioFresnelRim(vMat, 0x64748B, 0.44, 0.0);
+      } else if (v.defaultFinish === "wine_green") {
+        vMat = new THREE.MeshPhysicalMaterial({
+          color: 0x062311,
+          transparent: true,
+          opacity: 0.96,
+          roughness: 0.06,
+          metalness: 0.06,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.03,
+          envMapIntensity: 0.72,
+          side: THREE.DoubleSide
+        });
+        addStudioFresnelRim(vMat, 0x031209, 0.55, 0.04);
+      } else if (v.defaultFinish === "alu_brushed") {
+        vMat = new THREE.MeshStandardMaterial({
+          color: 0xCFD5DD,
+          roughness: 0.20,
+          metalness: 0.92,
+          envMapIntensity: 1.18,
+          side: THREE.DoubleSide
+        });
+        addStudioFresnelRim(vMat, 0x334155, 0.36, 0.0);
+      } else {
+        vMat = new THREE.MeshPhysicalMaterial({
+          color: 0xE2DFD7,
+          transparent: true,
+          opacity: 0.88,
+          roughness: 0.36,
+          metalness: 0.02,
+          clearcoat: 0.42,
+          clearcoatRoughness: 0.22,
+          envMapIntensity: 0.78,
+          side: THREE.DoubleSide
+        });
+        addStudioFresnelRim(vMat, 0x475569, 0.52, 0.14);
+      }
+
+      grp.add(new THREE.Mesh(vGeo, vMat));
+
+      // Molded neck lip on open rigid glass/plastic vessels
+      if (!pouchMode && v.shape !== "alu_can") {
+        const lipGeo = v.shape === "jar_lux"
+          ? new THREE.TorusGeometry(0.676, 0.024, 14, 64)
+          : (v.shape === "wine_bordeaux"
+              ? new THREE.TorusGeometry(0.160, 0.023, 14, 48)
+              : new THREE.TorusGeometry(0.214, 0.019, 14, 48));
+        lipGeo.rotateX(Math.PI / 2);
+        const lipMesh = new THREE.Mesh(lipGeo, vMat);
+        lipMesh.position.y = -1.25 + totalH;
+        grp.add(lipMesh);
+      }
+
+      // Rich internal formula core inside transparent / frosted glass & PET vessels
+      if (!pouchMode && v.shape !== "alu_can" && v.defaultFinish !== "hdpe_white") {
+        const liqTop = (v.shape === "jar_lux" || v.shape === "wine_bordeaux") ? 0.64 : 0.62;
+        const liqGeo = createParametricVesselGeometry(v, 56, 40, 0.03, liqTop, 0.89, true);
+        const liqCol = v.defaultFinish === "pet_gloss" ? 0x7BA9D1 : (v.defaultFinish === "frosted" ? 0xDDBB93 : 0x3A0A12);
+        const liqMat = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color(liqCol),
+          transparent: true,
+          opacity: v.defaultFinish === "wine_green" ? 0.85 : (v.defaultFinish === "frosted" ? 0.74 : 0.62),
+          roughness: 0.16,
+          clearcoat: 0.85
+        });
+        grp.add(new THREE.Mesh(liqGeo, liqMat));
+      }
+
+      // Metallic SOT 202 pull-tab deck on aluminum can
+      if (v.shape === "alu_can") {
+        const botDisk = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.50, 0.50, 0.02, 48),
+          new THREE.MeshStandardMaterial({ color: 0xC8CDD2, roughness: 0.26, metalness: 0.88 })
+        );
+        botDisk.position.y = -1.24;
+        grp.add(botDisk);
+
+        const canTopY = -1.25 + 0.965 * totalH;
+        const rimMat = new THREE.MeshStandardMaterial({ color: 0xE6E9ED, roughness: 0.16, metalness: 0.94 });
+        const deckMat = new THREE.MeshStandardMaterial({ color: 0xCBD0D6, roughness: 0.26, metalness: 0.90 });
+        const chime = new THREE.Mesh(new THREE.TorusGeometry(0.516, 0.022, 16, 64), rimMat);
+        chime.rotation.x = Math.PI / 2;
+        chime.position.y = canTopY;
+        grp.add(chime);
+        const deck = new THREE.Mesh(new THREE.CylinderGeometry(0.495, 0.495, 0.018, 64), deckMat);
+        deck.position.y = canTopY - 0.022;
+        grp.add(deck);
+        const rivet = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.03, 24), rimMat);
+        rivet.position.y = canTopY;
+        grp.add(rivet);
+        const pullRing = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.014, 12, 32), rimMat);
+        pullRing.rotation.x = Math.PI / 2;
+        pullRing.position.set(0, canTopY + 0.008, -0.14);
+        grp.add(pullRing);
+        const tabBlade = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.016, 0.18), rimMat);
+        tabBlade.position.set(0, canTopY + 0.008, 0.04);
+        grp.add(tabBlade);
+      }
+
+      offScene.add(grp);
+
+      const centerY = -1.25 + totalH * 0.5;
+      let dist = 6.3, phi = 1.32, theta = 0.34;
+      if (v.shape === "jar_lux") { dist = 4.9; phi = 1.18; theta = 0.38; }
+      else if (v.shape === "wine_bordeaux") { dist = 7.1; phi = 1.38; theta = 0.28; }
+      else if (v.shape === "doypack") { dist = 6.8; phi = 1.34; theta = 0.36; }
+      else if (v.shape === "alu_can") { dist = 6.3; phi = 1.22; theta = 0.32; }
+      else if (v.shape === "square_soft") { dist = 6.4; phi = 1.32; theta = 0.48; }
+
+      offCam.position.set(
+        dist * Math.sin(phi) * Math.sin(theta),
+        centerY + dist * Math.cos(phi),
+        dist * Math.sin(phi) * Math.cos(theta)
+      );
+      offCam.lookAt(0, centerY, 0);
+      offRenderer.clear();
+      offRenderer.render(offScene, offCam);
+
+      VESSEL_REALISTIC_THUMBS[v.id] = offCanvas.toDataURL("image/png");
+      offScene.remove(grp);
+      grp.traverse(obj => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) obj.material.dispose();
+      });
+    });
+
+    doypackTex.dispose();
+    shTex.dispose();
+    offRenderer.dispose();
+  } catch (e) {
+    console.warn("Thumb renderer fallback:", e);
+  }
+}
+
+function getVesselRealisticThumb(v) {
+  return VESSEL_REALISTIC_THUMBS[v.id] || "";
+}
+
 function renderCatalogView() {
   const l = state.lang;
   const pills = [
-    { id: "all", it: "Tutti i Contenitori", en: "All Containers" },
+    { id: "all", it: "Tutti", en: "All" },
     { id: "cylindrical", it: "Flacone Cilindrico", en: "Cylindrical Bottle" },
     { id: "square", it: "Flacone Quadro", en: "Square Bottle" },
     { id: "wine", it: "Bottiglia", en: "Bottle" },
@@ -8079,21 +9167,16 @@ function renderCatalogView() {
     { id: "cans", it: "Lattina", en: "Can" },
     { id: "flexibles", it: "Doypack", en: "Doypack" }
   ];
-  document.getElementById("ui_cat_eye").textContent = l === "it"
-    ? "SELEZIONE CONTENITORE CERTIFICATO DAI PRODUTTORI EUROPEI"
-    : "SELECT CERTIFIED VESSEL FROM EUROPEAN MANUFACTURERS";
-  document.getElementById("ui_cat_title").textContent = l === "it"
-    ? "Marketplace Contenitori Primari B2B"
-    : "B2B Primary Container Marketplace";
+  const eyeEl = document.getElementById("ui_cat_eye");
+  if (eyeEl) eyeEl.textContent = l === "it" ? "SELEZIONE CONTENITORE CERTIFICATO" : "CERTIFIED CONTAINER SELECTION";
+  const titleEl = document.getElementById("ui_cat_title");
+  if (titleEl) titleEl.textContent = l === "it" ? "Marketplace Contenitori" : "Container Marketplace";
   const catCodeEl = document.getElementById("ui_cat_code");
-  if (catCodeEl) {
-    catCodeEl.textContent = l === "it"
-      ? "CAD DOSSIER // 06 ARCHETIPI PRIMARI · QUOTE 1:1"
-      : "CAD DOSSIER // 06 PRIMARY ARCHETYPES · 1:1 SPECS";
-  }
-  document.getElementById("ui_cat_stat").textContent = l === "it"
-    ? "Scegli il contenitore per avviare lo Studio 3D"
-    : "Pick a vessel to launch the 3D Studio";
+  if (catCodeEl) catCodeEl.textContent = "06 ARCHETIPI PRIMARI · QUOTE 1:1";
+  const statEl = document.getElementById("ui_cat_stat");
+  if (statEl) statEl.textContent = l === "it" ? "Scegli il contenitore per avviare lo Studio 3D" : "Pick a vessel to launch the 3D Studio";
+  const customBtn = document.getElementById("btnCustomVessel");
+  if (customBtn) customBtn.textContent = l === "it" ? "Continua con il mio contenitore" : "Continue with my container";
 
   document.getElementById("catPillarPills").innerHTML = pills.map(p => `
     <button class="p-pill ${state.activeCatGroup === p.id ? "active" : ""}" onclick="state.activeCatGroup='${p.id}'; renderCatalogView();">
@@ -8102,31 +9185,39 @@ function renderCatalogView() {
   `).join("");
 
   const filtered = VESSELS.filter(v => state.activeCatGroup === "all" || v.catGroup === state.activeCatGroup);
-  document.getElementById("catGrid").innerHTML = filtered.map((v, idx) => `
-    <div class="cat-card">
-      <div class="cat-thumb">
-        <span class="cat-spec-stamp">SPEC-${String(idx + 1).padStart(2, "0")}</span>
-        ${renderCatalogThumbSVG(v)}
-      </div>
-      <div class="cat-card-body">
-        <div class="cat-card-header-flex" style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
-          <div>
-            <h3>${l === "it" ? v.it : v.en}</h3>
-            <p style="font-family:var(--mono); font-size:12.5px; font-weight:700; color:var(--espresso); margin-top:5px;">${l === "it" ? v.subIt : v.subEn}</p>
+  document.getElementById("catGrid").innerHTML = filtered.map(v => {
+    const isFav = isVesselFavorite(v.id);
+    const thumbUrl = getVesselRealisticThumb(v);
+    const visualMarkup = thumbUrl
+      ? `<img class="cat-real-img" src="${thumbUrl}" alt="${l === "it" ? v.it : v.en}">`
+      : renderCatalogThumbSVG(v);
+    const neckLabel = v.shape === "doypack" ? v.neck : (v.shape === "alu_can" ? v.neck : `${l === "it" ? "Collo" : "Neck"} ${v.neck}`);
+    return `
+      <div class="cat-card ${state.vesselId === v.id ? "selected" : ""}" onclick="selectVesselFromMarketplace('${v.id}')">
+        <div class="cat-stage">
+          <span class="cat-stage-tag">${l === "it" ? v.badgeIt : v.badgeEn}</span>
+          <button type="button" class="fav-heart-btn ${isFav ? "active" : ""}" data-fav-vid="${v.id}" onclick="toggleFavoriteVessel('${v.id}', event)" title="${l === "it" ? (isFav ? "Rimuovi dai preferiti" : "Salva nei preferiti") : (isFav ? "Remove from favorites" : "Save to favorites")}" aria-label="${l === "it" ? "Preferiti" : "Favorite"}">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="${isFav ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          ${visualMarkup}
+        </div>
+        <div class="cat-meta-body">
+          <div class="cat-meta-top">
+            <span class="cat-meta-kicker">${neckLabel}</span>
+            <span class="cat-meta-vol">${v.vol}</span>
           </div>
-          <div style="min-width:162px; flex-shrink:0;">
-            ${renderVesselSpecStack(v, l)}
+          <div class="cat-meta-title">${l === "it" ? v.it : v.en}</div>
+          <div class="cat-meta-sub">${l === "it" ? v.subIt : v.subEn} · ${v.vendor}</div>
+          <div class="cat-meta-footer">
+            <span class="cat-pill-mat">${l === "it" ? v.matIt : v.matEn}</span>
+            <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); selectVesselFromMarketplace('${v.id}')">
+              ${l === "it" ? "Seleziona" : "Select"}
+            </button>
           </div>
         </div>
-        <div style="border-top:1px solid var(--border-light); padding-top:8px; font-size:11.5px; color:var(--charcoal); display:flex; justify-content:space-between; align-items:center; gap:8px;">
-          <span><strong>${v.vendor}</strong></span>
-        </div>
-        <button class="cta-btn dark" style="height:38px;" onclick="selectVesselFromMarketplace('${v.id}')">
-          ${l === "it" ? "Seleziona" : "Select"}
-        </button>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 // ==================== VIEW 03: STEP-BY-STEP SUPPLY CHAIN WIZARD ====================
@@ -8460,7 +9551,7 @@ function renderPillarsView() {
   ` : "";
 
   document.getElementById("pillarsPortalBody").innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--ink); padding-bottom:12px; gap:12px; flex-wrap:wrap;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:1px solid var(--border); padding-bottom:14px; gap:12px; flex-wrap:wrap;">
       <div>
         <div style="font-size:11px; font-weight:800; color:var(--crimson); letter-spacing:0.12em;">${l === "it" ? "SELEZIONE PASSO-PASSO FORNITORI" : "STEP-BY-STEP SUPPLIER SELECTION"}</div>
         <h1 style="font-size:25px; font-weight:800; margin-top:2px;">${l === "it" ? "Composizione Filiera e Richiesta Prova" : "Step-by-Step Supply Chain and Trial Request"}</h1>
@@ -8591,7 +9682,10 @@ function openCheckoutModal() {
 // ==================== BOOTSTRAP & QUERY PARAM SUPPORT ====================
 window.addEventListener("DOMContentLoaded", () => {
   loadSubmittedRequests();
+  loadFavoriteVessels();
   initWebGL();
+  generatePhotorealisticVesselThumbnails();
+  updateFavoritesBadges();
   const qs = new URLSearchParams(window.location.search);
   resetVesselConfigState(qs.get("vessel") || "serum_250");
   if (qs.get("custom") === "1") state.customVesselMode = true;

@@ -3036,6 +3036,10 @@ def main():
       gap: 10px !important;
       margin-bottom: 14px !important;
     }
+    .pillar-pills {
+      justify-content: center !important;
+      width: 100% !important;
+    }
     .p-pill.red-cta {
       width: 100% !important;
       margin-left: 0 !important;
@@ -3105,8 +3109,7 @@ def main():
       align-items: center !important;
       gap: 0 !important;
     }
-    .floating-hud-top .hud-group:nth-child(2),
-    #btnShowAR {
+    .floating-hud-top .hud-group:nth-child(2) {
       display: none !important;
     }
     .floating-hud-top .hud-group:first-child {
@@ -3114,7 +3117,20 @@ def main():
       justify-content: center !important;
       flex-wrap: nowrap !important;
       width: auto !important;
+      max-width: 100% !important;
     }
+    .floating-hud-top .hud-group:first-child .hud-chip {
+      padding: 5px 7px !important;
+      font-size: 9.5px !important;
+      gap: 3px !important;
+      white-space: nowrap !important;
+    }
+    .floating-hud-top .hud-group:first-child .hud-chip.info-chip {
+      width: 24px !important;
+      padding: 0 !important;
+    }
+    .ar-icon-qr { display: none !important; }
+    .ar-icon-cam { display: block !important; }
     .vessel-info-popover {
       width: calc(100% - 20px) !important;
       left: 10px !important;
@@ -3183,6 +3199,108 @@ def main():
     .summary-strip-3 .cta-btn { width: 100% !important; min-width: 0 !important; }
     .upload-slot-grid { grid-template-columns: 1fr; }
     .modal-card { padding: 16px; }
+  }
+  .ar-icon-cam { display: none; }
+  .ar-icon-qr { display: block; }
+  .ar-cam-viewport {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    border-radius: 16px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 78%, rgba(148, 163, 184, 0.22) 0%, rgba(15, 23, 42, 0.92) 68%),
+      linear-gradient(180deg, #1E293B 0%, #0F172A 55%, #18181B 100%);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ar-cam-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .ar-cam-grid-floor {
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    bottom: -18px;
+    height: 46%;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+      linear-gradient(to top, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 28px 28px;
+    transform: perspective(300px) rotateX(62deg);
+    opacity: 0.6;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .ar-cam-reticle {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .ar-cam-vessel-img {
+    width: 184px;
+    height: 184px;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.55));
+  }
+  .ar-cam-floor-ring {
+    width: 126px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(255, 255, 255, 0.68);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, transparent 72%);
+    margin-top: -14px;
+  }
+  .ar-cam-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: rgba(255, 255, 255, 0.72);
+    border-style: solid;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .ar-cam-corner.tl { top: 14px; left: 14px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+  .ar-cam-corner.tr { top: 14px; right: 14px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+  .ar-cam-corner.bl { bottom: 14px; left: 14px; border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+  .ar-cam-corner.br { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+  .ar-cam-badge {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #FFFFFF;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .ar-cam-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #EF4444;
   }
 </style>
 </head>
@@ -3275,11 +3393,15 @@ def main():
             <span id="ui_tool_sleeve">Sposta Sleeve</span>
           </button>
           <button class="hud-chip" id="btnShowAR" onclick="toggleARModal(true)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="ar-icon-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 8V5a1 1 0 0 1 1-1h3"/><path d="M16 4h3a1 1 0 0 1 1 1v3"/>
               <path d="M4 16v3a1 1 0 0 0 1 1h3"/><path d="M16 20h3a1 1 0 0 0 1-1v-3"/>
               <rect x="8.5" y="8.5" width="7" height="7" rx="1"/>
               <line x1="12" y1="8.5" x2="12" y2="15.5"/><line x1="8.5" y1="12" x2="15.5" y2="12"/>
+            </svg>
+            <svg class="ar-icon-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
             </svg>
             <span id="ui_btn_ar">Vedi in AR</span>
           </button>
@@ -3805,6 +3927,7 @@ const state = {
   // CUSTOM CONTAINER UPLOAD DEMO, CUSTOM GRAPHIC DEMO, AR QR MODAL & USER PROFILE
   customVesselMode: false,
   customGraphicMode: false,
+  mobileARCameraMode: false,
   customGraphicFile: "",
   customDatasheetFile: "",
   customPhotoFiles: ["", "", "", "", "", ""],
@@ -6608,6 +6731,7 @@ function resetVesselConfigState(vid) {
   state.infoPopoverOpen = false;
   state.customVesselMode = false;
   state.customGraphicMode = false;
+  state.mobileARCameraMode = false;
   state.customGraphicFile = "";
   state.arModalOpen = false;
   state.boxMode = "grid";
@@ -6636,6 +6760,7 @@ function resetVesselConfigState(vid) {
 function selectVesselFromMarketplace(vid) {
   state.customVesselMode = false;
   state.customGraphicMode = false;
+  state.mobileARCameraMode = false;
   resetVesselConfigState(vid);
   switchMainView("studio");
   rebuild3DProduct();
@@ -6656,6 +6781,10 @@ function goStepBack() {
     rebuild3DProduct();
     renderAllUI();
   } else if (state.mainView === "studio") {
+    if (state.mobileARCameraMode) {
+      closeMobileARCameraStudio();
+      return;
+    }
     if (state.customGraphicMode) {
       closeCustomGraphicStudio();
       return;
@@ -6766,10 +6895,23 @@ function setLanguage(l) {
 }
 
 let isApplyingHistoryState = false;
+let mobileARStream = null;
+
+function stopMobileARCameraStream() {
+  if (mobileARStream) {
+    try { mobileARStream.getTracks().forEach(t => t.stop()); } catch (e) {}
+    mobileARStream = null;
+  }
+  const vidEl = document.getElementById("mobileArLiveVideo");
+  if (vidEl && vidEl.srcObject) {
+    try { vidEl.srcObject = null; } catch (e) {}
+  }
+}
 
 function getRouteKey() {
   if (state.mainView === "studio" && state.customVesselMode) return "custom-vessel";
   if (state.mainView === "studio" && state.customGraphicMode) return `custom-graphic:${state.vesselId}`;
+  if (state.mainView === "studio" && state.mobileARCameraMode) return `ar-camera:${state.vesselId}`;
   if (state.mainView === "studio") return `studio:${state.vesselId}`;
   if (state.mainView === "pillars") return `pillars:${state.vesselId}:${state.filieraStep || 1}`;
   if (state.mainView === "profile") return "profile";
@@ -6782,6 +6924,7 @@ function buildHistoryStateSnapshot() {
     mainView: state.mainView,
     customVesselMode: !!state.customVesselMode,
     customGraphicMode: !!state.customGraphicMode,
+    mobileARCameraMode: !!state.mobileARCameraMode,
     vesselId: state.vesselId,
     filieraStep: state.filieraStep || 1
   };
@@ -6796,6 +6939,9 @@ function buildHistoryUrl(snap) {
       u.searchParams.set("view", "custom-vessel");
     } else if (snap.customGraphicMode && snap.mainView === "studio") {
       u.searchParams.set("view", "custom-graphic");
+      u.searchParams.set("vessel", snap.vesselId);
+    } else if (snap.mobileARCameraMode && snap.mainView === "studio") {
+      u.searchParams.set("view", "ar-camera");
       u.searchParams.set("vessel", snap.vesselId);
     } else {
       u.searchParams.set("view", snap.mainView || "catalog");
@@ -6833,9 +6979,10 @@ window.addEventListener("popstate", e => {
     const qs = new URLSearchParams(window.location.search);
     const vParam = qs.get("view") || "catalog";
     snap = {
-      mainView: (vParam === "custom-vessel" || vParam === "custom-graphic") ? "studio" : vParam,
+      mainView: (vParam === "custom-vessel" || vParam === "custom-graphic" || vParam === "ar-camera") ? "studio" : vParam,
       customVesselMode: vParam === "custom-vessel",
       customGraphicMode: vParam === "custom-graphic",
+      mobileARCameraMode: vParam === "ar-camera",
       vesselId: qs.get("vessel") || state.vesselId || "serum_250",
       filieraStep: Number(qs.get("fstep")) || 1
     };
@@ -6847,6 +6994,7 @@ window.addEventListener("popstate", e => {
     }
     state.customVesselMode = !!snap.customVesselMode;
     state.customGraphicMode = !!snap.customGraphicMode;
+    state.mobileARCameraMode = !!snap.mobileARCameraMode;
     if (snap.mainView === "pillars") {
       const targetStep = Math.max(1, Number(snap.filieraStep) || 1);
       const previewSteps = buildSupplyChainSteps(evaluateLivePhysics());
@@ -6857,7 +7005,7 @@ window.addEventListener("popstate", e => {
       });
       state.filieraStep = targetStep;
     }
-    if (snap.mainView === "studio" && !state.customVesselMode && !state.customGraphicMode) {
+    if (snap.mainView === "studio" && !state.customVesselMode && !state.customGraphicMode && !state.mobileARCameraMode) {
       rebuild3DProduct();
     }
     switchMainView(snap.mainView || "catalog");
@@ -6891,26 +7039,31 @@ function switchMainView(v) {
   const gridMain = document.getElementById("studioGridMain");
   const customStage = document.getElementById("customVesselStage");
   if (gridMain && customStage) {
-    const showCustom = (v === "studio" && (state.customVesselMode || state.customGraphicMode));
+    const showCustom = (v === "studio" && (state.customVesselMode || state.customGraphicMode || state.mobileARCameraMode));
     gridMain.style.display = showCustom ? "none" : "";
     customStage.style.display = showCustom ? "block" : "none";
+    if (!(v === "studio" && state.mobileARCameraMode)) {
+      stopMobileARCameraStream();
+    }
   }
 
-  if (v === "studio" && !state.customVesselMode && !state.customGraphicMode) setTimeout(resizeWebGL, 25);
+  if (v === "studio" && !state.customVesselMode && !state.customGraphicMode && !state.mobileARCameraMode) setTimeout(resizeWebGL, 25);
   syncBrowserHistory(false);
   renderAllUI();
   if (window.scrollY !== 0) window.scrollTo(0, 0);
 }
 
-// ==================== CUSTOM CONTAINER UPLOAD & CUSTOM GRAPHIC UPLOAD DEMO (UNDER 02 STUDIO 3D) ====================
+// ==================== CUSTOM CONTAINER UPLOAD, CUSTOM GRAPHIC & MOBILE AR CAMERA (UNDER 02 STUDIO 3D) ====================
 function openCustomVesselStudio() {
   state.customGraphicMode = false;
+  state.mobileARCameraMode = false;
   state.customVesselMode = true;
   switchMainView("studio");
 }
 
 function openCustomGraphicStudio() {
   state.customVesselMode = false;
+  state.mobileARCameraMode = false;
   state.customGraphicMode = true;
   state.customGraphicFile = "";
   switchMainView("studio");
@@ -6918,6 +7071,23 @@ function openCustomGraphicStudio() {
 
 function closeCustomGraphicStudio() {
   state.customGraphicMode = false;
+  state.mobileARCameraMode = false;
+  switchMainView("studio");
+  rebuild3DProduct();
+  renderAllUI();
+}
+
+function openMobileARCameraStudio() {
+  state.customVesselMode = false;
+  state.customGraphicMode = false;
+  state.arModalOpen = false;
+  state.mobileARCameraMode = true;
+  switchMainView("studio");
+}
+
+function closeMobileARCameraStudio() {
+  state.mobileARCameraMode = false;
+  stopMobileARCameraStream();
   switchMainView("studio");
   rebuild3DProduct();
   renderAllUI();
@@ -6976,8 +7146,8 @@ function renderCustomGraphicView() {
     <div class="custom-vessel-inner">
       <div class="brown-hdr-bar">
         <div>
-          <div class="brown-hdr-kicker">${l === "it" ? "CARICAMENTO GRAFICA ESECUTIVA DI STAMPA" : "CUSTOM PRINT ARTWORK UPLOAD"}</div>
-          <h1 class="brown-hdr-title">${l === "it" ? "Inserisci il file della tua grafica" : "Upload your custom graphic file"}</h1>
+          <h1 class="brown-hdr-title">${l === "it" ? "Caricamento Grafica Esecutiva di Stampa" : "Custom Print Artwork Upload"}</h1>
+          <p class="cat-sub-minimal">${l === "it" ? "Inserisci il file della tua grafica" : "Upload your custom graphic file"}</p>
         </div>
       </div>
 
@@ -7071,8 +7241,8 @@ function renderCustomVesselView() {
     <div class="custom-vessel-inner">
       <div class="brown-hdr-bar">
         <div>
-          <div class="brown-hdr-kicker">${l === "it" ? "DIGITALIZZAZIONE CONTENITORE PERSONALIZZATO" : "CUSTOM CONTAINER 3D DIGITIZATION"}</div>
-          <h1 class="brown-hdr-title">${l === "it" ? "Ricrea il tuo contenitore nello Studio 3D" : "Recreate your container in the 3D Studio"}</h1>
+          <h1 class="brown-hdr-title">${l === "it" ? "Digitalizzazione Contenitore Personalizzato" : "Custom Container 3D Digitization"}</h1>
+          <p class="cat-sub-minimal">${l === "it" ? "Ricrea il tuo contenitore nello Studio 3D" : "Recreate your container in the 3D Studio"}</p>
         </div>
       </div>
 
@@ -7229,8 +7399,88 @@ function buildFictitiousQRSVG(seedStr) {
   `;
 }
 
+function renderMobileARCameraView() {
+  const host = document.getElementById("customVesselStage");
+  if (!host || !state.mobileARCameraMode) return;
+  const l = state.lang;
+  const v = getVessel();
+  const thumbUrl = getVesselRealisticThumb(v);
+  const visualMarkup = thumbUrl
+    ? `<img class="ar-cam-vessel-img" src="${thumbUrl}" alt="${l === "it" ? v.it : v.en}">`
+    : `<div class="ar-cam-vessel-img">${renderCatalogThumbSVG(v)}</div>`;
+
+  host.innerHTML = `
+    <div class="custom-vessel-inner">
+      <div class="brown-hdr-bar">
+        <div>
+          <h1 class="brown-hdr-title">${l === "it" ? "Realtà Aumentata in Tempo Reale" : "Live Augmented Reality Camera"}</h1>
+          <p class="cat-sub-minimal">${l === "it" ? "Inquadra una superficie con la fotocamera per visualizzare il contenitore dal vivo in scala 1:1" : "Point your camera at any surface to preview the container live at 1:1 scale"}</p>
+        </div>
+      </div>
+
+      <div class="custom-panel-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:15px; font-weight:800; color:var(--ink);">${l === "it" ? v.it : v.en}</div>
+            <div style="font-family:var(--mono); font-size:11.5px; color:var(--slate); margin-top:2px;">${l === "it" ? v.subIt : v.subEn}</div>
+          </div>
+          <span class="spec-tag ok">${l === "it" ? "SCALA REALE 1:1" : "TRUE 1:1 SCALE"}</span>
+        </div>
+
+        <div class="ar-cam-viewport">
+          <video id="mobileArLiveVideo" class="ar-cam-video" autoplay playsinline muted></video>
+          <div class="ar-cam-grid-floor"></div>
+          <span class="ar-cam-corner tl"></span>
+          <span class="ar-cam-corner tr"></span>
+          <span class="ar-cam-corner bl"></span>
+          <span class="ar-cam-corner br"></span>
+          <div class="ar-cam-badge">
+            <span class="ar-cam-dot"></span>
+            <span>${l === "it" ? "FOTOCAMERA AR ATTIVA · RILEVAMENTO PIANO" : "AR CAMERA ACTIVE · PLANE TRACKING"}</span>
+          </div>
+          <div class="ar-cam-reticle">
+            ${visualMarkup}
+            <div class="ar-cam-floor-ring"></div>
+          </div>
+        </div>
+
+        <p class="demo-red-text">
+          ${l === "it"
+            ? "Anteprima dimostrativa: funzione ancora in fase di sviluppo"
+            : "Demonstrative preview: feature still in development"}
+        </p>
+
+        <div style="display:flex; justify-content:center; align-items:center; border-top:1.5px solid var(--border); padding-top:12px;">
+          <button class="cta-btn white" style="width:100%; max-width:280px; padding:0 22px;" onclick="closeMobileARCameraStudio()">
+            ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
+      .then(stream => {
+        if (!state.mobileARCameraMode) {
+          stream.getTracks().forEach(t => t.stop());
+          return;
+        }
+        mobileARStream = stream;
+        const vidEl = document.getElementById("mobileArLiveVideo");
+        if (vidEl) vidEl.srcObject = stream;
+      })
+      .catch(() => {});
+  }
+}
+
 function toggleARModal(openVal) {
-  state.arModalOpen = (openVal !== undefined) ? !!openVal : !state.arModalOpen;
+  const wantOpen = (openVal !== undefined) ? !!openVal : !state.arModalOpen;
+  if (wantOpen && window.innerWidth <= 768) {
+    openMobileARCameraStudio();
+    return;
+  }
+  state.arModalOpen = wantOpen;
   const overlay = document.getElementById("arQrOverlay");
   const card = document.getElementById("arQrCard");
   if (!overlay || !card) return;
@@ -7876,6 +8126,8 @@ function renderAllUI() {
     renderCustomVesselView();
   } else if (state.mainView === "studio" && state.customGraphicMode) {
     renderCustomGraphicView();
+  } else if (state.mainView === "studio" && state.mobileARCameraMode) {
+    renderMobileARCameraView();
   } else {
     renderInspector();
     updateFastTelemetryUI();
@@ -10202,6 +10454,9 @@ window.addEventListener("DOMContentLoaded", () => {
     initialView = "studio";
   } else if (rawView === "custom-graphic") {
     state.customGraphicMode = true;
+    initialView = "studio";
+  } else if (rawView === "ar-camera") {
+    state.mobileARCameraMode = true;
     initialView = "studio";
   }
   document.addEventListener("click", e => {

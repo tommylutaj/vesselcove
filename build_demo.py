@@ -2227,18 +2227,19 @@ def main():
 
   .cat-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 15px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
   }
   .cat-card {
     grid-column: auto !important;
-    display: flex !important;
-    flex-direction: column !important;
+    display: grid !important;
+    grid-template-columns: 152px 1fr !important;
+    align-items: stretch !important;
     background: #FFFFFF !important;
     border: 1px solid var(--border) !important;
     border-radius: 20px !important;
-    padding: 11px !important;
-    gap: 9px !important;
+    padding: 12px !important;
+    gap: 16px !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14) !important;
     cursor: pointer;
     transition: none !important;
@@ -2253,12 +2254,14 @@ def main():
     position: relative;
     background: linear-gradient(180deg, #F0F2F5 0%, #E5E8EE 100%);
     border-radius: 14px;
-    height: 142px;
+    width: 152px;
+    height: 100%;
+    min-height: 184px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 6px;
+    padding: 8px 6px;
   }
   .cat-real-img {
     width: 100%;
@@ -2388,20 +2391,23 @@ def main():
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    align-items: stretch;
+    gap: 14px;
     box-shadow: var(--shadow-sm);
   }
   .fav-prof-stage {
     position: relative;
-    background: #F4F4F6;
+    background: linear-gradient(180deg, #F0F2F5 0%, #E5E8EE 100%);
     border-radius: 12px;
-    height: 148px;
+    width: 132px;
+    height: 100%;
+    min-height: 168px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 6px;
     overflow: hidden;
   }
   .verified-seal {
@@ -2607,9 +2613,14 @@ def main():
   .traffic-banner {
     margin: 10px 12px 0 12px !important;
     padding: 10px 14px !important;
+    height: 80px !important;
+    min-height: 80px !important;
+    max-height: 80px !important;
+    flex-shrink: 0 !important;
     border-radius: 14px !important;
     border: 1px solid rgba(20, 122, 59, 0.22) !important;
     box-shadow: none !important;
+    overflow: hidden !important;
   }
   .traffic-banner.y { border-color: rgba(229, 160, 0, 0.35) !important; }
   .traffic-banner.r { border-color: rgba(194, 24, 14, 0.30) !important; }
@@ -2619,25 +2630,34 @@ def main():
     font-size: 13px !important;
   }
   .tl-desc {
-    height: auto !important;
-    min-height: 24px;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
     font-size: 10.5px !important;
     line-height: 14px !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
   }
   .diag-scroll {
-    padding: 8px 12px !important;
-    gap: 7px !important;
-  }
-  .diag-board {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    padding: 10px 12px !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 7px !important;
+    overflow-y: auto !important;
+  }
+  .diag-board {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px !important;
     border: none !important;
     background: transparent !important;
     padding: 0 !important;
   }
   .diag-row {
-    flex: 0 1 auto !important;
+    flex: 1 1 0 !important;
+    min-height: 92px !important;
     border: 1px solid var(--border) !important;
     border-radius: 14px !important;
     background: #FFFFFF !important;
@@ -2645,12 +2665,12 @@ def main():
     overflow: hidden !important;
   }
   .diag-body {
-    padding: 6px 10px !important;
-    gap: 1px !important;
+    padding: 10px 12px !important;
+    gap: 3px !important;
   }
   .diag-card-s {
-    font-size: 10.5px !important;
-    line-height: 1.25 !important;
+    font-size: 11px !important;
+    line-height: 1.32 !important;
   }
   .checkout-footer {
     border-top: 1px solid var(--border-light) !important;
@@ -2929,9 +2949,13 @@ def main():
     .pin-sub { font-size: 8.5px; }
     .drag-toast { display: none; }
     .cat-hero-title { font-size: 24px; }
-    .cat-card, .cat-card:only-child {
-      grid-template-columns: 1fr;
-      gap: 0;
+    .cat-card, .cat-card:only-child, .fav-prof-card {
+      grid-template-columns: 118px 1fr !important;
+      gap: 12px !important;
+    }
+    .cat-stage, .fav-prof-stage {
+      width: 118px !important;
+      min-height: 156px !important;
     }
     .cat-thumb { width: 100%; height: 148px; min-height: 148px; border-right: none; border-bottom: 1.5px solid var(--ink); }
     .cat-card-header-flex { flex-direction: column !important; }
@@ -6962,9 +6986,20 @@ function toggleFavoriteVessel(vid, evt) {
   const idx = state.favoriteVessels.indexOf(vid);
   if (idx >= 0) state.favoriteVessels.splice(idx, 1);
   else state.favoriteVessels.push(vid);
+  const isFav = isVesselFavorite(vid);
   saveFavoriteVessels();
   updateFavoritesBadges();
-  if (state.mainView === "catalog") renderCatalogView();
+  if (state.mainView === "catalog") {
+    const l = state.lang;
+    document.querySelectorAll(`.fav-heart-btn[data-fav-vid="${vid}"]`).forEach(btn => {
+      btn.classList.toggle("active", isFav);
+      btn.title = l === "it"
+        ? (isFav ? "Rimuovi dai preferiti" : "Salva nei preferiti")
+        : (isFav ? "Remove from favorites" : "Save to favorites");
+      const svg = btn.querySelector("svg");
+      if (svg) svg.setAttribute("fill", isFav ? "currentColor" : "none");
+    });
+  }
   if (state.mainView === "profile") renderProfileView();
 }
 
@@ -7056,12 +7091,14 @@ function renderProfileView() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
               </button>
             </div>
-            <div class="cat-meta-title" style="padding:0 2px;">${l === "it" ? v.it : v.en}</div>
-            ${renderVesselTwoColSpecs(v, l)}
-            <div class="cat-meta-footer">
-              <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); selectVesselFromMarketplace('${v.id}')">
-                ${l === "it" ? "Seleziona" : "Select"}
-              </button>
+            <div class="cat-meta-body">
+              <div class="cat-meta-title">${l === "it" ? v.it : v.en}</div>
+              ${renderVesselTwoColSpecs(v, l)}
+              <div class="cat-meta-footer">
+                <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); selectVesselFromMarketplace('${v.id}')">
+                  ${l === "it" ? "Seleziona" : "Select"}
+                </button>
+              </div>
             </div>
           </div>
         `).join("")}
@@ -7095,10 +7132,10 @@ function renderProfileView() {
             <div class="req-spec-line">${req.summaryLine}</div>
           </div>
           <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0;">
-            <div style="font-family:var(--mono); font-size:17px; font-weight:800; color:var(--ink);">${formatEuro(req.totalCost)}</div>
             <button type="button" class="req-cancel-btn" onclick="cancelSubmittedRequest('${req.id}')">
               ${l === "it" ? "Annulla richiesta" : "Cancel request"}
             </button>
+            <div style="font-family:var(--mono); font-size:17px; font-weight:800; color:var(--ink);">${formatEuro(req.totalCost)}</div>
           </div>
         </div>
 
@@ -9021,7 +9058,7 @@ function createThumbDoypackTexture() {
 function generatePhotorealisticVesselThumbnails() {
   if (typeof THREE === "undefined") return;
   try {
-    const W = 520, H = 440;
+    const W = 340, H = 460;
     const offCanvas = document.createElement("canvas");
     offCanvas.width = W;
     offCanvas.height = H;
@@ -9238,12 +9275,12 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
       offScene.add(grp);
 
       const centerY = -1.25 + totalH * 0.5;
-      let dist = 6.3, phi = 1.32, theta = 0.34;
-      if (v.shape === "jar_lux") { dist = 4.9; phi = 1.18; theta = 0.38; }
-      else if (v.shape === "wine_bordeaux") { dist = 7.1; phi = 1.38; theta = 0.28; }
-      else if (v.shape === "doypack") { dist = 6.8; phi = 1.34; theta = 0.36; }
-      else if (v.shape === "alu_can") { dist = 6.3; phi = 1.22; theta = 0.32; }
-      else if (v.shape === "square_soft") { dist = 6.4; phi = 1.32; theta = 0.48; }
+      let dist = 5.95, phi = 1.32, theta = 0.34;
+      if (v.shape === "jar_lux") { dist = 4.75; phi = 1.18; theta = 0.38; }
+      else if (v.shape === "wine_bordeaux") { dist = 6.75; phi = 1.38; theta = 0.28; }
+      else if (v.shape === "doypack") { dist = 6.45; phi = 1.34; theta = 0.36; }
+      else if (v.shape === "alu_can") { dist = 5.95; phi = 1.22; theta = 0.32; }
+      else if (v.shape === "square_soft") { dist = 6.05; phi = 1.32; theta = 0.48; }
 
       offCam.position.set(
         dist * Math.sin(phi) * Math.sin(theta),

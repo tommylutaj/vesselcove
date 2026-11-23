@@ -2012,23 +2012,52 @@ def main():
     line-height: 1.4;
   }
   .req-cancel-btn {
-    border: 1px solid rgba(194, 24, 14, 0.30);
+    border: 1px solid rgba(194, 24, 14, 0.32);
     background: var(--crimson-soft);
     color: var(--crimson);
     font-family: var(--sans);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    padding: 6px 13px;
-    border-radius: 999px;
+    padding: 8px 16px;
+    border-radius: 10px;
     cursor: pointer;
     white-space: nowrap;
-    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.14s ease;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
   }
   .req-cancel-btn:hover {
     background: var(--crimson);
     color: #FFFFFF;
     border-color: var(--crimson);
-    transform: translateY(-1px);
+  }
+  .req-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border-light);
+    padding-top: 12px;
+    margin-top: 2px;
+  }
+  .req-overall-status-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: #F8FAFC;
+    border: 1px solid #CBD5E1;
+    color: #1E293B;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .req-overall-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #D97706;
+    flex-shrink: 0;
   }
   .req-sup-row {
     display: flex;
@@ -2134,8 +2163,8 @@ def main():
     border-color: var(--crimson) !important;
     background: var(--crimson-soft) !important;
     color: var(--crimson) !important;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm) !important;
+    transform: none !important;
+    box-shadow: none !important;
   }
   .profile-hdr-btn:hover .profile-hdr-name {
     color: var(--crimson) !important;
@@ -2151,9 +2180,17 @@ def main():
   .profile-req-badge { border-radius: 999px !important; }
 
   /* Minimal Sellora + ESTORE Marketplace */
-  .catalog-view {
-    max-width: 1380px !important;
-    padding: 14px 32px 26px 32px !important;
+  .custom-vessel-stage {
+    padding: 0 !important;
+  }
+  .catalog-view,
+  .pillars-portal,
+  .profile-view,
+  .custom-vessel-inner {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px 24px 32px 24px !important;
   }
   .cat-header-minimal {
     display: flex;
@@ -2161,11 +2198,13 @@ def main():
     align-items: flex-end;
     gap: 18px;
     flex-wrap: wrap;
-    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding-bottom: 14px;
+    margin-bottom: 12px;
   }
   .cat-title-minimal {
     font-family: var(--display);
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 800;
     color: #FFFFFF;
     letter-spacing: -0.025em;
@@ -2173,9 +2212,10 @@ def main():
     margin: 0;
   }
   .cat-sub-minimal {
-    font-size: 12.5px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.78);
-    margin-top: 2px;
+    margin-top: 3px;
+    margin-bottom: 0;
     font-weight: 500;
   }
   .cat-toolbar-minimal {
@@ -2233,7 +2273,7 @@ def main():
   .cat-card {
     grid-column: auto !important;
     display: grid !important;
-    grid-template-columns: 152px 1fr !important;
+    grid-template-columns: 188px 1fr !important;
     align-items: stretch !important;
     background: #FFFFFF !important;
     border: 1px solid var(--border) !important;
@@ -2254,14 +2294,15 @@ def main():
     position: relative;
     background: linear-gradient(180deg, #F0F2F5 0%, #E5E8EE 100%);
     border-radius: 14px;
-    width: 152px;
-    height: 100%;
-    min-height: 184px;
+    width: 188px !important;
+    height: 188px !important;
+    min-height: 188px !important;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 8px 6px;
+    padding: 10px;
   }
   .cat-real-img {
     width: 100%;
@@ -2275,21 +2316,28 @@ def main():
   .cat-card:hover .cat-real-img {
     transform: none !important;
   }
+  .cat-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
   .fav-heart-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 36px;
-    height: 36px;
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
     border-radius: 999px;
-    border: 1px solid rgba(15, 23, 42, 0.06);
+    border: 1px solid var(--border);
     background: #FFFFFF;
     color: #94A3B8;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+    box-shadow: none;
     transition: color 0.16s ease, background-color 0.16s ease, border-color 0.16s ease;
     z-index: 4;
   }
@@ -2392,7 +2440,7 @@ def main():
     border-radius: 16px;
     padding: 12px;
     display: grid;
-    grid-template-columns: 132px 1fr;
+    grid-template-columns: 168px 1fr;
     align-items: stretch;
     gap: 14px;
     box-shadow: var(--shadow-sm);
@@ -2401,13 +2449,14 @@ def main():
     position: relative;
     background: linear-gradient(180deg, #F0F2F5 0%, #E5E8EE 100%);
     border-radius: 12px;
-    width: 132px;
-    height: 100%;
+    width: 168px;
+    height: 168px;
     min-height: 168px;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px;
+    padding: 8px;
     overflow: hidden;
   }
   .verified-seal {
@@ -2810,9 +2859,12 @@ def main():
     letter-spacing: 0.12em;
   }
   .brown-hdr-title {
+    font-family: var(--display);
     font-size: 25px;
     font-weight: 800;
-    margin-top: 2px;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0;
     color: #FFFFFF;
   }
   .brown-hdr-muted {
@@ -2849,8 +2901,7 @@ def main():
     .drag-toast { left: 50%; font-size: 9.5px; padding: 5px 10px; }
     .filiera-locked-red-text { white-space: normal; }
     .fstep-pill { font-size: 10px; padding: 7px 5px; }
-    .pillars-portal { padding: 14px 18px 24px 18px; }
-    .catalog-view { padding: 20px 22px 36px 22px !important; }
+    .pillars-portal, .catalog-view, .profile-view, .custom-vessel-inner { padding: 16px 24px 32px 24px !important; }
     .cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   }
 
@@ -2955,7 +3006,8 @@ def main():
     }
     .cat-stage, .fav-prof-stage {
       width: 118px !important;
-      min-height: 156px !important;
+      height: 118px !important;
+      min-height: 118px !important;
     }
     .cat-thumb { width: 100%; height: 148px; min-height: 148px; border-right: none; border-bottom: 1.5px solid var(--ink); }
     .cat-card-header-flex { flex-direction: column !important; }
@@ -6680,7 +6732,7 @@ function renderCustomGraphicView() {
 
             <div class="custom-spec-checklist">
               <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI ATTIVI IN STUDIO 3D" : "ACTIVE 3D STUDIO PARAMETERS"}</div>
-              <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${l === "it" ? v.it : v.en}</strong> (${v.subIt})</div>
+              <div>01 // ${l === "it" ? "Misure:" : "Dimensions:"} <strong>${l === "it" ? v.subIt : v.subEn}</strong></div>
               <div>02 // ${l === "it" ? "Lavorazione:" : "Process:"} <strong>${l === "it" ? processIt : processEn}</strong></div>
               <div>03 // ${l === "it" ? "Materiale:" : "Material:"} <strong>${matName}</strong></div>
             </div>
@@ -6932,7 +6984,10 @@ function toggleARModal(openVal) {
       <button type="button" style="border:none; background:transparent; cursor:pointer; font-size:16px; font-weight:800; color:var(--slate);" onclick="toggleARModal(false)">✕</button>
     </div>
     <h3 style="font-size:17px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Visualizza il prodotto sul tuo tavolo" : "View the product on your desk"}</h3>
-    <div style="font-family:var(--mono); font-size:12px; font-weight:700; color:var(--espresso);">${l === "it" ? v.it : v.en} · ${l === "it" ? v.subIt : v.subEn}</div>
+    <div style="font-family:var(--mono); font-size:12px; font-weight:700; color:var(--espresso); text-align:center; line-height:1.45;">
+      <div>${l === "it" ? v.it : v.en}</div>
+      <div style="color:var(--slate); font-weight:600; margin-top:2px;">${l === "it" ? v.subIt : v.subEn}</div>
+    </div>
     <div class="ar-qr-frame">${qrSvg}</div>
     <p style="font-size:12px; color:var(--charcoal); line-height:1.45;">
       ${l === "it"
@@ -7087,12 +7142,14 @@ function renderProfileView() {
           <div class="fav-prof-card" onclick="selectVesselFromMarketplace('${v.id}')" style="cursor:pointer;">
             <div class="fav-prof-stage">
               <img class="cat-real-img" src="${getVesselRealisticThumb(v)}" alt="${l === "it" ? v.it : v.en}">
-              <button type="button" class="fav-heart-btn active" data-fav-vid="${v.id}" onclick="toggleFavoriteVessel('${v.id}', event)" title="${l === "it" ? "Rimuovi dai preferiti" : "Remove from favorites"}" aria-label="${l === "it" ? "Rimuovi dai preferiti" : "Remove from favorites"}">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
             </div>
             <div class="cat-meta-body">
-              <div class="cat-meta-title">${l === "it" ? v.it : v.en}</div>
+              <div class="cat-title-row">
+                <div class="cat-meta-title">${l === "it" ? v.it : v.en}</div>
+                <button type="button" class="fav-heart-btn active" data-fav-vid="${v.id}" onclick="toggleFavoriteVessel('${v.id}', event)" title="${l === "it" ? "Rimuovi dai preferiti" : "Remove from favorites"}" aria-label="${l === "it" ? "Rimuovi dai preferiti" : "Remove from favorites"}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
               ${renderVesselTwoColSpecs(v, l)}
               <div class="cat-meta-footer">
                 <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); selectVesselFromMarketplace('${v.id}')">
@@ -7126,15 +7183,11 @@ function renderProfileView() {
             <div style="font-size:11.5px; font-weight:600; color:var(--slate); margin-bottom:4px;">${l === "it" ? "Inviata il" : "Sent on"} ${req.createdAt}</div>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span style="font-family:var(--mono); font-size:11px; font-weight:800; color:var(--crimson);">${req.id}</span>
-              <span class="req-status-pill">${l === "it" ? "IN ATTESA DI ACCETTAZIONE" : "AWAITING ACCEPTANCE"}</span>
             </div>
             <div style="font-size:15.5px; font-weight:800; color:var(--ink); margin-top:7px;">${l === "it" ? req.vesselIt : req.vesselEn}</div>
             <div class="req-spec-line">${req.summaryLine}</div>
           </div>
-          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0;">
-            <button type="button" class="req-cancel-btn" onclick="cancelSubmittedRequest('${req.id}')">
-              ${l === "it" ? "Annulla richiesta" : "Cancel request"}
-            </button>
+          <div style="text-align:right; flex-shrink:0;">
             <div style="font-family:var(--mono); font-size:17px; font-weight:800; color:var(--ink);">${formatEuro(req.totalCost)}</div>
           </div>
         </div>
@@ -7155,6 +7208,16 @@ function renderProfileView() {
             </div>
           `).join("")}
         </div>
+
+        <div class="req-card-footer">
+          <div class="req-overall-status-box">
+            <span class="req-overall-status-dot"></span>
+            <span>${l === "it" ? "In attesa di accettazione" : "Awaiting acceptance"}</span>
+          </div>
+          <button type="button" class="req-cancel-btn" onclick="cancelSubmittedRequest('${req.id}')">
+            ${l === "it" ? "Annulla richiesta" : "Cancel request"}
+          </button>
+        </div>
       </div>
     `).join("");
 
@@ -7163,8 +7226,7 @@ function renderProfileView() {
   host.innerHTML = `
     <div class="brown-hdr-bar">
       <div>
-        <div class="brown-hdr-kicker">${l === "it" ? "AREA PERSONALE BRAND" : "BRAND PERSONAL AREA"}</div>
-        <h1 class="brown-hdr-title">${l === "it" ? "Account, Preferiti e Richieste" : "Account, Favorites & Requests"}</h1>
+        <h1 class="brown-hdr-title">${l === "it" ? "Area Personale" : "Personal Area"}</h1>
       </div>
       <button class="cta-btn white" style="width:auto; padding:0 18px; height:38px;" onclick="returnToMarketplaceAfterSubmit(true)">
         ${l === "it" ? "Torna al Marketplace" : "Back to Marketplace"}
@@ -9058,7 +9120,7 @@ function createThumbDoypackTexture() {
 function generatePhotorealisticVesselThumbnails() {
   if (typeof THREE === "undefined") return;
   try {
-    const W = 340, H = 460;
+    const W = 440, H = 440;
     const offCanvas = document.createElement("canvas");
     offCanvas.width = W;
     offCanvas.height = H;
@@ -9276,7 +9338,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
 
       const centerY = -1.25 + totalH * 0.5;
       let dist = 5.95, phi = 1.32, theta = 0.34;
-      if (v.shape === "jar_lux") { dist = 4.75; phi = 1.18; theta = 0.38; }
+      if (v.shape === "jar_lux") { dist = 5.15; phi = 1.18; theta = 0.38; }
       else if (v.shape === "wine_bordeaux") { dist = 6.75; phi = 1.38; theta = 0.28; }
       else if (v.shape === "doypack") { dist = 6.45; phi = 1.34; theta = 0.36; }
       else if (v.shape === "alu_can") { dist = 5.95; phi = 1.22; theta = 0.32; }
@@ -9349,13 +9411,15 @@ function renderCatalogView() {
     return `
       <div class="cat-card" onclick="selectVesselFromMarketplace('${v.id}')">
         <div class="cat-stage">
-          <button type="button" class="fav-heart-btn ${isFav ? "active" : ""}" data-fav-vid="${v.id}" onclick="toggleFavoriteVessel('${v.id}', event)" title="${l === "it" ? (isFav ? "Rimuovi dai preferiti" : "Salva nei preferiti") : (isFav ? "Remove from favorites" : "Save to favorites")}" aria-label="${l === "it" ? "Preferiti" : "Favorite"}">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="${isFav ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
           ${visualMarkup}
         </div>
         <div class="cat-meta-body">
-          <div class="cat-meta-title">${l === "it" ? v.it : v.en}</div>
+          <div class="cat-title-row">
+            <div class="cat-meta-title">${l === "it" ? v.it : v.en}</div>
+            <button type="button" class="fav-heart-btn ${isFav ? "active" : ""}" data-fav-vid="${v.id}" onclick="toggleFavoriteVessel('${v.id}', event)" title="${l === "it" ? (isFav ? "Rimuovi dai preferiti" : "Salva nei preferiti") : (isFav ? "Remove from favorites" : "Save to favorites")}" aria-label="${l === "it" ? "Preferiti" : "Favorite"}">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="${isFav ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
           ${renderVesselTwoColSpecs(v, l)}
           <div class="cat-meta-footer">
             <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); selectVesselFromMarketplace('${v.id}')">
@@ -9686,8 +9750,8 @@ function renderPillarsView() {
   document.getElementById("pillarsPortalBody").innerHTML = `
     <div class="brown-hdr-bar">
       <div>
-        <div class="brown-hdr-kicker">${l === "it" ? "SELEZIONE PASSO-PASSO FORNITORI" : "STEP-BY-STEP SUPPLIER SELECTION"}</div>
-        <h1 class="brown-hdr-title">${l === "it" ? "Composizione Filiera e Richiesta Prova" : "Step-by-Step Supply Chain and Trial Request"}</h1>
+        <h1 class="brown-hdr-title">${l === "it" ? "Selezione Passo-Passo Fornitori" : "Step-by-Step Supplier Selection"}</h1>
+        <p class="cat-sub-minimal">${l === "it" ? "Componi la filiera desiderata per richiedere la prova" : "Compose your desired supply chain to request a trial"}</p>
       </div>
       <div style="text-align:right;">
         <div class="brown-hdr-muted">${l === "it" ? "TOTALE LOTTO IN CORSO" : "LIVE TRIAL TOTAL"}</div>

@@ -7116,9 +7116,6 @@ function renderProfileView() {
             ? "Clicca sull'icona del cuore sui contenitori del Marketplace per salvarli rapidamente in questa sezione."
             : "Click the heart icon on any Marketplace container to save it here for quick access."}
         </p>
-        <button class="cta-btn white" style="width:auto; padding:0 20px; height:36px; margin:12px auto 0 auto;" onclick="returnToMarketplaceAfterSubmit(true)">
-          ${l === "it" ? "Esplora il Marketplace" : "Explore Marketplace"}
-        </button>
       </div>
     `
     : `
@@ -7156,9 +7153,6 @@ function renderProfileView() {
             ? "Configura un contenitore nello Studio 3D, scegli i fornitori in Filiera e clicca su Invia richiesta per monitorare qui lo stato di accettazione."
             : "Configure a container in the 3D Studio, pick your suppliers in Supply Chain and click Send request to monitor acceptance status here."}
         </p>
-        <button class="cta-btn" style="width:auto; padding:0 22px; margin:14px auto 0 auto;" onclick="returnToMarketplaceAfterSubmit(true)">
-          ${l === "it" ? "Vai al Marketplace" : "Go to Marketplace"}
-        </button>
       </div>
     `
     : reqs.map(req => `

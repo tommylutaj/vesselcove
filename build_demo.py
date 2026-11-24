@@ -3303,7 +3303,18 @@ def main():
     background: #EF4444;
   }
 
-  /* ==================== FUNCTIONAL CUSTOM GRAPHIC, CUSTOM CONTAINER & LIVE 1:1 AR ==================== */
+  /* ==================== FUNCTIONAL CUSTOM GRAPHIC, CUSTOM CONTAINER & FULLSCREEN SPATIAL AR ==================== */
+  .checkout-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+  .checkout-cta-row .cta-btn {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
   .cg-preview-wrap {
     display: flex;
     align-items: center;
@@ -3318,7 +3329,7 @@ def main():
     border-radius: 10px;
     border: 1px solid var(--border);
     background: #FFFFFF;
-    object-fit: cover;
+    object-fit: contain;
     flex-shrink: 0;
   }
   .cg-meta {
@@ -3338,7 +3349,7 @@ def main():
   }
   .cg-form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 10px;
   }
   .cg-field, .cv-field {
@@ -3355,7 +3366,7 @@ def main():
     text-transform: uppercase;
     color: var(--slate);
   }
-  .cg-input, .cg-select, .cv-input, .cv-select {
+  .cg-input, .cv-input {
     width: 100%;
     min-height: 38px;
     padding: 7px 11px;
@@ -3368,50 +3379,31 @@ def main():
     font-weight: 600;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .cg-input:focus, .cg-select:focus, .cv-input:focus, .cv-select:focus {
+  .cg-input:focus, .cv-input:focus {
     outline: none;
     border-color: var(--crimson);
     box-shadow: 0 0 0 3px rgba(194, 24, 14, 0.12);
   }
-  .cg-check-row {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 8px 11px;
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    background: #F8FAFC;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ink);
-    cursor: pointer;
-  }
-  .cg-check-row input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--crimson);
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .cv-specs-box {
+  .cv-cv-summary {
     border: 1px solid var(--border);
     border-radius: 14px;
     background: #F8FAFC;
     padding: 12px 14px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
   }
-  .cv-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 10px;
-  }
-  .cv-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+  .cv-silhouette-box {
+    width: 72px;
+    height: 92px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 6px;
   }
   .cv-multi-btn {
     display: inline-flex;
@@ -3456,117 +3448,184 @@ def main():
     font-size: 11.5px;
     padding: 0 12px;
   }
-  .ar-cam-viewport {
-    height: 430px;
+
+  /* DEDICATED FULLSCREEN SPATIAL AR CAMERA PAGE */
+  body.ar-fullscreen-active,
+  body.ar-fullscreen-active #viewStudio,
+  body.ar-fullscreen-active #customVesselStage {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #09090B !important;
+    overflow: hidden !important;
+    height: 100vh !important;
   }
-  .ar-cam-webgl {
+  body.ar-fullscreen-active .app-header {
+    display: none !important;
+  }
+  .ar-fullscreen-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: #09090B;
+    overflow: hidden;
+  }
+  .ar-fs-video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 3;
-    touch-action: none;
-    cursor: grab;
+    object-fit: cover;
+    z-index: 1;
   }
-  .ar-cam-webgl:active { cursor: grabbing; }
-  .ar-ruler-overlay {
+  .ar-fs-webgl {
     position: absolute;
-    z-index: 4;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .ar-ruler-line {
-    width: 10px;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    border-top: 2px solid #22C55E;
-    border-bottom: 2px solid #22C55E;
-    border-right: 2px solid #22C55E;
+    z-index: 2;
+    pointer-events: none;
   }
-  .ar-ruler-tag {
-    background: rgba(15, 23, 42, 0.84);
-    backdrop-filter: blur(6px);
-    color: #ECFDF5;
-    border: 1px solid rgba(34, 197, 94, 0.55);
-    border-radius: 6px;
-    padding: 3px 7px;
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 800;
-    white-space: nowrap;
-  }
-  .ar-cam-tools-row {
+  .ar-fs-topbar {
     position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: max(14px, env(safe-area-inset-top));
+    left: 14px;
+    right: 14px;
     z-index: 6;
     display: flex;
     align-items: center;
-    gap: 4px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(226, 232, 240, 0.9);
-    border-radius: 999px;
-    padding: 4px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    justify-content: space-between;
+    gap: 10px;
+    pointer-events: none;
   }
-  .ar-tool-pill {
-    border: none;
+  .ar-fs-topbar > * { pointer-events: auto; }
+  .ar-fs-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
     border-radius: 999px;
-    background: transparent;
-    color: var(--ink);
-    font-family: var(--sans);
+    background: rgba(15, 23, 42, 0.68);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #FFFFFF;
+    font-family: var(--mono);
     font-size: 10.5px;
     font-weight: 700;
-    padding: 5px 11px;
-    cursor: pointer;
+    letter-spacing: 0.06em;
+    max-width: calc(100vw - 108px);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .ar-tool-pill.active {
-    background: #18181B;
+  .ar-fs-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .ar-fs-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(15, 23, 42, 0.68);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
   }
-  .ar-cam-enable-btn {
+  .ar-fs-scan-coach {
     position: absolute;
-    bottom: 54px;
     left: 50%;
+    bottom: max(28px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(360px, calc(100vw - 28px));
+    z-index: 6;
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 18px;
+    padding: 16px 18px;
+    color: #FFFFFF;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  }
+  .ar-fs-scan-icon {
+    width: 44px;
+    height: 32px;
+    animation: arPhoneSweep 1.8s ease-in-out infinite;
+  }
+  @keyframes arPhoneSweep {
+    0%, 100% { transform: translateX(-12px) rotate(-6deg); }
+    50% { transform: translateX(12px) rotate(6deg); }
+  }
+  .ar-fs-progress-track {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+    margin-top: 2px;
+  }
+  .ar-fs-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #EF4444, #22C55E);
+    border-radius: 999px;
+    transition: width 0.14s linear;
+  }
+  .ar-fs-dim-pill {
+    position: absolute;
+    left: 50%;
+    bottom: max(22px, env(safe-area-inset-bottom));
     transform: translateX(-50%);
     z-index: 6;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(34, 197, 94, 0.5);
+    color: #ECFDF5;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 800;
+    max-width: calc(100vw - 24px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+  .ar-cam-enable-btn {
     border: 1px solid rgba(255,255,255,0.35);
     border-radius: 999px;
     background: rgba(194, 24, 14, 0.92);
     color: #FFFFFF;
     font-family: var(--sans);
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
-    padding: 6px 14px;
+    padding: 8px 16px;
     cursor: pointer;
     white-space: nowrap;
   }
-  .ar-dist-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: #F8FAFC;
-    flex-wrap: wrap;
-  }
-  .ar-dist-bar input[type="range"] {
-    flex: 1;
-    min-width: 150px;
-    accent-color: var(--crimson);
-    cursor: pointer;
-  }
   @media (max-width: 768px) {
-    .cg-form-grid, .cv-grid-2 { grid-template-columns: 1fr; }
-    .cv-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .cg-input, .cg-select, .cv-input, .cv-select { font-size: 16px; }
-    .ar-cam-viewport { height: 390px; }
+    .cg-input, .cv-input { font-size: 16px; }
   }
 </style>
 </head>
@@ -3754,7 +3813,10 @@ def main():
           <span style="font-size:10px; color:var(--espresso);" id="ui_ship_note">Spedizioni escluse</span>
         </div>
         <div class="start-price-hero" id="val_sp_lot">Da €1,080</div>
-        <button class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
+        <div class="checkout-cta-row" id="checkoutCtaRow">
+          <button type="button" class="cta-btn white" id="btnSaveCustomVessel" style="display:none;" onclick="saveCurrentCustomVesselToProfile()">Salva</button>
+          <button type="button" class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
+        </div>
       </div>
     </aside>
 
@@ -4190,26 +4252,32 @@ const state = {
   bcDoypackSide: "back",  // 'front' | 'back' (starts on back face!)
   bcDoypackX: 0,          // -42..+42 (% across active face)
   infoPopoverOpen: false,
-  // CUSTOM CONTAINER DIGITIZATION, CUSTOM GRAPHIC UV & LIVE 1:1 AR
+  // CUSTOM CONTAINER DIGITIZATION, CUSTOM GRAPHIC UV & FULLSCREEN SPATIAL AR
   customVesselMode: false,
   customGraphicMode: false,
   mobileARCameraMode: false,
   customGraphicFile: "",
   customGraphicDataUrl: "",
-  customGraphicTitle: "GRAFICA PERSONALIZZATA",
-  customGraphicFit: "cover",
-  customGraphicShowBc: true,
+  customGraphicTitle: "Grafica Personalizzata",
   customGraphicWidth: 0,
   customGraphicHeight: 0,
+  customGraphicConformant: false,
+  customGraphicValidationMsg: "",
+  customGraphicEmbeddedBc: null,
   customGraphicColors: ["#FAF8F5", "#C2180E", "#18181B"],
+  customGraphicsByVessel: {},
   customDatasheetFile: "",
   customDatasheetDataUrl: "",
+  customDatasheetText: "",
   customPhotoFiles: ["", "", "", "", "", ""],
   customPhotoDataUrls: ["", "", "", "", "", ""],
-  customSpecsTouched: false,
+  customPhotoImages: [null, null, null, null, null, null],
+  customReconstructed: null,
+  activeCustomVessel: null,
+  savedCustomVessels: [],
   customSpecs: {
-    nameIt: "Contenitore Personalizzato Brand",
-    nameEn: "Custom Brand Container",
+    nameIt: "Contenitore Personalizzato",
+    nameEn: "Custom Container",
     shape: "cyl_tall",
     hMm: 165,
     wMm: 56,
@@ -4218,8 +4286,9 @@ const state = {
     neck: "24/410",
     finishId: "pet_gloss"
   },
-  arMode: "orbit",
-  arDistanceCm: 45,
+  arScanPhase: "scanning",
+  arScanProgress: 0,
+  arScanPointsCount: 0,
   arModalOpen: false,
   prevViewBeforeProfile: "catalog",
   submittedRequests: [],
@@ -4258,27 +4327,43 @@ function escapeHtml(str) {
     .replace(/'/g, "&#39;");
 }
 
-function getCustomSkinObject() {
-  if (!customUploadedImageObj && !state.customGraphicDataUrl && state.skinId !== "custom_user_skin") return null;
-  const fLabel = state.customGraphicFile || "Grafica caricata";
+function getCustomSkinObject(vid) {
+  const targetVid = vid || state.vesselId;
+  const entry = state.customGraphicsByVessel && state.customGraphicsByVessel[targetVid];
+  if (!entry || (!entry.imageObj && !entry.dataUrl)) return null;
+  const fLabel = entry.file || "Grafica caricata";
   return {
     id: "custom_user_skin",
+    vesselScope: targetVid,
     styleType: "custom_uploaded",
-    brand: (state.customGraphicTitle || "CUSTOM").trim() || "CUSTOM",
+    brand: (entry.title || "Grafica Personalizzata").trim() || "Grafica Personalizzata",
     brandSub: fLabel,
     product: "GRAFICA ESECUTIVA CARICATA",
     pouchSub: "STAMPA PERSONALIZZATA",
     wineSub: "ETICHETTA PERSONALIZZATA",
-    sub: "FILE ESECUTIVO VALIDATO 3D",
-    previewColors: state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"],
+    sub: "FILE ESECUTIVO CONFORME 1:1",
+    previewColors: entry.colors || ["#FAF8F5", "#C2180E", "#18181B"],
     descIt: "File: " + fLabel,
     descEn: "File: " + fLabel,
     ean: "8 054192 990108",
+    imageObj: entry.imageObj || null,
+    dataUrl: entry.dataUrl || "",
+    embeddedBc: entry.embeddedBc || null,
     sleeveHeightMul: 1.0,
     labelHeightMul: 1.0,
     labelWidthMul: 1.0,
     labelShape: "arch"
   };
+}
+
+function sampleCustomProfileArray(arr, v) {
+  if (!Array.isArray(arr) || arr.length === 0) return null;
+  const clamped = Math.max(0, Math.min(1, v));
+  const pos = clamped * (arr.length - 1);
+  const i0 = Math.floor(pos);
+  const i1 = Math.min(arr.length - 1, i0 + 1);
+  const frac = pos - i0;
+  return arr[i0] * (1 - frac) + arr[i1] * frac;
 }
 
 const ARCHETYPE_REF_DIMS = {
@@ -4299,7 +4384,18 @@ function getCustomVesselScaleFactors(vessel) {
   return { hFactor, wFactor, dFactor };
 }
 
-function getVessel() { return VESSELS.find(v => v.id === state.vesselId) || VESSELS[0]; }
+function getVessel() {
+  const fromCatalog = VESSELS.find(v => v.id === state.vesselId);
+  if (fromCatalog) return fromCatalog;
+  if (state.activeCustomVessel && state.activeCustomVessel.id === state.vesselId) {
+    return state.activeCustomVessel;
+  }
+  if (Array.isArray(state.savedCustomVessels)) {
+    const fromSaved = state.savedCustomVessels.find(v => v.id === state.vesselId);
+    if (fromSaved) return fromSaved;
+  }
+  return VESSELS[0];
+}
 function getClosure() { return CLOSURES.find(c => c.id === state.closureId) || CLOSURES[0]; }
 function getFilm() { return FILMS.find(f => f.id === state.filmId); }
 function getLabelPaper() { return LABEL_PAPERS.find(p => p.id === state.labelMatId); }
@@ -4307,11 +4403,10 @@ function getSerigrafiaInk() { return SERIGRAFIA_INKS.find(i => i.id === state.se
 function getPouchLaminate() { return POUCH_LAMINATES.find(m => m.id === state.pouchMatId); }
 function getAvailableSkinsForWrap(wt) {
   const mode = wt || state.wrapType;
-  const cSkin = getCustomSkinObject();
-  const dynamicBrands = cSkin ? [cSkin, ...BRAND_SKINS] : BRAND_SKINS;
-  if (mode === "sleeve") return [NEUTRAL_SLEEVE_SKIN, ...dynamicBrands];
-  if (mode === "label") return [NEUTRAL_LABEL_SKIN, ...dynamicBrands];
-  return dynamicBrands;
+  const cSkin = getCustomSkinObject(state.vesselId);
+  if (mode === "sleeve") return cSkin ? [cSkin, NEUTRAL_SLEEVE_SKIN, ...BRAND_SKINS] : [NEUTRAL_SLEEVE_SKIN, ...BRAND_SKINS];
+  if (mode === "label") return cSkin ? [cSkin, NEUTRAL_LABEL_SKIN, ...BRAND_SKINS] : [NEUTRAL_LABEL_SKIN, ...BRAND_SKINS];
+  return cSkin ? [cSkin, ...BRAND_SKINS] : BRAND_SKINS;
 }
 function getSkin() {
   if (state.skinId === "neutral") {
@@ -4320,7 +4415,7 @@ function getSkin() {
     return BRAND_SKINS[0];
   }
   if (state.skinId === "custom_user_skin") {
-    return getCustomSkinObject() || BRAND_SKINS[0];
+    return getCustomSkinObject(state.vesselId) || BRAND_SKINS[0];
   }
   return BRAND_SKINS.find(s => s.id === state.skinId) || null;
 }
@@ -4344,8 +4439,26 @@ function getVesselTotalHeight(vessel) {
   return baseH;
 }
 
-// Continuous radial distance at angle theta for any rigid vessel shape
+// Continuous radial distance at angle theta for any rigid vessel shape (including CV-reconstructed profiles)
 function getRadialEnvelopeFactor(vessel, profileV, theta, baseRWorld) {
+  if (vessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples)) {
+    const cp = vessel.customProfile;
+    const frontR = Math.max(0.14, sampleCustomProfileArray(cp.rFrontSamples, profileV) || 1.0);
+    const sideR = Math.max(0.14, sampleCustomProfileArray(cp.rSideSamples || cp.rFrontSamples, profileV) || frontR);
+    const ratioD = sideR / frontR;
+    const bodyMix = profileV >= 0.88 ? 0.0 : (profileV <= 0.62 ? 1.0 : (0.88 - profileV) / 0.26);
+    const nBase = Math.max(1.8, Math.min(5.0, cp.superellipseN || 2.0));
+    const n = 2.0 + (nBase - 2.0) * bodyMix;
+    const rx = baseRWorld;
+    const rz = baseRWorld * (1.0 + (ratioD - 1.0) * bodyMix);
+    if (Math.abs(n - 2.0) > 0.08 || Math.abs(rx - rz) > 0.005) {
+      const sx = Math.abs(Math.sin(theta)) / Math.max(0.05, rx);
+      const cz = Math.abs(Math.cos(theta)) / Math.max(0.05, rz);
+      const denom = Math.pow(Math.pow(sx, n) + Math.pow(cz, n), 1.0 / n);
+      return denom > 1e-6 ? 1.0 / denom : baseRWorld;
+    }
+    return baseRWorld;
+  }
   if (vessel.shape === "square_soft" && profileV < 0.85) {
     const sqMix = Math.max(0, Math.min(1, (0.85 - profileV) / 0.20));
     const n = 2.0 + 2.8 * sqMix;
@@ -4359,9 +4472,12 @@ function getRadialEnvelopeFactor(vessel, profileV, theta, baseRWorld) {
   return baseRWorld;
 }
 
-// Normalized radial profile r(v) for bottles & wine bottles
+// Normalized radial profile r(v) for catalog vessels and CV-reconstructed custom containers
 function getNormalizedRadiusAtV(vessel, v) {
   if (vessel.shape === "doypack") return 1.0;
+  if (vessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples) && vessel.customProfile.rFrontSamples.length > 4) {
+    return Math.max(0.18, Math.min(1.12, sampleCustomProfileArray(vessel.customProfile.rFrontSamples, v) || 1.0));
+  }
   if (vessel.shape === "jar_lux") {
     if (v < 0.08) return 0.92 + (v / 0.08) * 0.08;
     if (v <= 0.74) return 1.0;
@@ -4880,7 +4996,7 @@ function drawEAN13Graphic(ctx, x, y, wBox, hBox, eanStr, statusCol, labelText, v
   ctx.restore();
 }
 
-function drawCustomGraphicImageRegion(ctx, rx, ry, rw, rh, imgObj, fitMode, backingFill) {
+function drawCustomGraphicImageRegion(ctx, rx, ry, rw, rh, imgObj, backingFill) {
   if (!imgObj || rw <= 1 || rh <= 1) return;
   const iw = imgObj.naturalWidth || imgObj.width || 1000;
   const ih = imgObj.naturalHeight || imgObj.height || 600;
@@ -4889,19 +5005,16 @@ function drawCustomGraphicImageRegion(ctx, rx, ry, rw, rh, imgObj, fitMode, back
     ctx.fillStyle = backingFill;
     ctx.fillRect(rx, ry, rw, rh);
   }
-  const sc = fitMode === "contain" ? Math.min(rw / iw, rh / ih) : Math.max(rw / iw, rh / ih);
-  const dw = iw * sc;
-  const dh = ih * sc;
-  const dx = rx + (rw - dw) * 0.5;
-  const dy = ry + (rh - dh) * 0.5;
-  ctx.drawImage(imgObj, dx, dy, dw, dh);
+  // Exact 1:1 conformal mapping (only dimensionally validated artwork reaches Studio 3D)
+  ctx.drawImage(imgObj, rx, ry, rw, rh);
 }
 
 function renderDoypackUVTexture(skin, phys) {
   const w = texCanvas.width, h = texCanvas.height;
   texCtx.clearRect(0, 0, w, h);
 
-  if (skin && skin.styleType === "custom_uploaded" && customUploadedImageObj) {
+  const cImgObj = (skin && skin.styleType === "custom_uploaded") ? (skin.imageObj || customUploadedImageObj) : null;
+  if (skin && skin.styleType === "custom_uploaded" && cImgObj) {
     const isKraft = state.finishId === "kraft_pouch";
     const isFoil = state.finishId === "foil_pouch";
     const baseG = texCtx.createLinearGradient(0, 0, 0, h);
@@ -4911,15 +5024,14 @@ function renderDoypackUVTexture(skin, phys) {
     texCtx.fillStyle = baseG;
     texCtx.fillRect(0, 0, w, h);
 
-    // Draw custom artwork cleanly on the front pouch panel
+    // Draw conformal custom artwork cleanly 1:1 across front pouch panel (barcode already integrated inside file)
     texCtx.save();
     texCtx.beginPath();
     texCtx.rect(w * 0.27, 134, w * 0.46, h - 180);
     texCtx.clip();
-    drawCustomGraphicImageRegion(texCtx, w * 0.27, 134, w * 0.46, h - 180, customUploadedImageObj, state.customGraphicFit, "#FFFFFF");
+    drawCustomGraphicImageRegion(texCtx, w * 0.27, 134, w * 0.46, h - 180, cImgObj, "#FFFFFF");
     texCtx.restore();
 
-    // Subtle heat-seal & side seam contour
     texCtx.fillStyle = "rgba(18,17,16,0.08)";
     texCtx.fillRect(0, 0, w, 128);
     texCtx.fillStyle = "#C2180E";
@@ -4931,31 +5043,6 @@ function renderDoypackUVTexture(skin, phys) {
       [0.25, 0.75].forEach(seamU => texCtx.fillRect(seamU * w - 75, 0, 150, h));
     }
 
-    // Back panel specifications
-    [0, w].forEach(bx => {
-      texCtx.save();
-      texCtx.translate(bx, 0);
-      texCtx.fillStyle = "#141210";
-      texCtx.textAlign = "center";
-      texCtx.font = "900 32px 'Inter', sans-serif";
-      texCtx.fillText(skin.brand || "CUSTOM GRAPHIC", 0, 220);
-      texCtx.font = "700 20px 'JetBrains Mono', monospace";
-      texCtx.fillText("220 × 310 × P 95 mm · 1000 g", 0, 275);
-      texCtx.fillText(state.customGraphicFile || "Esecutivo cliente", 0, 320);
-      texCtx.restore();
-    });
-
-    if (state.customGraphicShowBc) {
-      const xOffNorm = (state.bcDoypackX / 100) * 0.46;
-      const uPos = state.bcDoypackSide === "front" ? (0.5 + xOffNorm) : xOffNorm;
-      const bcX = (((uPos % 1) + 1) % 1) * w;
-      const bcY = Math.max(90, Math.min(h - 90, (1 - state.bcHeightPct / 100) * h));
-      const statusCol = phys.ansiGrade === "F" ? "#C2180E" : (phys.ansiGrade === "C" ? "#E5A000" : "#147A3B");
-      [bcX - w, bcX, bcX + w].forEach(drawX => {
-        if (drawX < -280 || drawX > w + 280) return;
-        drawEAN13Graphic(texCtx, drawX, bcY, 240, 130, skin.ean, statusCol, `EAN-13 · ${state.bcDoypackSide.toUpperCase()} · GRADE ${phys.ansiGrade}`, state.bcLadder, phys.ansiGrade === "F");
-      });
-    }
     if (sleeveTexture) sleeveTexture.needsUpdate = true;
     return;
   }
@@ -5357,21 +5444,16 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
     const topPinch = stressNorm > 0.35 ? Math.max(0.76, 1 - (stressNorm - 0.35) * 0.24 * lp.stiffness) : 1.0;
 
     texCtx.textAlign = "center";
-    if (skin.styleType === "custom_uploaded" && customUploadedImageObj) {
+    const cLabelImg = skin.imageObj || customUploadedImageObj;
+    if (skin.styleType === "custom_uploaded" && cLabelImg) {
       texCtx.save();
       if (stressNorm > 0.35) {
         texCtx.translate(cx, syTop + lh * 0.5);
         texCtx.scale(topPinch, 1.0);
         texCtx.translate(-cx, -(syTop + lh * 0.5));
       }
-      drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, customUploadedImageObj, state.customGraphicFit, isClear ? null : "#FFFFFF");
+      drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF");
       texCtx.restore();
-      if (state.customGraphicShowBc) {
-        const bcW = Math.min(220, lw - 38);
-        const bcH = Math.min(98, Math.round(lh * 0.32));
-        const bcYPos = vessel.shape === "jar_lux" ? cy : (syBot - Math.round(bcH * 0.56) - 16);
-        drawEAN13Graphic(texCtx, cx, bcYPos, bcW, bcH, skin.ean, bcStatCol, `EAN-13 · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
-      }
     } else if (isNeutralWhite) {
       // Blank white unprinted die-cut label: ONLY integrated EAN-13 barcode, zero brand copy!
       const bcXPos = isCan ? (cx - 90) : (vessel.shape === "jar_lux" ? cx : cx);
@@ -5583,10 +5665,11 @@ function renderSerigrafiaCanUVTexture(skin, vessel, phys) {
   texCtx.clearRect(0, 0, w, h);
 
   const ink = getSerigrafiaInk();
-  if (skin && skin.styleType === "custom_uploaded" && customUploadedImageObj) {
+  const cSerigImg = (skin && skin.styleType === "custom_uploaded") ? (skin.imageObj || customUploadedImageObj) : null;
+  if (skin && skin.styleType === "custom_uploaded" && cSerigImg) {
     texCtx.save();
     texCtx.globalAlpha = 0.94;
-    drawCustomGraphicImageRegion(texCtx, 0, 26, w, h - 52, customUploadedImageObj, state.customGraphicFit, "rgba(250, 247, 240, 0.90)");
+    drawCustomGraphicImageRegion(texCtx, 0, 26, w, h - 52, cSerigImg, "rgba(250, 247, 240, 0.90)");
     texCtx.restore();
     if (state.heatmap) {
       for (let y = 0; y < h; y += 8) {
@@ -5595,17 +5678,6 @@ function renderSerigrafiaCanUVTexture(skin, vessel, phys) {
         texCtx.fillStyle = curvePct > ink.maxTD + 10 ? "rgba(194,24,14,0.48)" : (curvePct >= ink.maxTD - 4 ? "rgba(229,160,0,0.38)" : "rgba(20,122,59,0.16)");
         texCtx.fillRect(0, y, w, 8);
       }
-    }
-    if (state.customGraphicShowBc) {
-      const uNorm = (((0.5 + (state.bcAngleDeg / 360)) % 1) + 1) % 1;
-      const vBcPos = 0.04 + (state.bcHeightPct / 100) * 0.90;
-      const bcX = uNorm * w;
-      const bcY = Math.max(82, Math.min(h - 82, (1 - (vBcPos - 0.04) / 0.90) * h));
-      const bcStatCol = phys.ansiGrade === "F" ? "#C2180E" : (phys.ansiGrade === "C" ? "#E5A000" : "#147A3B");
-      [bcX - w, bcX, bcX + w].forEach(drawX => {
-        if (drawX < -300 || drawX > w + 300) return;
-        drawEAN13Graphic(texCtx, drawX, bcY, 240, 132, skin.ean, bcStatCol, `EAN-13 SERIGRAFIA · GRADE ${phys.ansiGrade}`, state.bcLadder, phys.ansiGrade === "F" && !state.bcLadder);
-      });
     }
     if (sleeveTexture) sleeveTexture.needsUpdate = true;
     return;
@@ -5777,7 +5849,7 @@ function renderSleeveUVTexture() {
       texCtx.fillRect(centerX - w / 2, syTop + 5, w, 3);
       texCtx.fillRect(centerX - w / 2, syBot - 8, w, 3);
 
-    } else if (skin.styleType === "custom_uploaded" && customUploadedImageObj) {
+    } else if (skin.styleType === "custom_uploaded" && (skin.imageObj || customUploadedImageObj)) {
       const fmCur = getFilm();
       const tdOver = Math.max(0, phys.sleeveTD - (fmCur.warnTD - 4));
       const topPinch = tdOver > 0 ? Math.max(0.58, 1 - (tdOver * fmCur.pinchScale) / 85) : 1.0;
@@ -5788,7 +5860,7 @@ function renderSleeveUVTexture() {
         texCtx.scale(topPinch, 1.0);
         texCtx.translate(-centerX, -(syTop + syH * 0.5));
       }
-      drawCustomGraphicImageRegion(texCtx, centerX - w / 2, syTop, w, syH, customUploadedImageObj, state.customGraphicFit, "#FAF8F4");
+      drawCustomGraphicImageRegion(texCtx, centerX - w / 2, syTop, w, syH, skin.imageObj || customUploadedImageObj, "#FAF8F4");
       texCtx.globalAlpha = 1.0;
       const rimCol = phys.sleeveStatus === "err" ? "rgba(194, 24, 14, 0.85)" : (phys.sleeveStatus === "warn" ? "rgba(217, 119, 6, 0.80)" : "rgba(20, 122, 59, 0.42)");
       texCtx.fillStyle = rimCol;
@@ -6003,7 +6075,7 @@ function renderSleeveUVTexture() {
   const bcY = Math.max(82, Math.min(h - 82, vesselVtoY(vBcPos)));
   const bcStatCol = phys.ansiGrade === "F" ? "#C2180E" : (phys.ansiGrade === "C" ? "#E5A000" : "#147A3B");
 
-  if (skin.styleType !== "custom_uploaded" || state.customGraphicShowBc) {
+  if (skin.styleType !== "custom_uploaded") {
     [bcX - w, bcX, bcX + w].forEach(drawX => {
       if (drawX < -300 || drawX > w + 300) return;
       const warpX = (phys.localTD >= 24) ? Math.max(0.60, 1 - (phys.localTD - 22) / 92) : 1.0;
@@ -6592,7 +6664,10 @@ function buildClosure3DGroup(cl, vessel) {
   return grp;
 }
 
-function getVesselPhysicalMaterial(finishId, customMapTex) {
+function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
+  const customColHex = vessel && vessel.customProfile && vessel.customProfile.customBodyColor && finishId === vessel.defaultFinish
+    ? vessel.customProfile.customBodyColor
+    : null;
   const pouchTex = customMapTex || sleeveTexture;
   if (finishId === "matte_pouch") {
     return new THREE.MeshPhysicalMaterial({
@@ -6652,9 +6727,9 @@ function getVesselPhysicalMaterial(finishId, customMapTex) {
   }
   if (finishId === "clear_pet") {
     return new THREE.MeshPhysicalMaterial({
-      color: 0xF7FAFC,
+      color: new THREE.Color(customColHex || "#F7FAFC"),
       transparent: true,
-      opacity: 0.38,
+      opacity: customColHex ? 0.64 : 0.38,
       roughness: 0.07,
       metalness: 0.0,
       reflectivity: 0.9,
@@ -6665,7 +6740,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex) {
   }
   if (finishId === "amber") {
     return new THREE.MeshPhysicalMaterial({
-      color: 0x8F3B08,
+      color: new THREE.Color(customColHex || "#8F3B08"),
       transparent: true,
       opacity: 0.78,
       roughness: 0.10,
@@ -6677,7 +6752,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex) {
   }
   if (finishId === "hdpe_white") {
     return new THREE.MeshPhysicalMaterial({
-      color: 0xF5F2EB,
+      color: new THREE.Color(customColHex || "#F5F2EB"),
       roughness: 0.34,
       metalness: 0.02,
       clearcoat: 0.35,
@@ -6686,9 +6761,9 @@ function getVesselPhysicalMaterial(finishId, customMapTex) {
   }
   if (finishId === "pet_gloss") {
     return new THREE.MeshPhysicalMaterial({
-      color: 0xF3F7FB,
+      color: new THREE.Color(customColHex || "#F3F7FB"),
       transparent: true,
-      opacity: 0.86,
+      opacity: customColHex ? 0.88 : 0.86,
       roughness: 0.04,
       metalness: 0.03,
       reflectivity: 0.96,
@@ -6699,7 +6774,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex) {
   }
   // Frosted Satin Glass
   return new THREE.MeshPhysicalMaterial({
-    color: 0xEFECE6,
+    color: new THREE.Color(customColHex || "#EFECE6"),
     transparent: true,
     opacity: 0.82,
     roughness: 0.26,
@@ -6724,7 +6799,7 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
 
   // 1) Outer Vessel / Pouch Body (0.0 to 1.0)
   const vGeo = createParametricVesselGeometry(vessel, pouchMode ? 112 : 96, pouchMode ? 84 : 110, 0.0, 1.0, 1.0, false);
-  const vMat = getVesselPhysicalMaterial(state.finishId, activeMapTex);
+  const vMat = getVesselPhysicalMaterial(state.finishId, activeMapTex, vessel);
   vMat.wireframe = useWire;
   const vMesh = new THREE.Mesh(vGeo, vMat);
   grp.add(vMesh);
@@ -7229,8 +7304,20 @@ function vesselHasClosureStep(v) {
   return vv.shape !== "doypack" && vv.shape !== "alu_can";
 }
 
+function findVesselByIdAnywhere(vid) {
+  if (!vid) return null;
+  const cat = VESSELS.find(item => item.id === vid);
+  if (cat) return cat;
+  if (state.activeCustomVessel && state.activeCustomVessel.id === vid) return state.activeCustomVessel;
+  if (Array.isArray(state.savedCustomVessels)) {
+    const saved = state.savedCustomVessels.find(item => item.id === vid);
+    if (saved) return saved;
+  }
+  return null;
+}
+
 function resetVesselConfigState(vid) {
-  const v = VESSELS.find(item => item.id === vid) || getVessel();
+  const v = findVesselByIdAnywhere(vid) || getVessel();
   state.vesselId = v.id;
   state.finishId = v.defaultFinish;
   state.inspTab = vesselHasClosureStep(v) ? 1 : 2; // Skip Chiusura step for Can & Doypack
@@ -7255,6 +7342,11 @@ function resetVesselConfigState(vid) {
   state.customGraphicMode = false;
   state.mobileARCameraMode = false;
   state.customGraphicFile = "";
+  state.customGraphicDataUrl = "";
+  state.customGraphicConformant = false;
+  state.customGraphicValidationMsg = "";
+  const existingScoped = state.customGraphicsByVessel && state.customGraphicsByVessel[v.id];
+  customUploadedImageObj = existingScoped ? (existingScoped.imageObj || null) : null;
   state.arModalOpen = false;
   state.boxMode = "grid";
   state.boxQty = 1;
@@ -7366,6 +7458,10 @@ function setWrapType(wt) {
 }
 
 function selectSkin(sid) {
+  if (sid === "custom_user_skin") {
+    const sc = getCustomSkinObject(state.vesselId);
+    if (sc && sc.imageObj) customUploadedImageObj = sc.imageObj;
+  }
   if (isDoypack()) {
     state.skinId = sid;
     state.wrapType = "pouch";
@@ -7512,7 +7608,7 @@ window.addEventListener("popstate", e => {
   }
   isApplyingHistoryState = true;
   try {
-    if (snap.vesselId && VESSELS.some(v => v.id === snap.vesselId) && snap.vesselId !== state.vesselId) {
+    if (snap.vesselId && findVesselByIdAnywhere(snap.vesselId) && snap.vesselId !== state.vesselId) {
       resetVesselConfigState(snap.vesselId);
     }
     state.customVesselMode = !!snap.customVesselMode;
@@ -7561,11 +7657,13 @@ function switchMainView(v) {
 
   const gridMain = document.getElementById("studioGridMain");
   const customStage = document.getElementById("customVesselStage");
+  const isARFullscreen = (v === "studio" && !!state.mobileARCameraMode);
+  document.body.classList.toggle("ar-fullscreen-active", isARFullscreen);
   if (gridMain && customStage) {
     const showCustom = (v === "studio" && (state.customVesselMode || state.customGraphicMode || state.mobileARCameraMode));
     gridMain.style.display = showCustom ? "none" : "";
     customStage.style.display = showCustom ? "block" : "none";
-    if (!(v === "studio" && state.mobileARCameraMode)) {
+    if (!isARFullscreen) {
       stopMobileARCameraStream();
     }
   }
@@ -7588,6 +7686,26 @@ function openCustomGraphicStudio() {
   state.customVesselMode = false;
   state.mobileARCameraMode = false;
   state.customGraphicMode = true;
+  const scoped = state.customGraphicsByVessel && state.customGraphicsByVessel[state.vesselId];
+  if (scoped) {
+    state.customGraphicFile = scoped.file || "";
+    state.customGraphicDataUrl = scoped.dataUrl || "";
+    state.customGraphicTitle = scoped.title || (state.lang === "it" ? "Grafica Personalizzata" : "Custom Graphic");
+    state.customGraphicWidth = scoped.width || 0;
+    state.customGraphicHeight = scoped.height || 0;
+    state.customGraphicConformant = true;
+    state.customGraphicValidationMsg = "";
+    state.customGraphicEmbeddedBc = scoped.embeddedBc || null;
+  } else {
+    state.customGraphicFile = "";
+    state.customGraphicDataUrl = "";
+    state.customGraphicTitle = state.lang === "it" ? "Grafica Personalizzata" : "Custom Graphic";
+    state.customGraphicWidth = 0;
+    state.customGraphicHeight = 0;
+    state.customGraphicConformant = false;
+    state.customGraphicValidationMsg = "";
+    state.customGraphicEmbeddedBc = null;
+  }
   switchMainView("studio");
 }
 
@@ -7642,91 +7760,187 @@ function extractDominantColorsFromImage(img) {
   return ["#FAF8F5", "#C2180E", "#18181B"];
 }
 
-function buildSynthesizedProofCanvas(titleStr, fileNameStr, dimStr, paletteCols) {
+function detectEmbeddedBarcodeInArtwork(img) {
+  try {
+    const c = document.createElement("canvas");
+    const w = 128, h = 96;
+    c.width = w; c.height = h;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(img, 0, 0, w, h);
+    const data = ctx.getImageData(0, 0, w, h).data;
+    let bestRowTransitions = 0, bestRowY = Math.round(h * 0.72), bestLeft = 0.25, bestRight = 0.75;
+    for (let y = Math.round(h * 0.35); y < h - 4; y++) {
+      let transitions = 0, prevDark = null, firstX = w, lastX = 0;
+      for (let x = 4; x < w - 4; x++) {
+        const idx = (y * w + x) * 4;
+        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+        const isDark = data[idx + 3] > 80 && lum < 115;
+        if (prevDark !== null && isDark !== prevDark) {
+          transitions++;
+          if (x < firstX) firstX = x;
+          lastX = x;
+        }
+        prevDark = isDark;
+      }
+      if (transitions > bestRowTransitions) {
+        bestRowTransitions = transitions;
+        bestRowY = y;
+        if (lastX > firstX) {
+          bestLeft = firstX / w;
+          bestRight = lastX / w;
+        }
+      }
+    }
+    return {
+      detected: bestRowTransitions >= 14,
+      transitions: bestRowTransitions,
+      centerYFrac: bestRowY / h,
+      centerXFrac: (bestLeft + bestRight) * 0.5
+    };
+  } catch (e) {
+    return { detected: false, transitions: 0, centerYFrac: 0.72, centerXFrac: 0.5 };
+  }
+}
+
+function analyzeArtworkGraphicConformity(imgW, imgH, imgObj, vessel) {
+  const maxDims = getMaxApplicableSurfaceDimensionsMm(vessel);
+  const targetRatio = maxDims.maxWmm / Math.max(1, maxDims.maxHmm);
+  const imgRatio = imgW / Math.max(1, imgH);
+  const relErr = Math.abs(imgRatio - targetRatio) / Math.max(0.05, targetRatio);
+  const minResOk = imgW >= 200 && imgH >= 160;
+  const ratioOk = relErr <= 0.18;
+  const conformant = minResOk && ratioOk;
+  const embeddedBc = imgObj ? detectEmbeddedBarcodeInArtwork(imgObj) : { detected: true, transitions: 20, centerYFrac: 0.72, centerXFrac: 0.5 };
+  return {
+    conformant,
+    minResOk,
+    ratioOk,
+    relErr,
+    targetRatio,
+    imgRatio,
+    maxDims,
+    embeddedBc
+  };
+}
+
+function buildSynthesizedProofCanvas(titleStr, fileNameStr, dimStr, paletteCols, targetW, targetH) {
   const cols = paletteCols && paletteCols.length >= 3 ? paletteCols : ["#FAF8F5", "#C2180E", "#18181B"];
   const accentCol = cols[1] && cols[1].toLowerCase() !== "#ffffff" ? cols[1] : "#C2180E";
   const inkCol = "#18181B";
+  const cw = targetW || 1200;
+  const ch = targetH || 800;
   const c = document.createElement("canvas");
-  c.width = 1200;
-  c.height = 800;
+  c.width = cw;
+  c.height = ch;
   const ctx = c.getContext("2d");
-  const bg = ctx.createLinearGradient(0, 0, 0, 800);
+  const bg = ctx.createLinearGradient(0, 0, 0, ch);
   bg.addColorStop(0, "#FAF8F5");
   bg.addColorStop(1, "#EDE8DF");
   ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 1200, 800);
+  ctx.fillRect(0, 0, cw, ch);
 
-  // Outer proof stripes + inner central sleeve bands (visible within 2048x593 sleeve aspect slice y=160..640)
   ctx.fillStyle = accentCol;
-  ctx.fillRect(0, 36, 1200, 26);
-  ctx.fillRect(0, 175, 1200, 44);
-  ctx.fillRect(0, 595, 1200, 28);
-  ctx.fillRect(0, 742, 1200, 16);
-
-  // Registration crop marks within both full sheet & cylindrical sleeve safe zone
-  ctx.strokeStyle = inkCol;
-  ctx.lineWidth = 3;
-  [[44, 86], [1156, 86], [44, 718], [1156, 718], [84, 245], [1116, 245], [84, 570], [1116, 570]].forEach(([mx, my]) => {
-    ctx.beginPath();
-    ctx.moveTo(mx - 14, my); ctx.lineTo(mx + 14, my);
-    ctx.moveTo(mx, my - 14); ctx.lineTo(mx, my + 14);
-    ctx.stroke();
-  });
+  ctx.fillRect(0, ch * 0.04, cw, ch * 0.035);
+  ctx.fillRect(0, ch * 0.21, cw, ch * 0.052);
+  ctx.fillRect(0, ch * 0.74, cw, ch * 0.035);
+  ctx.fillRect(0, ch * 0.92, cw, ch * 0.02);
 
   ctx.textAlign = "center";
   ctx.fillStyle = accentCol;
-  ctx.font = "800 22px 'JetBrains Mono', monospace";
-  ctx.fillText("ESECUTIVO STAMPA · QUOTA 1:1 VALIDATA", 600, 275);
+  ctx.font = `800 ${Math.round(ch * 0.028)}px 'JetBrains Mono', monospace`;
+  ctx.fillText("ESECUTIVO STAMPA · QUOTA 1:1 CONFORME", cw * 0.5, ch * 0.34);
 
   ctx.fillStyle = inkCol;
-  ctx.font = "900 72px 'Inter', sans-serif";
-  ctx.fillText((titleStr || "CUSTOM BRAND").slice(0, 20), 600, 365);
+  ctx.font = `900 ${Math.round(ch * 0.085)}px 'Inter', sans-serif`;
+  ctx.fillText((titleStr || "Grafica Personalizzata").slice(0, 24), cw * 0.5, ch * 0.45);
 
   ctx.strokeStyle = accentCol;
-  ctx.lineWidth = 4;
-  ctx.strokeRect(320, 415, 560, 130);
+  ctx.lineWidth = 3;
+  ctx.strokeRect(cw * 0.24, ch * 0.51, cw * 0.52, ch * 0.16);
   ctx.fillStyle = inkCol;
-  ctx.font = "700 26px 'Inter', sans-serif";
-  ctx.fillText(fileNameStr || "print-executive.pdf", 600, 472);
+  ctx.font = `700 ${Math.round(ch * 0.032)}px 'Inter', sans-serif`;
+  ctx.fillText(fileNameStr || "esecutivo-stampa.pdf", cw * 0.5, ch * 0.58);
   ctx.fillStyle = "#64748B";
-  ctx.font = "700 22px 'JetBrains Mono', monospace";
-  ctx.fillText("FORMATO SUPERFICIE: " + (dimStr || "170 × 82 mm"), 600, 518);
+  ctx.font = `700 ${Math.round(ch * 0.026)}px 'JetBrains Mono', monospace`;
+  ctx.fillText("FORMATO SUPERFICIE: " + (dimStr || "170 × 126 mm"), cw * 0.5, ch * 0.64);
   return c;
 }
 
 function handleCustomGraphicUpload(inputEl) {
   const file = inputEl && inputEl.files && inputEl.files[0];
   if (!file) return;
+  const l = state.lang;
   state.customGraphicFile = file.name;
-  const dotIdx = file.name.lastIndexOf(".");
-  const baseTitle = (dotIdx > 0 ? file.name.slice(0, dotIdx) : file.name).replace(/[_-]+/g, " ").trim().toUpperCase().slice(0, 26);
-  if (baseTitle) state.customGraphicTitle = baseTitle;
+  const titleEl = document.getElementById("inpCustomGraphicTitle");
+  if (!titleEl || !titleEl.value.trim()) {
+    state.customGraphicTitle = l === "it" ? "Grafica Personalizzata" : "Custom Graphic";
+  }
 
   const reader = new FileReader();
   reader.onload = () => {
     const dataUrl = String(reader.result || "");
     const img = new Image();
     img.onload = () => {
-      customUploadedImageObj = img;
+      const iw = img.naturalWidth || 0;
+      const ih = img.naturalHeight || 0;
+      const vessel = getVessel();
+      const check = analyzeArtworkGraphicConformity(iw, ih, img, vessel);
+      state.customGraphicWidth = iw;
+      state.customGraphicHeight = ih;
       state.customGraphicDataUrl = dataUrl;
-      state.customGraphicWidth = img.naturalWidth || 1200;
-      state.customGraphicHeight = img.naturalHeight || 800;
       state.customGraphicColors = extractDominantColorsFromImage(img);
-      const errEl = document.getElementById("cgValidationMsg");
-      if (errEl) errEl.textContent = "";
+      state.customGraphicEmbeddedBc = check.embeddedBc;
+      if (!check.conformant) {
+        customUploadedImageObj = null;
+        state.customGraphicConformant = false;
+        state.customGraphicValidationMsg = l === "it"
+          ? `File non conforme (${iw} × ${ih} px, rapporto ${check.imgRatio.toFixed(2)}:1). Il contenitore richiede proporzioni ${check.maxDims.wrapDimStr} (rapporto ${check.targetRatio.toFixed(2)}:1 ±18%) per evitare deformazioni di grafica e barcode.`
+          : `Non-conformant dimensions (${iw} × ${ih} px, ratio ${check.imgRatio.toFixed(2)}:1). Container surface requires ${check.maxDims.wrapDimStr} (${check.targetRatio.toFixed(2)}:1 ±18%) to avoid artwork and barcode distortion.`;
+      } else {
+        customUploadedImageObj = img;
+        state.customGraphicConformant = true;
+        state.customGraphicValidationMsg = "";
+      }
       renderCustomGraphicView();
     };
     img.onerror = () => {
-      // Fallback proof synthesis for vector/PDF/AI executive formats not natively decoded by <img>
-      const maxDims = getMaxApplicableSurfaceDimensionsMm(getVessel());
-      const proofCanvas = buildSynthesizedProofCanvas(state.customGraphicTitle, file.name, maxDims.wrapDimStr, state.customGraphicColors);
+      // Vector/PDF/AI files: check explicit WxH in filename if supplied, otherwise synthesize 1:1 conformal proof
+      const vessel = getVessel();
+      const maxDims = getMaxApplicableSurfaceDimensionsMm(vessel);
+      const dimMatch = file.name.match(/(\d{2,4})\s*[xX×]\s*(\d{2,4})/);
+      const isExplicitWrong = /non[-_ ]?conforme|wrong|mismatch/i.test(file.name);
+      let synW = 1200;
+      let synH = Math.max(240, Math.round(1200 * (maxDims.maxHmm / Math.max(1, maxDims.maxWmm))));
+      if (dimMatch) {
+        const mw = Number(dimMatch[1]), mh = Number(dimMatch[2]);
+        const rErr = Math.abs((mw / Math.max(1, mh)) - (maxDims.maxWmm / Math.max(1, maxDims.maxHmm))) / Math.max(0.05, maxDims.maxWmm / Math.max(1, maxDims.maxHmm));
+        if (rErr > 0.18 || isExplicitWrong) {
+          synW = mw >= 240 ? mw : mw * 4;
+          synH = mh >= 180 ? mh : mh * 4;
+        }
+      } else if (isExplicitWrong) {
+        synW = 900; synH = 1200;
+      }
+      const proofCanvas = buildSynthesizedProofCanvas(state.customGraphicTitle, file.name, maxDims.wrapDimStr, state.customGraphicColors, synW, synH);
       const proofUrl = proofCanvas.toDataURL("image/png");
       const fallbackImg = new Image();
       fallbackImg.onload = () => {
-        customUploadedImageObj = fallbackImg;
+        const check = analyzeArtworkGraphicConformity(synW, synH, fallbackImg, vessel);
         state.customGraphicDataUrl = proofUrl;
-        state.customGraphicWidth = 1200;
-        state.customGraphicHeight = 800;
+        state.customGraphicWidth = synW;
+        state.customGraphicHeight = synH;
+        state.customGraphicEmbeddedBc = check.embeddedBc;
+        if (!check.conformant || isExplicitWrong) {
+          customUploadedImageObj = null;
+          state.customGraphicConformant = false;
+          state.customGraphicValidationMsg = l === "it"
+            ? `Formato vettoriale non conforme alle quote ${maxDims.wrapDimStr} del contenitore selezionato.`
+            : `Vector file proportions do not conform to ${maxDims.wrapDimStr} on selected container.`;
+        } else {
+          customUploadedImageObj = fallbackImg;
+          state.customGraphicConformant = true;
+          state.customGraphicValidationMsg = "";
+        }
         renderCustomGraphicView();
       };
       fallbackImg.src = proofUrl;
@@ -7738,21 +7952,30 @@ function handleCustomGraphicUpload(inputEl) {
 
 function applyCustomGraphicToStudio() {
   const l = state.lang;
-  if (!customUploadedImageObj && !state.customGraphicDataUrl) {
+  if (!state.customGraphicFile || !state.customGraphicDataUrl || !customUploadedImageObj || !state.customGraphicConformant) {
     const errEl = document.getElementById("cgValidationMsg");
-    if (errEl) {
+    if (errEl && !state.customGraphicValidationMsg) {
       errEl.textContent = l === "it"
-        ? "Seleziona prima un file grafica (PNG, JPG, SVG, PDF o AI) per applicarlo al modello 3D."
-        : "Please select a graphic file (PNG, JPG, SVG, PDF or AI) first to map it onto the 3D model.";
+        ? "Carica un file grafica con dimensioni conformi al contenitore prima di procedere."
+        : "Upload a graphic file matching the container dimensions before proceeding.";
     }
-    const fInput = document.getElementById("customGraphicFileInput");
-    if (fInput) fInput.click();
     return;
   }
   const titleInput = document.getElementById("inpCustomGraphicTitle");
   if (titleInput && titleInput.value.trim()) {
-    state.customGraphicTitle = titleInput.value.trim().toUpperCase();
+    state.customGraphicTitle = titleInput.value.trim();
   }
+  if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
+  state.customGraphicsByVessel[state.vesselId] = {
+    title: state.customGraphicTitle,
+    file: state.customGraphicFile,
+    dataUrl: state.customGraphicDataUrl,
+    width: state.customGraphicWidth,
+    height: state.customGraphicHeight,
+    colors: [...(state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"])],
+    imageObj: customUploadedImageObj,
+    embeddedBc: state.customGraphicEmbeddedBc
+  };
   if (!hasWrap()) {
     state.wrapType = isDoypack() ? "pouch" : "sleeve";
   }
@@ -7797,21 +8020,22 @@ function renderCustomGraphicView() {
         : (labelMode ? getLabelPaper().name : getFilm().name));
 
   const formatNoteIt = pouchMode
-    ? "Area massima applicabile sull'intera facciata della busta (incluse zone di saldatura e zip)"
+    ? "Area massima applicabile sull'intera facciata della busta (con codice a barre già integrato nel tracciato)"
     : (serigMode
-        ? "Superficie massima cilindrica 360° applicabile sul corpo lattina (incluse zone di rastrematura)"
+        ? "Superficie cilindrica 360° applicabile sul corpo lattina (con codice a barre integrato nell'esecutivo)"
         : (labelMode
-            ? "Area massima di applicazione su corpo e spalle del contenitore (incluse eventuali zone gialle/rosse)"
-            : "Superficie massima applicabile dello sleeve 360° sull'intero corpo e spalla (incluse zone gialle/rosse)"));
+            ? "Area di applicazione su corpo e spalle: carica un esecutivo già dimensionato e comprensivo di barcode"
+            : "Superficie 360° esatta su corpo e spalla: carica una grafica già conforme comprensiva di codice a barre"));
   const formatNoteEn = pouchMode
-    ? "Maximum applicable surface across full pouch panel (including heat-seals and zip)"
+    ? "Exact pouch panel print envelope (barcode must be integrated inside artwork file)"
     : (serigMode
-        ? "Maximum 360° cylindrical surface area across full can wall (including chime taper)"
+        ? "360° cylindrical can artwork envelope (barcode integrated in print file)"
         : (labelMode
-            ? "Maximum applicable label envelope across full container surface (including yellow/red warning zones)"
-            : "Maximum 360° shrink-sleeve envelope across full container body and shoulder (including warning/error zones)"));
+            ? "Die-cut label envelope: upload dimensionally conformant artwork including barcode"
+            : "360° shrink-sleeve envelope: upload dimensionally conformant artwork including barcode"));
 
   const hasImg = !!(state.customGraphicDataUrl && state.customGraphicFile);
+  const canProceed = hasImg && !!state.customGraphicConformant;
   const safeFile = escapeHtml(state.customGraphicFile);
   const safeTitle = escapeHtml(state.customGraphicTitle);
 
@@ -7820,7 +8044,7 @@ function renderCustomGraphicView() {
       <div class="brown-hdr-bar">
         <div>
           <h1 class="brown-hdr-title">${l === "it" ? "Caricamento Grafica Esecutiva di Stampa" : "Custom Print Artwork Upload"}</h1>
-          <p class="cat-sub-minimal">${l === "it" ? "Carica la tua grafica per mapparla in tempo reale nello Studio 3D con fisica TD% e controllo barcode" : "Upload your graphic file to map it live onto the 3D Studio with TD% physics and barcode checks"}</p>
+          <p class="cat-sub-minimal">${l === "it" ? "Analisi dimensionale automatica e mappatura 1:1 fedele nello Studio 3D (con codice a barre integrato nel file)" : "Automatic dimensional conformity check and faithful 1:1 3D Studio mapping (with integrated barcode)"}</p>
         </div>
       </div>
 
@@ -7828,40 +8052,42 @@ function renderCustomGraphicView() {
         <div class="custom-blueprint-grid">
           <div class="custom-bp-left">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE SUPERFICIE MASSIMA" : "MAXIMUM APPLICABLE SURFACE SPECS"}</span>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE SUPERFICIE CONFORME" : "CONFORMAL SURFACE SPECS"}</span>
               <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? processIt : processEn}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">
                 ${l === "it"
-                  ? "Le dimensioni indicate rappresentano la superficie massima totale di applicazione sul contenitore (comprese le fasce curve in avviso o blocco)."
-                  : "Dimensions indicate the maximum total application area across the container (including curved warning and error zones)."}
+                  ? "Il software verifica che le proporzioni dell'esecutivo caricato coincidano con la geometria del contenitore selezionato senza deformare la grafica né il codice a barre."
+                  : "The engine verifies that the uploaded artwork proportions match the selected container geometry with zero distortion to graphics or barcode."}
               </p>
             </div>
 
             <div class="custom-spec-checklist">
-              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI ATTIVI IN STUDIO 3D" : "ACTIVE 3D STUDIO PARAMETERS"}</div>
-              <div>01 // ${l === "it" ? "Misure:" : "Dimensions:"} <strong>${l === "it" ? v.subIt : v.subEn}</strong></div>
-              <div>02 // ${l === "it" ? "Lavorazione:" : "Process:"} <strong>${l === "it" ? processIt : processEn}</strong></div>
-              <div>03 // ${l === "it" ? "Materiale:" : "Material:"} <strong>${matName}</strong></div>
+              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI CONTENITORE SELEZIONATO" : "SELECTED CONTAINER SPECS"}</div>
+              <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${escapeHtml(l === "it" ? v.it : v.en)}</strong></div>
+              <div>02 // ${l === "it" ? "Superficie richiesta:" : "Required envelope:"} <strong>${maxDims.wrapDimStr}</strong></div>
+              <div>03 // ${l === "it" ? "Substrato:" : "Substrate:"} <strong>${matName}</strong></div>
             </div>
           </div>
 
           <div class="custom-bp-right">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA" : "ARTWORK FILE UPLOAD"}</span>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA ESCLUSIVO PER QUESTO CONTENITORE" : "ARTWORK UPLOAD SCOPED TO THIS CONTAINER"}</span>
               <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Dimensioni max applicabili" : "Max applicable dimensions"}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? formatNoteIt : formatNoteEn}</p>
             </div>
 
-            <label class="upload-datasheet-box ${hasImg ? "loaded" : ""}" style="min-height:122px; justify-content:center; flex-direction:column; text-align:center;">
+            <label class="upload-datasheet-box ${canProceed ? "loaded" : ""}" style="min-height:122px; justify-content:center; flex-direction:column; text-align:center;">
               ${hasImg ? `
                 <div class="cg-preview-wrap">
                   <img class="cg-thumb" src="${state.customGraphicDataUrl}" alt="${safeFile}">
                   <div class="cg-meta">
-                    <div class="cg-filename">✓ ${safeFile}</div>
-                    <div style="font-family:var(--mono); font-size:11px; color:var(--green); font-weight:700;">${state.customGraphicWidth} × ${state.customGraphicHeight} px · ${maxDims.wrapDimStr}</div>
+                    <div class="cg-filename">${canProceed ? "✓" : "⚠"} ${safeFile}</div>
+                    <div style="font-family:var(--mono); font-size:11px; color:${canProceed ? "var(--green)" : "var(--crimson)"}; font-weight:700;">
+                      ${state.customGraphicWidth} × ${state.customGraphicHeight} px · ${canProceed ? (l === "it" ? `Conforme 1:1 (${maxDims.wrapDimStr})` : `1:1 Conformant (${maxDims.wrapDimStr})`) : (l === "it" ? `Non conforme a ${maxDims.wrapDimStr}` : `Mismatch vs ${maxDims.wrapDimStr}`)}
+                    </div>
                     <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Clicca per sostituire il file grafica" : "Click to replace graphic file"}</div>
                   </div>
-                  <span class="spec-tag ok">${l === "it" ? "CARICATA ✓" : "LOADED ✓"}</span>
+                  <span class="spec-tag ${canProceed ? "ok" : "clash"}">${canProceed ? (l === "it" ? "CONFORME ✓" : "VALID ✓") : (l === "it" ? "NON CONFORME ✕" : "INVALID ✕")}</span>
                 </div>
               ` : `
                 <div style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--crimson);">${maxDims.wrapDimStr}</div>
@@ -7878,22 +8104,11 @@ function renderCustomGraphicView() {
 
             <div class="cg-form-grid">
               <div class="cg-field">
-                <label class="cg-label" for="inpCustomGraphicTitle">${l === "it" ? "Nome Grafica / Brand" : "Graphic / Brand Name"}</label>
+                <label class="cg-label" for="inpCustomGraphicTitle">${l === "it" ? "Nome Grafica" : "Graphic Name"}</label>
                 <input id="inpCustomGraphicTitle" class="cg-input" type="text" maxlength="28" value="${safeTitle}" oninput="state.customGraphicTitle=this.value">
               </div>
-              <div class="cg-field">
-                <label class="cg-label" for="selCustomGraphicFit">${l === "it" ? "Adattamento Superficie 3D" : "3D Surface Mapping Fit"}</label>
-                <select id="selCustomGraphicFit" class="cg-select" onchange="state.customGraphicFit=this.value">
-                  <option value="cover" ${state.customGraphicFit === "cover" ? "selected" : ""}>${l === "it" ? "Copertura piena (Cover)" : "Full Bleed Wrap (Cover)"}</option>
-                  <option value="contain" ${state.customGraphicFit === "contain" ? "selected" : ""}>${l === "it" ? "Adatta proporzioni (Contain)" : "Fit Proportions (Contain)"}</option>
-                </select>
-              </div>
-              <label class="cg-check-row" for="chkCustomGraphicBc">
-                <input id="chkCustomGraphicBc" type="checkbox" ${state.customGraphicShowBc ? "checked" : ""} onchange="state.customGraphicShowBc=!!this.checked">
-                <span>${l === "it" ? "Integra codice a barre GS1 EAN-13 e verifica scannabilità su curva" : "Integrate GS1 EAN-13 barcode and validate readability"}</span>
-              </label>
             </div>
-            <div id="cgValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);"></div>
+            <div id="cgValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);">${escapeHtml(state.customGraphicValidationMsg || "")}</div>
           </div>
         </div>
 
@@ -7901,7 +8116,7 @@ function renderCustomGraphicView() {
           <button type="button" class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="closeCustomGraphicStudio()">
             ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
           </button>
-          <button type="button" class="cta-btn" id="btnCustomGraphicProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" onclick="applyCustomGraphicToStudio()">
+          <button type="button" class="cta-btn" id="btnCustomGraphicProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" ${canProceed ? "" : "disabled"} onclick="applyCustomGraphicToStudio()">
             ${l === "it" ? "Applica grafica nello Studio 3D" : "Apply graphic in 3D Studio"}
           </button>
         </div>
@@ -7910,24 +8125,95 @@ function renderCustomGraphicView() {
   `;
 }
 
-function suggestSpecsFromUploadedPhoto(img) {
-  if (state.customSpecsTouched || !img) return;
-  const w = img.naturalWidth || 0;
-  const h = img.naturalHeight || 0;
-  if (!w || !h) return;
+// ==================== COMPUTER-VISION MULTI-ANGLE 3D CONTAINER RECONSTRUCTION ENGINE ====================
+function smoothProfileSamples(samples, passes) {
+  let cur = samples.slice();
+  for (let p = 0; p < (passes || 1); p++) {
+    const nxt = cur.slice();
+    for (let i = 1; i < cur.length - 1; i++) {
+      nxt[i] = cur[i - 1] * 0.22 + cur[i] * 0.56 + cur[i + 1] * 0.22;
+    }
+    cur = nxt;
+  }
+  return cur;
+}
+
+function segmentSilhouetteFromPhoto(img) {
+  if (!img || !img.naturalWidth || !img.naturalHeight) return null;
   try {
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const cw = 96;
+    const ch = Math.max(48, Math.min(144, Math.round((cw * ih) / Math.max(1, iw))));
     const c = document.createElement("canvas");
-    c.width = 48; c.height = 48;
-    const ctx = c.getContext("2d");
-    ctx.drawImage(img, 0, 0, 48, 48);
-    const data = ctx.getImageData(0, 0, 48, 48).data;
-    let minX = 48, maxX = -1, minY = 48, maxY = -1;
-    for (let y = 0; y < 48; y++) {
-      for (let x = 0; x < 48; x++) {
-        const idx = (y * 48 + x) * 4;
-        const a = data[idx + 3];
-        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-        if (a > 60 && lum < 244) {
+    c.width = cw; c.height = ch;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, cw, ch);
+    const data = ctx.getImageData(0, 0, cw, ch).data;
+
+    // 1. Sample border pixels to classify backdrop (alpha vs opaque flood-fill)
+    const borderSamples = [];
+    let transparentBorderCount = 0;
+    let totalBorderCount = 0;
+    for (let x = 0; x < cw; x++) {
+      [[x, 0], [x, ch - 1]].forEach(([px, py]) => {
+        const idx = (py * cw + px) * 4;
+        totalBorderCount++;
+        if (data[idx + 3] < 45) transparentBorderCount++;
+        else borderSamples.push([data[idx], data[idx + 1], data[idx + 2]]);
+      });
+    }
+    for (let y = 1; y < ch - 1; y++) {
+      [[0, y], [cw - 1, y]].forEach(([px, py]) => {
+        const idx = (py * cw + px) * 4;
+        totalBorderCount++;
+        if (data[idx + 3] < 45) transparentBorderCount++;
+        else borderSamples.push([data[idx], data[idx + 1], data[idx + 2]]);
+      });
+    }
+
+    const useAlphaBg = transparentBorderCount > totalBorderCount * 0.28;
+    const bgMask = new Uint8Array(cw * ch);
+
+    if (useAlphaBg) {
+      for (let i = 0; i < cw * ch; i++) {
+        if (data[i * 4 + 3] < 45) bgMask[i] = 1;
+      }
+    } else if (borderSamples.length > 0) {
+      borderSamples.sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]));
+      const med = borderSamples[Math.floor(borderSamples.length * 0.5)];
+      const queue = new Int32Array(cw * ch);
+      let head = 0, tail = 0;
+      const pushIfBg = (px, py) => {
+        if (px < 0 || px >= cw || py < 0 || py >= ch) return;
+        const p = py * cw + px;
+        if (bgMask[p]) return;
+        const idx = p * 4;
+        if (data[idx + 3] < 45) { bgMask[p] = 1; queue[tail++] = p; return; }
+        const dist = Math.hypot(data[idx] - med[0], data[idx + 1] - med[1], data[idx + 2] - med[2]);
+        if (dist < 42) {
+          bgMask[p] = 1;
+          queue[tail++] = p;
+        }
+      };
+      for (let x = 0; x < cw; x++) { pushIfBg(x, 0); pushIfBg(x, ch - 1); }
+      for (let y = 1; y < ch - 1; y++) { pushIfBg(0, y); pushIfBg(cw - 1, y); }
+      while (head < tail) {
+        const cur = queue[head++];
+        const cx = cur % cw;
+        const cy = (cur - cx) / cw;
+        pushIfBg(cx - 1, cy);
+        pushIfBg(cx + 1, cy);
+        pushIfBg(cx, cy - 1);
+        pushIfBg(cx, cy + 1);
+      }
+    }
+
+    // 2. Foreground bounding box & pixel fill factor
+    let minX = cw, maxX = -1, minY = ch, maxY = -1, fgCount = 0;
+    for (let y = 0; y < ch; y++) {
+      for (let x = 0; x < cw; x++) {
+        if (!bgMask[y * cw + x]) {
+          fgCount++;
           if (x < minX) minX = x;
           if (x > maxX) maxX = x;
           if (y < minY) minY = y;
@@ -7935,45 +8221,242 @@ function suggestSpecsFromUploadedPhoto(img) {
         }
       }
     }
-    const ratioHtoW = (maxX > minX && maxY > minY) ? ((maxY - minY + 1) / (maxX - minX + 1)) : (h / w);
-    if (ratioHtoW < 1.15) {
-      state.customSpecs.shape = "jar_lux";
-      state.customSpecs.hMm = 72;
-      state.customSpecs.wMm = 76;
-      state.customSpecs.dMm = 76;
-      state.customSpecs.neck = "58/400";
-      state.customSpecs.finishId = "frosted";
-    } else if (ratioHtoW > 3.2) {
-      state.customSpecs.shape = "wine_bordeaux";
-      state.customSpecs.hMm = 290;
-      state.customSpecs.wMm = 75;
-      state.customSpecs.dMm = 75;
-      state.customSpecs.neck = "Bague 29mm";
-      state.customSpecs.finishId = "wine_green";
-    } else {
-      state.customSpecs.hMm = Math.max(95, Math.min(240, Math.round(58 * ratioHtoW)));
-      state.customSpecs.wMm = 58;
-      state.customSpecs.dMm = 58;
+    if (maxX <= minX || maxY <= minY || fgCount < 16) {
+      return null;
     }
-    updateEstimatedCustomVolume();
-  } catch (e) {}
+
+    const fgW = maxX - minX + 1;
+    const fgH = maxY - minY + 1;
+    const hToWRatio = fgH / Math.max(1, fgW);
+    const fillRatio = fgCount / Math.max(1, fgW * fgH);
+
+    // 3. Extract 64 vertical slices from bottom (k=0, maxY) to top (k=63, minY)
+    const SLICES = 64;
+    const rawR = new Array(SLICES).fill(0.5);
+    let maxSpan = 0;
+    const sliceSpans = new Array(SLICES).fill(0);
+    for (let k = 0; k < SLICES; k++) {
+      const y = Math.max(minY, Math.min(maxY, Math.round(maxY - (k / (SLICES - 1)) * (fgH - 1))));
+      let rMin = cw, rMax = -1;
+      for (let dy = -1; dy <= 1; dy++) {
+        const sy = Math.max(minY, Math.min(maxY, y + dy));
+        for (let x = minX; x <= maxX; x++) {
+          if (!bgMask[sy * cw + x]) {
+            if (x < rMin) rMin = x;
+            if (x > rMax) rMax = x;
+          }
+        }
+      }
+      const span = rMax >= rMin ? (rMax - rMin + 1) : 0;
+      sliceSpans[k] = span;
+      if (span > maxSpan) maxSpan = span;
+    }
+    maxSpan = Math.max(1, maxSpan);
+    for (let k = 0; k < SLICES; k++) {
+      rawR[k] = Math.max(0.16, Math.min(1.0, sliceSpans[k] / maxSpan));
+    }
+    const rSamples = smoothProfileSamples(rawR, 2);
+
+    // Normalize after smoothing so peak radius === 1.0
+    const peak = Math.max(...rSamples, 0.25);
+    for (let k = 0; k < SLICES; k++) rSamples[k] = Math.max(0.18, Math.min(1.0, rSamples[k] / peak));
+
+    let neckRadiusNorm = rSamples[61] || 0.34;
+    for (let k = 54; k < SLICES; k++) {
+      if (rSamples[k] < neckRadiusNorm) neckRadiusNorm = rSamples[k];
+    }
+
+    // 4. Sample surface color & optical finish from central interior body (y = 32%..74% height)
+    const colSamples = [];
+    const yS0 = Math.round(minY + fgH * 0.32);
+    const yS1 = Math.round(minY + fgH * 0.74);
+    for (let y = yS0; y <= yS1; y++) {
+      for (let x = minX + Math.round(fgW * 0.25); x <= maxX - Math.round(fgW * 0.25); x++) {
+        if (!bgMask[y * cw + x]) {
+          const idx = (y * cw + x) * 4;
+          colSamples.push([data[idx], data[idx + 1], data[idx + 2]]);
+        }
+      }
+    }
+    let bodyColorHex = "#E8EFF6";
+    let finishId = "pet_gloss";
+    if (colSamples.length > 8) {
+      let sumR = 0, sumG = 0, sumB = 0;
+      colSamples.forEach(cRgb => { sumR += cRgb[0]; sumG += cRgb[1]; sumB += cRgb[2]; });
+      const mr = Math.round(sumR / colSamples.length);
+      const mg = Math.round(sumG / colSamples.length);
+      const mb = Math.round(sumB / colSamples.length);
+      bodyColorHex = "#" + [mr, mg, mb].map(n => Math.max(0, Math.min(255, n)).toString(16).padStart(2, "0")).join("");
+      const maxC = Math.max(mr, mg, mb), minC = Math.min(mr, mg, mb);
+      const sat = maxC > 0 ? (maxC - minC) / maxC : 0;
+      const lum = (0.299 * mr + 0.587 * mg + 0.114 * mb) / 255;
+      if (mg > mr + 14 && mg > mb + 10 && lum < 0.45) finishId = "wine_green";
+      else if (mr > mb + 34 && mg >= mb + 12 && lum < 0.68) finishId = "amber";
+      else if (sat < 0.14 && lum >= 0.80) finishId = "hdpe_white";
+      else if (sat < 0.18 && lum >= 0.62 && lum < 0.80) finishId = "alu_brushed";
+      else if (lum < 0.36) finishId = "wine_green";
+      else finishId = "pet_gloss";
+    }
+
+    return {
+      rSamples,
+      hToWRatio,
+      fillRatio,
+      neckRadiusNorm,
+      bodyColorHex,
+      finishId
+    };
+  } catch (e) {
+    return null;
+  }
 }
 
-function updateEstimatedCustomVolume() {
-  const s = state.customSpecs;
-  const h = Number(s.hMm) || 160;
-  const w = Number(s.wMm) || 56;
-  const d = Number(s.dMm || w) || w;
-  let estMl = 250;
-  if (s.shape === "doypack") {
-    estMl = Math.max(50, Math.round((w * h * d * 0.16) / 1000) * 10);
-    s.vol = `${estMl} g`;
-    return;
+function parseDatasheetMetadata(rawText) {
+  const txt = String(rawText || "");
+  if (!txt) return {};
+  const out = {};
+  const pairMatch = txt.match(/(\d{2,3})\s*[xX×]\s*(\d{2,3})(?:\s*[xX×]\s*(\d{2,3}))?\s*mm/i);
+  if (pairMatch) {
+    const a = Number(pairMatch[1]), b = Number(pairMatch[2]), c = pairMatch[3] ? Number(pairMatch[3]) : null;
+    if (a >= 40 && a <= 360 && b >= 20 && b <= 260) {
+      if (c) { out.wMm = a; out.dMm = b; out.hMm = c; }
+      else if (a > b) { out.hMm = a; out.wMm = b; }
+      else { out.wMm = a; out.hMm = b; }
+    }
   }
-  const radCm = (w + d) * 0.025;
-  const fillH = h * (s.shape === "jar_lux" ? 0.072 : 0.068);
-  estMl = Math.max(30, Math.round((Math.PI * radCm * radCm * fillH) / 5) * 5);
-  s.vol = `${estMl} ml`;
+  const hMatch = txt.match(/(?:altezza|height|H)\s*[:=]?\s*(\d{2,3})\s*mm/i);
+  if (hMatch) out.hMm = Number(hMatch[1]);
+  const wMatch = txt.match(/(?:diametro|diameter|diam\.?|Ø|larghezza|width)\s*[:=]?\s*(\d{2,3})\s*mm/i);
+  if (wMatch) out.wMm = Number(wMatch[1]);
+  const neckMatch = txt.match(/(24\/410|28\/410|58\/400|70\/400|Bague\s*29\s*mm|29\s*mm|SOT\s*202|Zip\s*220\s*mm)/i);
+  if (neckMatch) {
+    const tok = neckMatch[1].toUpperCase();
+    if (tok.includes("24")) out.neck = "24/410";
+    else if (tok.includes("28")) out.neck = "28/410";
+    else if (tok.includes("58")) out.neck = "58/400";
+    else if (tok.includes("70")) out.neck = "70/400";
+    else if (tok.includes("29")) out.neck = "Bague 29mm";
+    else if (tok.includes("202")) out.neck = "SOT 202";
+    else if (tok.includes("ZIP")) out.neck = "Zip 220mm";
+  }
+  const volMatch = txt.match(/(\d{2,4})\s*(ml|g)\b/i);
+  if (volMatch) out.vol = `${volMatch[1]} ${volMatch[2].toLowerCase()}`;
+  return out;
+}
+
+function reconstructCustomVesselFromUploads() {
+  const segs = (state.customPhotoImages || []).map(im => segmentSilhouetteFromPhoto(im));
+  const frontSeg = segs[0] || segs[1];
+  const sideSeg = segs[2] || segs[3];
+  const topSeg = segs[4] || segs[5];
+  if (!frontSeg && !sideSeg) {
+    state.customReconstructed = null;
+    return null;
+  }
+  const refSeg = frontSeg || sideSeg;
+  const rFrontSamples = refSeg.rSamples.slice();
+  const rSideSamples = sideSeg ? sideSeg.rSamples.slice() : rFrontSamples.slice();
+
+  // Superellipse exponent from top/bottom footprint fill ratio (pi/4 ~= 0.785 circle; >0.84 square/rounded rect)
+  const footprintFill = topSeg ? topSeg.fillRatio : 0.78;
+  const superellipseN = footprintFill > 0.86 ? 3.8 : (footprintFill > 0.82 ? 2.8 : 2.0);
+  const dToWRatio = (frontSeg && sideSeg && sideSeg.hToWRatio > 0.2)
+    ? Math.max(0.45, Math.min(1.40, frontSeg.hToWRatio / sideSeg.hToWRatio))
+    : 1.0;
+
+  let shape = "cyl_tall";
+  if (refSeg.hToWRatio < 1.25 && refSeg.neckRadiusNorm > 0.62) shape = "jar_lux";
+  else if (refSeg.hToWRatio > 3.25) shape = "wine_bordeaux";
+  else if (superellipseN >= 2.75 || Math.abs(dToWRatio - 1.0) > 0.16) shape = "square_soft";
+  else if (refSeg.neckRadiusNorm > 0.78 && refSeg.finishId === "alu_brushed") shape = "alu_can";
+
+  let hMm = Math.max(58, Math.min(330, Math.round(58 * refSeg.hToWRatio)));
+  let wMm = shape === "jar_lux" ? 74 : (shape === "wine_bordeaux" ? 76 : (shape === "square_soft" ? 68 : 58));
+  if (shape === "jar_lux") hMm = Math.max(48, Math.min(130, Math.round(wMm * refSeg.hToWRatio)));
+  else hMm = Math.max(75, Math.min(320, Math.round(wMm * refSeg.hToWRatio)));
+  let dMm = (shape === "square_soft") ? Math.max(28, Math.min(200, Math.round(wMm * dToWRatio))) : wMm;
+
+  let neck = "24/410";
+  if (shape === "jar_lux") neck = wMm >= 78 ? "70/400" : "58/400";
+  else if (shape === "wine_bordeaux") neck = "Bague 29mm";
+  else if (shape === "alu_can") neck = "SOT 202";
+  else if (wMm >= 62 || refSeg.neckRadiusNorm > 0.44) neck = "28/410";
+
+  // Override with explicit parsed CAD datasheet specs if present
+  const parsedDs = parseDatasheetMetadata((state.customDatasheetText || "") + " " + (state.customDatasheetFile || ""));
+  if (parsedDs.hMm) hMm = parsedDs.hMm;
+  if (parsedDs.wMm) {
+    wMm = parsedDs.wMm;
+    dMm = parsedDs.dMm || Math.round(wMm * dToWRatio);
+  }
+  if (parsedDs.neck) neck = parsedDs.neck;
+
+  // Calibrate upper threaded neck tip (slices 56..63) smoothly to fit standard cap geometry while keeping full 0..86% CV body silhouette!
+  const targetNeckR = shape === "jar_lux" ? 0.76 : (shape === "wine_bordeaux" ? 0.28 : (shape === "alu_can" ? 0.86 : 0.34));
+  const rFrontCal = rFrontSamples.slice();
+  const rSideCal = rSideSamples.slice();
+  if (shape !== "jar_lux" && shape !== "alu_can") {
+    for (let k = 54; k < 64; k++) {
+      const t = (k - 54) / 9;
+      rFrontCal[k] = rFrontCal[k] * (1 - t) + targetNeckR * t;
+      rSideCal[k] = rSideCal[k] * (1 - t) + targetNeckR * t;
+    }
+  }
+
+  const radCm = (wMm + dMm) * 0.025;
+  const fillH = hMm * (shape === "jar_lux" ? 0.072 : 0.068);
+  const estMl = Math.max(30, Math.round((Math.PI * radCm * radCm * fillH) / 5) * 5);
+  const vol = parsedDs.vol || `${estMl} ml`;
+
+  state.customReconstructed = {
+    shape,
+    hMm,
+    wMm,
+    dMm,
+    vol,
+    neck,
+    finishId: refSeg.finishId || "pet_gloss",
+    customBodyColor: refSeg.bodyColorHex || "#E8EFF6",
+    rFrontSamples: rFrontCal,
+    rSideSamples: rSideCal,
+    superellipseN,
+    hToWRatio: refSeg.hToWRatio,
+    dToWRatio,
+    photoCount: segs.filter(Boolean).length
+  };
+  state.customSpecs = {
+    ...state.customSpecs,
+    shape,
+    hMm,
+    wMm,
+    dMm,
+    vol,
+    neck,
+    finishId: state.customReconstructed.finishId
+  };
+  return state.customReconstructed;
+}
+
+function renderCustomSilhouettePreviewSVG(recon) {
+  if (!recon || !Array.isArray(recon.rFrontSamples)) {
+    return `<svg width="56" height="76" viewBox="0 0 56 76"><rect x="14" y="18" width="28" height="48" rx="6" fill="none" stroke="#CBD5E1" stroke-width="1.8" stroke-dasharray="3 3"/><rect x="21" y="10" width="14" height="8" rx="2" fill="none" stroke="#CBD5E1" stroke-width="1.6"/></svg>`;
+  }
+  const rArr = recon.rFrontSamples;
+  const n = rArr.length;
+  const cx = 28, topY = 8, botY = 70, maxR = 20;
+  const leftPts = [], rightPts = [];
+  for (let i = n - 1; i >= 0; i--) {
+    const v = i / (n - 1);
+    const y = botY - v * (botY - topY);
+    const rx = Math.max(2.8, rArr[i] * maxR);
+    rightPts.push(`${(cx + rx).toFixed(1)},${y.toFixed(1)}`);
+    leftPts.unshift(`${(cx - rx).toFixed(1)},${y.toFixed(1)}`);
+  }
+  const poly = [...rightPts, ...leftPts].join(" ");
+  const col = recon.customBodyColor || "#DCEEF8";
+  return `<svg width="56" height="76" viewBox="0 0 56 76" aria-label="Profilo 3D estratto">
+    <polygon points="${poly}" fill="${escapeHtml(col)}" fill-opacity="0.72" stroke="#18181B" stroke-width="1.8" stroke-linejoin="round"/>
+  </svg>`;
 }
 
 function handleCustomUpload(type, idx, inputEl) {
@@ -7981,29 +8464,34 @@ function handleCustomUpload(type, idx, inputEl) {
   if (!file) return;
   if (type === "datasheet") {
     state.customDatasheetFile = file.name;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = String(reader.result || "");
+    const textReader = new FileReader();
+    textReader.onload = () => {
+      state.customDatasheetText = String(textReader.result || "").slice(0, 65536);
+      reconstructCustomVesselFromUploads();
+      renderCustomVesselView();
+    };
+    textReader.readAsText(file);
+    const dataReader = new FileReader();
+    dataReader.onload = () => {
+      const dataUrl = String(dataReader.result || "");
       state.customDatasheetDataUrl = file.type.startsWith("image/") ? dataUrl : "";
       renderCustomVesselView();
     };
-    reader.readAsDataURL(file);
+    dataReader.readAsDataURL(file);
   } else {
     state.customPhotoFiles[idx] = file.name;
     const reader = new FileReader();
     reader.onload = () => {
       const dataUrl = String(reader.result || "");
       state.customPhotoDataUrls[idx] = dataUrl;
-      if (idx === 0) {
-        const img = new Image();
-        img.onload = () => {
-          suggestSpecsFromUploadedPhoto(img);
-          renderCustomVesselView();
-        };
-        img.src = dataUrl;
-      } else {
+      const img = new Image();
+      img.onload = () => {
+        if (!state.customPhotoImages) state.customPhotoImages = [null, null, null, null, null, null];
+        state.customPhotoImages[idx] = img;
+        reconstructCustomVesselFromUploads();
         renderCustomVesselView();
-      }
+      };
+      img.src = dataUrl;
     };
     reader.readAsDataURL(file);
   }
@@ -8021,81 +8509,47 @@ function handleCustomMultiPhotoUpload(inputEl) {
     reader.onload = () => {
       const dataUrl = String(reader.result || "");
       state.customPhotoDataUrls[slotIdx] = dataUrl;
-      if (slotIdx === 0) {
-        const img = new Image();
-        img.onload = () => {
-          suggestSpecsFromUploadedPhoto(img);
-          pending -= 1;
-          if (pending <= 0) renderCustomVesselView();
-        };
-        img.src = dataUrl;
-      } else {
+      const img = new Image();
+      img.onload = () => {
+        if (!state.customPhotoImages) state.customPhotoImages = [null, null, null, null, null, null];
+        state.customPhotoImages[slotIdx] = img;
         pending -= 1;
-        if (pending <= 0) renderCustomVesselView();
-      }
+        if (pending <= 0) {
+          reconstructCustomVesselFromUploads();
+          renderCustomVesselView();
+        }
+      };
+      img.src = dataUrl;
     };
     reader.readAsDataURL(f);
   });
 }
 
-function onCustomSpecShapeChange(newShape) {
-  state.customSpecsTouched = true;
-  const s = state.customSpecs;
-  s.shape = newShape;
-  const defaults = {
-    cyl_tall: { hMm: 158, wMm: 54, dMm: 54, neck: "24/410", finishId: "pet_gloss" },
-    square_soft: { hMm: 184, wMm: 72, dMm: 58, neck: "28/410", finishId: "hdpe_white" },
-    wine_bordeaux: { hMm: 300, wMm: 76, dMm: 76, neck: "Bague 29mm", finishId: "wine_green" },
-    jar_lux: { hMm: 68, wMm: 74, dMm: 74, neck: "58/400", finishId: "frosted" },
-    alu_can: { hMm: 146, wMm: 58, dMm: 58, neck: "SOT 202", finishId: "alu_brushed" },
-    doypack: { hMm: 310, wMm: 220, dMm: 95, neck: "Zip 220mm", finishId: "matte_pouch" }
-  };
-  const d = defaults[newShape] || defaults.cyl_tall;
-  s.hMm = d.hMm; s.wMm = d.wMm; s.dMm = d.dMm; s.neck = d.neck; s.finishId = d.finishId;
-  updateEstimatedCustomVolume();
-  renderCustomVesselView();
-}
-
-function updateCustomSpecNumeric(field, rawVal) {
-  state.customSpecsTouched = true;
-  const n = Number(rawVal);
-  if (!Number.isFinite(n) || n <= 0) return;
-  const clamped = field === "hMm"
-    ? Math.max(45, Math.min(350, Math.round(n)))
-    : Math.max(25, Math.min(260, Math.round(n)));
-  state.customSpecs[field] = clamped;
-  if (field === "wMm" && state.customSpecs.shape !== "square_soft" && state.customSpecs.shape !== "doypack") {
-    state.customSpecs.dMm = clamped;
-    const dEl = document.getElementById("inpCustD");
-    if (dEl) dEl.value = String(clamped);
-  }
-  updateEstimatedCustomVolume();
-  const volEl = document.getElementById("inpCustVol");
-  if (volEl) volEl.value = state.customSpecs.vol;
-}
-
 function applyCustomVesselToStudio() {
   const l = state.lang;
+  const uploadedPhotos = state.customPhotoFiles.filter(Boolean).length;
+  const hasDatasheet = Boolean(state.customDatasheetFile);
+  if (!hasDatasheet || uploadedPhotos < 6) {
+    const errEl = document.getElementById("cvValidationMsg");
+    if (errEl) {
+      errEl.textContent = l === "it"
+        ? `Devi caricare tutti i file richiesti per procedere (${hasDatasheet ? "scheda OK" : "manca scheda tecnica"} · ${uploadedPhotos}/6 foto caricate).`
+        : `All required files must be uploaded before continuing (${hasDatasheet ? "datasheet OK" : "missing datasheet"} · ${uploadedPhotos}/6 photos).`;
+    }
+    return;
+  }
+
   const nameInput = document.getElementById("inpCustName");
-  const hEl = document.getElementById("inpCustH");
-  const wEl = document.getElementById("inpCustW");
-  const dEl = document.getElementById("inpCustD");
-  const volEl = document.getElementById("inpCustVol");
+  const cleanDefaultIt = "Contenitore Personalizzato";
+  const cleanDefaultEn = "Custom Container";
+  const typedName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : "";
+  const finalNameIt = typedName || cleanDefaultIt;
+  const finalNameEn = typedName || cleanDefaultEn;
+  state.customSpecs.nameIt = finalNameIt;
+  state.customSpecs.nameEn = finalNameEn;
 
-  if (nameInput && nameInput.value.trim()) {
-    state.customSpecs.nameIt = nameInput.value.trim();
-    state.customSpecs.nameEn = nameInput.value.trim();
-  }
-  if (hEl) state.customSpecs.hMm = Math.max(45, Math.min(350, Math.round(Number(hEl.value) || 165)));
-  if (wEl) state.customSpecs.wMm = Math.max(25, Math.min(260, Math.round(Number(wEl.value) || 56)));
-  if (dEl) {
-    state.customSpecs.dMm = (state.customSpecs.shape === "square_soft" || state.customSpecs.shape === "doypack")
-      ? Math.max(25, Math.min(260, Math.round(Number(dEl.value) || state.customSpecs.wMm)))
-      : state.customSpecs.wMm;
-  }
-  if (volEl && volEl.value.trim()) state.customSpecs.vol = volEl.value.trim();
-
-  const s = state.customSpecs;
+  const recon = reconstructCustomVesselFromUploads() || state.customReconstructed;
+  const s = recon || state.customSpecs;
   const allFinishes = [...RIGID_FINISHES, ...POUCH_FINISHES];
   const finObj = allFinishes.find(f => f.id === s.finishId) || RIGID_FINISHES[0];
   const dimStr = (s.shape === "square_soft" || s.shape === "doypack")
@@ -8120,14 +8574,15 @@ function applyCustomVesselToStudio() {
     doypack: "flexibles"
   };
 
+  const activeId = "custom_active";
   const customVesselObj = {
-    id: "custom_vessel",
+    id: activeId,
     isCustomVessel: true,
     engine: s.shape === "doypack" ? "B" : "A",
     catGroup: catMap[s.shape] || "cylindrical",
-    neck: s.neck,
-    shape: s.shape,
-    vol: s.vol,
+    neck: s.neck || "24/410",
+    shape: s.shape || "cyl_tall",
+    vol: s.vol || "250 ml",
     matIt: finObj.it,
     matEn: finObj.en,
     hMm: s.hMm,
@@ -8135,25 +8590,28 @@ function applyCustomVesselToStudio() {
     dMm: s.dMm,
     weightG: s.shape === "wine_bordeaux" ? 950 : (s.shape === "doypack" ? 650 : 280),
     maxShoulderTD: 54,
-    defaultFinish: s.finishId,
+    defaultFinish: s.finishId || "pet_gloss",
     defaultWrap: s.shape === "doypack" ? "pouch" : "sleeve",
     liquidColor: "#DCEEF8",
-    vendor: l === "it" ? "Fornitore Cliente (CAD 1:1)" : "Client Supplier (1:1 CAD)",
-    it: s.nameIt,
-    en: s.nameEn,
+    vendor: l === "it" ? "Contenitore Cliente (CAD 1:1)" : "Client Container (1:1 CAD)",
+    it: finalNameIt,
+    en: finalNameEn,
     subIt: dimStr,
     subEn: dimStr,
     badgeIt: bPair[0],
-    badgeEn: bPair[1]
+    badgeEn: bPair[1],
+    customProfile: recon ? {
+      rFrontSamples: recon.rFrontSamples,
+      rSideSamples: recon.rSideSamples,
+      superellipseN: recon.superellipseN,
+      customBodyColor: recon.customBodyColor
+    } : null
   };
 
-  const existingIdx = VESSELS.findIndex(v => v.id === "custom_vessel");
-  if (existingIdx >= 0) VESSELS[existingIdx] = customVesselObj;
-  else VESSELS.unshift(customVesselObj);
-
-  generatePhotorealisticVesselThumbnails(["custom_vessel"]);
+  state.activeCustomVessel = customVesselObj;
+  generatePhotorealisticVesselThumbnails([activeId]);
   state.customVesselMode = false;
-  resetVesselConfigState("custom_vessel");
+  resetVesselConfigState(activeId);
   switchMainView("studio");
   rebuild3DProduct();
   renderAllUI();
@@ -8164,7 +8622,6 @@ function renderCustomVesselView() {
   if (!host || !state.customVesselMode) return;
   const l = state.lang;
   const s = state.customSpecs;
-  const isPolyD = (s.shape === "square_soft" || s.shape === "doypack");
   const slots = [
     { it: "1. Lato Frontale", en: "1. Front Side", subIt: "Vista frontale dritta al centro", subEn: "Straight centered front view" },
     { it: "2. Lato Posteriore", en: "2. Back Side", subIt: "Vista posteriore a 180°", subEn: "180° rear side view" },
@@ -8174,15 +8631,21 @@ function renderCustomVesselView() {
     { it: "6. Vista Dal Basso (Sotto)", en: "6. Bottom View", subIt: "Fondo e profilo di appoggio", subEn: "Base and bottom footprint" }
   ];
   const uploadedPhotos = state.customPhotoFiles.filter(Boolean).length;
-  const finishOpts = s.shape === "doypack" ? POUCH_FINISHES : RIGID_FINISHES;
-  const neckOpts = ["24/410", "28/410", "58/400", "70/400", "Bague 29mm", "SOT 202", "Zip 220mm"];
+  const hasDatasheet = Boolean(state.customDatasheetFile);
+  const allReady = hasDatasheet && uploadedPhotos === 6;
+  const recon = state.customReconstructed;
+  const allF = [...RIGID_FINISHES, ...POUCH_FINISHES];
+  const reconFin = recon ? (allF.find(f => f.id === recon.finishId) || RIGID_FINISHES[0]) : null;
+  const reconDimStr = recon
+    ? ((recon.shape === "square_soft") ? `${recon.wMm} × ${recon.dMm} × ${recon.hMm} mm` : `Ø ${recon.wMm} × H ${recon.hMm} mm`)
+    : "";
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
       <div class="brown-hdr-bar">
         <div>
           <h1 class="brown-hdr-title">${l === "it" ? "Digitalizzazione Contenitore Personalizzato" : "Custom Container 3D Digitization"}</h1>
-          <p class="cat-sub-minimal">${l === "it" ? "Inserisci scheda tecnica, foto o quote reali per generare subito il modello parametrico nello Studio 3D" : "Upload your datasheet, photos or dimensions to generate the parametric 1:1 model inside the 3D Studio"}</p>
+          <p class="cat-sub-minimal">${l === "it" ? "Carica scheda tecnica e tutte e 6 le foto: il motore ricava automaticamente sagoma 3D, sezione, collo e dimensioni reali 1:1" : "Upload datasheet and all 6 views: the engine automatically extracts true 3D silhouette, cross-section, neck and 1:1 dimensions"}</p>
         </div>
       </div>
 
@@ -8190,90 +8653,58 @@ function renderCustomVesselView() {
         <div class="custom-blueprint-grid">
           <div class="custom-bp-left">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "REQUISITO 01 · SCHEDA E QUOTE CAD 1:1" : "REQUIREMENT 01 · DATASHEET & 1:1 SPECS"}</span>
-              <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica la scheda tecnica e verifica le misure reali" : "Upload datasheet and confirm exact container specs"}</h2>
-              <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Le quote e la geometria impostate qui generano la mesh 3D in scala reale, i calcoli TD% e l'anteprima AR 1:1." : "These dimensions directly drive the 3D parametric geometry, TD% physics, and 1:1 AR scale."}</p>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "REQUISITO 01 · SCHEDA TECNICA E RICOSTRUZIONE" : "REQUIREMENT 01 · DATASHEET & RECONSTRUCTION"}</span>
+              <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica la scheda tecnica del contenitore" : "Upload container technical datasheet"}</h2>
+              <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Necessaria insieme alle 6 viste fotografiche per ricostruire con precisione la tua bottiglia o vasetto reale." : "Required together with all 6 photo angles to reconstruct your exact physical container in 3D."}</p>
             </div>
 
-            <label class="upload-datasheet-box ${state.customDatasheetFile ? "loaded" : ""}">
+            <div class="cv-field">
+              <label class="cv-label" for="inpCustName">${l === "it" ? "Nome Contenitore" : "Container Name"}</label>
+              <input id="inpCustName" class="cv-input" type="text" maxlength="48" value="${escapeHtml(l === "it" ? s.nameIt : s.nameEn)}" oninput="state.customSpecs.nameIt=this.value; state.customSpecs.nameEn=this.value;">
+            </div>
+
+            <label class="upload-datasheet-box ${hasDatasheet ? "loaded" : ""}">
               ${state.customDatasheetDataUrl ? `<img class="upload-ds-thumb" src="${state.customDatasheetDataUrl}" alt="Datasheet">` : ""}
               <div style="flex:1; min-inline-size:0;">
-                <div style="font-size:13px; font-weight:800; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${state.customDatasheetFile ? `✓ ${escapeHtml(state.customDatasheetFile)}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
-                <div style="font-size:11px; color:var(--slate); margin-top:2px;">${l === "it" ? "JPG, PNG, PDF · Estrazione assistita quote" : "JPG, PNG, PDF · Assisted spec capture"}</div>
+                <div style="font-size:13px; font-weight:800; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${hasDatasheet ? `✓ ${escapeHtml(state.customDatasheetFile)}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
+                <div style="font-size:11px; color:var(--slate); margin-top:2px;">${l === "it" ? "JPG, PNG, PDF · Estrazione automatica quote meccaniche" : "JPG, PNG, PDF · Automatic mechanical spec extraction"}</div>
               </div>
-              <span class="spec-tag ${state.customDatasheetFile ? "ok" : ""}">${state.customDatasheetFile ? (l === "it" ? "CARICATA ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
-              <input type="file" accept="image/*,.pdf" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
+              <span class="spec-tag ${hasDatasheet ? "ok" : ""}">${hasDatasheet ? (l === "it" ? "CARICATA ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
+              <input type="file" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
             </label>
 
-            <div class="cv-specs-box">
-              <div class="cv-field">
-                <label class="cv-label" for="inpCustName">${l === "it" ? "Nome Contenitore" : "Container Name"}</label>
-                <input id="inpCustName" class="cv-input" type="text" maxlength="48" value="${escapeHtml(l === "it" ? s.nameIt : s.nameEn)}" oninput="state.customSpecs.nameIt=this.value; state.customSpecs.nameEn=this.value;">
-              </div>
-
-              <div class="cv-grid-2">
-                <div class="cv-field">
-                  <label class="cv-label" for="selCustShape">${l === "it" ? "Geometria 3D" : "3D Archetype"}</label>
-                  <select id="selCustShape" class="cv-select" onchange="onCustomSpecShapeChange(this.value)">
-                    <option value="cyl_tall" ${s.shape === "cyl_tall" ? "selected" : ""}>${l === "it" ? "Flacone Cilindrico" : "Cylindrical Bottle"}</option>
-                    <option value="square_soft" ${s.shape === "square_soft" ? "selected" : ""}>${l === "it" ? "Flacone Quadro" : "Square Bottle"}</option>
-                    <option value="wine_bordeaux" ${s.shape === "wine_bordeaux" ? "selected" : ""}>${l === "it" ? "Bottiglia Collo Lungo" : "Long-Neck Bottle"}</option>
-                    <option value="jar_lux" ${s.shape === "jar_lux" ? "selected" : ""}>${l === "it" ? "Vaso Bocca Larga" : "Wide-Mouth Jar"}</option>
-                    <option value="alu_can" ${s.shape === "alu_can" ? "selected" : ""}>${l === "it" ? "Lattina Alluminio" : "Aluminum Can"}</option>
-                    <option value="doypack" ${s.shape === "doypack" ? "selected" : ""}>Doypack</option>
-                  </select>
-                </div>
-                <div class="cv-field">
-                  <label class="cv-label" for="selCustNeck">${l === "it" ? "Attacco / Collo" : "Neck / Thread"}</label>
-                  <select id="selCustNeck" class="cv-select" onchange="state.customSpecsTouched=true; state.customSpecs.neck=this.value;">
-                    ${neckOpts.map(n => `<option value="${n}" ${s.neck === n ? "selected" : ""}>${n}</option>`).join("")}
-                  </select>
-                </div>
-              </div>
-
-              <div class="cv-grid-3">
-                <div class="cv-field">
-                  <label class="cv-label" for="inpCustH">${l === "it" ? "Altezza H (mm)" : "Height H (mm)"}</label>
-                  <input id="inpCustH" class="cv-input" type="number" min="45" max="350" value="${s.hMm}" oninput="updateCustomSpecNumeric('hMm', this.value)">
-                </div>
-                <div class="cv-field">
-                  <label class="cv-label" for="inpCustW">${isPolyD ? (l === "it" ? "Largh. L (mm)" : "Width W (mm)") : (l === "it" ? "Diam. Ø (mm)" : "Diam. Ø (mm)")}</label>
-                  <input id="inpCustW" class="cv-input" type="number" min="25" max="260" value="${s.wMm}" oninput="updateCustomSpecNumeric('wMm', this.value)">
-                </div>
-                <div class="cv-field">
-                  <label class="cv-label" for="inpCustD">${l === "it" ? "Prof. P (mm)" : "Depth D (mm)"}</label>
-                  <input id="inpCustD" class="cv-input" type="number" min="25" max="260" value="${s.dMm}" ${isPolyD ? "" : "disabled style='background:#F1F5F9; color:var(--slate);'"} oninput="updateCustomSpecNumeric('dMm', this.value)">
-                </div>
-              </div>
-
-              <div class="cv-grid-2">
-                <div class="cv-field">
-                  <label class="cv-label" for="selCustFinish">${l === "it" ? "Materiale & Finitura" : "Material & Finish"}</label>
-                  <select id="selCustFinish" class="cv-select" onchange="state.customSpecsTouched=true; state.customSpecs.finishId=this.value;">
-                    ${finishOpts.map(f => `<option value="${f.id}" ${s.finishId === f.id ? "selected" : ""}>${l === "it" ? f.it : f.en}</option>`).join("")}
-                  </select>
-                </div>
-                <div class="cv-field">
-                  <label class="cv-label" for="inpCustVol">${l === "it" ? "Capacità" : "Capacity"}</label>
-                  <input id="inpCustVol" class="cv-input" type="text" maxlength="20" value="${escapeHtml(s.vol)}" oninput="state.customSpecs.vol=this.value">
-                </div>
+            <div class="cv-cv-summary">
+              <div class="cv-silhouette-box">${renderCustomSilhouettePreviewSVG(recon)}</div>
+              <div style="flex:1; min-inline-size:0; display:flex; flex-direction:column; gap:4px;">
+                <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:${allReady ? "var(--green)" : "var(--crimson)"};">
+                  ${allReady ? (l === "it" ? "RICOSTRUZIONE 3D PRONTA ✓" : "3D RECONSTRUCTION READY ✓") : (l === "it" ? "ANALISI MULTI-VISTA AUTOMATICA" : "AUTOMATIC MULTI-VIEW ANALYSIS")}
+                </span>
+                ${recon ? `
+                  <div style="font-size:12.5px; font-weight:800; color:var(--ink);">${reconDimStr} · ${recon.vol}</div>
+                  <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Collo rilevato:" : "Detected neck:"} <strong>${recon.neck}</strong> · ${reconFin ? (l === "it" ? reconFin.it : reconFin.en) : ""}</div>
+                  <div style="font-size:11px; color:var(--slate);">${l === "it" ? `Profilo estratto da ${recon.photoCount} viste · Sezione ${recon.superellipseN > 2.6 ? "quadra/ovale" : "cilindrica"}` : `Profile extracted from ${recon.photoCount} views · ${recon.superellipseN > 2.6 ? "Square/oval" : "Circular"} section`}</div>
+                ` : `
+                  <div style="font-size:12px; font-weight:700; color:var(--ink);">${l === "it" ? "In attesa di scheda tecnica e 6 foto" : "Waiting for datasheet and 6 photos"}</div>
+                  <div style="font-size:11px; color:var(--slate);">${l === "it" ? "La sagoma 3D verrà calcolata direttamente dalle immagini caricate senza parametri manuali." : "3D shape is extracted directly from uploaded photos with no manual dimension entry."}</div>
+                `}
               </div>
             </div>
+            <div id="cvValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);"></div>
           </div>
 
           <div class="custom-bp-right">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
               <div>
                 <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "REQUISITO 02 · ACQUISIZIONE FOTOGRAFICA MULTI-ANGOLO" : "REQUIREMENT 02 · MULTI-ANGLE PHOTO CAPTURE"}</span>
-                <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica le viste del contenitore per la calibrazione 3D" : "Upload container views for 3D calibration"}</h2>
-                <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Carica le 4 viste laterali, sopra e sotto. La vista frontale calibra automaticamente le proporzioni H × Ø." : "Upload side, top, and bottom views. The front view automatically calibrates H × Ø proportions."}</p>
+                <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica tutte e 6 le viste del tuo contenitore" : "Upload all 6 views of your container"}</h2>
+                <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Le viste frontale, posteriore, laterali, dall'alto e dal basso ricreano fedelmente la tua geometria reale." : "Front, back, left, right, top, and bottom views faithfully reconstruct your exact physical bottle."}</p>
               </div>
               <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <label class="cv-multi-btn">
                   <span>${l === "it" ? "+ Carica più foto" : "+ Batch upload"}</span>
                   <input type="file" accept="image/*" multiple style="display:none;" onchange="handleCustomMultiPhotoUpload(this)">
                 </label>
-                <span class="spec-tag ${uploadedPhotos > 0 ? "ok" : ""}">${uploadedPhotos} / 6 ${l === "it" ? "FOTO" : "PHOTOS"}</span>
+                <span class="spec-tag ${uploadedPhotos === 6 ? "ok" : ""}">${uploadedPhotos} / 6 ${l === "it" ? "FOTO" : "PHOTOS"}</span>
               </div>
             </div>
 
@@ -8299,7 +8730,7 @@ function renderCustomVesselView() {
           <button type="button" class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="state.customVesselMode=false; switchMainView('catalog');">
             ${l === "it" ? "Torna al Marketplace" : "Back to Marketplace"}
           </button>
-          <button type="button" class="cta-btn" id="btnCustomProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" onclick="applyCustomVesselToStudio()">
+          <button type="button" class="cta-btn" id="btnCustomProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" ${allReady ? "" : "disabled"} onclick="applyCustomVesselToStudio()">
             ${l === "it" ? "Ricrea nel Configuratore 3D" : "Recreate in 3D Configurator"}
           </button>
         </div>
@@ -8644,6 +9075,35 @@ function buildRealScannableQRSVG(urlStr) {
   `;
 }
 
+function encodeCustomProfileCompact(samples) {
+  if (!Array.isArray(samples) || samples.length < 16) return "";
+  const step = (samples.length - 1) / 15;
+  let out = "";
+  for (let i = 0; i < 16; i++) {
+    const val = Math.round(Math.max(0.15, Math.min(0.99, samples[Math.round(i * step)])) * 99);
+    out += String(val).padStart(2, "0");
+  }
+  return out;
+}
+
+function decodeCustomProfileCompact(str) {
+  if (!str || str.length < 32) return null;
+  const pts16 = [];
+  for (let i = 0; i < 16; i++) {
+    const n = Number(str.slice(i * 2, i * 2 + 2));
+    pts16.push(Number.isFinite(n) && n >= 10 ? n / 99 : 0.85);
+  }
+  const full64 = [];
+  for (let k = 0; k < 64; k++) {
+    const pos = (k / 63) * 15;
+    const i0 = Math.floor(pos);
+    const i1 = Math.min(15, i0 + 1);
+    const f = pos - i0;
+    full64.push(pts16[i0] * (1 - f) + pts16[i1] * f);
+  }
+  return full64;
+}
+
 function buildARShareUrl() {
   const base = (window.location.protocol === "http:" || window.location.protocol === "https:")
     ? (window.location.origin + window.location.pathname)
@@ -8664,23 +9124,81 @@ function buildARShareUrl() {
     u.searchParams.set("cd", String(v.dMm || v.wMm));
     u.searchParams.set("cs", v.shape);
     u.searchParams.set("cn", v.neck);
+    u.searchParams.set("cnm", String(v.it || "Contenitore Personalizzato").slice(0, 28));
+    if (v.customProfile && Array.isArray(v.customProfile.rFrontSamples)) {
+      u.searchParams.set("cp", encodeCustomProfileCompact(v.customProfile.rFrontSamples));
+      if (v.customProfile.customBodyColor) u.searchParams.set("cc", v.customProfile.customBodyColor);
+      if (v.customProfile.superellipseN) u.searchParams.set("sn", Number(v.customProfile.superellipseN).toFixed(1));
+    }
   }
   if (state.skinId === "custom_user_skin") {
-    u.searchParams.set("cgt", (state.customGraphicTitle || "CUSTOM").slice(0, 24));
-    u.searchParams.set("cgc", (state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"]).join(","));
+    const scG = getCustomSkinObject(v.id);
+    u.searchParams.set("cgt", ((scG && scG.brand) || state.customGraphicTitle || "Grafica Personalizzata").slice(0, 26));
+    u.searchParams.set("cgc", ((scG && scG.previewColors) || state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"]).join(","));
   }
   return u.toString();
 }
 
-// ==================== LIVE CAMERA + TRUE 1:1 PHYSICAL SCALE 3D AR RENDERER ====================
-let arRenderer = null, arScene = null, arCamera = null, arProductGroup = null, arSleeveTexture = null, arRafId = null;
+// ==================== DEDICATED FULLSCREEN SPATIAL PLANE-SCANNING 1:1 AR ENGINE ====================
+let arRenderer = null, arScene = null, arCamera = null, arProductGroup = null, arReticleGroup = null, arSleeveTexture = null, arRafId = null;
+let arReticlePulseMesh = null, arReticlePoints = [];
 let arWorldBBox = { minY: -1.25, maxY: 1.30, height: 2.55 };
-let arPanOffset = { x: 0, y: 0 };
-let arCamOrbit = { theta: 0.25, phi: 1.32 };
+let arBaseSensorAlpha = null, arGyroYawRad = 0.22, arGyroPitchRad = 1.24, arOpticalOffset = { x: 0, y: 0, distCm: 44 };
 let arActiveRenderedKey = "";
+let arSensorBound = false;
+let arOpticalCanvas = null, arOpticalCtx = null, arPrevLuma = null;
+let arLastTickMs = 0, arPlaceAnimStartMs = 0;
+
+function onARDeviceOrientation(e) {
+  if (!state.mobileARCameraMode) return;
+  if (typeof e.alpha === "number") {
+    if (arBaseSensorAlpha === null) arBaseSensorAlpha = e.alpha;
+    const dAlpha = ((e.alpha - arBaseSensorAlpha + 540) % 360) - 180;
+    const targetYaw = (dAlpha * Math.PI) / 180 + 0.22;
+    arGyroYawRad += (targetYaw - arGyroYawRad) * 0.25;
+  }
+  if (typeof e.beta === "number") {
+    // Map phone pitch tilt (beta ~30° looking down at table .. 85° eye-level) to camera polar phi
+    const clampedBeta = Math.max(15, Math.min(95, e.beta));
+    const targetPhi = 0.72 + ((clampedBeta - 15) / 80) * 0.78;
+    arGyroPitchRad += (targetPhi - arGyroPitchRad) * 0.22;
+  }
+  if (state.arScanPhase === "scanning") {
+    state.arScanProgress = Math.min(100, state.arScanProgress + 0.85);
+  }
+}
+
+function attachARSensorListeners() {
+  if (arSensorBound) return;
+  arSensorBound = true;
+  window.addEventListener("deviceorientation", onARDeviceOrientation, true);
+}
+
+function requestIOSMotionPermissionIfNeeded() {
+  try {
+    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission().then(res => {
+        if (res === "granted") attachARSensorListeners();
+      }).catch(() => {});
+    } else {
+      attachARSensorListeners();
+    }
+  } catch (e) {
+    attachARSensorListeners();
+  }
+}
 
 function disposeARWebGL() {
   if (arRafId) { cancelAnimationFrame(arRafId); arRafId = null; }
+  arReticlePoints = [];
+  arReticlePulseMesh = null;
+  if (arReticleGroup) {
+    arReticleGroup.traverse(obj => {
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) obj.material.dispose();
+    });
+    arReticleGroup = null;
+  }
   if (arProductGroup) {
     arProductGroup.traverse(obj => {
       if (obj.geometry) obj.geometry.dispose();
@@ -8693,6 +9211,7 @@ function disposeARWebGL() {
   arScene = null;
   arCamera = null;
   arActiveRenderedKey = "";
+  arPrevLuma = null;
 }
 
 function getARTotalHeightMm() {
@@ -8702,46 +9221,167 @@ function getARTotalHeightMm() {
   return Math.round((Number(v.hMm) || 158) + (hasCap ? (cl.addH || 0) : 0));
 }
 
-function setARControlMode(m) {
-  state.arMode = m === "move" ? "move" : "orbit";
-  const bOrb = document.getElementById("arModeOrbit");
-  const bMov = document.getElementById("arModeMove");
-  if (bOrb) bOrb.classList.toggle("active", state.arMode === "orbit");
-  if (bMov) bMov.classList.toggle("active", state.arMode === "move");
+function resetARSurfaceScan() {
+  state.arScanPhase = "scanning";
+  state.arScanProgress = 0;
+  state.arScanPointsCount = 0;
+  arBaseSensorAlpha = null;
+  arGyroYawRad = 0.22;
+  arGyroPitchRad = 1.24;
+  arOpticalOffset = { x: 0, y: 0, distCm: 44 };
+  arLastTickMs = performance.now();
+  if (arProductGroup) arProductGroup.visible = false;
+  if (arReticleGroup) arReticleGroup.visible = true;
+  updateARScanDOMState();
 }
 
-function updateAROpticalDistance(cmVal) {
-  state.arDistanceCm = Math.max(25, Math.min(90, Math.round(Number(cmVal) || 45)));
-  const lbl = document.getElementById("arDistLabel");
-  if (lbl) lbl.textContent = `${state.arDistanceCm} cm`;
-  const rangeEl = document.getElementById("arDistSlider");
-  if (rangeEl && Number(rangeEl.value) !== state.arDistanceCm) rangeEl.value = String(state.arDistanceCm);
+function updateARScanDOMState() {
+  const l = state.lang;
+  const isPlaced = state.arScanPhase === "placed";
+  const badgeTxt = document.getElementById("arCamBadgeText");
+  const dotEl = document.getElementById("arCamDot");
+  const coachCard = document.getElementById("arScanCoachCard");
+  const dimPill = document.getElementById("arFsDimPill");
+  const progFill = document.getElementById("arScanProgressFill");
+  const scanSub = document.getElementById("arScanStatusSub");
+  const pct = Math.min(100, Math.round(state.arScanProgress || 0));
+  if (progFill) progFill.style.width = `${pct}%`;
+  if (scanSub) {
+    scanSub.textContent = l === "it"
+      ? `Scansione superficie: ${pct}% · ${state.arScanPointsCount} punti piano`
+      : `Surface scanning: ${pct}% · ${state.arScanPointsCount} plane points`;
+  }
+  if (coachCard) coachCard.style.display = isPlaced ? "none" : "flex";
+  if (dimPill) dimPill.style.display = isPlaced ? "block" : "none";
+  if (badgeTxt) {
+    badgeTxt.textContent = isPlaced
+      ? (l === "it" ? "PIANO RILEVATO · SCALA REALE 1:1" : "SURFACE LOCKED · TRUE 1:1 SCALE")
+      : (l === "it" ? "SCANSIONE AMBIENTE AR..." : "SCANNING AR SURFACE...");
+  }
+  if (dotEl) dotEl.style.background = isPlaced ? "#22C55E" : "#F59E0B";
 }
 
-function updateARRulerOverlay(w, h) {
-  const rulerEl = document.getElementById("arScaleRulerOverlay");
-  if (!rulerEl || !arCamera || !arProductGroup || w <= 0 || h <= 0) return;
-  const cx = arProductGroup.position.x;
-  const cz = arProductGroup.position.z;
-  const topV = new THREE.Vector3(cx, arWorldBBox.maxY + arProductGroup.position.y, cz).project(arCamera);
-  const botV = new THREE.Vector3(cx, arWorldBBox.minY + arProductGroup.position.y, cz).project(arCamera);
-  const topY = (-topV.y * 0.5 + 0.5) * h;
-  const botY = (-botV.y * 0.5 + 0.5) * h;
-  const pxH = Math.max(24, Math.min(h - 24, botY - topY));
-  const rightV = new THREE.Vector3(cx + (arWorldBBox.width || 1.2) * 0.54, (arWorldBBox.minY + arWorldBBox.maxY) * 0.5 + arProductGroup.position.y, cz).project(arCamera);
-  const leftPx = Math.min(w - 112, Math.max(14, (rightV.x * 0.5 + 0.5) * w + 10));
-  rulerEl.style.top = `${Math.max(12, Math.min(h - pxH - 12, topY))}px`;
-  rulerEl.style.left = `${leftPx}px`;
-  rulerEl.style.height = `${pxH}px`;
+function analyzeARVideoFrameForPlane(dtSec) {
+  const vid = document.getElementById("mobileArLiveVideo");
+  let featureScore = 0.25;
+  let motionEnergy = 0.15;
+  if (vid && vid.readyState >= 2 && vid.videoWidth > 0) {
+    try {
+      if (!arOpticalCanvas) {
+        arOpticalCanvas = document.createElement("canvas");
+        arOpticalCanvas.width = 48;
+        arOpticalCanvas.height = 36;
+        arOpticalCtx = arOpticalCanvas.getContext("2d", { willReadFrequently: true });
+      }
+      arOpticalCtx.drawImage(vid, 0, 0, 48, 36);
+      const px = arOpticalCtx.getImageData(0, 0, 48, 36).data;
+      const luma = new Float32Array(48 * 36);
+      let gradSum = 0;
+      let cxSum = 0, cySum = 0, wSum = 0;
+      for (let y = 0; y < 36; y++) {
+        for (let x = 0; x < 48; x++) {
+          const i = y * 48 + x;
+          const idx = i * 4;
+          const lVal = 0.299 * px[idx] + 0.587 * px[idx + 1] + 0.114 * px[idx + 2];
+          luma[i] = lVal;
+          if (y >= 16 && x > 0) {
+            const g = Math.abs(lVal - luma[i - 1]);
+            gradSum += g;
+            if (g > 12) { cxSum += x * g; cySum += y * g; wSum += g; }
+          }
+        }
+      }
+      featureScore = Math.min(1.0, (gradSum / (48 * 20)) / 18.0 + 0.25);
+
+      if (arPrevLuma) {
+        let diffSum = 0;
+        let flowDx = 0, flowDy = 0, flowN = 0;
+        for (let y = 16; y < 35; y += 2) {
+          for (let x = 2; x < 46; x += 2) {
+            const i = y * 48 + x;
+            const dT = Math.abs(luma[i] - arPrevLuma[i]);
+            diffSum += dT;
+            const gx = luma[i + 1] - luma[i - 1];
+            const gy = luma[i + 48] - luma[i - 48];
+            const gMag = gx * gx + gy * gy;
+            if (gMag > 140) {
+              const dt = luma[i] - arPrevLuma[i];
+              flowDx -= (dt * gx) / (gMag + 80);
+              flowDy -= (dt * gy) / (gMag + 80);
+              flowN++;
+            }
+          }
+        }
+        motionEnergy = Math.min(1.0, (diffSum / 400) / 14.0 + 0.18);
+        if (state.arScanPhase === "placed" && flowN > 10) {
+          const avgDx = Math.max(-0.45, Math.min(0.45, flowDx / flowN));
+          const avgDy = Math.max(-0.45, Math.min(0.45, flowDy / flowN));
+          arOpticalOffset.x = Math.max(-0.55, Math.min(0.55, arOpticalOffset.x + avgDx * 0.035));
+          arOpticalOffset.y = Math.max(-0.22, Math.min(0.22, arOpticalOffset.y - avgDy * 0.02));
+          if (wSum > 50) {
+            const cNorm = Math.max(-0.5, Math.min(0.5, (cxSum / wSum) / 48 - 0.5));
+            arGyroYawRad += cNorm * 0.004;
+          }
+        }
+      }
+      arPrevLuma = luma;
+    } catch (e) {}
+  }
+
+  if (state.arScanPhase === "scanning") {
+    // Accumulate real plane detection confidence across ~1.8s of surface sweep
+    const rate = 38 + 26 * featureScore + 18 * motionEnergy;
+    state.arScanProgress = Math.min(100, state.arScanProgress + rate * dtSec);
+    state.arScanPointsCount = Math.min(24, Math.floor((state.arScanProgress / 100) * 24));
+    if (state.arScanProgress >= 100) {
+      state.arScanPhase = "placed";
+      arPlaceAnimStartMs = performance.now();
+      if (arProductGroup) arProductGroup.visible = true;
+      if (arReticleGroup) arReticleGroup.visible = false;
+    }
+    updateARScanDOMState();
+  }
+}
+
+function buildARFloorReticleGroup() {
+  const rGrp = new THREE.Group();
+  rGrp.position.y = -1.24;
+
+  const outerGeo = new THREE.RingGeometry(0.92, 1.0, 48);
+  outerGeo.rotateX(-Math.PI / 2);
+  const outerMat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.78, side: THREE.DoubleSide });
+  rGrp.add(new THREE.Mesh(outerGeo, outerMat));
+
+  const innerGeo = new THREE.RingGeometry(0.42, 0.48, 36);
+  innerGeo.rotateX(-Math.PI / 2);
+  const innerMat = new THREE.MeshBasicMaterial({ color: 0x22C55E, transparent: true, opacity: 0.9, side: THREE.DoubleSide });
+  rGrp.add(new THREE.Mesh(innerGeo, innerMat));
+
+  const pulseGeo = new THREE.RingGeometry(0.18, 0.24, 36);
+  pulseGeo.rotateX(-Math.PI / 2);
+  const pulseMat = new THREE.MeshBasicMaterial({ color: 0x22C55E, transparent: true, opacity: 0.85, side: THREE.DoubleSide });
+  arReticlePulseMesh = new THREE.Mesh(pulseGeo, pulseMat);
+  rGrp.add(arReticlePulseMesh);
+
+  arReticlePoints = [];
+  const ptGeo = new THREE.CircleGeometry(0.032, 12);
+  ptGeo.rotateX(-Math.PI / 2);
+  for (let i = 0; i < 24; i++) {
+    const ang = (i / 24) * Math.PI * 2 * 2.3;
+    const rad = 0.28 + ((i * 37) % 100) / 100 * 1.15;
+    const ptMat = new THREE.MeshBasicMaterial({ color: 0x4ADE80, transparent: true, opacity: 0.0, side: THREE.DoubleSide });
+    const ptMesh = new THREE.Mesh(ptGeo, ptMat);
+    ptMesh.position.set(Math.cos(ang) * rad, 0.01, Math.sin(ang) * rad);
+    rGrp.add(ptMesh);
+    arReticlePoints.push(ptMesh);
+  }
+  return rGrp;
 }
 
 function requestARCameraStream() {
-  const l = state.lang;
-  const badgeTxt = document.getElementById("arCamBadgeText");
-  const dotEl = document.getElementById("arCamDot");
   const retryBtn = document.getElementById("arCamEnableBtn");
+  attachARSensorListeners();
   if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-    if (badgeTxt) badgeTxt.textContent = l === "it" ? "AR 3D · SCALA REALE 1:1" : "AR 3D · TRUE 1:1 SCALE";
     if (retryBtn) retryBtn.style.display = "none";
     return;
   }
@@ -8753,8 +9393,6 @@ function requestARCameraStream() {
     mobileARStream = stream;
     const vidEl = document.getElementById("mobileArLiveVideo");
     if (vidEl) vidEl.srcObject = stream;
-    if (badgeTxt) badgeTxt.textContent = l === "it" ? "FOTOCAMERA LIVE · SCALA REALE 1:1" : "LIVE CAMERA · TRUE 1:1 SCALE";
-    if (dotEl) dotEl.style.background = "#22C55E";
     if (retryBtn) retryBtn.style.display = "none";
   };
   navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
@@ -8763,7 +9401,6 @@ function requestARCameraStream() {
       navigator.mediaDevices.getUserMedia({ video: true, audio: false })
         .then(onStream)
         .catch(() => {
-          if (badgeTxt) badgeTxt.textContent = l === "it" ? "ANTEPRIMA AR 1:1 (ATTIVA CAMERA)" : "AR 1:1 PREVIEW (ENABLE CAMERA)";
           if (retryBtn) retryBtn.style.display = "inline-flex";
         });
     });
@@ -8798,7 +9435,7 @@ function initOrUpdateARWebGL() {
   rim.position.set(-5, 3, -4);
   arScene.add(rim);
 
-  arCamera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
+  arCamera = new THREE.PerspectiveCamera(42, 1, 0.1, 60);
   arSleeveTexture = new THREE.CanvasTexture(texCanvas);
   arSleeveTexture.encoding = THREE.sRGBEncoding;
   arSleeveTexture.wrapS = THREE.RepeatWrapping;
@@ -8806,6 +9443,10 @@ function initOrUpdateARWebGL() {
 
   renderSleeveUVTexture();
   arSleeveTexture.needsUpdate = true;
+
+  arReticleGroup = buildARFloorReticleGroup();
+  arReticleGroup.visible = state.arScanPhase === "scanning";
+  arScene.add(arReticleGroup);
 
   const vessel = getVessel();
   const cl = getClosure();
@@ -8816,8 +9457,9 @@ function initOrUpdateARWebGL() {
     hideClashRing: true
   });
   arProductGroup = built.group;
+  arProductGroup.visible = state.arScanPhase === "placed";
 
-  // Soft grounded tabletop shadow inside AR space
+  // Soft grounded contact shadow on the detected physical tabletop plane
   const shC = document.createElement("canvas");
   shC.width = 256; shC.height = 256;
   const shCtx = shC.getContext("2d");
@@ -8841,50 +9483,15 @@ function initOrUpdateARWebGL() {
   const box = new THREE.Box3().setFromObject(arProductGroup);
   const sz = box.getSize(new THREE.Vector3());
   arWorldBBox = { minY: box.min.y, maxY: box.max.y, height: Math.max(0.8, sz.y), width: Math.max(0.8, sz.x) };
-
-  // Pointer + touch interactions (Orbit 360, Move on tabletop, 2-finger pinch zoom)
-  let arDrag = false, arPrev = { x: 0, y: 0 }, arPinchDist = 0;
-  canvas.addEventListener("pointerdown", e => {
-    arDrag = true;
-    arPrev = { x: e.clientX, y: e.clientY };
-  });
-  canvas.addEventListener("pointermove", e => {
-    if (!arDrag || !arProductGroup) return;
-    const dx = e.clientX - arPrev.x;
-    const dy = e.clientY - arPrev.y;
-    arPrev = { x: e.clientX, y: e.clientY };
-    if (state.arMode === "move") {
-      arPanOffset.x = Math.max(-2.2, Math.min(2.2, arPanOffset.x + dx * 0.008));
-      arPanOffset.y = Math.max(-1.6, Math.min(1.6, arPanOffset.y - dy * 0.008));
-    } else {
-      arCamOrbit.theta -= dx * 0.011;
-      arCamOrbit.phi = Math.max(0.45, Math.min(2.0, arCamOrbit.phi - dy * 0.009));
-    }
-  });
-  window.addEventListener("pointerup", () => { arDrag = false; });
-  canvas.addEventListener("wheel", e => {
-    e.preventDefault();
-    const step = e.deltaY > 0 ? 4 : -4;
-    updateAROpticalDistance(state.arDistanceCm + step);
-  }, { passive: false });
-  canvas.addEventListener("touchstart", e => {
-    if (e.touches.length === 2) {
-      arPinchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-    }
-  }, { passive: true });
-  canvas.addEventListener("touchmove", e => {
-    if (e.touches.length === 2 && arPinchDist > 0) {
-      e.preventDefault();
-      const dNow = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-      const delta = (arPinchDist - dNow) * 0.22;
-      arPinchDist = dNow;
-      updateAROpticalDistance(state.arDistanceCm + delta);
-    }
-  }, { passive: false });
+  arLastTickMs = performance.now();
 
   const renderARFrame = () => {
     if (!state.mobileARCameraMode || !arRenderer || !arScene || !arCamera || !arProductGroup) return;
     arRafId = requestAnimationFrame(renderARFrame);
+    const now = performance.now();
+    const dtSec = Math.min(0.12, Math.max(0.008, (now - arLastTickMs) / 1000));
+    arLastTickMs = now;
+
     const w = viewport.clientWidth, h = viewport.clientHeight;
     if (w <= 0 || h <= 0) return;
     if (canvas.width !== Math.round(w * (arRenderer.getPixelRatio() || 1)) || canvas.height !== Math.round(h * (arRenderer.getPixelRatio() || 1))) {
@@ -8893,20 +9500,41 @@ function initOrUpdateARWebGL() {
       arCamera.updateProjectionMatrix();
     }
 
+    analyzeARVideoFrameForPlane(dtSec);
+
+    if (arReticleGroup && arReticleGroup.visible) {
+      const pulsePhase = (now * 0.0012) % 1;
+      if (arReticlePulseMesh) {
+        const sc = 0.8 + pulsePhase * 2.8;
+        arReticlePulseMesh.scale.set(sc, 1, sc);
+        arReticlePulseMesh.material.opacity = 0.82 * (1 - pulsePhase);
+      }
+      arReticlePoints.forEach((pt, idx) => {
+        pt.material.opacity = idx < state.arScanPointsCount ? 0.85 : 0.0;
+      });
+    }
+
+    // Physical 1:1 camera framing driven by real sensors & walk-around parallax
     const totalRealHmm = getARTotalHeightMm();
-    const frameFrac = Math.max(0.12, Math.min(0.84, totalRealHmm / (state.arDistanceCm * 8.8)));
-    const halfTan = Math.tan((34 * Math.PI) / 360);
+    const effDistCm = Math.max(28, Math.min(72, arOpticalOffset.distCm));
+    const frameFrac = Math.max(0.14, Math.min(0.62, totalRealHmm / (effDistCm * 10.5)));
+    const halfTan = Math.tan((42 * Math.PI) / 360);
     const radius = arWorldBBox.height / (2 * halfTan * frameFrac);
     const midY = (arWorldBBox.minY + arWorldBBox.maxY) * 0.5;
 
-    arProductGroup.position.set(arPanOffset.x, arPanOffset.y, 0);
-    arCamera.position.x = radius * Math.sin(arCamOrbit.phi) * Math.sin(arCamOrbit.theta);
-    arCamera.position.y = radius * Math.cos(arCamOrbit.phi) + midY;
-    arCamera.position.z = radius * Math.sin(arCamOrbit.phi) * Math.cos(arCamOrbit.theta);
-    arCamera.lookAt(0, midY, 0);
+    if (arProductGroup.visible && arPlaceAnimStartMs > 0) {
+      const tPop = Math.min(1, (now - arPlaceAnimStartMs) / 280);
+      const sPop = 0.72 + 0.28 * (1 - Math.pow(1 - tPop, 3));
+      arProductGroup.scale.setScalar(sPop);
+    }
+
+    arProductGroup.position.set(arOpticalOffset.x, arOpticalOffset.y, 0);
+    arCamera.position.x = radius * Math.sin(arGyroPitchRad) * Math.sin(arGyroYawRad);
+    arCamera.position.y = radius * Math.cos(arGyroPitchRad) + midY;
+    arCamera.position.z = radius * Math.sin(arGyroPitchRad) * Math.cos(arGyroYawRad);
+    arCamera.lookAt(arOpticalOffset.x * 0.25, midY, 0);
 
     arRenderer.render(arScene, arCamera);
-    updateARRulerOverlay(w, h);
   };
   renderARFrame();
 }
@@ -8922,66 +9550,56 @@ function renderMobileARCameraView() {
     return;
   }
   arActiveRenderedKey = key;
+  resetARSurfaceScan();
 
   host.innerHTML = `
-    <div class="custom-vessel-inner">
-      <div class="brown-hdr-bar">
-        <div>
-          <h1 class="brown-hdr-title">${l === "it" ? "Realtà Aumentata 3D in Tempo Reale" : "Live 3D Augmented Reality Camera"}</h1>
-          <p class="cat-sub-minimal">${l === "it" ? "Inquadra una superficie con la fotocamera per visualizzare il tuo modello 3D nelle sue misure fisiche reali" : "Point your camera at any surface to inspect the 3D model at true 1:1 physical dimensions"}</p>
+    <div class="ar-fullscreen-root" id="arCamViewport">
+      <video id="mobileArLiveVideo" class="ar-fs-video" autoplay playsinline muted></video>
+      <canvas id="arLiveWebglCanvas" class="ar-fs-webgl"></canvas>
+
+      <div class="ar-fs-topbar">
+        <div class="ar-fs-status-pill">
+          <span class="ar-cam-dot" id="arCamDot" style="background:#F59E0B;"></span>
+          <span id="arCamBadgeText">${l === "it" ? "SCANSIONE AMBIENTE AR..." : "SCANNING AR SURFACE..."}</span>
+        </div>
+        <div class="ar-fs-actions-group">
+          <button type="button" class="ar-fs-icon-btn" id="btnArRescan" onclick="resetARSurfaceScan()" title="${l === "it" ? "Riscansiona piano" : "Rescan surface"}" aria-label="${l === "it" ? "Riscansiona piano" : "Rescan surface"}">↻</button>
+          <button type="button" class="ar-fs-icon-btn" id="btnArClose" onclick="closeMobileARCameraStudio()" title="${l === "it" ? "Chiudi AR" : "Close AR"}" aria-label="${l === "it" ? "Chiudi AR" : "Close AR"}">✕</button>
         </div>
       </div>
 
-      <div class="custom-panel-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-          <div>
-            <div style="font-size:15px; font-weight:800; color:var(--ink);">${escapeHtml(l === "it" ? v.it : v.en)}</div>
-            <div style="font-family:var(--mono); font-size:11.5px; color:var(--slate); margin-top:2px;">H ${totalRealHmm} mm · ${escapeHtml(l === "it" ? v.subIt : v.subEn)}</div>
-          </div>
-          <span class="spec-tag ok">${l === "it" ? "SCALA REALE 1:1" : "TRUE 1:1 SCALE"}</span>
+      <div class="ar-fs-scan-coach" id="arScanCoachCard">
+        <svg class="ar-fs-scan-icon" viewBox="0 0 44 32" fill="none" stroke="#FFFFFF" stroke-width="1.8">
+          <rect x="15" y="3" width="14" height="26" rx="3" fill="rgba(255,255,255,0.12)"/>
+          <line x1="20" y1="25" x2="24" y2="25" stroke-linecap="round"/>
+          <path d="M9 12c-3 2-3 6 0 8M35 12c3 2 3 6 0 8" stroke="#22C55E" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:14px; font-weight:800; letter-spacing:-0.01em;">
+          ${l === "it" ? "Scansiona l'ambiente circostante" : "Scan your surroundings"}
         </div>
+        <div style="font-size:11.5px; color:rgba(255,255,255,0.82); line-height:1.4;">
+          ${l === "it"
+            ? "Inquadra una superficie piana e muovi lentamente la fotocamera per ancorare il prodotto in scala reale 1:1"
+            : "Point your camera at a flat surface and move slowly to anchor the 3D product at true 1:1 scale"}
+        </div>
+        <div class="ar-fs-progress-track">
+          <div class="ar-fs-progress-fill" id="arScanProgressFill"></div>
+        </div>
+        <div id="arScanStatusSub" style="font-family:var(--mono); font-size:10.5px; color:#94A3B8; font-weight:700;">
+          ${l === "it" ? "Scansione superficie: 0% · 0 punti piano" : "Surface scanning: 0% · 0 plane points"}
+        </div>
+        <button type="button" class="ar-cam-enable-btn" id="arCamEnableBtn" style="display:none;" onclick="requestARCameraStream()">
+          ${l === "it" ? "Consenti Accesso Fotocamera" : "Allow Camera Access"}
+        </button>
+      </div>
 
-        <div class="ar-cam-viewport" id="arCamViewport">
-          <video id="mobileArLiveVideo" class="ar-cam-video" autoplay playsinline muted></video>
-          <div class="ar-cam-grid-floor"></div>
-          <canvas id="arLiveWebglCanvas" class="ar-cam-webgl"></canvas>
-          <div class="ar-ruler-overlay" id="arScaleRulerOverlay">
-            <div class="ar-ruler-line"></div>
-            <div class="ar-ruler-tag">1:1 · H ${totalRealHmm} mm</div>
-          </div>
-          <span class="ar-cam-corner tl"></span>
-          <span class="ar-cam-corner tr"></span>
-          <span class="ar-cam-corner bl"></span>
-          <span class="ar-cam-corner br"></span>
-          <div class="ar-cam-badge">
-            <span class="ar-cam-dot" id="arCamDot"></span>
-            <span id="arCamBadgeText">${l === "it" ? "INIZIALIZZAZIONE CAMERA AR..." : "INITIALIZING AR CAMERA..."}</span>
-          </div>
-          <button type="button" class="ar-cam-enable-btn" id="arCamEnableBtn" style="display:none;" onclick="requestARCameraStream()">
-            ${l === "it" ? "Consenti Accesso Fotocamera" : "Allow Camera Access"}
-          </button>
-          <div class="ar-cam-tools-row">
-            <button type="button" class="ar-tool-pill ${state.arMode !== "move" ? "active" : ""}" id="arModeOrbit" onclick="setARControlMode('orbit')">${l === "it" ? "Ruota 360°" : "Orbit 360°"}</button>
-            <button type="button" class="ar-tool-pill ${state.arMode === "move" ? "active" : ""}" id="arModeMove" onclick="setARControlMode('move')">${l === "it" ? "Sposta sul piano" : "Move on plane"}</button>
-          </div>
-        </div>
-
-        <div class="ar-dist-bar">
-          <label for="arDistSlider" style="font-family:var(--mono); font-size:11px; font-weight:800; color:var(--ink);">
-            ${l === "it" ? "Distanza fotocamera:" : "Camera distance:"} <span id="arDistLabel" style="color:var(--crimson);">${state.arDistanceCm} cm</span>
-          </label>
-          <input id="arDistSlider" type="range" min="25" max="90" value="${state.arDistanceCm}" oninput="updateAROpticalDistance(this.value)">
-        </div>
-
-        <div style="display:flex; justify-content:center; align-items:center; border-top:1.5px solid var(--border); padding-top:12px;">
-          <button type="button" class="cta-btn white" style="width:100%; max-width:280px; padding:0 22px;" onclick="closeMobileARCameraStudio()">
-            ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
-          </button>
-        </div>
+      <div class="ar-fs-dim-pill" id="arFsDimPill" style="display:none;">
+        1:1 · ${escapeHtml(l === "it" ? v.subIt : v.subEn)} · ${l === "it" ? "Muoviti intorno al prodotto" : "Walk around 360°"}
       </div>
     </div>
   `;
 
+  updateARScanDOMState();
   initOrUpdateARWebGL();
   requestARCameraStream();
 }
@@ -9002,6 +9620,7 @@ function copyARShareUrl(btnEl, urlStr) {
 function toggleARModal(openVal) {
   const wantOpen = (openVal !== undefined) ? !!openVal : !state.arModalOpen;
   if (wantOpen && window.innerWidth <= 768) {
+    requestIOSMotionPermissionIfNeeded();
     openMobileARCameraStudio();
     return;
   }
@@ -9029,27 +9648,204 @@ function toggleARModal(openVal) {
     <div class="ar-qr-frame">${qrSvg}</div>
     <p style="font-size:12px; color:var(--charcoal); line-height:1.45;">
       ${l === "it"
-        ? "Inquadra questo QR code con la fotocamera dello smartphone per aprire direttamente la vista AR in scala reale 1:1 sul tuo tavolo."
-        : "Scan this QR code with your smartphone camera to launch the live 1:1 augmented reality camera view directly on your device."}
+        ? "Inquadra questo QR code con la fotocamera dello smartphone per aprire la camera AR a tutto schermo, scansionare il piano e vedere il prodotto in scala reale 1:1."
+        : "Scan this QR code with your smartphone camera to launch fullscreen AR, scan your surface plane, and inspect the product at true 1:1 scale."}
     </p>
     <div class="ar-qr-actions">
       <button type="button" class="cta-btn white" style="flex:1;" onclick="copyARShareUrl(this, '${safeArUrl}')">${l === "it" ? "Copia link AR" : "Copy AR link"}</button>
-      <button type="button" class="cta-btn" style="flex:1;" onclick="openMobileARCameraStudio()">${l === "it" ? "Prova Camera AR qui" : "Test AR Camera here"}</button>
+      <button type="button" class="cta-btn" style="flex:1;" onclick="requestIOSMotionPermissionIfNeeded(); openMobileARCameraStudio()">${l === "it" ? "Apri Camera AR" : "Open AR Camera"}</button>
     </div>
   `;
 }
 
-// ==================== USER PROFILE, FAVORITES & SUBMITTED REQUESTS PERSISTENCE ====================
+// ==================== USER PROFILE, SAVED CUSTOM CONTAINERS, FAVORITES & REQUESTS ====================
 const REQUEST_STORAGE_KEY = "vesselcove_submitted_requests_v19";
 const FAVORITES_STORAGE_KEY = "vesselcove_favorite_vessels_v25";
+const SAVED_CUSTOM_VESSELS_KEY = "vesselcove_saved_custom_vessels_v30";
 const ACCEPTANCE_DEADLINE_DAYS = 3;
+
+function loadSavedCustomVessels() {
+  try {
+    const raw = localStorage.getItem(SAVED_CUSTOM_VESSELS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        state.savedCustomVessels = parsed;
+        parsed.forEach(cv => {
+          if (cv.thumbDataUrl) VESSEL_REALISTIC_THUMBS[cv.id] = cv.thumbDataUrl;
+          if (cv.customGraphic && cv.customGraphic.dataUrl) {
+            if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
+            const cgImg = new Image();
+            const cgRec = { ...cv.customGraphic, imageObj: null };
+            cgImg.onload = () => {
+              cgRec.imageObj = cgImg;
+              if (state.vesselId === cv.id && state.skinId === "custom_user_skin") {
+                customUploadedImageObj = cgImg;
+                rebuild3DProduct();
+              }
+            };
+            cgImg.src = cv.customGraphic.dataUrl;
+            cgRec.imageObj = cgImg;
+            state.customGraphicsByVessel[cv.id] = cgRec;
+          }
+        });
+      }
+    }
+  } catch {}
+}
+
+function persistSavedCustomVessels() {
+  try {
+    const serializable = (state.savedCustomVessels || []).map(cv => {
+      const copy = { ...cv };
+      if (copy.customGraphic) {
+        copy.customGraphic = {
+          title: copy.customGraphic.title,
+          file: copy.customGraphic.file,
+          dataUrl: copy.customGraphic.dataUrl,
+          width: copy.customGraphic.width,
+          height: copy.customGraphic.height,
+          colors: copy.customGraphic.colors,
+          embeddedBc: copy.customGraphic.embeddedBc
+        };
+      }
+      return copy;
+    });
+    localStorage.setItem(SAVED_CUSTOM_VESSELS_KEY, JSON.stringify(serializable));
+  } catch {}
+}
+
+function saveCurrentCustomVesselToProfile() {
+  const v = getVessel();
+  if (!v || !v.isCustomVessel) return;
+  const oldId = v.id;
+  const targetId = (oldId === "custom_active" || !oldId.startsWith("custom_saved_"))
+    ? `custom_saved_${Date.now()}`
+    : oldId;
+
+  if (oldId !== targetId && state.customGraphicsByVessel && state.customGraphicsByVessel[oldId]) {
+    state.customGraphicsByVessel[targetId] = state.customGraphicsByVessel[oldId];
+    delete state.customGraphicsByVessel[oldId];
+  }
+  const activeCustomGraphic = state.customGraphicsByVessel ? state.customGraphicsByVessel[targetId] : null;
+  v.id = targetId;
+  state.vesselId = targetId;
+  generatePhotorealisticVesselThumbnails([targetId]);
+
+  const savedEntry = {
+    ...v,
+    savedAt: new Date().toLocaleDateString(state.lang === "it" ? "it-IT" : "en-US"),
+    thumbDataUrl: VESSEL_REALISTIC_THUMBS[targetId] || VESSEL_REALISTIC_THUMBS[oldId] || "",
+    savedConfig: {
+      finishId: state.finishId,
+      closureId: state.closureId,
+      wrapType: state.wrapType,
+      pouchPrintType: state.pouchPrintType,
+      filmId: state.filmId,
+      labelMatId: state.labelMatId,
+      serigrafiaInkId: state.serigrafiaInkId,
+      pouchMatId: state.pouchMatId,
+      skinId: state.skinId,
+      sleeveAngleDeg: state.sleeveAngleDeg,
+      sleeveHeightPct: state.sleeveHeightPct,
+      bcAngleDeg: state.bcAngleDeg,
+      bcHeightPct: state.bcHeightPct,
+      bcLadder: state.bcLadder,
+      bcDoypackSide: state.bcDoypackSide,
+      bcDoypackX: state.bcDoypackX,
+      boxMode: state.boxMode,
+      boxQty: state.boxQty,
+      bulkQty: state.bulkQty,
+      boxDivider: state.boxDivider,
+      boxBoard: state.boxBoard
+    },
+    customGraphic: activeCustomGraphic ? {
+      title: activeCustomGraphic.title,
+      file: activeCustomGraphic.file,
+      dataUrl: activeCustomGraphic.dataUrl,
+      width: activeCustomGraphic.width,
+      height: activeCustomGraphic.height,
+      colors: activeCustomGraphic.colors,
+      embeddedBc: activeCustomGraphic.embeddedBc
+    } : null
+  };
+  if (!Array.isArray(state.savedCustomVessels)) state.savedCustomVessels = [];
+  const exIdx = state.savedCustomVessels.findIndex(item => item.id === targetId);
+  if (exIdx >= 0) state.savedCustomVessels[exIdx] = savedEntry;
+  else state.savedCustomVessels.unshift(savedEntry);
+  state.activeCustomVessel = savedEntry;
+  persistSavedCustomVessels();
+
+  const btn = document.getElementById("btnSaveCustomVessel");
+  if (btn) {
+    const l = state.lang;
+    btn.textContent = l === "it" ? "Salvato ✓" : "Saved ✓";
+    setTimeout(() => {
+      const bNow = document.getElementById("btnSaveCustomVessel");
+      if (bNow) bNow.textContent = state.lang === "it" ? "Salva" : "Save";
+    }, 1800);
+  }
+}
+
+function deleteSavedCustomVessel(vid, evt) {
+  if (evt && typeof evt.stopPropagation === "function") evt.stopPropagation();
+  state.savedCustomVessels = (state.savedCustomVessels || []).filter(item => item.id !== vid);
+  if (state.customGraphicsByVessel && state.customGraphicsByVessel[vid]) {
+    delete state.customGraphicsByVessel[vid];
+  }
+  if (state.activeCustomVessel && state.activeCustomVessel.id === vid) {
+    state.activeCustomVessel = null;
+  }
+  if (state.vesselId === vid) {
+    resetVesselConfigState("serum_250");
+  }
+  persistSavedCustomVessels();
+  renderProfileView();
+}
+
+function openSavedCustomVesselInStudio(vid) {
+  const saved = (state.savedCustomVessels || []).find(item => item.id === vid);
+  if (!saved) return;
+  state.activeCustomVessel = saved;
+  if (saved.customGraphic && saved.customGraphic.dataUrl) {
+    if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
+    if (!state.customGraphicsByVessel[vid] || !state.customGraphicsByVessel[vid].imageObj) {
+      const cgImg = new Image();
+      const cgRec = { ...saved.customGraphic, imageObj: null };
+      cgImg.onload = () => {
+        cgRec.imageObj = cgImg;
+        if (state.vesselId === vid && state.skinId === "custom_user_skin") {
+          customUploadedImageObj = cgImg;
+          rebuild3DProduct();
+        }
+      };
+      cgImg.src = saved.customGraphic.dataUrl;
+      cgRec.imageObj = cgImg;
+      state.customGraphicsByVessel[vid] = cgRec;
+    }
+    customUploadedImageObj = state.customGraphicsByVessel[vid].imageObj || null;
+  }
+  resetVesselConfigState(vid);
+  if (saved.savedConfig) {
+    Object.assign(state, saved.savedConfig);
+    state.vesselId = vid;
+  }
+  switchMainView("studio");
+  rebuild3DProduct();
+  renderAllUI();
+}
 
 function loadFavoriteVessels() {
   try {
     const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) state.favoriteVessels = parsed;
+      if (Array.isArray(parsed)) {
+        // Purge any legacy custom containers from favorites so they never appear in Marketplace or Favorites
+        const cleaned = parsed.filter(id => id && !String(id).startsWith("custom") && VESSELS.some(v => v.id === id));
+        state.favoriteVessels = cleaned;
+        if (cleaned.length !== parsed.length) saveFavoriteVessels();
+      }
     }
   } catch {}
 }
@@ -9160,6 +9956,7 @@ function renderProfileView() {
   const reqs = state.submittedRequests;
   const favIds = Array.isArray(state.favoriteVessels) ? state.favoriteVessels : [];
   const favVessels = favIds.map(id => VESSELS.find(v => v.id === id)).filter(Boolean);
+  const savedCustoms = Array.isArray(state.savedCustomVessels) ? state.savedCustomVessels : [];
 
   const favsHtml = favVessels.length === 0
     ? `
@@ -9198,6 +9995,47 @@ function renderProfileView() {
       </div>
     `;
 
+  const customSavedHtml = savedCustoms.length === 0
+    ? `
+      <div style="text-align:center; padding:26px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
+        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessun contenitore personalizzato salvato" : "No custom containers saved yet"}</div>
+        <p style="font-size:12px; color:var(--slate); margin-top:5px;">
+          ${l === "it"
+            ? "Digitalizza il tuo contenitore da 'Continua con il mio contenitore' e usa il tasto Salva nello Studio 3D per ritrovarlo qui."
+            : "Digitize your container via 'Continue with my container' and click Save inside 3D Studio to store it here."}
+        </p>
+      </div>
+    `
+    : `
+      <div class="fav-prof-grid">
+        ${savedCustoms.map(v => {
+          const thumbSrc = getVesselRealisticThumb(v) || v.thumbDataUrl || "";
+          const visualTag = thumbSrc
+            ? `<img class="cat-real-img" src="${thumbSrc}" alt="${escapeHtml(l === "it" ? v.it : v.en)}">`
+            : renderCatalogThumbSVG(v);
+          return `
+            <div class="fav-prof-card" onclick="openSavedCustomVesselInStudio('${v.id}')" style="cursor:pointer;">
+              <div class="fav-prof-stage">${visualTag}</div>
+              <div class="cat-meta-body">
+                <div class="cat-title-row">
+                  <div class="cat-meta-title">${escapeHtml(l === "it" ? v.it : v.en)}</div>
+                  <button type="button" class="fav-heart-btn" data-del-custom="${v.id}" onclick="deleteSavedCustomVessel('${v.id}', event)" title="${l === "it" ? "Elimina contenitore personalizzato" : "Delete custom container"}" aria-label="${l === "it" ? "Elimina contenitore personalizzato" : "Delete custom container"}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  </button>
+                </div>
+                ${renderVesselTwoColSpecs(v, l)}
+                <div class="cat-meta-footer">
+                  <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); openSavedCustomVesselInStudio('${v.id}')">
+                    ${l === "it" ? "Seleziona" : "Select"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
+
   const reqsHtml = reqs.length === 0
     ? `
       <div style="text-align:center; padding:32px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
@@ -9217,8 +10055,8 @@ function renderProfileView() {
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span style="font-family:var(--mono); font-size:11px; font-weight:800; color:var(--crimson);">${req.id}</span>
             </div>
-            <div style="font-size:15.5px; font-weight:800; color:var(--ink); margin-top:7px;">${l === "it" ? req.vesselIt : req.vesselEn}</div>
-            <div class="req-spec-line">${req.summaryLine}</div>
+            <div style="font-size:15.5px; font-weight:800; color:var(--ink); margin-top:7px;">${escapeHtml(l === "it" ? req.vesselIt : req.vesselEn)}</div>
+            <div class="req-spec-line">${escapeHtml(req.summaryLine)}</div>
           </div>
           <div style="text-align:right; flex-shrink:0;">
             <div style="font-family:var(--mono); font-size:17px; font-weight:800; color:var(--ink);">${formatEuro(req.totalCost)}</div>
@@ -9327,6 +10165,24 @@ function renderProfileView() {
           </p>
 
           ${favsHtml}
+        </div>
+
+        <div class="profile-card" id="profileCustomVesselsCard">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "I TUOI CONTENITORI" : "YOUR CONTAINERS"}</span>
+              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Contenitori Personalizzati" : "Custom Containers"}</h2>
+            </div>
+            <span class="spec-tag">${savedCustoms.length} ${savedCustoms.length === 1 ? (l === "it" ? "SALVATO" : "SAVED") : (l === "it" ? "SALVATI" : "SAVED")}</span>
+          </div>
+
+          <p style="font-size:12px; color:var(--slate); line-height:1.4; margin:0;">
+            ${l === "it"
+              ? "Contenitori digitalizzati dalle tue foto e salvati nello Studio 3D con le relative modifiche."
+              : "Containers reconstructed from your photos and saved from 3D Studio with all custom edits."}
+          </p>
+
+          ${customSavedHtml}
         </div>
 
         <div class="profile-card">
@@ -9706,8 +10562,9 @@ function renderInspector() {
   } else if (state.inspTab === 2) {
     const availSkins = getAvailableSkinsForWrap(state.wrapType);
     const skinPills = availSkins.map(s => {
-      const swatchHtml = (s.id === "custom_user_skin" && state.customGraphicDataUrl)
-        ? `<img src="${state.customGraphicDataUrl}" alt="${escapeHtml(s.brand)}" style="width:22px; height:28px; border-radius:3px; object-fit:cover; border:1px solid var(--border); flex-shrink:0;">`
+      const cgSrc = s.dataUrl || state.customGraphicDataUrl;
+      const swatchHtml = (s.id === "custom_user_skin" && cgSrc)
+        ? `<img src="${cgSrc}" alt="${escapeHtml(s.brand)}" style="width:22px; height:28px; border-radius:3px; object-fit:cover; border:1px solid var(--border); flex-shrink:0;">`
         : (s.id === "neutral" && s.styleType === "neutral_clear"
             ? `<div style="width:22px; height:28px; border-radius:3px; border:1px dashed var(--slate); background:repeating-linear-gradient(45deg, #F8FAFC, #F8FAFC 4px, #E2E8F0 4px, #E2E8F0 8px); flex-shrink:0;"></div>`
             : `<div style="display:flex; flex-direction:column; width:22px; height:28px; border-radius:3px; overflow:hidden; border:1px solid var(--border); flex-shrink:0;">
@@ -11027,6 +11884,12 @@ function updateFastTelemetryUI() {
   document.getElementById("ui_ship_note").textContent = t.shipNote;
   document.getElementById("val_sp_lot").textContent = `${prefix}${formatEuro(chain.minBaseCost)}`;
 
+  const vCur = getVessel();
+  const btnSaveCustom = document.getElementById("btnSaveCustomVessel");
+  if (btnSaveCustom) {
+    btnSaveCustom.style.display = vCur && vCur.isCustomVessel ? "flex" : "none";
+    btnSaveCustom.textContent = l === "it" ? "Salva" : "Save";
+  }
   const btnChk = document.getElementById("btnCheckout");
   if (phys.status === "r") {
     btnChk.disabled = true;
@@ -11212,7 +12075,7 @@ function generatePhotorealisticVesselThumbnails(onlyIds) {
     const doypackTex = createThumbDoypackTexture();
 
     const targetList = Array.isArray(onlyIds) && onlyIds.length > 0
-      ? VESSELS.filter(item => onlyIds.includes(item.id))
+      ? onlyIds.map(id => findVesselByIdAnywhere(id)).filter(Boolean)
       : VESSELS;
 
     targetList.forEach(v => {
@@ -11249,6 +12112,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
       }
 
       let vMat;
+      const custHex = v.customProfile && v.customProfile.customBodyColor;
       if (pouchMode) {
         vMat = new THREE.MeshPhysicalMaterial({
           map: doypackTex,
@@ -11262,9 +12126,9 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x475569, 0.42, 0.0);
       } else if (v.defaultFinish === "pet_gloss") {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: 0xD2E4F3,
+          color: new THREE.Color(custHex || "#D2E4F3"),
           transparent: true,
-          opacity: 0.72,
+          opacity: custHex ? 0.88 : 0.72,
           roughness: 0.05,
           metalness: 0.05,
           reflectivity: 1.0,
@@ -11276,7 +12140,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x334155, 0.68, 0.28);
       } else if (v.defaultFinish === "hdpe_white") {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: 0xEDF0F5,
+          color: new THREE.Color(custHex || "#EDF0F5"),
           roughness: 0.44,
           metalness: 0.03,
           clearcoat: 0.22,
@@ -11286,7 +12150,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x64748B, 0.44, 0.0);
       } else if (v.defaultFinish === "wine_green") {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: 0x062311,
+          color: new THREE.Color(custHex || "#062311"),
           transparent: true,
           opacity: 0.96,
           roughness: 0.06,
@@ -11299,7 +12163,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x031209, 0.55, 0.04);
       } else if (v.defaultFinish === "alu_brushed") {
         vMat = new THREE.MeshStandardMaterial({
-          color: 0xCFD5DD,
+          color: new THREE.Color(custHex || "#CFD5DD"),
           roughness: 0.20,
           metalness: 0.92,
           envMapIntensity: 1.18,
@@ -11308,7 +12172,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x334155, 0.36, 0.0);
       } else {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: 0xE2DFD7,
+          color: new THREE.Color(custHex || "#E2DFD7"),
           transparent: true,
           opacity: 0.88,
           roughness: 0.36,
@@ -11450,7 +12314,7 @@ function renderCatalogView() {
     </button>
   `).join("");
 
-  const filtered = VESSELS.filter(v => state.activeCatGroup === "all" || v.catGroup === state.activeCatGroup);
+  const filtered = VESSELS.filter(v => !v.isCustomVessel && (state.activeCatGroup === "all" || v.catGroup === state.activeCatGroup));
   document.getElementById("catGrid").innerHTML = filtered.map(v => {
     const isFav = isVesselFavorite(v.id);
     const thumbUrl = getVesselRealisticThumb(v);
@@ -11928,59 +12792,93 @@ function openCheckoutModal() {
 window.addEventListener("DOMContentLoaded", () => {
   loadSubmittedRequests();
   loadFavoriteVessels();
+  loadSavedCustomVessels();
   initWebGL();
   generatePhotorealisticVesselThumbnails();
   updateFavoritesBadges();
   const qs = new URLSearchParams(window.location.search);
-  if (qs.get("ch") || qs.get("cw") || qs.get("v") === "custom_vessel" || qs.get("vessel") === "custom_vessel") {
-    const cs = qs.get("cs") || "cyl_tall";
-    const ch = Math.max(45, Math.min(350, Number(qs.get("ch")) || 165));
-    const cw = Math.max(25, Math.min(260, Number(qs.get("cw")) || 56));
-    const cd = Math.max(25, Math.min(260, Number(qs.get("cd")) || cw));
-    const cn = qs.get("cn") || "24/410";
-    const cFin = qs.get("f") || "pet_gloss";
-    const allF = [...RIGID_FINISHES, ...POUCH_FINISHES];
-    const finO = allF.find(f => f.id === cFin) || RIGID_FINISHES[0];
-    const dimS = (cs === "square_soft" || cs === "doypack") ? `${cw} × ${cd} × ${ch} mm` : `Ø ${cw} × H ${ch} mm`;
-    state.customSpecs = { nameIt: "Contenitore Personalizzato Brand", nameEn: "Custom Brand Container", shape: cs, hMm: ch, wMm: cw, dMm: cd, vol: "280 ml", neck: cn, finishId: cFin };
-    updateEstimatedCustomVolume();
-    const custV = {
-      id: "custom_vessel",
-      isCustomVessel: true,
-      engine: cs === "doypack" ? "B" : "A",
-      catGroup: "cylindrical",
-      neck: cn,
-      shape: cs,
-      vol: state.customSpecs.vol,
-      matIt: finO.it,
-      matEn: finO.en,
-      hMm: ch, wMm: cw, dMm: cd,
-      weightG: 280,
-      maxShoulderTD: 54,
-      defaultFinish: cFin,
-      defaultWrap: cs === "doypack" ? "pouch" : "sleeve",
-      liquidColor: "#DCEEF8",
-      vendor: "Fornitore Cliente (CAD 1:1)",
-      it: state.customSpecs.nameIt,
-      en: state.customSpecs.nameEn,
-      subIt: dimS,
-      subEn: dimS,
-      badgeIt: "PERSONALIZZATO",
-      badgeEn: "CUSTOM 3D"
-    };
-    const eIdx = VESSELS.findIndex(v => v.id === "custom_vessel");
-    if (eIdx >= 0) VESSELS[eIdx] = custV; else VESSELS.unshift(custV);
-    generatePhotorealisticVesselThumbnails(["custom_vessel"]);
+  const rawVidParam = qs.get("v") || qs.get("vessel") || "serum_250";
+  let bootVid = rawVidParam;
+  if (qs.get("ch") || qs.get("cw") || String(rawVidParam).startsWith("custom")) {
+    const existingSaved = (state.savedCustomVessels || []).find(item => item.id === rawVidParam);
+    if (existingSaved && !qs.get("cp")) {
+      state.activeCustomVessel = existingSaved;
+      bootVid = existingSaved.id;
+    } else {
+      const cs = qs.get("cs") || "cyl_tall";
+      const ch = Math.max(45, Math.min(350, Number(qs.get("ch")) || 165));
+      const cw = Math.max(25, Math.min(260, Number(qs.get("cw")) || 56));
+      const cd = Math.max(25, Math.min(260, Number(qs.get("cd")) || cw));
+      const cn = qs.get("cn") || "24/410";
+      const cFin = qs.get("f") || "pet_gloss";
+      const cnm = qs.get("cnm") ? qs.get("cnm").slice(0, 40) : "Contenitore Personalizzato";
+      const allF = [...RIGID_FINISHES, ...POUCH_FINISHES];
+      const finO = allF.find(f => f.id === cFin) || RIGID_FINISHES[0];
+      const dimS = (cs === "square_soft" || cs === "doypack") ? `${cw} × ${cd} × ${ch} mm` : `Ø ${cw} × H ${ch} mm`;
+      const radCm = (cw + cd) * 0.025;
+      const fillH = ch * (cs === "jar_lux" ? 0.072 : 0.068);
+      const estMl = Math.max(30, Math.round((Math.PI * radCm * radCm * fillH) / 5) * 5);
+      const decSamples = decodeCustomProfileCompact(qs.get("cp"));
+      const activeCid = "custom_active";
+      state.activeCustomVessel = {
+        id: activeCid,
+        isCustomVessel: true,
+        engine: cs === "doypack" ? "B" : "A",
+        catGroup: "cylindrical",
+        neck: cn,
+        shape: cs,
+        vol: `${estMl} ml`,
+        matIt: finO.it,
+        matEn: finO.en,
+        hMm: ch, wMm: cw, dMm: cd,
+        weightG: 280,
+        maxShoulderTD: 54,
+        defaultFinish: cFin,
+        defaultWrap: cs === "doypack" ? "pouch" : "sleeve",
+        liquidColor: "#DCEEF8",
+        vendor: "Contenitore Cliente (CAD 1:1)",
+        it: cnm,
+        en: cnm,
+        subIt: dimS,
+        subEn: dimS,
+        badgeIt: "PERSONALIZZATO",
+        badgeEn: "CUSTOM 3D",
+        customProfile: decSamples ? {
+          rFrontSamples: decSamples,
+          rSideSamples: decSamples,
+          superellipseN: Number(qs.get("sn")) || 2.0,
+          customBodyColor: qs.get("cc") || "#E8EFF6"
+        } : null
+      };
+      generatePhotorealisticVesselThumbnails([activeCid]);
+      bootVid = activeCid;
+    }
   }
+  resetVesselConfigState(bootVid);
   if (qs.get("cgt")) {
-    state.customGraphicTitle = qs.get("cgt").slice(0, 28);
-    state.customGraphicFile = state.customGraphicTitle + ".png";
-    if (qs.get("cgc")) state.customGraphicColors = qs.get("cgc").split(",").slice(0, 3);
-    const pC = buildSynthesizedProofCanvas(state.customGraphicTitle, state.customGraphicFile, "1:1 AR", state.customGraphicColors);
-    state.customGraphicDataUrl = pC.toDataURL("image/png");
+    const cgTitle = qs.get("cgt").slice(0, 28);
+    const cgFile = cgTitle + ".png";
+    const cgCols = qs.get("cgc") ? qs.get("cgc").split(",").slice(0, 3) : state.customGraphicColors;
+    const pC = buildSynthesizedProofCanvas(cgTitle, cgFile, "1:1 AR", cgCols);
+    const pUrl = pC.toDataURL("image/png");
+    state.customGraphicTitle = cgTitle;
+    state.customGraphicFile = cgFile;
+    state.customGraphicColors = cgCols;
+    state.customGraphicDataUrl = pUrl;
+    state.customGraphicConformant = true;
+    if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
+    state.customGraphicsByVessel[bootVid] = {
+      title: cgTitle,
+      file: cgFile,
+      dataUrl: pUrl,
+      width: pC.width,
+      height: pC.height,
+      colors: cgCols,
+      imageObj: pC,
+      embeddedBc: null
+    };
     customUploadedImageObj = pC;
   }
-  resetVesselConfigState(qs.get("v") || qs.get("vessel") || "serum_250");
   if (qs.get("f")) state.finishId = qs.get("f");
   if (qs.get("c")) state.closureId = qs.get("c");
   if (qs.get("w")) state.wrapType = qs.get("w");

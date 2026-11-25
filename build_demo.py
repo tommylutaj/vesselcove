@@ -12,18 +12,12 @@ BASE_DIR = Path("/Users/thomas/.gemini/antigravity/scratch/vesselcove_demo")
 LOGO_PATH = Path("/Users/thomas/.gemini/antigravity/scratch/vesselcove_audit_2026/logos/vesselcove_official.png")
 FAVICON_PATH = BASE_DIR / "favicon.png"
 THREE_PATH = BASE_DIR / "vendor" / "three.min.js"
-FFLATE_PATH = BASE_DIR / "vendor" / "fflate.min.js"
-GLTF_EXP_PATH = BASE_DIR / "vendor" / "GLTFExporter.js"
-USDZ_EXP_PATH = BASE_DIR / "vendor" / "USDZExporter.js"
 
 
 def main():
     logo_b64 = "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
     favicon_b64 = "data:image/png;base64," + base64.b64encode(FAVICON_PATH.read_bytes()).decode("ascii")
     three_js = THREE_PATH.read_text(encoding="utf-8")
-    fflate_js = FFLATE_PATH.read_text(encoding="utf-8")
-    gltf_exp_js = GLTF_EXP_PATH.read_text(encoding="utf-8")
-    usdz_exp_js = USDZ_EXP_PATH.read_text(encoding="utf-8")
 
     html = """<!doctype html>
 <html lang="it">
@@ -37,7 +31,6 @@ def main():
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <style>
   :root {
     --bg-ivory: #F5F6F8;
@@ -1857,12 +1850,12 @@ def main():
     display: grid;
     grid-template-columns: 0.9fr 1.35fr;
     gap: 24px;
-    align-items: stretch;
+    align-items: start;
   }
   .custom-bp-left {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
     border-right: 1px solid var(--border-light);
     padding-right: 22px;
   }
@@ -1887,22 +1880,14 @@ def main():
     border: 1.5px dashed #CBD5E1;
     border-radius: 14px;
     background: #F8FAFC;
-    padding: 20px 18px;
+    padding: 16px 18px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    text-align: center;
     gap: 12px;
     flex-wrap: wrap;
     cursor: pointer;
     transition: border-color 0.16s ease, background-color 0.16s ease;
-  }
-  .upload-datasheet-box.cv-datasheet-lg {
-    flex: 1 1 auto;
-    min-height: 230px;
-    padding: 28px 22px;
-    gap: 14px;
   }
   .upload-datasheet-box:hover { border-color: var(--crimson); background: var(--crimson-soft); }
   .upload-datasheet-box.loaded { border-style: solid; border-color: var(--green); background: var(--green-soft); }
@@ -2271,20 +2256,16 @@ def main():
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22) !important;
   }
   .p-pill.red-cta {
-    background: var(--crimson) !important;
-    color: #FFFFFF !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.34) !important;
-    border-radius: 12px !important;
-    padding: 11px 18px !important;
-    font-size: 13px !important;
-    font-weight: 700 !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22) !important;
+    background: #FFFFFF !important;
+    border: 1px solid #FFFFFF !important;
+    color: #34251B !important;
   }
   .p-pill.red-cta:hover {
-    background: var(--crimson-dark) !important;
-    border-color: rgba(255, 255, 255, 0.55) !important;
+    background: var(--crimson) !important;
+    border-color: var(--crimson) !important;
     color: #FFFFFF !important;
     transform: none !important;
+    box-shadow: none !important;
   }
 
   .cat-grid {
@@ -2971,20 +2952,17 @@ def main():
       grid-column: 1;
       grid-row: 2;
       height: auto !important;
-      overflow: hidden !important;
-      border-radius: 20px !important;
+      overflow: visible !important;
     }
     .dock-right {
       grid-column: 2;
       grid-row: 2;
       height: auto !important;
-      overflow: hidden !important;
-      border-radius: 20px !important;
+      overflow: visible !important;
     }
-    .inspector-tabs { border-radius: 20px 20px 0 0 !important; }
-    .checkout-footer { height: auto !important; gap: 10px; border-radius: 0 0 20px 20px !important; }
     .dock-scroll, .diag-scroll { overflow-y: visible !important; }
     .diag-row { flex: none !important; min-height: 86px !important; height: auto !important; }
+    .checkout-footer { height: auto !important; gap: 10px; }
     .cat-grid { grid-template-columns: 1fr !important; }
     .fav-prof-grid { grid-template-columns: 1fr !important; }
     .profile-grid { grid-template-columns: 1fr; }
@@ -3114,15 +3092,13 @@ def main():
       order: 2 !important;
       width: 100% !important;
       height: auto !important;
-      overflow: hidden !important;
-      border-radius: 20px !important;
+      overflow: visible !important;
     }
     .dock-right {
       order: 3 !important;
       width: 100% !important;
       height: auto !important;
-      overflow: hidden !important;
-      border-radius: 20px !important;
+      overflow: visible !important;
     }
     .floating-hud-top {
       top: 10px !important;
@@ -3326,679 +3302,6 @@ def main():
     border-radius: 999px;
     background: #EF4444;
   }
-
-  /* ==================== FUNCTIONAL CUSTOM GRAPHIC, CUSTOM CONTAINER & FULLSCREEN SPATIAL AR ==================== */
-  .checkout-cta-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-  }
-  .checkout-cta-row .cta-btn {
-    flex: 1;
-    width: auto;
-    min-width: 0;
-  }
-  .cg-preview-wrap {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    text-align: left;
-    min-inline-size: 0;
-  }
-  .cg-thumb {
-    width: 74px;
-    height: 74px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: #FFFFFF;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
-  .cg-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    min-inline-size: 0;
-    flex: 1;
-  }
-  .cg-filename {
-    font-size: 13px;
-    font-weight: 800;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .cg-form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .cg-field, .cv-field {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-inline-size: 0;
-  }
-  .cg-label, .cv-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--slate);
-  }
-  .cg-input, .cv-input {
-    width: 100%;
-    min-height: 38px;
-    padding: 7px 11px;
-    border-radius: 10px;
-    border: 1.5px solid var(--border);
-    background: #FFFFFF;
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 600;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  .cg-input:focus, .cv-input:focus {
-    outline: none;
-    border-color: var(--crimson);
-    box-shadow: 0 0 0 3px rgba(194, 24, 14, 0.12);
-  }
-  .cv-cv-summary {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: #F8FAFC;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .cv-silhouette-box {
-    width: 72px;
-    height: 92px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    padding: 6px;
-  }
-  .cv-multi-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--ink);
-    background: #FFFFFF;
-    color: var(--ink);
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .cv-multi-btn:hover { background: var(--crimson-soft); border-color: var(--crimson); color: var(--crimson); }
-  .cv-audit-card {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: #F8FAFC;
-    padding: 13px 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .cv-audit-card.warn {
-    border-color: #F59E0B;
-    background: var(--amber-soft);
-  }
-  .cv-audit-card.err {
-    border-color: var(--crimson);
-    background: var(--crimson-soft);
-  }
-  .cv-audit-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-  }
-  .cv-audit-cell {
-    background: #FFFFFF;
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    padding: 7px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-inline-size: 0;
-  }
-  .cv-audit-k {
-    font-family: var(--mono);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--slate);
-    text-transform: uppercase;
-  }
-  .cv-audit-v {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 800;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .cv-src-pill {
-    display: inline-block;
-    width: fit-content;
-    font-family: var(--mono);
-    font-size: 8.5px;
-    font-weight: 800;
-    padding: 1px 6px;
-    border-radius: 999px;
-    margin-top: 2px;
-  }
-  .cv-src-pill.ds { background: var(--green-soft); color: var(--green); border: 1px solid rgba(20,122,59,0.28); }
-  .cv-src-pill.ai { background: #EFF6FF; color: #1D4ED8; border: 1px solid rgba(29,78,216,0.24); }
-  .cv-src-pill.warn { background: var(--amber-soft); color: #92400E; border: 1px solid rgba(245,158,11,0.35); }
-  .cv-unverified-box {
-    font-size: 11px;
-    line-height: 1.4;
-    color: var(--charcoal);
-    background: #FFFFFF;
-    border: 1px dashed #CBD5E1;
-    border-radius: 10px;
-    padding: 8px 10px;
-  }
-  .cg-mode-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .cg-mode-tab {
-    border: 1.5px solid var(--border);
-    background: #FFFFFF;
-    color: var(--charcoal);
-    border-radius: 10px;
-    padding: 6px 11px;
-    font-size: 11.5px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: border-color 0.14s ease, background-color 0.14s ease, color 0.14s ease;
-  }
-  .cg-mode-tab:hover { border-color: var(--ink); color: var(--ink); }
-  .cg-mode-tab.active {
-    background: var(--crimson);
-    border-color: var(--crimson);
-    color: #FFFFFF;
-  }
-  .cg-prepress-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
-  }
-  .cg-prepress-item {
-    background: #F8FAFC;
-    border: 1px solid var(--border-light);
-    border-radius: 9px;
-    padding: 7px 9px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-inline-size: 0;
-  }
-  .cg-prepress-item.ok { border-color: rgba(20,122,59,0.35); background: var(--green-soft); }
-  .cg-prepress-item.warn { border-color: rgba(245,158,11,0.45); background: var(--amber-soft); }
-  .cg-prepress-item.err { border-color: rgba(194,24,14,0.42); background: var(--crimson-soft); }
-  .cg-resize-card {
-    border: 1.5px solid #F59E0B;
-    background: var(--amber-soft);
-    border-radius: 12px;
-    padding: 10px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .slv-pos-card {
-    background: #F8FAFC;
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .slv-pos-row {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .slv-pos-hdr {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .slv-pos-hdr label { cursor: pointer; }
-  .slv-pos-val {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 800;
-    color: var(--crimson);
-  }
-  input[type="range"].vc-range-slider {
-    --slider-track-size: 6px;
-    --slider-thumb-size: 16px;
-    --slider-track-radius: 999px;
-    --slider-thumb-radius: 50%;
-    --slider-track-color: #CBD5E1;
-    --slider-fill-color: var(--crimson);
-    --slider-thumb-color: var(--crimson);
-    --slider-direction: to right;
-    --attr-min: attr(min type(<number>), 0);
-    --attr-max: attr(max type(<number>), 100);
-    --control-value: attr(value type(<number>), 50);
-    --slider-progress: calc(progress(var(--control-value), var(--attr-min), var(--attr-max)) * 100%);
-    appearance: none;
-    inline-size: 100%;
-    block-size: 26px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    accent-color: var(--crimson);
-  }
-  @supports not (opacity: progress(1, 0, 100)) {
-    input[type="range"].vc-range-slider {
-      --slider-progress: calc((var(--control-value) - var(--attr-min)) / (var(--attr-max) - var(--attr-min)) * 100%);
-    }
-  }
-  input[type="range"].vc-range-slider:focus-visible {
-    outline: 2px solid var(--slider-fill-color);
-    outline-offset: 3px;
-    border-radius: 6px;
-  }
-  input[type="range"].vc-range-slider::-webkit-slider-runnable-track {
-    block-size: var(--slider-track-size);
-    border: 0;
-    border-radius: var(--slider-track-radius);
-    background: linear-gradient(
-      var(--slider-direction),
-      var(--slider-fill-color) var(--slider-progress),
-      var(--slider-track-color) var(--slider-progress)
-    );
-  }
-  input[type="range"].vc-range-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    inline-size: var(--slider-thumb-size);
-    block-size: var(--slider-thumb-size);
-    margin-block-start: calc((var(--slider-track-size) - var(--slider-thumb-size)) / 2);
-    border: 2px solid #FFFFFF;
-    border-radius: var(--slider-thumb-radius);
-    background: var(--slider-thumb-color);
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25);
-  }
-  input[type="range"].vc-range-slider::-moz-range-track {
-    block-size: var(--slider-track-size);
-    border: 0;
-    border-radius: var(--slider-track-radius);
-    background: var(--slider-track-color);
-  }
-  input[type="range"].vc-range-slider::-moz-range-progress {
-    block-size: var(--slider-track-size);
-    border-radius: var(--slider-track-radius);
-    background: var(--slider-fill-color);
-  }
-  input[type="range"].vc-range-slider::-moz-range-thumb {
-    inline-size: var(--slider-thumb-size);
-    block-size: var(--slider-thumb-size);
-    border: 2px solid #FFFFFF;
-    border-radius: var(--slider-thumb-radius);
-    background: var(--slider-thumb-color);
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25);
-  }
-  @media (max-width: 680px) {
-    .cv-audit-grid, .cg-prepress-grid { grid-template-columns: 1fr; }
-  }
-  .upload-slot-thumb {
-    width: 100%;
-    height: 62px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 1px solid rgba(20, 122, 59, 0.28);
-    background: #FFFFFF;
-  }
-  .upload-ds-thumb {
-    width: 52px;
-    height: 52px;
-    border-radius: 9px;
-    object-fit: cover;
-    border: 1px solid rgba(20, 122, 59, 0.35);
-    background: #FFFFFF;
-    flex-shrink: 0;
-  }
-  .ar-qr-actions {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    margin-top: 2px;
-  }
-  .ar-qr-actions .cta-btn {
-    height: 36px;
-    font-size: 11.5px;
-    padding: 0 12px;
-  }
-
-  /* DEDICATED FULLSCREEN SPATIAL AR CAMERA PAGE */
-  body.ar-fullscreen-active,
-  body.ar-fullscreen-active #viewStudio,
-  body.ar-fullscreen-active #customVesselStage {
-    padding: 0 !important;
-    margin: 0 !important;
-    background: #09090B !important;
-    overflow: hidden !important;
-    height: 100vh !important;
-  }
-  body.ar-fullscreen-active .app-header {
-    display: none !important;
-  }
-  .ar-fullscreen-root {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
-    background: #09090B;
-    overflow: hidden;
-  }
-  .ar-fs-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-  }
-  .ar-fs-webgl {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .ar-fs-topbar {
-    position: absolute;
-    top: max(14px, env(safe-area-inset-top));
-    left: 14px;
-    right: 14px;
-    z-index: 6;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    pointer-events: none;
-  }
-  .ar-fs-topbar > * { pointer-events: auto; }
-  .ar-fs-status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 7px 13px;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.68);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    color: #FFFFFF;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    min-width: 0;
-    flex: 0 1 auto;
-    max-width: calc(100vw - 156px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ar-fs-actions-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-  .ar-fs-icon-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: rgba(15, 23, 42, 0.68);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  .ar-fs-scan-coach {
-    position: absolute;
-    left: 50%;
-    bottom: max(28px, env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    width: min(360px, calc(100vw - 28px));
-    z-index: 6;
-    background: rgba(15, 23, 42, 0.78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 18px;
-    padding: 16px 18px;
-    color: #FFFFFF;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-  }
-  .ar-fs-scan-icon {
-    width: 44px;
-    height: 32px;
-    animation: arPhoneSweep 1.8s ease-in-out infinite;
-  }
-  @keyframes arPhoneSweep {
-    0%, 100% { transform: translateX(-12px) rotate(-6deg); }
-    50% { transform: translateX(12px) rotate(6deg); }
-  }
-  .ar-fs-progress-track {
-    width: 100%;
-    height: 6px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.18);
-    overflow: hidden;
-    margin-top: 2px;
-  }
-  .ar-fs-progress-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #EF4444, #22C55E);
-    border-radius: 999px;
-    transition: width 0.14s linear;
-  }
-  .ar-fs-dim-pill {
-    position: absolute;
-    left: 50%;
-    bottom: max(22px, env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    z-index: 6;
-    padding: 7px 14px;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(34, 197, 94, 0.5);
-    color: #ECFDF5;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 800;
-    max-width: calc(100vw - 24px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none;
-  }
-  .ar-cam-enable-btn {
-    border: 1px solid rgba(255,255,255,0.35);
-    border-radius: 999px;
-    background: rgba(194, 24, 14, 0.92);
-    color: #FFFFFF;
-    font-family: var(--sans);
-    font-size: 11.5px;
-    font-weight: 700;
-    padding: 8px 16px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .ar-mv-stage {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    background: radial-gradient(circle at 50% 44%, #FFFFFF 0%, #F1F5F9 68%, #E2E8F0 100%);
-    display: flex;
-    flex-direction: column;
-  }
-  model-viewer#vcArModelViewer {
-    width: 100%;
-    height: 100%;
-    flex: 1 1 auto;
-    background: transparent;
-    --poster-color: transparent;
-  }
-  .ar-native-footer {
-    position: absolute;
-    left: 14px;
-    right: 14px;
-    bottom: max(20px, env(safe-area-inset-bottom));
-    z-index: 7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    pointer-events: none;
-  }
-  .ar-native-footer > * { pointer-events: auto; }
-  .ar-native-specs-badge {
-    padding: 6px 13px;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.80);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #FFFFFF;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 700;
-    max-width: calc(100vw - 28px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ar-native-btn-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 420px;
-  }
-  .ar-native-launch-btn {
-    flex: 1 1 auto;
-    height: 46px;
-    border-radius: 999px;
-    border: 1.5px solid rgba(255, 255, 255, 0.35);
-    background: var(--crimson);
-    color: #FFFFFF;
-    font-family: var(--sans);
-    font-size: 13.5px;
-    font-weight: 800;
-    padding: 0 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(194, 24, 14, 0.32);
-    text-decoration: none;
-  }
-  .ar-native-launch-btn:disabled {
-    opacity: 0.55;
-    cursor: wait;
-  }
-  .ar-mode-pill-btn {
-    height: 46px;
-    border-radius: 999px;
-    border: 1px solid rgba(24, 24, 27, 0.18);
-    background: rgba(255, 255, 255, 0.94);
-    color: #18181B;
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 0 14px;
-    cursor: pointer;
-    white-space: nowrap;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.14);
-  }
-  .ar-export-row {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding-top: 8px;
-    border-top: 1px solid var(--border-light);
-    flex-wrap: wrap;
-  }
-  .ar-dl-pill {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 700;
-    color: var(--ink);
-    background: #F4F4F6;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 5px 12px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .ar-dl-pill:hover {
-    border-color: var(--crimson);
-    background: var(--crimson-soft);
-    color: var(--crimson);
-  }
-  @media (max-width: 768px) {
-    .cg-input, .cv-input { font-size: 16px; }
-  }
 </style>
 </head>
 <body>
@@ -4185,10 +3488,7 @@ def main():
           <span style="font-size:10px; color:var(--espresso);" id="ui_ship_note">Spedizioni escluse</span>
         </div>
         <div class="start-price-hero" id="val_sp_lot">Da €1,080</div>
-        <div class="checkout-cta-row" id="checkoutCtaRow">
-          <button type="button" class="cta-btn white" id="btnSaveCustomVessel" onclick="saveCurrentCustomVesselToProfile()">Salva</button>
-          <button type="button" class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
-        </div>
+        <button class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
       </div>
     </aside>
 
@@ -4212,9 +3512,6 @@ def main():
 
 <script>
 __THREE_JS__
-__FFLATE_JS__
-__GLTF_EXPORTER_JS__
-__USDZ_EXPORTER_JS__
 </script>
 <script>
 // ==================== BILINGUAL DICTIONARY ====================
@@ -4610,7 +3907,6 @@ const state = {
   finishId: "pet_gloss",
   closureId: "none",
   wrapType: "none", // 'none' | 'sleeve' | 'label' | 'serigrafia' | 'pouch'
-  labelLayout: "single", // 'single' (Front) | 'front_back' (Front + Back Panels)
   pouchPrintType: "none", // 'none' | 'flexo' | 'digital'
   filmId: "PETG",
   labelMatId: "COTTON",
@@ -4628,50 +3924,13 @@ const state = {
   bcDoypackSide: "back",  // 'front' | 'back' (starts on back face!)
   bcDoypackX: 0,          // -42..+42 (% across active face)
   infoPopoverOpen: false,
-  // CUSTOM CONTAINER DIGITIZATION, CUSTOM GRAPHIC UV & FULLSCREEN SPATIAL AR
+  // CUSTOM CONTAINER UPLOAD DEMO, CUSTOM GRAPHIC DEMO, AR QR MODAL & USER PROFILE
   customVesselMode: false,
   customGraphicMode: false,
   mobileARCameraMode: false,
   customGraphicFile: "",
-  customGraphicDataUrl: "",
-  customGraphicTitle: "Grafica Personalizzata",
-  customGraphicWidth: 0,
-  customGraphicHeight: 0,
-  customGraphicPhysicalWmm: 0,
-  customGraphicPhysicalHmm: 0,
-  customGraphicBleedMm: 0,
-  customGraphicAudit: null,
-  customGraphicTargetMode: "",
-  customGraphicConformant: false,
-  customGraphicValidationMsg: "",
-  customGraphicEmbeddedBc: null,
-  customGraphicColors: ["#FAF8F5", "#C2180E", "#18181B"],
-  customGraphicsByVessel: {},
   customDatasheetFile: "",
-  customDatasheetDataUrl: "",
-  customDatasheetText: "",
-  customDatasheetAudit: null,
   customPhotoFiles: ["", "", "", "", "", ""],
-  customPhotoDataUrls: ["", "", "", "", "", ""],
-  customPhotoImages: [null, null, null, null, null, null],
-  customReconstructed: null,
-  activeCustomVessel: null,
-  currentDraftId: null,
-  savedCustomVessels: [],
-  customSpecs: {
-    nameIt: "Contenitore Personalizzato",
-    nameEn: "Custom Container",
-    shape: "cyl_tall",
-    hMm: 165,
-    wMm: 56,
-    dMm: 56,
-    vol: "280 ml",
-    neck: "24/410",
-    finishId: "pet_gloss"
-  },
-  arScanPhase: "scanning",
-  arScanProgress: 0,
-  arScanPointsCount: 0,
   arModalOpen: false,
   prevViewBeforeProfile: "catalog",
   submittedRequests: [],
@@ -4699,107 +3958,7 @@ const state = {
   copackerFillType: "Liquidi"
 };
 
-let customUploadedImageObj = null;
-
-function escapeHtml(str) {
-  return String(str == null ? "" : str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function getVesselDimsSignature(v) {
-  const vv = v || getVessel();
-  return `${Number(vv.wMm) || 0}x${Number(vv.dMm || vv.wMm) || 0}x${Number(vv.hMm) || 0}:${vv.shape || "cyl_tall"}:${vv.neck || "24/410"}`;
-}
-
-function getCustomSkinObject(vid) {
-  const targetVid = vid || state.vesselId;
-  const entry = state.customGraphicsByVessel && state.customGraphicsByVessel[targetVid];
-  if (!entry || (!entry.imageObj && !entry.dataUrl)) return null;
-  const activeV = findVesselByIdAnywhere(targetVid);
-  if (activeV && entry.vesselDimsSignature && entry.vesselDimsSignature !== getVesselDimsSignature(activeV)) {
-    return null;
-  }
-  const fLabel = entry.file || "Grafica caricata";
-  return {
-    id: "custom_user_skin",
-    vesselScope: targetVid,
-    vesselDimsSignature: entry.vesselDimsSignature || "",
-    validatedWrapType: entry.validatedWrapType || "",
-    styleType: "custom_uploaded",
-    brand: (entry.title || "Grafica Personalizzata").trim() || "Grafica Personalizzata",
-    brandSub: fLabel,
-    product: "GRAFICA ESECUTIVA CARICATA",
-    pouchSub: "STAMPA PERSONALIZZATA",
-    wineSub: "ETICHETTA PERSONALIZZATA",
-    sub: entry.physicalWmm && entry.physicalHmm
-      ? `${entry.physicalWmm.toFixed(0)} × ${entry.physicalHmm.toFixed(0)} mm CONFORME`
-      : "FILE ESECUTIVO CONFORME 1:1",
-    previewColors: entry.colors || ["#FAF8F5", "#C2180E", "#18181B"],
-    descIt: entry.physicalWmm && entry.physicalHmm
-      ? `${Math.round(entry.physicalWmm)}×${Math.round(entry.physicalHmm)} mm · ${fLabel}`
-      : ("File: " + fLabel),
-    descEn: entry.physicalWmm && entry.physicalHmm
-      ? `${Math.round(entry.physicalWmm)}×${Math.round(entry.physicalHmm)} mm · ${fLabel}`
-      : ("File: " + fLabel),
-    ean: "8 054192 990108",
-    imageObj: entry.imageObj || null,
-    dataUrl: entry.dataUrl || "",
-    physicalWmm: entry.physicalWmm || 0,
-    physicalHmm: entry.physicalHmm || 0,
-    labelLayout: entry.labelLayout || "single",
-    audit: entry.audit || null,
-    embeddedBc: entry.embeddedBc || null,
-    sleeveHeightMul: 1.0,
-    labelHeightMul: 1.0,
-    labelWidthMul: 1.0,
-    labelShape: "arch"
-  };
-}
-
-function sampleCustomProfileArray(arr, v) {
-  if (!Array.isArray(arr) || arr.length === 0) return null;
-  const clamped = Math.max(0, Math.min(1, v));
-  const pos = clamped * (arr.length - 1);
-  const i0 = Math.floor(pos);
-  const i1 = Math.min(arr.length - 1, i0 + 1);
-  const frac = pos - i0;
-  return arr[i0] * (1 - frac) + arr[i1] * frac;
-}
-
-const ARCHETYPE_REF_DIMS = {
-  cyl_tall: { hMm: 158, wMm: 54, dMm: 54 },
-  square_soft: { hMm: 184, wMm: 72, dMm: 58 },
-  wine_bordeaux: { hMm: 300, wMm: 76, dMm: 76 },
-  jar_lux: { hMm: 68, wMm: 74, dMm: 74 },
-  alu_can: { hMm: 146, wMm: 58, dMm: 58 },
-  doypack: { hMm: 310, wMm: 220, dMm: 95 }
-};
-
-function getCustomVesselScaleFactors(vessel) {
-  if (!vessel || !vessel.isCustomVessel) return { hFactor: 1.0, wFactor: 1.0, dFactor: 1.0 };
-  const ref = ARCHETYPE_REF_DIMS[vessel.shape] || ARCHETYPE_REF_DIMS.cyl_tall;
-  const hFactor = Math.max(0.62, Math.min(1.45, (Number(vessel.hMm) || ref.hMm) / ref.hMm));
-  const wFactor = Math.max(0.60, Math.min(1.50, (Number(vessel.wMm) || ref.wMm) / ref.wMm));
-  const dFactor = Math.max(0.60, Math.min(1.50, (Number(vessel.dMm || vessel.wMm) || ref.dMm) / ref.dMm));
-  return { hFactor, wFactor, dFactor };
-}
-
-function getVessel() {
-  const fromCatalog = VESSELS.find(v => v.id === state.vesselId);
-  if (fromCatalog) return fromCatalog;
-  if (state.activeCustomVessel && state.activeCustomVessel.id === state.vesselId) {
-    return state.activeCustomVessel;
-  }
-  if (Array.isArray(state.savedCustomVessels)) {
-    const fromSaved = state.savedCustomVessels.find(v => v.id === state.vesselId);
-    if (fromSaved) return fromSaved;
-  }
-  return VESSELS[0];
-}
+function getVessel() { return VESSELS.find(v => v.id === state.vesselId); }
 function getClosure() { return CLOSURES.find(c => c.id === state.closureId) || CLOSURES[0]; }
 function getFilm() { return FILMS.find(f => f.id === state.filmId); }
 function getLabelPaper() { return LABEL_PAPERS.find(p => p.id === state.labelMatId); }
@@ -4807,10 +3966,9 @@ function getSerigrafiaInk() { return SERIGRAFIA_INKS.find(i => i.id === state.se
 function getPouchLaminate() { return POUCH_LAMINATES.find(m => m.id === state.pouchMatId); }
 function getAvailableSkinsForWrap(wt) {
   const mode = wt || state.wrapType;
-  const cSkin = getCustomSkinObject(state.vesselId);
-  if (mode === "sleeve") return cSkin ? [cSkin, NEUTRAL_SLEEVE_SKIN, ...BRAND_SKINS] : [NEUTRAL_SLEEVE_SKIN, ...BRAND_SKINS];
-  if (mode === "label") return cSkin ? [cSkin, NEUTRAL_LABEL_SKIN, ...BRAND_SKINS] : [NEUTRAL_LABEL_SKIN, ...BRAND_SKINS];
-  return cSkin ? [cSkin, ...BRAND_SKINS] : BRAND_SKINS;
+  if (mode === "sleeve") return [NEUTRAL_SLEEVE_SKIN, ...BRAND_SKINS];
+  if (mode === "label") return [NEUTRAL_LABEL_SKIN, ...BRAND_SKINS];
+  return BRAND_SKINS;
 }
 function getSkin() {
   if (state.skinId === "neutral") {
@@ -4818,88 +3976,25 @@ function getSkin() {
     if (state.wrapType === "sleeve") return NEUTRAL_SLEEVE_SKIN;
     return BRAND_SKINS[0];
   }
-  if (state.skinId === "custom_user_skin") {
-    return getCustomSkinObject(state.vesselId) || BRAND_SKINS[0];
-  }
   return BRAND_SKINS.find(s => s.id === state.skinId) || null;
 }
 function getPrinter() { return PRINTER_POOL[state.printerIdx % PRINTER_POOL.length]; }
 function isDoypack() { return getVessel().shape === "doypack"; }
-function isPlasticBottle(v) { const vv = v || getVessel(); return vv.id === "serum_250" || vv.id === "square_500" || (!!vv.isCustomVessel && (vv.shape === "cyl_tall" || vv.shape === "square_soft")); }
+function isPlasticBottle(v) { const vv = v || getVessel(); return vv.id === "serum_250" || vv.id === "square_500"; }
 function hasWrap() { return state.wrapType !== "none"; }
 function isSerigrafiaMode() { return getVessel().shape === "alu_can" && state.wrapType === "serigrafia"; }
 function isLabelMode() { return !isDoypack() && state.wrapType === "label"; }
 
 function getVesselTotalHeight(vessel) {
-  let baseH = 2.55;
-  if (vessel.shape === "jar_lux") baseH = 1.48;
-  else if (vessel.shape === "wine_bordeaux") baseH = 2.86;
-  else if (vessel.shape === "alu_can") baseH = 2.65;
-  else if (vessel.shape === "doypack") baseH = 2.60;
-  if (vessel.isCustomVessel) {
-    const { hFactor } = getCustomVesselScaleFactors(vessel);
-    return Math.max(1.20, Math.min(3.20, baseH * hFactor));
-  }
-  return baseH;
+  if (vessel.shape === "jar_lux") return 1.48;
+  if (vessel.shape === "wine_bordeaux") return 2.86;
+  if (vessel.shape === "alu_can") return 2.65;
+  if (vessel.shape === "doypack") return 2.60;
+  return 2.55;
 }
 
-function getCustomNeckHalfMm(vessel) {
-  const neckStr = String((vessel && vessel.neck) || "24/410");
-  let halfMm = 12;
-  if (vessel && vessel.customProfile && vessel.customProfile.neckOuterMm) {
-    halfMm = Number(vessel.customProfile.neckOuterMm) * 0.5;
-  } else if (neckStr.includes("28")) halfMm = 14;
-  else if (neckStr.includes("58")) halfMm = 29;
-  else if (neckStr.includes("70")) halfMm = 35;
-  else if (neckStr.includes("29")) halfMm = 14.5;
-  else if (neckStr.includes("202")) halfMm = 25;
-  const maxBodyHalf = Math.min(Number(vessel.wMm) || 54, Number(vessel.dMm || vessel.wMm) || 54) * 0.48;
-  return Math.max(8, Math.min(maxBodyHalf, halfMm));
-}
-
-// Continuous radial distance at angle theta for any rigid vessel shape (including CV-reconstructed profiles)
+// Continuous radial distance at angle theta for any rigid vessel shape
 function getRadialEnvelopeFactor(vessel, profileV, theta, baseRWorld) {
-  if (vessel && vessel.isCustomVessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples)) {
-    const cp = vessel.customProfile;
-    const totalH = getVesselTotalHeight(vessel);
-    const mmToWorld = totalH / Math.max(10, Number(vessel.hMm) || 165);
-    const radiusScale = baseRWorld / Math.max(0.05, (Number(vessel.wMm) * 0.5) * mmToWorld || 0.5);
-    const frontR = Math.max(0.14, sampleCustomProfileArray(cp.rFrontSamples, profileV) || 1.0);
-    const sideR = Math.max(0.14, sampleCustomProfileArray(cp.rSideSamples || cp.rFrontSamples, profileV) || frontR);
-    const rxBody = (Number(vessel.wMm) * 0.5) * mmToWorld * frontR * radiusScale;
-    const rzBody = (Number(vessel.dMm || vessel.wMm) * 0.5) * mmToWorld * sideR * radiusScale;
-    const neckBlend = (vessel.shape !== "jar_lux" && vessel.shape !== "alu_can" && profileV >= 0.86)
-      ? Math.min(1, (profileV - 0.86) / 0.04)
-      : 0;
-    const neckRW = getCustomNeckHalfMm(vessel) * mmToWorld * radiusScale;
-    const rx = rxBody * (1 - neckBlend) + neckRW * neckBlend;
-    const rz = rzBody * (1 - neckBlend) + neckRW * neckBlend;
-    const bodyMix = profileV >= 0.88 ? 0.0 : (profileV <= 0.62 ? 1.0 : (0.88 - profileV) / 0.26);
-    const nBase = Math.max(1.8, Math.min(5.0, cp.superellipseN || 2.0));
-    const n = 2.0 + (nBase - 2.0) * bodyMix * (1 - neckBlend);
-    const sx = Math.abs(Math.sin(theta)) / Math.max(0.001, rx);
-    const cz = Math.abs(Math.cos(theta)) / Math.max(0.001, rz);
-    const denom = Math.pow(Math.pow(sx, n) + Math.pow(cz, n), 1.0 / n);
-    return denom > 1e-6 ? 1.0 / denom : rx;
-  }
-  if (vessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples)) {
-    const cp = vessel.customProfile;
-    const frontR = Math.max(0.14, sampleCustomProfileArray(cp.rFrontSamples, profileV) || 1.0);
-    const sideR = Math.max(0.14, sampleCustomProfileArray(cp.rSideSamples || cp.rFrontSamples, profileV) || frontR);
-    const ratioD = sideR / frontR;
-    const bodyMix = profileV >= 0.88 ? 0.0 : (profileV <= 0.62 ? 1.0 : (0.88 - profileV) / 0.26);
-    const nBase = Math.max(1.8, Math.min(5.0, cp.superellipseN || 2.0));
-    const n = 2.0 + (nBase - 2.0) * bodyMix;
-    const rx = baseRWorld;
-    const rz = baseRWorld * (1.0 + (ratioD - 1.0) * bodyMix);
-    if (Math.abs(n - 2.0) > 0.08 || Math.abs(rx - rz) > 0.005) {
-      const sx = Math.abs(Math.sin(theta)) / Math.max(0.05, rx);
-      const cz = Math.abs(Math.cos(theta)) / Math.max(0.05, rz);
-      const denom = Math.pow(Math.pow(sx, n) + Math.pow(cz, n), 1.0 / n);
-      return denom > 1e-6 ? 1.0 / denom : baseRWorld;
-    }
-    return baseRWorld;
-  }
   if (vessel.shape === "square_soft" && profileV < 0.85) {
     const sqMix = Math.max(0, Math.min(1, (0.85 - profileV) / 0.20));
     const n = 2.0 + 2.8 * sqMix;
@@ -4913,12 +4008,9 @@ function getRadialEnvelopeFactor(vessel, profileV, theta, baseRWorld) {
   return baseRWorld;
 }
 
-// Normalized radial profile r(v) for catalog vessels and CV-reconstructed custom containers
+// Normalized radial profile r(v) for bottles & wine bottles
 function getNormalizedRadiusAtV(vessel, v) {
   if (vessel.shape === "doypack") return 1.0;
-  if (vessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples) && vessel.customProfile.rFrontSamples.length > 4) {
-    return Math.max(0.18, Math.min(1.12, sampleCustomProfileArray(vessel.customProfile.rFrontSamples, v) || 1.0));
-  }
   if (vessel.shape === "jar_lux") {
     if (v < 0.08) return 0.92 + (v / 0.08) * 0.08;
     if (v <= 0.74) return 1.0;
@@ -5029,129 +4121,42 @@ function getWrapRealDimensionsMm(vessel) {
   };
 }
 
-function getContainerCircumferenceMm(v) {
-  const vessel = v || getVessel();
-  const w = Number(vessel.wMm) || 54;
-  const d = Number(vessel.dMm || vessel.wMm) || w;
-  if (vessel.shape === "square_soft" || (vessel.customProfile && (vessel.customProfile.superellipseN || 2.0) >= 2.7)) {
-    const n = (vessel.customProfile && vessel.customProfile.superellipseN) || 3.6;
-    const sqPerimeter = 2 * (w + d) - 10;
-    const ellPerimeter = Math.PI * (3 * ((w + d) / 2) - Math.sqrt((3 * w / 2 + d / 2) * (w / 2 + 3 * d / 2)));
-    const mix = Math.max(0, Math.min(1, (n - 2.0) / 2.2));
-    return Math.round(ellPerimeter * (1 - mix) + sqPerimeter * mix);
-  }
-  if (Math.abs(w - d) > 1.5) {
-    const a = w * 0.5, b = d * 0.5;
-    return Math.round(Math.PI * (3 * (a + b) - Math.sqrt((3 * a + b) * (a + 3 * b))));
-  }
-  return Math.round(Math.PI * w);
-}
-
-function getContainerPrintableAreasMm(vessel, overrideMode, overrideLayout) {
+// Maximum physically applicable surface of the container (including yellow/red curvature zones)
+function getMaxApplicableSurfaceDimensionsMm(vessel) {
   const v = vessel || getVessel();
-  const cp = v.customProfile || null;
   const isCan = v.shape === "alu_can";
   const isPouch = v.shape === "doypack";
-  const circMm = getContainerCircumferenceMm(v);
+  const isLabel = isLabelMode();
+  const circMm = v.shape === "square_soft"
+    ? Math.round(2 * (v.wMm + v.dMm) - 12)
+    : Math.round(Math.PI * v.wMm);
   const bcWmm = v.shape === "jar_lux" ? 32 : 37;
   const bcHmm = v.shape === "jar_lux" ? 22 : 26;
 
   if (isPouch) {
-    const pW = Math.round(v.wMm * 0.86);
-    const pH = Math.round(v.hMm * 0.74);
     return {
-      mode: "pouch",
-      labelLayout: "single",
-      circumferenceMm: circMm,
-      maxWmm: pW,
-      maxHmm: pH,
-      safeMarginMm: 5,
-      bleedMm: 3,
-      printableVMin: 0.08,
-      printableVMax: 0.82,
-      supportedModes: ["pouch"],
-      wrapDimStr: `${pW} × ${pH} mm`,
+      maxWmm: v.wMm,
+      maxHmm: v.hMm,
+      wrapDimStr: `${v.wMm} × ${v.hMm} mm`,
       bcDimStr: `${bcWmm} × ${bcHmm} mm`
     };
   }
 
-  let vMin = 0.04;
-  let vMax = isCan ? 0.94 : (v.shape === "wine_bordeaux" ? 0.72 : (v.shape === "jar_lux" ? 0.76 : 0.80));
-  if (cp && typeof cp.vPrintableMin === "number" && typeof cp.vPrintableMax === "number") {
-    vMin = cp.vPrintableMin;
-    vMax = cp.vPrintableMax;
-  }
-
-  const bodyHeightMm = Math.max(24, Math.round((vMax - vMin) * v.hMm));
-  const sleeveH = (cp && cp.printableHmm) ? Math.min(Math.round(v.hMm * 0.92), Math.round(cp.printableHmm)) : bodyHeightMm;
-  const sleeveW = (cp && cp.printableWmm)
-    ? Math.round(cp.printableWmm)
-    : circMm;
-
-  const frontPanelFrac = isCan ? 0.85 : (v.shape === "jar_lux" ? 0.44 : (v.shape === "square_soft" ? 0.30 : (v.shape === "wine_bordeaux" ? 0.34 : 0.38)));
-  const labelMaxH = (cp && cp.printableHmm)
-    ? Math.min(Math.round(v.hMm * 0.90), Math.round(cp.printableHmm))
-    : Math.max(22, Math.round((Math.min(vMax, v.shape === "wine_bordeaux" ? 0.50 : 0.62) - vMin) * v.hMm));
-  const layout = overrideLayout || state.labelLayout || "single";
-  const singleLabelW = (cp && cp.printableLabelWmm)
-    ? Math.round(cp.printableLabelWmm)
-    : Math.round(circMm * frontPanelFrac);
-  const labelW = layout === "front_back" ? Math.round(Math.min(circMm * 0.90, singleLabelW * 2)) : singleLabelW;
-
-  const mode = overrideMode || (state.customGraphicTargetMode || (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
-  const supportedModes = isCan ? ["sleeve", "label", "serigrafia"] : ["sleeve", "label"];
-  if (mode === "serigrafia" && isCan) {
-    return {
-      mode: "serigrafia",
-      labelLayout: "single",
-      circumferenceMm: circMm,
-      maxWmm: circMm,
-      maxHmm: Math.round(v.hMm * 0.86),
-      safeMarginMm: 3,
-      bleedMm: 2,
-      printableVMin: 0.04,
-      printableVMax: 0.90,
-      supportedModes,
-      wrapDimStr: `${circMm} × ${Math.round(v.hMm * 0.86)} mm`,
-      bcDimStr: `${bcWmm} × ${bcHmm} mm`
-    };
-  }
-  if (mode === "label") {
-    return {
-      mode: "label",
-      labelLayout: layout,
-      circumferenceMm: circMm,
-      maxWmm: labelW,
-      maxHmm: labelMaxH,
-      singlePanelWmm: singleLabelW,
-      safeMarginMm: 3,
-      bleedMm: 2,
-      printableVMin: vMin,
-      printableVMax: vMax,
-      supportedModes,
-      wrapDimStr: `${labelW} × ${labelMaxH} mm`,
-      bcDimStr: `${bcWmm} × ${bcHmm} mm`
-    };
+  const maxCarrierV = isCan ? 0.95 : (v.shape === "wine_bordeaux" ? 0.76 : (v.shape === "jar_lux" ? 0.80 : 0.84));
+  const minCarrierV = 0.04;
+  const maxHmm = Math.round((maxCarrierV - minCarrierV) * v.hMm);
+  let maxWmm = circMm;
+  if (isLabel) {
+    // Full applicable wrap-around width including corners/margins before self-overlap
+    const maxLabelFrac = isCan ? 0.94 : (v.shape === "jar_lux" ? 0.65 : (v.shape === "square_soft" ? 0.45 : 0.50));
+    maxWmm = Math.round(circMm * maxLabelFrac);
   }
   return {
-    mode: "sleeve",
-    labelLayout: "single",
-    circumferenceMm: circMm,
-    maxWmm: sleeveW,
-    maxHmm: sleeveH,
-    safeMarginMm: 4,
-    bleedMm: 3,
-    printableVMin: vMin,
-    printableVMax: vMax,
-    supportedModes,
-    wrapDimStr: `${sleeveW} × ${sleeveH} mm`,
+    maxWmm,
+    maxHmm,
+    wrapDimStr: `${maxWmm} × ${maxHmm} mm`,
     bcDimStr: `${bcWmm} × ${bcHmm} mm`
   };
-}
-
-// Maximum physically applicable surface of the container (container-specific geometric dimensions)
-function getMaxApplicableSurfaceDimensionsMm(vessel, overrideMode, overrideLayout) {
-  return getContainerPrintableAreasMm(vessel, overrideMode, overrideLayout);
 }
 
 function getClosureRealDimensionsMm(cl) {
@@ -5524,98 +4529,9 @@ function drawEAN13Graphic(ctx, x, y, wBox, hBox, eanStr, statusCol, labelText, v
   ctx.restore();
 }
 
-function drawCustomGraphicImageRegion(ctx, rx, ry, rw, rh, imgObj, backingFill, curveOpts) {
-  if (!imgObj || rw <= 1 || rh <= 1) return;
-  const iw = imgObj.naturalWidth || imgObj.width || 1000;
-  const ih = imgObj.naturalHeight || imgObj.height || 600;
-  if (!iw || !ih) return;
-  const opts = curveOpts || null;
-  const srcX = (opts && Number.isFinite(opts.srcX)) ? opts.srcX : 0;
-  const srcW = (opts && Number.isFinite(opts.srcW) && opts.srcW > 1) ? opts.srcW : iw;
-  const vessel = opts && opts.vessel;
-  const sSpan = (opts && Number(opts.sSpan) > 0.05) ? Number(opts.sSpan) : 0.92;
-  if (!vessel || typeof getNormalizedRadiusAtV !== "function") {
-    if (backingFill) {
-      ctx.fillStyle = backingFill;
-      ctx.fillRect(rx, ry, rw, rh);
-    }
-    ctx.drawImage(imgObj, srcX, 0, srcW, ih, rx, ry, rw, rh);
-    return;
-  }
-  const strips = 48;
-  const canvasH = (ctx && ctx.canvas && ctx.canvas.height) ? ctx.canvas.height : 1024;
-  const isLabel = !!opts.isLabel;
-  const subFactor = Number.isFinite(opts.substrateFactor) ? opts.substrateFactor : 0.65;
-  const centerX = rx + rw * 0.5;
-  for (let i = 0; i < strips; i++) {
-    const t0 = i / strips;
-    const t1 = (i + 1) / strips;
-    const tMid = (t0 + t1) * 0.5;
-    const dy = ry + t0 * rh;
-    const dh = Math.max(1.2, (t1 - t0) * rh + 0.6);
-    const stripMidY = ry + tMid * rh;
-    const vStrip = Math.max(0.01, Math.min(0.99, 0.04 + (1 - stripMidY / canvasH) * sSpan));
-    const rStrip = getNormalizedRadiusAtV(vessel, vStrip);
-    const wScaleRaw = isLabel
-      ? Math.max(0.76, 1 - Math.max(0, 1 - rStrip) * 0.35 * subFactor)
-      : Math.max(0.46, 0.25 + 0.75 * rStrip);
-    const wScale = Math.min(1.04, wScaleRaw);
-    const drawW = rw * wScale;
-    const drawX = centerX - drawW * 0.5;
-    const sy = t0 * ih;
-    const sh = Math.max(1, (t1 - t0) * ih);
-    if (backingFill) {
-      ctx.fillStyle = backingFill;
-      ctx.fillRect(drawX, dy, drawW, dh);
-    }
-    ctx.drawImage(imgObj, srcX, sy, srcW, sh, drawX, dy, drawW, dh);
-    if (rStrip < 0.97) {
-      const shadeAlpha = Math.min(0.18, (0.97 - rStrip) * (isLabel ? 0.32 : 0.24));
-      ctx.fillStyle = (i % 2 === 0)
-        ? ("rgba(15, 23, 42, " + shadeAlpha.toFixed(3) + ")")
-        : ("rgba(255, 255, 255, " + (shadeAlpha * 0.45).toFixed(3) + ")");
-      ctx.fillRect(drawX, dy, drawW, dh);
-    }
-  }
-}
-
 function renderDoypackUVTexture(skin, phys) {
   const w = texCanvas.width, h = texCanvas.height;
   texCtx.clearRect(0, 0, w, h);
-
-  const cImgObj = (skin && skin.styleType === "custom_uploaded") ? (skin.imageObj || customUploadedImageObj) : null;
-  if (skin && skin.styleType === "custom_uploaded" && cImgObj) {
-    const isKraft = state.finishId === "kraft_pouch";
-    const isFoil = state.finishId === "foil_pouch";
-    const baseG = texCtx.createLinearGradient(0, 0, 0, h);
-    if (isKraft) { baseG.addColorStop(0, "#CFA87C"); baseG.addColorStop(1, "#A87E52"); }
-    else if (isFoil) { baseG.addColorStop(0, "#E5E7EB"); baseG.addColorStop(1, "#B8BFC7"); }
-    else { baseG.addColorStop(0, "#FFFFFF"); baseG.addColorStop(1, "#EAE5DC"); }
-    texCtx.fillStyle = baseG;
-    texCtx.fillRect(0, 0, w, h);
-
-    // Draw conformal custom artwork cleanly 1:1 across front pouch panel (barcode already integrated inside file)
-    texCtx.save();
-    texCtx.beginPath();
-    texCtx.rect(w * 0.27, 134, w * 0.46, h - 180);
-    texCtx.clip();
-    drawCustomGraphicImageRegion(texCtx, w * 0.27, 134, w * 0.46, h - 180, cImgObj, "#FFFFFF");
-    texCtx.restore();
-
-    texCtx.fillStyle = "rgba(18,17,16,0.08)";
-    texCtx.fillRect(0, 0, w, 128);
-    texCtx.fillStyle = "#C2180E";
-    texCtx.fillRect(0, 128, w, 8);
-    if (state.heatmap) {
-      texCtx.fillStyle = "rgba(194,24,14,0.45)";
-      texCtx.fillRect(0, 0, w, 175);
-      texCtx.fillRect(0, h - 140, w, 140);
-      [0.25, 0.75].forEach(seamU => texCtx.fillRect(seamU * w - 75, 0, 150, h));
-    }
-
-    if (sleeveTexture) sleeveTexture.needsUpdate = true;
-    return;
-  }
 
   // Bare White Soft-Touch Doypack when no brand print is selected yet
   if (!skin || state.wrapType === "none") {
@@ -5870,13 +4786,7 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
     const cx = w * 0.5 + slOffsetPx + seamOff;
     const isCan = vessel.shape === "alu_can";
     const lwBase = isCan ? Math.round(w * 0.85) : (vessel.shape === "jar_lux" ? 820 : (vessel.shape === "square_soft" ? 450 : (vessel.shape === "wine_bordeaux" ? 460 : 480)));
-    const isCustomLabelPhysical = (skin.styleType === "custom_uploaded" && Number(skin.physicalWmm) > 0);
-    const circMmLbl = isCustomLabelPhysical ? Math.max(20, getContainerCircumferenceMm(vessel)) : 0;
-    const isFrontBackLbl = isCustomLabelPhysical && state.labelLayout === "front_back";
-    const panelWmmLbl = isFrontBackLbl ? (Number(skin.physicalWmm) * 0.5) : Number(skin.physicalWmm || 0);
-    const lw = isCustomLabelPhysical
-      ? Math.max(40, Math.min(Math.round(w * (isFrontBackLbl ? 0.44 : 0.92)), Math.round((panelWmmLbl / circMmLbl) * w)))
-      : Math.min(Math.round(w * 0.90), Math.round(lwBase * getLabelWidthMultiplier(vessel)));
+    const lw = Math.min(Math.round(w * 0.90), Math.round(lwBase * getLabelWidthMultiplier(vessel)));
     const labelCenter = isCan ? (cx - 540) : cx;
     const labelLeft = labelCenter - lw / 2;
     const labelRight = labelCenter + lw / 2;
@@ -6020,38 +4930,7 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
     const topPinch = stressNorm > 0.35 ? Math.max(0.76, 1 - (stressNorm - 0.35) * 0.24 * lp.stiffness) : 1.0;
 
     texCtx.textAlign = "center";
-    const cLabelImg = skin.imageObj || customUploadedImageObj;
-    if (skin.styleType === "custom_uploaded" && cLabelImg) {
-      texCtx.save();
-      const iwNat = cLabelImg.naturalWidth || cLabelImg.width || 1000;
-      const isFrontBackLayout = (state.labelLayout === "front_back" && Number(skin.physicalWmm) > 0);
-      if (isFrontBackLayout) {
-        drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF", {
-          vessel,
-          sSpan,
-          isLabel: true,
-          substrateFactor: lp.stiffness,
-          srcX: 0,
-          srcW: iwNat * 0.5
-        });
-        drawCustomGraphicImageRegion(texCtx, labelLeft + w * 0.5, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF", {
-          vessel,
-          sSpan,
-          isLabel: true,
-          substrateFactor: lp.stiffness,
-          srcX: iwNat * 0.5,
-          srcW: iwNat * 0.5
-        });
-      } else {
-        drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF", {
-          vessel,
-          sSpan,
-          isLabel: true,
-          substrateFactor: lp.stiffness
-        });
-      }
-      texCtx.restore();
-    } else if (isNeutralWhite) {
+    if (isNeutralWhite) {
       // Blank white unprinted die-cut label: ONLY integrated EAN-13 barcode, zero brand copy!
       const bcXPos = isCan ? (cx - 90) : (vessel.shape === "jar_lux" ? cx : cx);
       const bcYPos = vessel.shape === "jar_lux" ? cy : (syBot - Math.min(92, Math.round(lh * 0.26)));
@@ -6262,23 +5141,6 @@ function renderSerigrafiaCanUVTexture(skin, vessel, phys) {
   texCtx.clearRect(0, 0, w, h);
 
   const ink = getSerigrafiaInk();
-  const cSerigImg = (skin && skin.styleType === "custom_uploaded") ? (skin.imageObj || customUploadedImageObj) : null;
-  if (skin && skin.styleType === "custom_uploaded" && cSerigImg) {
-    texCtx.save();
-    texCtx.globalAlpha = 0.94;
-    drawCustomGraphicImageRegion(texCtx, 0, 26, w, h - 52, cSerigImg, "rgba(250, 247, 240, 0.90)");
-    texCtx.restore();
-    if (state.heatmap) {
-      for (let y = 0; y < h; y += 8) {
-        const vNorm = 0.04 + (1 - y / h) * 0.90;
-        const curvePct = Math.round((1 - getNormalizedRadiusAtV(vessel, vNorm)) * 260);
-        texCtx.fillStyle = curvePct > ink.maxTD + 10 ? "rgba(194,24,14,0.48)" : (curvePct >= ink.maxTD - 4 ? "rgba(229,160,0,0.38)" : "rgba(20,122,59,0.16)");
-        texCtx.fillRect(0, y, w, 8);
-      }
-    }
-    if (sleeveTexture) sleeveTexture.needsUpdate = true;
-    return;
-  }
   // Full 360° silk-screen ink printed directly on brushed aluminum body
   if (skin.styleType === "black_gold") {
     texCtx.fillStyle = "rgba(18, 17, 20, 0.84)";
@@ -6445,23 +5307,6 @@ function renderSleeveUVTexture() {
       texCtx.fillStyle = "rgba(255, 255, 255, 0.72)";
       texCtx.fillRect(centerX - w / 2, syTop + 5, w, 3);
       texCtx.fillRect(centerX - w / 2, syBot - 8, w, 3);
-
-    } else if (skin.styleType === "custom_uploaded" && (skin.imageObj || customUploadedImageObj)) {
-      const fmCur = getFilm();
-      texCtx.save();
-      texCtx.globalAlpha = state.xray ? 0.88 : 0.98;
-      drawCustomGraphicImageRegion(texCtx, centerX - w / 2, syTop, w, syH, skin.imageObj || customUploadedImageObj, "#FAF8F4", {
-        vessel,
-        sSpan,
-        isLabel: false,
-        substrateFactor: fmCur.pinchScale
-      });
-      texCtx.globalAlpha = 1.0;
-      const rimCol = phys.sleeveStatus === "err" ? "rgba(194, 24, 14, 0.85)" : (phys.sleeveStatus === "warn" ? "rgba(217, 119, 6, 0.80)" : "rgba(20, 122, 59, 0.42)");
-      texCtx.fillStyle = rimCol;
-      texCtx.fillRect(centerX - w / 2, syTop, w, 5);
-      texCtx.fillRect(centerX - w / 2, syBot - 5, w, 5);
-      texCtx.restore();
 
     } else if (skin.styleType === "white_swiss") {
       const g = texCtx.createLinearGradient(0, syTop, 0, syBot);
@@ -6670,17 +5515,15 @@ function renderSleeveUVTexture() {
   const bcY = Math.max(82, Math.min(h - 82, vesselVtoY(vBcPos)));
   const bcStatCol = phys.ansiGrade === "F" ? "#C2180E" : (phys.ansiGrade === "C" ? "#E5A000" : "#147A3B");
 
-  if (skin.styleType !== "custom_uploaded") {
-    [bcX - w, bcX, bcX + w].forEach(drawX => {
-      if (drawX < -300 || drawX > w + 300) return;
-      const warpX = (phys.localTD >= 24) ? Math.max(0.60, 1 - (phys.localTD - 22) / 92) : 1.0;
-      texCtx.save();
-      texCtx.translate(drawX, bcY);
-      texCtx.scale(warpX, 1.0);
-      drawEAN13Graphic(texCtx, 0, 0, 248, 136, skin.ean, bcStatCol, `EAN-13 · TD ${phys.localTD}% · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
-      texCtx.restore();
-    });
-  }
+  [bcX - w, bcX, bcX + w].forEach(drawX => {
+    if (drawX < -300 || drawX > w + 300) return;
+    const warpX = (phys.localTD >= 24) ? Math.max(0.60, 1 - (phys.localTD - 22) / 92) : 1.0;
+    texCtx.save();
+    texCtx.translate(drawX, bcY);
+    texCtx.scale(warpX, 1.0);
+    drawEAN13Graphic(texCtx, 0, 0, 248, 136, skin.ean, bcStatCol, `EAN-13 · TD ${phys.localTD}% · GRADE ${phys.ansiGrade}`, false, phys.ansiGrade === "F");
+    texCtx.restore();
+  });
 
   if (sleeveTexture) {
     sleeveTexture.needsUpdate = true;
@@ -6745,9 +5588,8 @@ function createStudioEnvironment(renderer) {
 // Exact single-source Doypack stand-up pouch surface point + bottom gusset fold
 function getDoypackPoint(vessel, u, v) {
   const totalH = getVesselTotalHeight(vessel);
-  const { wFactor, dFactor } = getCustomVesselScaleFactors(vessel);
-  const halfW = 0.92 * wFactor;
-  const maxHalfD = 0.41 * dFactor;
+  const halfW = 0.92;
+  const maxHalfD = 0.41;
   const theta = (u - 0.5) * Math.PI * 2;
   const sinT = Math.sin(theta);
   const cosT = Math.cos(theta);
@@ -6830,19 +5672,7 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
   const wrapMeta = isSleeve ? [] : null;
 
   const totalH = getVesselTotalHeight(vessel);
-  const { wFactor, dFactor } = getCustomVesselScaleFactors(vessel);
-  const isCustomMetric = !!(vessel && vessel.isCustomVessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples));
-  const mmToWorld = totalH / Math.max(10, Number(vessel.hMm) || 165);
-  const uniformRadial = (vessel.shape === "jar_lux" || vessel.shape === "alu_can");
   const baseScale = vessel.shape === "jar_lux" ? 0.92 : (vessel.shape === "wine_bordeaux" ? 0.58 : (vessel.shape === "alu_can" ? 0.60 : 0.68));
-  const hasBaseCap = (!isSleeve && yMin === 0);
-  if (hasBaseCap) {
-    const yBaseCap = -1.25 + 0.006 * totalH;
-    for (let ix = 0; ix <= radialSegs; ix++) {
-      positions.push(0, yBaseCap, 0);
-      uvs.push(ix / radialSegs, 0);
-    }
-  }
 
   for (let iy = 0; iy <= heightSegs; iy++) {
     const v = iy / heightSegs;
@@ -6858,12 +5688,7 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
       if (profileV > 0.885 && profileV < 0.91) rBase += 0.035;
     }
 
-    const bodyFrac = uniformRadial ? 1.0 : (profileV >= 0.88 ? 0.0 : (profileV <= 0.62 ? 1.0 : (0.88 - profileV) / 0.26));
-    const hScaleX = isCustomMetric ? 1.0 : (1.0 + bodyFrac * (wFactor - 1.0));
-    const hScaleZ = isCustomMetric ? 1.0 : (1.0 + bodyFrac * (dFactor - 1.0));
-    const rWorld = isCustomMetric
-      ? ((Number(vessel.wMm || 54) * 0.5) * mmToWorld * radiusScale)
-      : (rBase * baseScale * radiusScale);
+    const rWorld = rBase * baseScale * radiusScale;
 
     for (let ix = 0; ix <= radialSegs; ix++) {
       const u = ix / radialSegs;
@@ -6873,7 +5698,7 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
       let rFinal = getRadialEnvelopeFactor(vessel, profileV, theta, rWorld);
 
       if (wrapMeta) {
-        wrapMeta.push({ profileV, yWorld, rBase, theta, sinT, cosT, baseR: rFinal, hScaleX, hScaleZ });
+        wrapMeta.push({ profileV, yWorld, rBase, theta, sinT, cosT, baseR: rFinal });
       }
 
       // 3D Helical screw thread ridges on neck (cosmetic/dermo jars & bottles only)
@@ -6886,16 +5711,15 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
         if (Math.sin(threadPhase) > 0.25) rFinal += 0.016;
       }
 
-      const x = rFinal * sinT * hScaleX;
-      const z = rFinal * cosT * hScaleZ;
+      const x = rFinal * sinT;
+      const z = rFinal * cosT;
 
       positions.push(x, yWorld, z);
       uvs.push(u, v);
     }
   }
 
-  const ringCount = hasBaseCap ? (heightSegs + 1) : heightSegs;
-  for (let iy = 0; iy < ringCount; iy++) {
+  for (let iy = 0; iy < heightSegs; iy++) {
     for (let ix = 0; ix < radialSegs; ix++) {
       const a = iy * (radialSegs + 1) + ix;
       const b = a + 1;
@@ -6935,14 +5759,8 @@ function applyDynamicWrapMeshDeformation(geo, vessel) {
     const slTheta = (state.sleeveAngleDeg / 360) * Math.PI * 2;
     const isCan = vessel.shape === "alu_can";
     const centerTheta = isCan ? (slTheta - (540 / 2048) * Math.PI * 2) : slTheta;
-    const activeSkin = typeof getSkin === "function" ? getSkin() : null;
-    const isCustomLabelPhysical = !!(activeSkin && activeSkin.styleType === "custom_uploaded" && Number(activeSkin.physicalWmm) > 0);
-    const circMmLbl = isCustomLabelPhysical ? Math.max(20, getContainerCircumferenceMm(vessel)) : 0;
-    const customPanelWmm = isCustomLabelPhysical ? (state.labelLayout === "front_back" ? Number(activeSkin.physicalWmm) * 0.5 : Number(activeSkin.physicalWmm)) : 0;
     const labelHalfRadBase = isCan ? 2.67 : (vessel.shape === "jar_lux" ? 1.26 : (vessel.shape === "square_soft" ? 0.69 : (vessel.shape === "wine_bordeaux" ? 0.71 : 0.74)));
-    const labelHalfRad = isCustomLabelPhysical
-      ? Math.min(Math.PI * 0.92, (customPanelWmm / circMmLbl) * Math.PI)
-      : Math.min(Math.PI * 0.90, labelHalfRadBase * getLabelWidthMultiplier(vessel));
+    const labelHalfRad = Math.min(Math.PI * 0.90, labelHalfRadBase * getLabelWidthMultiplier(vessel));
 
     for (let i = 0; i < meta.length; i++) {
       const m = meta[i];
@@ -6973,7 +5791,7 @@ function applyDynamicWrapMeshDeformation(geo, vessel) {
           }
         }
       }
-      pos.setXYZ(i, r * (m.hScaleX || 1) * m.sinT, m.yWorld, r * (m.hScaleZ || 1) * m.cosT);
+      pos.setXYZ(i, r * m.sinT, m.yWorld, r * m.cosT);
     }
   } else if (isSleeveOnly) {
     const fmS = getFilm();
@@ -6989,12 +5807,12 @@ function applyDynamicWrapMeshDeformation(geo, vessel) {
           r += flare + creaseAmp * creaseWave;
         }
       }
-      pos.setXYZ(i, r * (m.hScaleX || 1) * m.sinT, m.yWorld, r * (m.hScaleZ || 1) * m.cosT);
+      pos.setXYZ(i, r * m.sinT, m.yWorld, r * m.cosT);
     }
   } else {
     for (let i = 0; i < meta.length; i++) {
       const m = meta[i];
-      pos.setXYZ(i, m.baseR * (m.hScaleX || 1) * m.sinT, m.yWorld, m.baseR * (m.hScaleZ || 1) * m.cosT);
+      pos.setXYZ(i, m.baseR * m.sinT, m.yWorld, m.baseR * m.cosT);
     }
   }
   pos.needsUpdate = true;
@@ -7278,14 +6096,10 @@ function buildClosure3DGroup(cl, vessel) {
   return grp;
 }
 
-function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
-  const customColHex = vessel && vessel.customProfile && vessel.customProfile.customBodyColor && finishId === vessel.defaultFinish
-    ? vessel.customProfile.customBodyColor
-    : null;
-  const pouchTex = customMapTex || sleeveTexture;
+function getVesselPhysicalMaterial(finishId) {
   if (finishId === "matte_pouch") {
     return new THREE.MeshPhysicalMaterial({
-      map: pouchTex,
+      map: sleeveTexture,
       roughness: 0.68,
       metalness: 0.02,
       clearcoat: 0.08,
@@ -7294,7 +6108,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "gloss_pouch") {
     return new THREE.MeshPhysicalMaterial({
-      map: pouchTex,
+      map: sleeveTexture,
       roughness: 0.14,
       metalness: 0.06,
       clearcoat: 0.92,
@@ -7304,7 +6118,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "kraft_pouch") {
     return new THREE.MeshPhysicalMaterial({
-      map: pouchTex,
+      map: sleeveTexture,
       roughness: 0.84,
       metalness: 0.0,
       clearcoat: 0.02,
@@ -7313,7 +6127,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "foil_pouch") {
     return new THREE.MeshPhysicalMaterial({
-      map: pouchTex,
+      map: sleeveTexture,
       roughness: 0.24,
       metalness: 0.58,
       clearcoat: 0.45,
@@ -7341,9 +6155,9 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "clear_pet") {
     return new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(customColHex || "#F7FAFC"),
+      color: 0xF7FAFC,
       transparent: true,
-      opacity: customColHex ? 0.64 : 0.38,
+      opacity: 0.38,
       roughness: 0.07,
       metalness: 0.0,
       reflectivity: 0.9,
@@ -7354,7 +6168,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "amber") {
     return new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(customColHex || "#8F3B08"),
+      color: 0x8F3B08,
       transparent: true,
       opacity: 0.78,
       roughness: 0.10,
@@ -7366,7 +6180,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "hdpe_white") {
     return new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(customColHex || "#F5F2EB"),
+      color: 0xF5F2EB,
       roughness: 0.34,
       metalness: 0.02,
       clearcoat: 0.35,
@@ -7375,9 +6189,9 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   if (finishId === "pet_gloss") {
     return new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(customColHex || "#F3F7FB"),
+      color: 0xF3F7FB,
       transparent: true,
-      opacity: customColHex ? 0.88 : 0.86,
+      opacity: 0.86,
       roughness: 0.04,
       metalness: 0.03,
       reflectivity: 0.96,
@@ -7388,7 +6202,7 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   }
   // Frosted Satin Glass
   return new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(customColHex || "#EFECE6"),
+    color: 0xEFECE6,
     transparent: true,
     opacity: 0.82,
     roughness: 0.26,
@@ -7399,44 +6213,42 @@ function getVesselPhysicalMaterial(finishId, customMapTex, vessel) {
   });
 }
 
-function buildConfiguredProductGroup(vessel, cl, phys, opts) {
-  const options = opts || {};
-  const grp = new THREE.Group();
+function rebuild3DProduct() {
+  if (!scene) return;
+  if (productGroup) scene.remove(productGroup);
+
+  productGroup = new THREE.Group();
+  const vessel = getVessel();
+  const cl = getClosure();
+  const phys = evaluateLivePhysics();
   const totalH = getVesselTotalHeight(vessel);
-  const pouchMode = vessel.shape === "doypack";
-  const labelMode = !pouchMode && state.wrapType === "label";
-  const wrapActive = state.wrapType !== "none";
-  const { wFactor, dFactor } = getCustomVesselScaleFactors(vessel);
-  const uniformRadial = (vessel.shape === "jar_lux" || vessel.shape === "alu_can");
-  const activeMapTex = options.mapTexture || sleeveTexture;
-  const useWire = !!options.wireframe;
+  const pouchMode = isDoypack();
+  const baseScale = vessel.shape === "jar_lux" ? 0.92 : (vessel.shape === "wine_bordeaux" ? 0.58 : (vessel.shape === "alu_can" ? 0.60 : 0.68));
+
+  // Render dynamic UV texture BEFORE building material (Doypack uses sleeveTexture directly)
+  renderSleeveUVTexture();
 
   // 1) Outer Vessel / Pouch Body (0.0 to 1.0)
   const vGeo = createParametricVesselGeometry(vessel, pouchMode ? 112 : 96, pouchMode ? 84 : 110, 0.0, 1.0, 1.0, false);
-  const vMat = getVesselPhysicalMaterial(state.finishId, activeMapTex, vessel);
-  vMat.wireframe = useWire;
-  const vMesh = new THREE.Mesh(vGeo, vMat);
-  grp.add(vMesh);
+  const vMat = getVesselPhysicalMaterial(state.finishId);
+  vMat.wireframe = state.wireframe;
+  vesselMesh = new THREE.Mesh(vGeo, vMat);
+  productGroup.add(vesselMesh);
 
-  // Molded neck lip torus on open rigid bottles & jars
+  // Molded neck lip torus on open rigid bottles & jars so uncapped container looks complete
   if (!pouchMode && vessel.shape !== "alu_can") {
-    const isCustomMetricLip = !!(vessel.isCustomVessel && vessel.customProfile);
-    const mmToWorldLip = totalH / Math.max(10, Number(vessel.hMm) || 165);
-    const lipR = isCustomMetricLip
-      ? Math.max(0.10, getCustomNeckHalfMm(vessel) * mmToWorldLip - 0.014)
-      : (vessel.shape === "jar_lux" ? 0.676 : (vessel.shape === "wine_bordeaux" ? 0.160 : 0.214));
-    const lipTube = vessel.shape === "jar_lux" ? 0.024 : (vessel.shape === "wine_bordeaux" ? 0.023 : 0.019);
-    const lipGeo = new THREE.TorusGeometry(lipR, lipTube, 14, vessel.shape === "jar_lux" ? 64 : 48);
+    const lipGeo = vessel.shape === "jar_lux"
+      ? new THREE.TorusGeometry(0.676, 0.024, 14, 64)
+      : (vessel.shape === "wine_bordeaux"
+          ? new THREE.TorusGeometry(0.160, 0.023, 14, 48)
+          : new THREE.TorusGeometry(0.214, 0.019, 14, 48));
     lipGeo.rotateX(Math.PI / 2);
     const lipMesh = new THREE.Mesh(lipGeo, vMat);
-    if (uniformRadial && !isCustomMetricLip) lipMesh.scale.set(wFactor, 1, dFactor);
     lipMesh.position.y = -1.25 + totalH;
-    grp.add(lipMesh);
+    productGroup.add(lipMesh);
   }
 
-  // 2) Internal Liquid Volume + Dip Tube
-  let lMesh = null;
-  let dTubeMesh = null;
+  // 2) Internal Liquid Volume + Dip Tube (visible ONLY when Interno / Liquido toggle is manually enabled)
   const showInternals = !pouchMode && vessel.shape !== "alu_can" && state.xray;
   const hasDipTube = ["pump", "spray", "dropper"].includes(cl.type);
   if (showInternals) {
@@ -7449,13 +6261,13 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
       roughness: 0.15,
       clearcoat: 0.8
     });
-    lMesh = new THREE.Mesh(liqGeo, liqMat);
-    grp.add(lMesh);
+    liquidMesh = new THREE.Mesh(liqGeo, liqMat);
+    productGroup.add(liquidMesh);
 
     if (hasDipTube && vessel.shape !== "jar_lux" && vessel.shape !== "wine_bordeaux") {
       const tubeCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, -1.25 + 0.90 * totalH, 0),
-        new THREE.Vector3(0.02, -1.25 + 0.53 * totalH, 0.02),
+        new THREE.Vector3(0, 1.05, 0),
+        new THREE.Vector3(0.02, 0.10, 0.02),
         new THREE.Vector3(0.18, -1.12, 0.12)
       ]);
       const dtGeo = new THREE.TubeGeometry(tubeCurve, 32, 0.032, 16, false);
@@ -7465,20 +6277,24 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
         opacity: 0.78,
         roughness: 0.15
       });
-      dTubeMesh = new THREE.Mesh(dtGeo, dtMat);
-      grp.add(dTubeMesh);
+      dipTubeMesh = new THREE.Mesh(dtGeo, dtMat);
+      productGroup.add(dipTubeMesh);
+    } else {
+      dipTubeMesh = null;
     }
+  } else {
+    liquidMesh = null;
+    dipTubeMesh = null;
   }
 
   // Integral aluminum base disk & SOT 202 top seam/tab deck on can body
   if (vessel.shape === "alu_can") {
-    const canEndGrp = new THREE.Group();
     const botDisk = new THREE.Mesh(
       new THREE.CylinderGeometry(0.50, 0.50, 0.02, 48),
       new THREE.MeshStandardMaterial({ color: 0xC8CDD2, roughness: 0.26, metalness: 0.88 })
     );
     botDisk.position.y = -1.24;
-    canEndGrp.add(botDisk);
+    productGroup.add(botDisk);
 
     const canTopY = -1.25 + 0.965 * totalH;
     const rimMat = new THREE.MeshStandardMaterial({ color: 0xE2E5E9, roughness: 0.18, metalness: 0.92 });
@@ -7486,115 +6302,78 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
     const chime = new THREE.Mesh(new THREE.TorusGeometry(0.516, 0.022, 16, 64), rimMat);
     chime.rotation.x = Math.PI / 2;
     chime.position.y = canTopY;
-    canEndGrp.add(chime);
+    productGroup.add(chime);
     const deck = new THREE.Mesh(new THREE.CylinderGeometry(0.495, 0.495, 0.018, 64), deckMat);
     deck.position.y = canTopY - 0.022;
-    canEndGrp.add(deck);
+    productGroup.add(deck);
     const rivet = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.03, 24), rimMat);
     rivet.position.y = canTopY;
-    canEndGrp.add(rivet);
+    productGroup.add(rivet);
     const pullRing = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.014, 12, 32), rimMat);
     pullRing.rotation.x = Math.PI / 2;
     pullRing.position.set(0, canTopY + 0.008, -0.14);
-    canEndGrp.add(pullRing);
+    productGroup.add(pullRing);
     const tabBlade = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.016, 0.18), rimMat);
     tabBlade.position.set(0, canTopY + 0.008, 0.04);
-    canEndGrp.add(tabBlade);
-    if (uniformRadial) canEndGrp.scale.set(wFactor, 1, dFactor);
-    grp.add(canEndGrp);
+    productGroup.add(tabBlade);
   }
 
-  // 3) UV-Wrapped Form-Fitting 3D Sleeve OR Adhesive Label Mesh
-  let slMesh = null;
-  if (!pouchMode && wrapActive) {
+  // 3) UV-Wrapped Form-Fitting 3D Sleeve OR Adhesive Label Mesh (only when a wrap is selected!)
+  if (!pouchMode && hasWrap()) {
     const sMaxV = vessel.shape === "wine_bordeaux" ? 0.76 : (vessel.shape === "alu_can" ? 0.95 : 0.84);
     const sGeo = createParametricVesselGeometry(vessel, 96, 96, 0.04, sMaxV, 1.024, true);
     const lpCur = getLabelPaper();
     const fmCur = getFilm();
+    const isLabelCur = isLabelMode();
     const isSleeveOnly = state.wrapType === "sleeve";
     const isNeutralClearSleeve = isSleeveOnly && state.skinId === "neutral";
     const sMat = new THREE.MeshPhysicalMaterial({
-      map: activeMapTex,
+      map: sleeveTexture,
       transparent: true,
       alphaTest: 0.01,
-      depthWrite: !(isNeutralClearSleeve || (labelMode && lpCur.transparentBg)),
-      opacity: labelMode ? 1.0 : (isNeutralClearSleeve ? 0.94 : 0.98),
-      roughness: labelMode ? lpCur.roughness : (isSleeveOnly ? fmCur.roughness : 0.18),
+      depthWrite: !(isNeutralClearSleeve || (isLabelCur && lpCur.transparentBg)),
+      opacity: isLabelCur ? 1.0 : (isNeutralClearSleeve ? 0.94 : 0.98),
+      roughness: isLabelCur ? lpCur.roughness : (isSleeveOnly ? fmCur.roughness : 0.18),
       metalness: 0.04,
-      clearcoat: labelMode ? lpCur.clearcoat : (isSleeveOnly ? fmCur.clearcoat : 0.85),
-      clearcoatRoughness: labelMode ? (lpCur.roughness * 0.65) : (isSleeveOnly ? fmCur.roughness * 0.75 : 0.12),
+      clearcoat: isLabelCur ? lpCur.clearcoat : (isSleeveOnly ? fmCur.clearcoat : 0.85),
+      clearcoatRoughness: isLabelCur ? (lpCur.roughness * 0.65) : (isSleeveOnly ? fmCur.roughness * 0.75 : 0.12),
       polygonOffset: true,
       polygonOffsetFactor: -2,
       polygonOffsetUnits: -2,
-      wireframe: useWire
+      wireframe: state.wireframe
     });
-    slMesh = new THREE.Mesh(sGeo, sMat);
-    grp.add(slMesh);
+    sleeveMesh = new THREE.Mesh(sGeo, sMat);
+    productGroup.add(sleeveMesh);
+  } else {
+    sleeveMesh = null;
   }
 
-  // 4) 3D Closure Group seated ON TOP
-  const clGrp = buildClosure3DGroup(cl, vessel);
-  const isCustomMetricNeck = !!(vessel.isCustomVessel && vessel.customProfile && !pouchMode);
-  const mmToWorldNeck = totalH / Math.max(10, Number(vessel.hMm) || 165);
-  const neckRW = isCustomMetricNeck ? (getCustomNeckHalfMm(vessel) * mmToWorldNeck) : 0;
-  if (isCustomMetricNeck && neckRW > 0.04) {
-    const refNeckR = vessel.shape === "jar_lux" ? 0.699 : (vessel.shape === "wine_bordeaux" ? 0.162 : (vessel.shape === "alu_can" ? 0.516 : 0.231));
-    clGrp.scale.setScalar(neckRW / refNeckR);
-  } else if (uniformRadial || pouchMode) {
-    clGrp.scale.set(wFactor, 1, dFactor);
-  }
+  // 4) 3D Closure Group seated ON TOP of neck/jar/wine bague, SOT 202 can chime or pouch zip track
+  if (!phys.neckMatch) state.exploded = true;
+  closureGroup = buildClosure3DGroup(cl, vessel);
   const neckV = pouchMode ? 0.865 : (vessel.shape === "jar_lux" ? 0.80 : (vessel.shape === "wine_bordeaux" ? 0.955 : (vessel.shape === "alu_can" ? 0.965 : 0.88)));
   const neckBaseY = -1.25 + neckV * totalH;
-  clGrp.userData.baseY = neckBaseY;
+  closureGroup.userData.baseY = neckBaseY;
   const clashExtra = phys.neckMatch ? 0 : (vessel.shape === "wine_bordeaux" ? 0.04 : 0.08);
   const explodeLift = vessel.shape === "wine_bordeaux" ? 0.15 : (pouchMode ? 0.28 : 0.34);
-  clGrp.position.y = neckBaseY + clashExtra + (!options.hideClashRing && state.exploded ? explodeLift : 0);
-  grp.add(clGrp);
+  closureGroup.position.y = neckBaseY + clashExtra + (state.exploded ? explodeLift : 0);
+  productGroup.add(closureGroup);
 
   // 5) Red/Green Neck or Zip Validation Indicator
-  let ringMesh = null;
-  if (!options.hideClashRing) {
-    const ringMat = new THREE.MeshBasicMaterial({ color: phys.neckMatch ? 0x147A3B : 0xC2180E });
-    if (pouchMode) {
-      const barGeo = new THREE.BoxGeometry(2.04 * wFactor, 0.025, 0.08);
-      ringMesh = new THREE.Mesh(barGeo, ringMat);
-      ringMesh.position.y = neckBaseY + 0.08;
-    } else {
-      const ringR = (isCustomMetricNeck && neckRW > 0.04) ? (neckRW * 1.45) : (vessel.shape === "jar_lux" ? 0.78 * wFactor : (vessel.shape === "wine_bordeaux" ? 0.22 : (vessel.shape === "alu_can" ? 0.54 * wFactor : 0.34)));
-      const ringGeo = new THREE.TorusGeometry(ringR, 0.018, 16, 64);
-      ringGeo.rotateX(Math.PI / 2);
-      ringMesh = new THREE.Mesh(ringGeo, ringMat);
-      ringMesh.position.y = neckBaseY + 0.10;
-    }
-    ringMesh.visible = !phys.isNoCap && (!phys.neckMatch || state.exploded);
-    grp.add(ringMesh);
+  const ringMat = new THREE.MeshBasicMaterial({ color: phys.neckMatch ? 0x147A3B : 0xC2180E });
+  if (pouchMode) {
+    const barGeo = new THREE.BoxGeometry(2.04, 0.025, 0.08);
+    clashRingMesh = new THREE.Mesh(barGeo, ringMat);
+    clashRingMesh.position.y = neckBaseY + 0.08;
+  } else {
+    const ringR = vessel.shape === "jar_lux" ? 0.78 : (vessel.shape === "wine_bordeaux" ? 0.22 : (vessel.shape === "alu_can" ? 0.54 : 0.34));
+    const ringGeo = new THREE.TorusGeometry(ringR, 0.018, 16, 64);
+    ringGeo.rotateX(Math.PI / 2);
+    clashRingMesh = new THREE.Mesh(ringGeo, ringMat);
+    clashRingMesh.position.y = neckBaseY + 0.10;
   }
-
-  return { group: grp, vesselMesh: vMesh, liquidMesh: lMesh, dipTubeMesh: dTubeMesh, sleeveMesh: slMesh, closureGroup: clGrp, clashRingMesh: ringMesh };
-}
-
-function rebuild3DProduct() {
-  if (!scene) return;
-  if (productGroup) scene.remove(productGroup);
-
-  const vessel = getVessel();
-  const cl = getClosure();
-  const phys = evaluateLivePhysics();
-  renderSleeveUVTexture();
-  if (!phys.neckMatch) state.exploded = true;
-
-  const built = buildConfiguredProductGroup(vessel, cl, phys, {
-    mapTexture: sleeveTexture,
-    wireframe: state.wireframe,
-    hideClashRing: false
-  });
-  productGroup = built.group;
-  vesselMesh = built.vesselMesh;
-  liquidMesh = built.liquidMesh;
-  dipTubeMesh = built.dipTubeMesh;
-  sleeveMesh = built.sleeveMesh;
-  closureGroup = built.closureGroup;
-  clashRingMesh = built.clashRingMesh;
+  clashRingMesh.visible = !phys.isNoCap && (!phys.neckMatch || state.exploded);
+  productGroup.add(clashRingMesh);
 
   scene.add(productGroup);
 }
@@ -7669,15 +6448,12 @@ function setupViewportInteractions(canvas) {
     pointerNDC.y = -((e.clientY - r.top) / r.height) * 2 + 1;
   }
 
-  let dragSleeveAngleF = Number(state.sleeveAngleDeg) || 0;
-  let dragSleeveHeightF = Number(state.sleeveHeightPct) || 50;
-
   function intersectBottleUV(e) {
-    const targets = isDoypack() ? [vesselMesh] : [sleeveMesh, vesselMesh].filter(Boolean);
-    if (!targets.length) return null;
+    const targetMesh = isDoypack() ? vesselMesh : sleeveMesh;
+    if (!targetMesh) return null;
     getNDC(e);
     raycaster.setFromCamera(pointerNDC, camera);
-    const hits = raycaster.intersectObjects(targets, false);
+    const hits = raycaster.intersectObject(targetMesh, false);
     return (hits.length > 0 && hits[0].uv) ? hits[0].uv : null;
   }
 
@@ -7685,8 +6461,6 @@ function setupViewportInteractions(canvas) {
     prevPtr = { x: e.clientX, y: e.clientY };
     if (state.pointerTool === "sleeve" && !isDoypack() && !isSerigrafiaMode()) {
       if (intersectBottleUV(e)) {
-        dragSleeveAngleF = Number(state.sleeveAngleDeg) || 0;
-        dragSleeveHeightF = Number(state.sleeveHeightPct) || 50;
         activeDragMode = "sleeve";
         canvas.style.cursor = "grabbing";
         return;
@@ -7701,17 +6475,12 @@ function setupViewportInteractions(canvas) {
       const dx = e.clientX - prevPtr.x;
       const dy = e.clientY - prevPtr.y;
       prevPtr = { x: e.clientX, y: e.clientY };
-      dragSleeveAngleF += dx * 0.45;
-      while (dragSleeveAngleF > 180) dragSleeveAngleF -= 360;
-      while (dragSleeveAngleF < -180) dragSleeveAngleF += 360;
-      dragSleeveHeightF = Math.max(10, Math.min(88, dragSleeveHeightF - dy * 0.35));
-      state.sleeveAngleDeg = Math.round(dragSleeveAngleF);
-      state.sleeveHeightPct = Math.round(dragSleeveHeightF);
+      state.sleeveAngleDeg = Math.max(-175, Math.min(175, Math.round(state.sleeveAngleDeg + dx * 0.45)));
+      state.sleeveHeightPct = Math.max(10, Math.min(88, Math.round(state.sleeveHeightPct - dy * 0.35)));
       clampBarcodeToSleeve();
       if (sleeveMesh && sleeveMesh.geometry) applyDynamicWrapMeshDeformation(sleeveMesh.geometry, getVessel());
       renderSleeveUVTexture();
       updateFastTelemetryUI();
-      if (typeof syncSleevePositionSliderUI === "function") syncSleevePositionSliderUI();
       return;
     }
     if (activeDragMode === "orbit") {
@@ -7938,20 +6707,8 @@ function vesselHasClosureStep(v) {
   return vv.shape !== "doypack" && vv.shape !== "alu_can";
 }
 
-function findVesselByIdAnywhere(vid) {
-  if (!vid) return null;
-  const cat = VESSELS.find(item => item.id === vid);
-  if (cat) return cat;
-  if (state.activeCustomVessel && state.activeCustomVessel.id === vid) return state.activeCustomVessel;
-  if (Array.isArray(state.savedCustomVessels)) {
-    const saved = state.savedCustomVessels.find(item => item.id === vid);
-    if (saved) return saved;
-  }
-  return null;
-}
-
 function resetVesselConfigState(vid) {
-  const v = findVesselByIdAnywhere(vid) || getVessel();
+  const v = VESSELS.find(item => item.id === vid) || getVessel();
   state.vesselId = v.id;
   state.finishId = v.defaultFinish;
   state.inspTab = vesselHasClosureStep(v) ? 1 : 2; // Skip Chiusura step for Can & Doypack
@@ -7972,24 +6729,10 @@ function resetVesselConfigState(vid) {
   state.bcDoypackX = 0;
   camTargetTheta = null;
   state.infoPopoverOpen = false;
-  state.labelLayout = "single";
   state.customVesselMode = false;
   state.customGraphicMode = false;
   state.mobileARCameraMode = false;
   state.customGraphicFile = "";
-  state.customGraphicDataUrl = "";
-  state.customGraphicConformant = false;
-  state.customGraphicValidationMsg = "";
-  state.customGraphicTargetMode = "";
-  state.customGraphicPhysicalWmm = 0;
-  state.customGraphicPhysicalHmm = 0;
-  state.customGraphicBleedMm = 0;
-  state.customGraphicAudit = null;
-  const sig = getVesselDimsSignature(v);
-  const scopedRaw = state.customGraphicsByVessel && state.customGraphicsByVessel[v.id];
-  const existingScoped = (scopedRaw && (!scopedRaw.vesselDimsSignature || scopedRaw.vesselDimsSignature === sig)) ? scopedRaw : null;
-  customUploadedImageObj = existingScoped ? (existingScoped.imageObj || null) : null;
-  state.currentDraftId = null;
   state.arModalOpen = false;
   state.boxMode = "grid";
   state.boxQty = 1;
@@ -8101,10 +6844,6 @@ function setWrapType(wt) {
 }
 
 function selectSkin(sid) {
-  if (sid === "custom_user_skin") {
-    const sc = getCustomSkinObject(state.vesselId);
-    if (sc && sc.imageObj) customUploadedImageObj = sc.imageObj;
-  }
   if (isDoypack()) {
     state.skinId = sid;
     state.wrapType = "pouch";
@@ -8167,7 +6906,6 @@ function stopMobileARCameraStream() {
   if (vidEl && vidEl.srcObject) {
     try { vidEl.srcObject = null; } catch (e) {}
   }
-  if (typeof disposeARWebGL === "function") disposeARWebGL();
 }
 
 function getRouteKey() {
@@ -8251,7 +6989,7 @@ window.addEventListener("popstate", e => {
   }
   isApplyingHistoryState = true;
   try {
-    if (snap.vesselId && findVesselByIdAnywhere(snap.vesselId) && snap.vesselId !== state.vesselId) {
+    if (snap.vesselId && VESSELS.some(v => v.id === snap.vesselId) && snap.vesselId !== state.vesselId) {
       resetVesselConfigState(snap.vesselId);
     }
     state.customVesselMode = !!snap.customVesselMode;
@@ -8300,13 +7038,11 @@ function switchMainView(v) {
 
   const gridMain = document.getElementById("studioGridMain");
   const customStage = document.getElementById("customVesselStage");
-  const isARFullscreen = (v === "studio" && !!state.mobileARCameraMode);
-  document.body.classList.toggle("ar-fullscreen-active", isARFullscreen);
   if (gridMain && customStage) {
     const showCustom = (v === "studio" && (state.customVesselMode || state.customGraphicMode || state.mobileARCameraMode));
     gridMain.style.display = showCustom ? "none" : "";
     customStage.style.display = showCustom ? "block" : "none";
-    if (!isARFullscreen) {
+    if (!(v === "studio" && state.mobileARCameraMode)) {
       stopMobileARCameraStream();
     }
   }
@@ -8317,7 +7053,7 @@ function switchMainView(v) {
   if (window.scrollY !== 0) window.scrollTo(0, 0);
 }
 
-// ==================== 1. CUSTOM CONTAINER DIGITIZATION, 2. CUSTOM GRAPHIC UPLOAD, 3. REAL QR & 1:1 LIVE 3D AR ====================
+// ==================== CUSTOM CONTAINER UPLOAD, CUSTOM GRAPHIC & MOBILE AR CAMERA (UNDER 02 STUDIO 3D) ====================
 function openCustomVesselStudio() {
   state.customGraphicMode = false;
   state.mobileARCameraMode = false;
@@ -8325,47 +7061,11 @@ function openCustomVesselStudio() {
   switchMainView("studio");
 }
 
-function openCustomGraphicStudio(targetMode) {
+function openCustomGraphicStudio() {
   state.customVesselMode = false;
   state.mobileARCameraMode = false;
   state.customGraphicMode = true;
-  const v = getVessel();
-  if (targetMode) {
-    state.customGraphicTargetMode = targetMode;
-  } else if (!state.customGraphicTargetMode) {
-    state.customGraphicTargetMode = isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve"));
-  }
-  const scoped = state.customGraphicsByVessel && state.customGraphicsByVessel[state.vesselId];
-  const validScope = scoped && (!scoped.vesselDimsSignature || scoped.vesselDimsSignature === getVesselDimsSignature(v));
-  if (validScope) {
-    state.customGraphicFile = scoped.file || "";
-    state.customGraphicDataUrl = scoped.dataUrl || "";
-    state.customGraphicTitle = scoped.title || (state.lang === "it" ? "Grafica Personalizzata" : "Custom Graphic");
-    state.customGraphicWidth = scoped.width || 0;
-    state.customGraphicHeight = scoped.height || 0;
-    state.customGraphicPhysicalWmm = scoped.physicalWmm || 0;
-    state.customGraphicPhysicalHmm = scoped.physicalHmm || 0;
-    state.customGraphicBleedMm = scoped.bleedMm || 0;
-    state.customGraphicAudit = scoped.audit || null;
-    if (scoped.validatedWrapType) state.customGraphicTargetMode = scoped.validatedWrapType;
-    if (scoped.labelLayout) state.labelLayout = scoped.labelLayout;
-    state.customGraphicConformant = true;
-    state.customGraphicValidationMsg = "";
-    state.customGraphicEmbeddedBc = scoped.embeddedBc || null;
-  } else {
-    state.customGraphicFile = "";
-    state.customGraphicDataUrl = "";
-    state.customGraphicTitle = state.lang === "it" ? "Grafica Personalizzata" : "Custom Graphic";
-    state.customGraphicWidth = 0;
-    state.customGraphicHeight = 0;
-    state.customGraphicPhysicalWmm = 0;
-    state.customGraphicPhysicalHmm = 0;
-    state.customGraphicBleedMm = 0;
-    state.customGraphicAudit = null;
-    state.customGraphicConformant = false;
-    state.customGraphicValidationMsg = "";
-    state.customGraphicEmbeddedBc = null;
-  }
+  state.customGraphicFile = "";
   switchMainView("studio");
 }
 
@@ -8381,10 +7081,7 @@ function openMobileARCameraStudio() {
   state.customVesselMode = false;
   state.customGraphicMode = false;
   state.arModalOpen = false;
-  const arOv = document.getElementById("arQrOverlay");
-  if (arOv) arOv.classList.remove("open");
   state.mobileARCameraMode = true;
-  arPanOffset = { x: 0, y: 0 };
   switchMainView("studio");
 }
 
@@ -8396,658 +7093,11 @@ function closeMobileARCameraStudio() {
   renderAllUI();
 }
 
-function extractDominantColorsFromImage(img) {
-  try {
-    const c = document.createElement("canvas");
-    c.width = 24;
-    c.height = 24;
-    const ctx = c.getContext("2d");
-    ctx.drawImage(img, 0, 0, 24, 24);
-    const data = ctx.getImageData(0, 0, 24, 24).data;
-    const buckets = new Map();
-    for (let i = 0; i < data.length; i += 4) {
-      if (data[i + 3] < 90) continue;
-      const r = Math.min(255, Math.round(data[i] / 32) * 32);
-      const g = Math.min(255, Math.round(data[i + 1] / 32) * 32);
-      const b = Math.min(255, Math.round(data[i + 2] / 32) * 32);
-      const hex = "#" + [r, g, b].map(n => n.toString(16).padStart(2, "0")).join("");
-      buckets.set(hex, (buckets.get(hex) || 0) + 1);
-    }
-    const sorted = [...buckets.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
-    if (sorted.length >= 3) return sorted.slice(0, 3);
-    if (sorted.length > 0) return [sorted[0], sorted[1] || "#C2180E", "#18181B"];
-  } catch (e) {}
-  return ["#FAF8F5", "#C2180E", "#18181B"];
-}
-
-function detectEmbeddedBarcodeInArtwork(img) {
-  try {
-    const c = document.createElement("canvas");
-    const w = 128, h = 96;
-    c.width = w; c.height = h;
-    const ctx = c.getContext("2d");
-    ctx.drawImage(img, 0, 0, w, h);
-    const data = ctx.getImageData(0, 0, w, h).data;
-    let bestRowTransitions = 0, bestRowY = Math.round(h * 0.72), bestLeft = 0.25, bestRight = 0.75;
-    for (let y = Math.round(h * 0.35); y < h - 4; y++) {
-      let transitions = 0, prevDark = null, firstX = w, lastX = 0;
-      for (let x = 4; x < w - 4; x++) {
-        const idx = (y * w + x) * 4;
-        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-        const isDark = data[idx + 3] > 80 && lum < 115;
-        if (prevDark !== null && isDark !== prevDark) {
-          transitions++;
-          if (x < firstX) firstX = x;
-          lastX = x;
-        }
-        prevDark = isDark;
-      }
-      if (transitions > bestRowTransitions) {
-        bestRowTransitions = transitions;
-        bestRowY = y;
-        if (lastX > firstX) {
-          bestLeft = firstX / w;
-          bestRight = lastX / w;
-        }
-      }
-    }
-    return {
-      detected: bestRowTransitions >= 14,
-      transitions: bestRowTransitions,
-      centerYFrac: bestRowY / h,
-      centerXFrac: (bestLeft + bestRight) * 0.5
-    };
-  } catch (e) {
-    return { detected: false, transitions: 0, centerYFrac: 0.72, centerXFrac: 0.5 };
-  }
-}
-
-// Shared PDF/AI FlateDecode stream + PNG pHYs/tEXt binary metadata extractor
-function extractTextFromPDFBuffer(arrayBuffer, fileName) {
-  const chunks = [];
-  if (!arrayBuffer) return "";
-  const u8 = new Uint8Array(arrayBuffer);
-  const latin = new TextDecoder("latin1").decode(u8);
-  const isPdf = latin.startsWith("%PDF-") || /\.(pdf|ai)$/i.test(fileName || "");
-
-  function decodePdfLiterals(src) {
-    const out = [];
-    // Literal text strings (...) in Tj / TJ or metadata
-    const litRe = /\(([^()\\\\]*(?:\\\\.[^()\\\\]*)*)\)/g;
-    let m;
-    while ((m = litRe.exec(src)) !== null) {
-      const cleaned = m[1]
-        .replace(/\\\\n/g, " ")
-        .replace(/\\\\r/g, " ")
-        .replace(/\\\\t/g, " ")
-        .replace(/\\\\([()\\\\])/g, "$1")
-        .replace(/\\\\(\d{3})/g, (_, oct) => String.fromCharCode(parseInt(oct, 8)));
-      if (/[A-Za-z0-9]/.test(cleaned) && cleaned.length >= 2) out.push(cleaned);
-    }
-    return out.join(" ");
-  }
-
-  if (isPdf) {
-    chunks.push(decodePdfLiterals(latin));
-    // Locate & decompress all FlateDecode / zlib streams
-    let searchPos = 0;
-    while (searchPos < latin.length) {
-      const sIdx = latin.indexOf("stream", searchPos);
-      if (sIdx < 0) break;
-      let dataStart = sIdx + 6;
-      if (latin[dataStart] === "\\r" && latin[dataStart + 1] === "\\n") dataStart += 2;
-      else if (latin[dataStart] === "\\n" || latin[dataStart] === "\\r") dataStart += 1;
-      const eIdx = latin.indexOf("endstream", dataStart);
-      if (eIdx < 0) break;
-      let dataEnd = eIdx;
-      while (dataEnd > dataStart && (u8[dataEnd - 1] === 10 || u8[dataEnd - 1] === 13)) dataEnd--;
-      const sub = u8.subarray(dataStart, dataEnd);
-      if (sub.length > 4 && typeof window !== "undefined" && window.fflate) {
-        let dec = null;
-        try { dec = window.fflate.unzlibSync(sub); } catch (e1) {
-          try { dec = window.fflate.inflateSync(sub); } catch (e2) {}
-        }
-        if (dec && dec.length > 0) {
-          const decTxt = new TextDecoder("latin1").decode(dec);
-          const lits = decodePdfLiterals(decTxt);
-          if (lits) chunks.push(lits);
-          // Also capture plain readable lines inside uncompressed operator streams
-          const readable = decTxt.replace(/[^\\x20-\\x7E\\xA0-\\xFF\\n]+/g, " ").trim();
-          if (readable.length >= 4) chunks.push(readable);
-        }
-      }
-      searchPos = eIdx + 9;
-    }
-    // Extract XMP / XML text if present
-    const xmlMatches = latin.match(/>([^<]{2,140})</g);
-    if (xmlMatches) {
-      chunks.push(xmlMatches.map(s => s.slice(1, -1).trim()).filter(Boolean).join(" "));
-    }
-  } else if (u8.length > 8 && u8[0] === 0x89 && u8[1] === 0x50 && u8[2] === 0x4E && u8[3] === 0x47) {
-    // Walk PNG tEXt / iTXt / zTXt chunks
-    let off = 8;
-    while (off + 12 <= u8.length) {
-      const len = (u8[off] << 24) | (u8[off + 1] << 16) | (u8[off + 2] << 8) | u8[off + 3];
-      const typ = String.fromCharCode(u8[off + 4], u8[off + 5], u8[off + 6], u8[off + 7]);
-      if (len < 0 || off + 12 + len > u8.length) break;
-      if (typ === "tEXt" || typ === "iTXt") {
-        chunks.push(new TextDecoder("utf-8").decode(u8.subarray(off + 8, off + 8 + len)).replace(/\\0+/g, ": "));
-      } else if (typ === "zTXt" && window.fflate) {
-        const nul = u8.subarray(off + 8, off + 8 + len).indexOf(0);
-        if (nul >= 0 && off + 8 + nul + 2 < off + 8 + len) {
-          try {
-            const dec = window.fflate.unzlibSync(u8.subarray(off + 8 + nul + 2, off + 8 + len));
-            chunks.push(new TextDecoder("utf-8").decode(dec));
-          } catch (e) {}
-        }
-      }
-      if (typ === "IEND") break;
-      off += 12 + len;
-    }
-  } else {
-    chunks.push(new TextDecoder("utf-8").decode(u8.subarray(0, Math.min(u8.length, 131072))));
-  }
-  return chunks.join("\\n").replace(/\s+/g, " ").trim();
-}
-
-function parseArtworkFileMetadata(file, arrayBuffer) {
-  const name = (file && file.name) || "";
-  const extMatch = name.match(/\.([a-zA-Z0-9]+)$/);
-  const ext = extMatch ? extMatch[1].toLowerCase() : "png";
-  const u8 = arrayBuffer ? new Uint8Array(arrayBuffer) : new Uint8Array(0);
-  const meta = {
-    fileName: name,
-    ext,
-    isVector: /^(pdf|ai|svg|eps)$/.test(ext),
-    physicalWmm: 0,
-    physicalHmm: 0,
-    bleedMm: 0,
-    dpi: 0,
-    dimSource: "pixel_ratio",
-    extractedText: "",
-    svgDataUrl: ""
-  };
-
-  if (ext === "svg" && u8.length > 0) {
-    const svgText = new TextDecoder("utf-8").decode(u8);
-    meta.extractedText = svgText.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 2000);
-    const wAttr = svgText.match(/\\bwidth\s*=\s*["']([^"']+)["']/i)?.[1] || "";
-    const hAttr = svgText.match(/\\bheight\s*=\s*["']([^"']+)["']/i)?.[1] || "";
-    const vbAttr = svgText.match(/\\bviewBox\s*=\s*["']([^"']+)["']/i)?.[1] || "";
-    const parseUnitMm = (valStr) => {
-      const m = String(valStr).trim().match(/^(\d+(?:\.\d+)?)\s*(mm|cm|in|pt|pc|px)?$/i);
-      if (!m) return 0;
-      const num = Number(m[1]);
-      const unit = (m[2] || "px").toLowerCase();
-      if (unit === "mm") return num;
-      if (unit === "cm") return num * 10;
-      if (unit === "in") return num * 25.4;
-      if (unit === "pt") return (num * 25.4) / 72;
-      if (unit === "pc") return (num * 25.4) / 6;
-      return (num * 25.4) / 96;
-    };
-    const wMm = parseUnitMm(wAttr);
-    const hMm = parseUnitMm(hAttr);
-    if (wMm > 5 && hMm > 5) {
-      meta.physicalWmm = Number(wMm.toFixed(1));
-      meta.physicalHmm = Number(hMm.toFixed(1));
-      meta.dimSource = /mm|cm|in|pt/i.test(wAttr + hAttr) ? "svg_physical_units" : "svg_96dpi";
-    } else if (vbAttr) {
-      const parts = vbAttr.trim().split(/[\s,]+/).map(Number);
-      if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
-        meta.physicalWmm = Number((parts[2] * 25.4 / 96).toFixed(1));
-        meta.physicalHmm = Number((parts[3] * 25.4 / 96).toFixed(1));
-        meta.dimSource = "svg_viewbox";
-      }
-    }
-    const blob = new Blob([svgText], { type: "image/svg+xml" });
-    meta.svgDataUrl = URL.createObjectURL(blob);
-    return meta;
-  }
-
-  if (/^(pdf|ai|eps)$/.test(ext) && u8.length > 0) {
-    const latin = new TextDecoder("latin1").decode(u8);
-    meta.extractedText = extractTextFromPDFBuffer(arrayBuffer, name);
-    const ptToMm = 25.4 / 72;
-    const parseBox = (key) => {
-      const m = latin.match(new RegExp(`/${key}` + "\\\\s*\\\\[\\\\s*(-?\\\\d+(?:\\\\.\\\\d+)?)\\\\s+(-?\\\\d+(?:\\\\.\\\\d+)?)\\\\s+(-?\\\\d+(?:\\\\.\\\\d+)?)\\\\s+(-?\\\\d+(?:\\\\.\\\\d+)?)\\\\s*\\\\]"));
-      if (!m) return null;
-      return {
-        wMm: Math.abs(Number(m[3]) - Number(m[1])) * ptToMm,
-        hMm: Math.abs(Number(m[4]) - Number(m[2])) * ptToMm
-      };
-    };
-    const trim = parseBox("TrimBox");
-    const bleed = parseBox("BleedBox");
-    const crop = parseBox("CropBox");
-    const art = parseBox("ArtBox");
-    const media = parseBox("MediaBox");
-    const primary = trim || art || crop || media;
-    if (primary && primary.wMm > 5 && primary.hMm > 5) {
-      meta.physicalWmm = Number(primary.wMm.toFixed(1));
-      meta.physicalHmm = Number(primary.hMm.toFixed(1));
-      meta.dimSource = trim ? "pdf_trimbox" : (art ? "pdf_artbox" : "pdf_mediabox");
-      if (bleed && trim && bleed.wMm > trim.wMm + 0.4) {
-        meta.bleedMm = Number(((bleed.wMm - trim.wMm) * 0.5).toFixed(1));
-      }
-    }
-    return meta;
-  }
-
-  // PNG pHYs chunk (pixels per meter)
-  if (u8.length > 24 && u8[0] === 0x89 && u8[1] === 0x50 && u8[2] === 0x4E && u8[3] === 0x47) {
-    let off = 8;
-    while (off + 12 <= u8.length) {
-      const len = (u8[off] << 24) | (u8[off + 1] << 16) | (u8[off + 2] << 8) | u8[off + 3];
-      const typ = String.fromCharCode(u8[off + 4], u8[off + 5], u8[off + 6], u8[off + 7]);
-      if (len < 0 || off + 12 + len > u8.length) break;
-      if (typ === "pHYs" && len >= 9) {
-        const ppux = ((u8[off + 8] << 24) | (u8[off + 9] << 16) | (u8[off + 10] << 8) | u8[off + 11]) >>> 0;
-        const ppuy = ((u8[off + 12] << 24) | (u8[off + 13] << 16) | (u8[off + 14] << 8) | u8[off + 15]) >>> 0;
-        const unit = u8[off + 16];
-        if (unit === 1 && ppux > 100 && ppuy > 100) {
-          meta.dpi = Math.round(ppux * 0.0254);
-          meta.ppux = ppux;
-          meta.ppuy = ppuy;
-          meta.dimSource = "png_phys_dpi";
-        }
-      }
-      if (typ === "IEND") break;
-      off += 12 + len;
-    }
-  }
-  return meta;
-}
-
-function scanArtworkSafeMargins(img) {
-  try {
-    const c = document.createElement("canvas");
-    const cw = 96, ch = 96;
-    c.width = cw; c.height = ch;
-    const ctx = c.getContext("2d", { willReadFrequently: true });
-    ctx.drawImage(img, 0, 0, cw, ch);
-    const data = ctx.getImageData(0, 0, cw, ch).data;
-    // Detect dark/ink foreground touches right along inner border band (2px from trim edge)
-    let edgeHits = 0;
-    const band = 3;
-    for (let y = 0; y < ch; y++) {
-      for (let x = 0; x < cw; x++) {
-        if (x >= band && x < cw - band && y >= band && y < ch - band) continue;
-        const idx = (y * cw + x) * 4;
-        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-        if (data[idx + 3] > 180 && lum < 85) edgeHits++;
-      }
-    }
-    const perimCount = cw * ch - (cw - band * 2) * (ch - band * 2);
-    const edgeInkRatio = edgeHits / Math.max(1, perimCount);
-    const hasBleedBackground = edgeInkRatio > 0.12 && edgeInkRatio < 0.72;
-    return {
-      safeMarginOk: edgeInkRatio < 0.45,
-      edgeInkRatio,
-      hasBleedBackground
-    };
-  } catch (e) {
-    return { safeMarginOk: true, edgeInkRatio: 0, hasBleedBackground: false };
-  }
-}
-
-function analyzeArtworkGraphicConformity(imgW, imgH, imgObj, vessel, fileMeta) {
-  const targetMode = state.customGraphicTargetMode || (isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
-  const maxDims = getContainerPrintableAreasMm(vessel, targetMode, state.labelLayout);
-  const meta = fileMeta || {};
-  const targetRatio = maxDims.maxWmm / Math.max(1, maxDims.maxHmm);
-  const imgRatio = imgW / Math.max(1, imgH);
-
-  let physicalWmm = Number(meta.physicalWmm) || 0;
-  let physicalHmm = Number(meta.physicalHmm) || 0;
-  let physSource = meta.dimSource || "pixel_ratio";
-
-  if ((!physicalWmm || !physicalHmm) && meta.ppux && meta.ppuy) {
-    physicalWmm = Number(((imgW / meta.ppux) * 1000).toFixed(1));
-    physicalHmm = Number(((imgH / meta.ppuy) * 1000).toFixed(1));
-    physSource = "png_phys_dpi";
-  }
-  const fnDimMatch = (meta.fileName || "").match(/(\d{2,4}(?:\.\d+)?)\s*[xX×]\s*(\d{2,4}(?:\.\d+)?)\s*mm/i);
-  if ((!physicalWmm || !physicalHmm) && fnDimMatch) {
-    physicalWmm = Number(fnDimMatch[1]);
-    physicalHmm = Number(fnDimMatch[2]);
-    physSource = "filename_mm";
-  }
-  if (!physicalWmm || !physicalHmm) {
-    // Unmarked raster: check at standard 150 DPI print assumption or maxDims envelope if matching ratio
-    const assume150W = Number(((imgW / 150) * 25.4).toFixed(1));
-    const assume150H = Number(((imgH / 150) * 25.4).toFixed(1));
-    if (assume150W > maxDims.maxWmm * 1.05 || assume150H > maxDims.maxHmm * 1.05) {
-      physicalWmm = assume150W;
-      physicalHmm = assume150H;
-      physSource = "pixel_150dpi";
-    } else {
-      physicalHmm = maxDims.maxHmm;
-      physicalWmm = Number((maxDims.maxHmm * imgRatio).toFixed(1));
-      physSource = "fit_height_mm";
-    }
-  }
-
-  const bleedMm = Number(meta.bleedMm) || 0;
-  const relErr = Math.abs((physicalWmm / Math.max(1, physicalHmm)) - targetRatio) / Math.max(0.05, targetRatio);
-  const overflowWmm = Number(Math.max(0, physicalWmm - maxDims.maxWmm).toFixed(1));
-  const overflowHmm = Number(Math.max(0, physicalHmm - maxDims.maxHmm).toFixed(1));
-  const fitsPrintableArea = overflowWmm <= 2.0 && overflowHmm <= 2.0;
-
-  // Aspect tolerance: tight on 360° sleeve/serigrafia (+/-14%), flexible on cut adhesive label if fits inside printable panel (+/-28%)
-  const maxRelErr = (maxDims.mode === "sleeve" || maxDims.mode === "serigrafia") ? 0.14 : (fitsPrintableArea ? 0.28 : 0.18);
-  const ratioOk = relErr <= maxRelErr;
-
-  const effectiveDpi = meta.isVector ? 300 : Math.round((imgW / Math.max(10, physicalWmm)) * 25.4);
-  const minResOk = (meta.isVector || (imgW >= 200 && imgH >= 160 && effectiveDpi >= 110));
-
-  const marginScan = imgObj ? scanArtworkSafeMargins(imgObj) : { safeMarginOk: true, edgeInkRatio: 0, hasBleedBackground: false };
-  const embeddedBc = imgObj ? detectEmbeddedBarcodeInArtwork(imgObj) : { detected: false, transitions: 0, centerYFrac: 0.72, centerXFrac: 0.5 };
-  const bleedOk = bleedMm >= 1.5 || marginScan.hasBleedBackground || maxDims.mode === "label";
-
-  // Can we proportionally scale down without distortion to fit maxDims?
-  const propScale = Math.min(maxDims.maxWmm / Math.max(1, physicalWmm), maxDims.maxHmm / Math.max(1, physicalHmm));
-  const scaledWmm = Number((physicalWmm * propScale).toFixed(1));
-  const scaledHmm = Number((physicalHmm * propScale).toFixed(1));
-  const scaledRelErr = Math.abs((scaledWmm / Math.max(1, scaledHmm)) - targetRatio) / Math.max(0.05, targetRatio);
-  const canProportionalResize = !fitsPrintableArea && propScale < 0.995 && propScale >= 0.25 && scaledRelErr <= maxRelErr;
-
-  const overlapRisk = (maxDims.mode === "sleeve" && physicalWmm > maxDims.circumferenceMm + 2)
-    || (maxDims.mode === "label" && physicalWmm > maxDims.maxWmm + 2);
-  const clippingRisk = overflowHmm > 2.0 || !marginScan.safeMarginOk || overlapRisk;
-
-  const conformant = minResOk && fitsPrintableArea && ratioOk && marginScan.safeMarginOk;
-
-  const issuesIt = [];
-  const issuesEn = [];
-  if (!fitsPrintableArea) {
-    issuesIt.push(`Dimensioni file (${physicalWmm} × ${physicalHmm} mm) superiori all'area stampabile (${maxDims.maxWmm} × ${maxDims.maxHmm} mm: esubero ${overflowWmm > 0 ? `+${overflowWmm} mm L` : ""}${overflowWmm > 0 && overflowHmm > 0 ? ", " : ""}${overflowHmm > 0 ? `+${overflowHmm} mm H` : ""}).`);
-    issuesEn.push(`Artwork size (${physicalWmm} × ${physicalHmm} mm) exceeds container printable area (${maxDims.maxWmm} × ${maxDims.maxHmm} mm).`);
-  }
-  if (!ratioOk) {
-    issuesIt.push(`Rapporto d'aspetto ${ (physicalWmm / Math.max(1, physicalHmm)).toFixed(2) }:1 incompatibile con l'area ${maxDims.wrapDimStr} (${targetRatio.toFixed(2)}:1, scarto ${Math.round(relErr * 100)}%). Non verrà eseguita alcuna distorsione automatica.`);
-    issuesEn.push(`Aspect ratio ${(physicalWmm / Math.max(1, physicalHmm)).toFixed(2)}:1 is incompatible with ${maxDims.wrapDimStr} (${targetRatio.toFixed(2)}:1, ${Math.round(relErr * 100)}% delta). Zero auto-stretching applied.`);
-  }
-  if (!minResOk) {
-    issuesIt.push(`Risoluzione effettiva insufficiente (${effectiveDpi} DPI · min 110 DPI su ${physicalWmm} mm).`);
-    issuesEn.push(`Insufficient effective print resolution (${effectiveDpi} DPI · min 110 DPI at ${physicalWmm} mm).`);
-  }
-  if (!marginScan.safeMarginOk) {
-    issuesIt.push(`Rilevati elementi critici troppo vicini al bordo di taglio/abbondanza (margine di sicurezza < ${maxDims.safeMarginMm} mm).`);
-    issuesEn.push(`Critical elements detected too close to trim edge (safe margin < ${maxDims.safeMarginMm} mm).`);
-  }
-
-  return {
-    conformant,
-    physicalWmm,
-    physicalHmm,
-    physSource,
-    bleedMm,
-    bleedOk,
-    effectiveDpi,
-    minResOk,
-    fitsPrintableArea,
-    overflowWmm,
-    overflowHmm,
-    ratioOk,
-    relErr,
-    targetRatio,
-    imgRatio,
-    safeMarginOk: marginScan.safeMarginOk,
-    overlapRisk,
-    clippingRisk,
-    canProportionalResize,
-    propScale,
-    scaledWmm,
-    scaledHmm,
-    maxDims,
-    embeddedBc,
-    issuesIt,
-    issuesEn
-  };
-}
-
-function buildSynthesizedProofCanvas(titleStr, fileNameStr, dimStr, paletteCols, targetW, targetH) {
-  const cols = paletteCols && paletteCols.length >= 3 ? paletteCols : ["#FAF8F5", "#C2180E", "#18181B"];
-  const accentCol = cols[1] && cols[1].toLowerCase() !== "#ffffff" ? cols[1] : "#C2180E";
-  const inkCol = "#18181B";
-  const cw = targetW || 1200;
-  const ch = targetH || 800;
-  const c = document.createElement("canvas");
-  c.width = cw;
-  c.height = ch;
-  const ctx = c.getContext("2d");
-  const bg = ctx.createLinearGradient(0, 0, 0, ch);
-  bg.addColorStop(0, "#FAF8F5");
-  bg.addColorStop(1, "#EDE8DF");
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, cw, ch);
-
-  ctx.fillStyle = accentCol;
-  ctx.fillRect(0, ch * 0.04, cw, ch * 0.035);
-  ctx.fillRect(0, ch * 0.21, cw, ch * 0.052);
-  ctx.fillRect(0, ch * 0.74, cw, ch * 0.035);
-  ctx.fillRect(0, ch * 0.92, cw, ch * 0.02);
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = accentCol;
-  ctx.font = `800 ${Math.round(ch * 0.028)}px 'JetBrains Mono', monospace`;
-  ctx.fillText("ESECUTIVO STAMPA · QUOTA 1:1 CONFORME", cw * 0.5, ch * 0.34);
-
-  ctx.fillStyle = inkCol;
-  ctx.font = `900 ${Math.round(ch * 0.085)}px 'Inter', sans-serif`;
-  ctx.fillText((titleStr || "Grafica Personalizzata").slice(0, 24), cw * 0.5, ch * 0.45);
-
-  ctx.strokeStyle = accentCol;
-  ctx.lineWidth = 3;
-  ctx.strokeRect(cw * 0.24, ch * 0.51, cw * 0.52, ch * 0.16);
-  ctx.fillStyle = inkCol;
-  ctx.font = `700 ${Math.round(ch * 0.032)}px 'Inter', sans-serif`;
-  ctx.fillText(fileNameStr || "esecutivo-stampa.pdf", cw * 0.5, ch * 0.58);
-  ctx.fillStyle = "#64748B";
-  ctx.font = `700 ${Math.round(ch * 0.026)}px 'JetBrains Mono', monospace`;
-  ctx.fillText("FORMATO SUPERFICIE: " + (dimStr || "170 × 126 mm"), cw * 0.5, ch * 0.64);
-  return c;
-}
-
-let lastParsedArtworkMeta = null;
-
-function finalizeGraphicConformityCheck(img, iw, ih, dataUrl, fileMeta) {
-  const l = state.lang;
-  const vessel = getVessel();
-  const check = analyzeArtworkGraphicConformity(iw, ih, img, vessel, fileMeta);
-  state.customGraphicWidth = iw;
-  state.customGraphicHeight = ih;
-  state.customGraphicPhysicalWmm = check.physicalWmm;
-  state.customGraphicPhysicalHmm = check.physicalHmm;
-  state.customGraphicBleedMm = check.bleedMm;
-  state.customGraphicAudit = check;
-  state.customGraphicDataUrl = dataUrl;
-  state.customGraphicColors = extractDominantColorsFromImage(img);
-  state.customGraphicEmbeddedBc = check.embeddedBc;
-  if (!check.conformant) {
-    customUploadedImageObj = img;
-    state.customGraphicConformant = false;
-    state.customGraphicValidationMsg = (l === "it" ? check.issuesIt : check.issuesEn).join(" ");
-  } else {
-    customUploadedImageObj = img;
-    state.customGraphicConformant = true;
-    state.customGraphicValidationMsg = "";
-  }
-  renderCustomGraphicView();
-}
-
-function resizeCustomGraphicProportionally() {
-  const img = customUploadedImageObj;
-  const check = state.customGraphicAudit;
-  if (!img || !check || !check.canProportionalResize) return;
-  const newMeta = {
-    ...(lastParsedArtworkMeta || { fileName: state.customGraphicFile, ext: "png" }),
-    physicalWmm: check.scaledWmm,
-    physicalHmm: check.scaledHmm,
-    dimSource: "proportional_scale_1to1",
-    bleedMm: check.bleedMm
-  };
-  lastParsedArtworkMeta = newMeta;
-  finalizeGraphicConformityCheck(img, state.customGraphicWidth, state.customGraphicHeight, state.customGraphicDataUrl, newMeta);
-}
-
-function switchCustomGraphicTargetMode(mode, layout) {
-  state.customGraphicTargetMode = mode;
-  if (layout) state.labelLayout = layout;
-  else if (mode !== "label") state.labelLayout = "single";
-  if (!isDoypack() && (mode === "sleeve" || mode === "label" || mode === "serigrafia")) {
-    state.wrapType = mode;
-    if (state.skinId === "none") state.skinId = "neutral";
-  }
-  if (state.customGraphicFile && state.customGraphicDataUrl && customUploadedImageObj) {
-    const meta = lastParsedArtworkMeta || {
-      fileName: state.customGraphicFile,
-      physicalWmm: state.customGraphicPhysicalWmm,
-      physicalHmm: state.customGraphicPhysicalHmm,
-      bleedMm: state.customGraphicBleedMm,
-      dimSource: state.customGraphicAudit?.physSource || "pixel_ratio"
-    };
-    finalizeGraphicConformityCheck(customUploadedImageObj, state.customGraphicWidth, state.customGraphicHeight, state.customGraphicDataUrl, meta);
-  } else {
-    renderCustomGraphicView();
-  }
-}
-
-async function handleCustomGraphicUpload(inputEl) {
+function handleCustomGraphicUpload(inputEl) {
   const file = inputEl && inputEl.files && inputEl.files[0];
   if (!file) return;
-  const l = state.lang;
   state.customGraphicFile = file.name;
-  state.customGraphicAudit = null;
-  state.customGraphicConformant = false;
-  const titleEl = document.getElementById("inpCustomGraphicTitle");
-  if (!titleEl || !titleEl.value.trim()) {
-    state.customGraphicTitle = l === "it" ? "Grafica Personalizzata" : "Custom Graphic";
-  }
-
-  let arrayBuffer = null;
-  try { arrayBuffer = await file.arrayBuffer(); } catch (e) {}
-  const fileMeta = parseArtworkFileMetadata(file, arrayBuffer);
-  lastParsedArtworkMeta = fileMeta;
-
-  if (fileMeta.ext === "svg" && fileMeta.svgDataUrl) {
-    const svgImg = new Image();
-    svgImg.onload = () => {
-      const iw = svgImg.naturalWidth || Math.max(800, Math.round((fileMeta.physicalWmm || 170) * 8));
-      const ih = svgImg.naturalHeight || Math.max(600, Math.round((fileMeta.physicalHmm || 120) * 8));
-      const rasterC = document.createElement("canvas");
-      rasterC.width = iw;
-      rasterC.height = ih;
-      rasterC.getContext("2d").drawImage(svgImg, 0, 0, iw, ih);
-      const pngUrl = rasterC.toDataURL("image/png");
-      const outImg = new Image();
-      outImg.onload = () => finalizeGraphicConformityCheck(outImg, iw, ih, pngUrl, fileMeta);
-      outImg.src = pngUrl;
-    };
-    svgImg.onerror = () => {
-      state.customGraphicConformant = false;
-      state.customGraphicValidationMsg = l === "it" ? "Impossibile interpretare il tracciato SVG." : "Unable to parse SVG markup.";
-      renderCustomGraphicView();
-    };
-    svgImg.src = fileMeta.svgDataUrl;
-    return;
-  }
-
-  if (fileMeta.isVector) {
-    const vessel = getVessel();
-    const targetMode = state.customGraphicTargetMode || (isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
-    const maxDims = getContainerPrintableAreasMm(vessel, targetMode, state.labelLayout);
-    if (!fileMeta.physicalWmm || !fileMeta.physicalHmm) {
-      const fnMatch = file.name.match(/(\d{2,4}(?:\.\d+)?)\s*[xX×]\s*(\d{2,4}(?:\.\d+)?)/);
-      if (fnMatch) {
-        fileMeta.physicalWmm = Number(fnMatch[1]);
-        fileMeta.physicalHmm = Number(fnMatch[2]);
-        fileMeta.dimSource = "filename_mm";
-      } else {
-        fileMeta.physicalWmm = maxDims.maxWmm;
-        fileMeta.physicalHmm = maxDims.maxHmm;
-        fileMeta.dimSource = "vector_fallback";
-      }
-    }
-    const synW = 1200;
-    const synH = Math.max(240, Math.round(synW * (fileMeta.physicalHmm / Math.max(1, fileMeta.physicalWmm))));
-    const dimLabel = `${fileMeta.physicalWmm} × ${fileMeta.physicalHmm} mm`;
-    const proofCanvas = buildSynthesizedProofCanvas(state.customGraphicTitle, file.name, dimLabel, state.customGraphicColors, synW, synH);
-    const proofUrl = proofCanvas.toDataURL("image/png");
-    const vecImg = new Image();
-    vecImg.onload = () => finalizeGraphicConformityCheck(vecImg, synW, synH, proofUrl, fileMeta);
-    vecImg.src = proofUrl;
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    const dataUrl = String(reader.result || "");
-    const img = new Image();
-    img.onload = () => finalizeGraphicConformityCheck(img, img.naturalWidth || 0, img.naturalHeight || 0, dataUrl, fileMeta);
-    img.onerror = () => {
-      customUploadedImageObj = null;
-      state.customGraphicConformant = false;
-      state.customGraphicValidationMsg = l === "it"
-        ? "Formato file grafico non decodificabile nel browser. Usa SVG, PDF con TrimBox, PNG o JPG."
-        : "Unable to decode artwork file in browser. Use SVG, PDF with TrimBox, PNG, or JPG.";
-      renderCustomGraphicView();
-    };
-    img.src = dataUrl;
-  };
-  reader.readAsDataURL(file);
-}
-
-function applyCustomGraphicToStudio() {
-  const l = state.lang;
-  if (!state.customGraphicFile || !state.customGraphicDataUrl || !customUploadedImageObj || !state.customGraphicConformant) {
-    const errEl = document.getElementById("cgValidationMsg");
-    if (errEl && !state.customGraphicValidationMsg) {
-      errEl.textContent = l === "it"
-        ? "Carica un file grafica con dimensioni conformi al contenitore prima di procedere."
-        : "Upload a graphic file matching the container dimensions before proceeding.";
-    }
-    return;
-  }
-  const titleInput = document.getElementById("inpCustomGraphicTitle");
-  if (titleInput && titleInput.value.trim()) {
-    state.customGraphicTitle = titleInput.value.trim();
-  }
-  const activeV = getVessel();
-  const targetMode = state.customGraphicTargetMode || (isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
-  if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
-  state.customGraphicsByVessel[state.vesselId] = {
-    title: state.customGraphicTitle,
-    file: state.customGraphicFile,
-    dataUrl: state.customGraphicDataUrl,
-    width: state.customGraphicWidth,
-    height: state.customGraphicHeight,
-    physicalWmm: state.customGraphicPhysicalWmm,
-    physicalHmm: state.customGraphicPhysicalHmm,
-    bleedMm: state.customGraphicBleedMm,
-    labelLayout: state.labelLayout || "single",
-    validatedWrapType: targetMode,
-    vesselDimsSignature: getVesselDimsSignature(activeV),
-    audit: state.customGraphicAudit,
-    colors: [...(state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"])],
-    imageObj: customUploadedImageObj,
-    embeddedBc: state.customGraphicEmbeddedBc
-  };
-  if (isDoypack()) {
-    state.wrapType = "pouch";
-    if (state.pouchPrintType === "none") state.pouchPrintType = "digital";
-  } else {
-    state.wrapType = targetMode;
-  }
-  state.skinId = "custom_user_skin";
-  state.customGraphicMode = false;
-  state.inspTab = 2;
-  state.selectedSuppliers = activeV.isCustomVessel ? {} : { container: 0 };
-  state.filieraStep = 1;
-  switchMainView("studio");
-  rebuild3DProduct();
-  renderAllUI();
+  renderCustomGraphicView();
 }
 
 function renderCustomGraphicView() {
@@ -9055,22 +7105,21 @@ function renderCustomGraphicView() {
   if (!host || !state.customGraphicMode) return;
   const l = state.lang;
   const v = getVessel();
+  const maxDims = getMaxApplicableSurfaceDimensionsMm(v);
   const pouchMode = isDoypack();
-  const targetMode = state.customGraphicTargetMode || (pouchMode ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
-  const maxDims = getContainerPrintableAreasMm(v, targetMode, state.labelLayout);
-  const labelMode = targetMode === "label";
-  const serigMode = targetMode === "serigrafia";
+  const labelMode = isLabelMode();
+  const serigMode = isSerigrafiaMode();
 
   const processIt = pouchMode
     ? (state.pouchPrintType === "flexo" ? "Stampa Flessografica su Doypack" : "Stampa Digitale su Doypack")
     : (serigMode
         ? "Serigrafia Diretta 360° su Alluminio"
-        : (labelMode ? (maxDims.labelLayout === "front_back" ? "Etichette Fronte + Retro" : "Etichetta Adesiva Frontale") : "Sleeve Termoretraibile 360°"));
+        : (labelMode ? "Etichetta Adesiva Fustellata" : "Sleeve Termoretraibile 360°"));
   const processEn = pouchMode
     ? (state.pouchPrintType === "flexo" ? "Flexographic Pouch Printing" : "Digital Pouch Printing")
     : (serigMode
         ? "360° Direct-to-Can Silk Screen"
-        : (labelMode ? (maxDims.labelLayout === "front_back" ? "Front + Back Adhesive Labels" : "Front Adhesive Label") : "360° Heat-Shrink Sleeve"));
+        : (labelMode ? "Die-Cut Adhesive Label" : "360° Heat-Shrink Sleeve"));
 
   const matName = pouchMode
     ? (l === "it" ? (POUCH_FINISHES.find(f => f.id === state.finishId)?.it || "Bianco Soft-Touch") : (POUCH_FINISHES.find(f => f.id === state.finishId)?.en || "White Soft-Touch"))
@@ -9079,93 +7128,26 @@ function renderCustomGraphicView() {
         : (labelMode ? getLabelPaper().name : getFilm().name));
 
   const formatNoteIt = pouchMode
-    ? "Area utile tra le saldature della busta (codice a barre già integrato nel file esecutivo)"
+    ? "Area massima applicabile sull'intera facciata della busta (incluse zone di saldatura e zip)"
     : (serigMode
-        ? "Superficie cilindrica 360° sul corpo lattina (esecutivo PDF/SVG/PNG/AI con barcode integrato)"
+        ? "Superficie massima cilindrica 360° applicabile sul corpo lattina (incluse zone di rastrematura)"
         : (labelMode
-            ? `Pannello adesivo dedicato per ${v.it} (${maxDims.labelLayout === "front_back" ? "doppia fascia fronte/retro" : "etichetta frontale"}, margine sicurezza ${maxDims.safeMarginMm} mm)`
-            : `Circonferenza ${maxDims.circumferenceMm} mm × altezza zona stampabile ${maxDims.maxHmm} mm con abbondanza consigliata ${maxDims.bleedMm} mm`));
+            ? "Area massima di applicazione su corpo e spalle del contenitore (incluse eventuali zone gialle/rosse)"
+            : "Superficie massima applicabile dello sleeve 360° sull'intero corpo e spalla (incluse zone gialle/rosse)"));
   const formatNoteEn = pouchMode
-    ? "Printable front panel inside pouch heat-seals (integrated barcode supported)"
+    ? "Maximum applicable surface across full pouch panel (including heat-seals and zip)"
     : (serigMode
-        ? "360° cylindrical can envelope (PDF/SVG/PNG/AI with integrated barcode)"
+        ? "Maximum 360° cylindrical surface area across full can wall (including chime taper)"
         : (labelMode
-            ? `Adhesive label envelope for ${v.en} (${maxDims.labelLayout === "front_back" ? "front + back panels" : "front label"}, ${maxDims.safeMarginMm} mm safe margin)`
-            : `Circumference ${maxDims.circumferenceMm} mm × printable height ${maxDims.maxHmm} mm (${maxDims.bleedMm} mm bleed recommended)`));
-
-  const hasImg = !!(state.customGraphicDataUrl && state.customGraphicFile);
-  const canProceed = hasImg && !!state.customGraphicConformant;
-  const safeFile = escapeHtml(state.customGraphicFile);
-  const safeTitle = escapeHtml(state.customGraphicTitle);
-  const audit = state.customGraphicAudit;
-
-  const modeTabsHtml = pouchMode ? "" : `
-    <div class="cg-mode-tabs" role="group" aria-label="${l === "it" ? "Tipo decorazione" : "Decoration mode"}">
-      <button type="button" class="cg-mode-tab ${targetMode === "sleeve" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('sleeve', 'single')">
-        ${l === "it" ? "Sleeve 360°" : "360° Sleeve"}
-      </button>
-      <button type="button" class="cg-mode-tab ${targetMode === "label" && maxDims.labelLayout === "single" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('label', 'single')">
-        ${l === "it" ? "Etichetta Frontale" : "Front Label"}
-      </button>
-      <button type="button" class="cg-mode-tab ${targetMode === "label" && maxDims.labelLayout === "front_back" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('label', 'front_back')">
-        ${l === "it" ? "Fronte + Retro" : "Front + Back"}
-      </button>
-      ${v.shape === "alu_can" ? `
-        <button type="button" class="cg-mode-tab ${targetMode === "serigrafia" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('serigrafia', 'single')">
-          ${l === "it" ? "Stampa Diretta 360°" : "Direct Print 360°"}
-        </button>
-      ` : ""}
-    </div>
-  `;
-
-  const prepressAuditHtml = (hasImg && audit) ? `
-    <div class="cg-prepress-grid" id="cgPrepressAuditBox">
-      <div class="cg-prepress-item ${audit.fitsPrintableArea ? "ok" : "err"}">
-        <span class="cv-audit-k">${l === "it" ? "MISURA FISICA vs STAMPABILE" : "PHYSICAL SIZE VS PRINTABLE"}</span>
-        <span class="cv-audit-v">${audit.physicalWmm} × ${audit.physicalHmm} mm / ${maxDims.wrapDimStr}</span>
-        <span style="font-size:10px; color:var(--charcoal);">${audit.fitsPrintableArea ? (l === "it" ? "Entro i limiti ✓" : "Within printable bounds ✓") : (l === "it" ? `Esubero: +${audit.overflowWmm} mm L, +${audit.overflowHmm} mm H` : `Overflow: +${audit.overflowWmm} mm W, +${audit.overflowHmm} mm H`)}</span>
-      </div>
-      <div class="cg-prepress-item ${audit.ratioOk ? "ok" : "err"}">
-        <span class="cv-audit-k">${l === "it" ? "RAPPORTO ASPETTO" : "ASPECT RATIO"}</span>
-        <span class="cv-audit-v">${(audit.physicalWmm / Math.max(1, audit.physicalHmm)).toFixed(2)}:1 vs ${audit.targetRatio.toFixed(2)}:1</span>
-        <span style="font-size:10px; color:var(--charcoal);">${l === "it" ? `Scarto ${Math.round(audit.relErr * 100)}% (zero stiramento)` : `Delta ${Math.round(audit.relErr * 100)}% (zero distortion)`}</span>
-      </div>
-      <div class="cg-prepress-item ${audit.minResOk ? (audit.effectiveDpi >= 240 ? "ok" : "warn") : "err"}">
-        <span class="cv-audit-k">${l === "it" ? "RISOLUZIONE STAMPA" : "PRINT RESOLUTION"}</span>
-        <span class="cv-audit-v">${audit.effectiveDpi} DPI (${state.customGraphicWidth} × ${state.customGraphicHeight} px)</span>
-        <span style="font-size:10px; color:var(--charcoal);">${audit.minResOk ? (audit.effectiveDpi >= 240 ? (l === "it" ? "Qualità alta serie ✓" : "High print quality ✓") : (l === "it" ? "Accettabile (consigliati ≥ 300 DPI)" : "Acceptable (300 DPI ideal)")) : (l === "it" ? "Troppo bassa (< 110 DPI)" : "Too low (< 110 DPI)")}</span>
-      </div>
-      <div class="cg-prepress-item ${audit.safeMarginOk && !audit.clippingRisk ? "ok" : (audit.safeMarginOk ? "warn" : "err")}">
-        <span class="cv-audit-k">${l === "it" ? "ABBONDANZA & MARGINI SICURI" : "BLEED & SAFE MARGINS"}</span>
-        <span class="cv-audit-v">${audit.bleedMm > 0 ? `Bleed ${audit.bleedMm} mm` : (l === "it" ? `Margine rifilo ≥ ${maxDims.safeMarginMm} mm` : `Safe margin ≥ ${maxDims.safeMarginMm} mm`)}</span>
-        <span style="font-size:10px; color:var(--charcoal);">${audit.clippingRisk ? (l === "it" ? "Rischio taglio / sovrapposizione su bordo ⚠" : "Edge clipping / overlap risk ⚠") : (l === "it" ? "Nessun taglio o sormonto critico ✓" : "No critical clipping or overlap ✓")}</span>
-      </div>
-    </div>
-    ${audit.canProportionalResize ? `
-      <div class="cg-resize-card" id="cgProportionalResizeBox">
-        <div style="flex:1; min-width:200px;">
-          <div style="font-size:12px; font-weight:800; color:#92400E;">
-            ${l === "it" ? `Ridimensionamento proporzionale 1:1 disponibile (${audit.scaledWmm} × ${audit.scaledHmm} mm)` : `Proportional 1:1 scaling available (${audit.scaledWmm} × ${audit.scaledHmm} mm)`}
-          </div>
-          <div style="font-size:11px; color:var(--charcoal); margin-top:2px;">
-            ${l === "it"
-              ? `Scala uniforme ${(audit.propScale * 100).toFixed(0)}% mantenendo invariate le proporzioni e il codice a barre.`
-              : `Uniform ${(audit.propScale * 100).toFixed(0)}% scale preserving aspect ratio and barcode geometry.`}
-          </div>
-        </div>
-        <button type="button" class="cta-btn" id="btnProportionalResizeGraphic" style="width:auto; height:36px; font-size:11.5px; padding:0 16px;" onclick="resizeCustomGraphicProportionally()">
-          ${l === "it" ? "Adatta in proporzione 1:1" : "Scale proportionally 1:1"}
-        </button>
-      </div>
-    ` : ""}
-  ` : "";
+            ? "Maximum applicable label envelope across full container surface (including yellow/red warning zones)"
+            : "Maximum 360° shrink-sleeve envelope across full container body and shoulder (including warning/error zones)"));
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
       <div class="brown-hdr-bar">
         <div>
           <h1 class="brown-hdr-title">${l === "it" ? "Caricamento Grafica Esecutiva di Stampa" : "Custom Print Artwork Upload"}</h1>
-          <p class="cat-sub-minimal">${l === "it" ? "Verifica prepress su misura per l'area stampabile reale del contenitore e mappatura 1:1 nello Studio 3D" : "Container-specific prepress verification and realistic 1:1 3D Studio mapping"}</p>
+          <p class="cat-sub-minimal">${l === "it" ? "Inserisci il file della tua grafica" : "Upload your custom graphic file"}</p>
         </div>
       </div>
 
@@ -9173,77 +7155,55 @@ function renderCustomGraphicView() {
         <div class="custom-blueprint-grid">
           <div class="custom-bp-left">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE SUPERFICIE CONFORME" : "CONFORMAL SURFACE SPECS"}</span>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "SPECIFICHE SUPERFICIE MASSIMA" : "MAXIMUM APPLICABLE SURFACE SPECS"}</span>
               <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? processIt : processEn}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">
                 ${l === "it"
-                  ? "Ogni contenitore ha quote stampabili dedicate: l'esecutivo viene controllato su misura fisica, proporzioni, bleed, margini e DPI senza mai essere stirato in automatico."
-                  : "Every container has dedicated printable geometry: artwork is verified for physical size, aspect ratio, bleed, safe margins, and DPI with zero automatic stretching."}
+                  ? "Le dimensioni indicate rappresentano la superficie massima totale di applicazione sul contenitore (comprese le fasce curve in avviso o blocco)."
+                  : "Dimensions indicate the maximum total application area across the container (including curved warning and error zones)."}
               </p>
             </div>
 
-            ${modeTabsHtml}
-
             <div class="custom-spec-checklist">
-              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI CONTENITORE SELEZIONATO" : "SELECTED CONTAINER SPECS"}</div>
-              <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${escapeHtml(l === "it" ? v.it : v.en)}</strong></div>
-              <div>02 // ${l === "it" ? "Quote corpo reali:" : "Body dimensions:"} <strong>${v.wMm} × ${v.dMm || v.wMm} × ${v.hMm} mm</strong></div>
-              <div>03 // ${l === "it" ? "Area stampabile:" : "Printable area:"} <strong>${maxDims.wrapDimStr}</strong></div>
-              <div>04 // ${l === "it" ? "Margine sicuro / Bleed:" : "Safe margin / Bleed:"} <strong>${maxDims.safeMarginMm} mm / ${maxDims.bleedMm} mm</strong></div>
-              <div>05 // ${l === "it" ? "Substrato:" : "Substrate:"} <strong>${matName}</strong></div>
+              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI ATTIVI IN STUDIO 3D" : "ACTIVE 3D STUDIO PARAMETERS"}</div>
+              <div>01 // ${l === "it" ? "Misure:" : "Dimensions:"} <strong>${l === "it" ? v.subIt : v.subEn}</strong></div>
+              <div>02 // ${l === "it" ? "Lavorazione:" : "Process:"} <strong>${l === "it" ? processIt : processEn}</strong></div>
+              <div>03 // ${l === "it" ? "Materiale:" : "Material:"} <strong>${matName}</strong></div>
             </div>
           </div>
 
           <div class="custom-bp-right">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA ESCLUSIVO PER QUESTO CONTENITORE" : "ARTWORK UPLOAD SCOPED TO THIS CONTAINER"}</span>
-              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? `Area stampabile richiesta: ${maxDims.wrapDimStr}` : `Required printable area: ${maxDims.wrapDimStr}`}</h2>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA" : "ARTWORK FILE UPLOAD"}</span>
+              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Dimensioni max applicabili" : "Max applicable dimensions"}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? formatNoteIt : formatNoteEn}</p>
             </div>
 
-            <label class="upload-datasheet-box ${canProceed ? "loaded" : ""}" style="min-height:122px; justify-content:center; flex-direction:column; text-align:center;">
-              ${hasImg ? `
-                <div class="cg-preview-wrap">
-                  <img class="cg-thumb" src="${state.customGraphicDataUrl}" alt="${safeFile}">
-                  <div class="cg-meta">
-                    <div class="cg-filename">${canProceed ? "✓" : "⚠"} ${safeFile}</div>
-                    <div style="font-family:var(--mono); font-size:11px; color:${canProceed ? "var(--green)" : "var(--crimson)"}; font-weight:700;">
-                      ${audit ? `${audit.physicalWmm} × ${audit.physicalHmm} mm · ${audit.effectiveDpi} DPI` : `${state.customGraphicWidth} × ${state.customGraphicHeight} px`}
-                    </div>
-                    <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Clicca per sostituire il file grafica" : "Click to replace graphic file"}</div>
-                  </div>
-                  <span class="spec-tag ${canProceed ? "ok" : "clash"}">${canProceed ? (l === "it" ? "CONFORME ✓" : "VALID ✓") : (l === "it" ? "NON CONFORME ✕" : "INVALID ✕")}</span>
-                </div>
-              ` : `
-                <div style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--crimson);">${maxDims.wrapDimStr}</div>
-                <div style="font-size:13.5px; font-weight:800; color:var(--ink);">
-                  ${l === "it" ? `Carica esecutivo grafica (max ${maxDims.wrapDimStr})` : `Upload graphic file (max ${maxDims.wrapDimStr})`}
-                </div>
-                <div style="font-size:11px; color:var(--slate);">
-                  ${l === "it" ? "PDF (/TrimBox), SVG vettoriale, PNG (pHYs DPI) o Adobe Illustrator (.ai)" : "Vector PDF (/TrimBox), SVG, PNG (pHYs DPI) or Adobe Illustrator (.ai)"}
-                </div>
-                <span class="spec-tag">${l === "it" ? "SELEZIONA FILE" : "SELECT FILE"}</span>
-              `}
-              <input id="customGraphicFileInput" type="file" accept="image/*,.svg,.pdf,.ai,.eps,.tif,.tiff" style="display:none;" onchange="handleCustomGraphicUpload(this)">
-            </label>
-
-            ${prepressAuditHtml}
-
-            <div class="cg-form-grid">
-              <div class="cg-field">
-                <label class="cg-label" for="inpCustomGraphicTitle">${l === "it" ? "Nome Grafica" : "Graphic Name"}</label>
-                <input id="inpCustomGraphicTitle" class="cg-input" type="text" maxlength="28" value="${safeTitle}" oninput="state.customGraphicTitle=this.value">
+            <label class="upload-datasheet-box ${state.customGraphicFile ? "loaded" : ""}" style="min-height:132px; justify-content:center; flex-direction:column; text-align:center;">
+              <div style="font-family:var(--mono); font-size:20px; font-weight:800; color:var(--crimson);">${maxDims.wrapDimStr}</div>
+              <div style="font-size:13.5px; font-weight:800; color:var(--ink);">
+                ${state.customGraphicFile ? `✓ ${state.customGraphicFile}` : (l === "it" ? `Carica esecutivo grafica (max ${maxDims.wrapDimStr})` : `Upload graphic file (max ${maxDims.wrapDimStr})`)}
               </div>
-            </div>
-            <div id="cgValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:${canProceed ? "var(--green)" : "var(--crimson)"};">${escapeHtml(state.customGraphicValidationMsg || "")}</div>
+              <div style="font-size:11px; color:var(--slate);">
+                ${l === "it" ? "PDF vettoriale, Adobe Illustrator (.ai), TIFF o PNG · 300 DPI · Quadricromia CMYK + Pantone" : "Vector PDF, Adobe Illustrator (.ai), TIFF or PNG · 300 DPI · CMYK + Spot"}
+              </div>
+              <span class="spec-tag ${state.customGraphicFile ? "ok" : ""}">${state.customGraphicFile ? (l === "it" ? "CARICATO ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
+              <input type="file" accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg,.tif,.tiff" style="display:none;" onchange="handleCustomGraphicUpload(this)">
+            </label>
           </div>
         </div>
 
+        <p class="demo-red-text">
+          ${l === "it"
+            ? "Anteprima dimostrativa: funzione ancora in fase di sviluppo"
+            : "Demonstrative preview: feature still in development"}
+        </p>
+
         <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; border-top:1.5px solid var(--border); padding-top:12px;">
-          <button type="button" class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="closeCustomGraphicStudio()">
+          <button class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="closeCustomGraphicStudio()">
             ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
           </button>
-          <button type="button" class="cta-btn" id="btnCustomGraphicProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" ${canProceed ? "" : "disabled"} onclick="applyCustomGraphicToStudio()">
+          <button class="cta-btn" id="btnCustomGraphicProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" disabled>
             ${l === "it" ? "Applica grafica nello Studio 3D" : "Apply graphic in 3D Studio"}
           </button>
         </div>
@@ -9252,767 +7212,21 @@ function renderCustomGraphicView() {
   `;
 }
 
-// ==================== COMPUTER-VISION MULTI-ANGLE 3D CONTAINER RECONSTRUCTION ENGINE ====================
-function smoothProfileSamples(samples, passes) {
-  let cur = samples.slice();
-  for (let p = 0; p < (passes || 1); p++) {
-    const nxt = cur.slice();
-    for (let i = 1; i < cur.length - 1; i++) {
-      nxt[i] = cur[i - 1] * 0.22 + cur[i] * 0.56 + cur[i + 1] * 0.22;
-    }
-    cur = nxt;
-  }
-  return cur;
-}
-
-function segmentSilhouetteFromPhoto(img) {
-  if (!img || !img.naturalWidth || !img.naturalHeight) return null;
-  try {
-    const iw = img.naturalWidth, ih = img.naturalHeight;
-    const cw = 96;
-    const ch = Math.max(48, Math.min(144, Math.round((cw * ih) / Math.max(1, iw))));
-    const c = document.createElement("canvas");
-    c.width = cw; c.height = ch;
-    const ctx = c.getContext("2d", { willReadFrequently: true });
-    ctx.drawImage(img, 0, 0, cw, ch);
-    const data = ctx.getImageData(0, 0, cw, ch).data;
-
-    // 1. Sample border pixels to classify backdrop (alpha vs opaque flood-fill)
-    const borderSamples = [];
-    let transparentBorderCount = 0;
-    let totalBorderCount = 0;
-    for (let x = 0; x < cw; x++) {
-      [[x, 0], [x, ch - 1]].forEach(([px, py]) => {
-        const idx = (py * cw + px) * 4;
-        totalBorderCount++;
-        if (data[idx + 3] < 45) transparentBorderCount++;
-        else borderSamples.push([data[idx], data[idx + 1], data[idx + 2]]);
-      });
-    }
-    for (let y = 1; y < ch - 1; y++) {
-      [[0, y], [cw - 1, y]].forEach(([px, py]) => {
-        const idx = (py * cw + px) * 4;
-        totalBorderCount++;
-        if (data[idx + 3] < 45) transparentBorderCount++;
-        else borderSamples.push([data[idx], data[idx + 1], data[idx + 2]]);
-      });
-    }
-
-    const useAlphaBg = transparentBorderCount > totalBorderCount * 0.28;
-    const bgMask = new Uint8Array(cw * ch);
-
-    if (useAlphaBg) {
-      for (let i = 0; i < cw * ch; i++) {
-        if (data[i * 4 + 3] < 45) bgMask[i] = 1;
-      }
-    } else if (borderSamples.length > 0) {
-      borderSamples.sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]));
-      const med = borderSamples[Math.floor(borderSamples.length * 0.5)];
-      const queue = new Int32Array(cw * ch);
-      let head = 0, tail = 0;
-      const pushIfBg = (px, py) => {
-        if (px < 0 || px >= cw || py < 0 || py >= ch) return;
-        const p = py * cw + px;
-        if (bgMask[p]) return;
-        const idx = p * 4;
-        if (data[idx + 3] < 45) { bgMask[p] = 1; queue[tail++] = p; return; }
-        const dist = Math.hypot(data[idx] - med[0], data[idx + 1] - med[1], data[idx + 2] - med[2]);
-        if (dist < 42) {
-          bgMask[p] = 1;
-          queue[tail++] = p;
-        }
-      };
-      for (let x = 0; x < cw; x++) { pushIfBg(x, 0); pushIfBg(x, ch - 1); }
-      for (let y = 1; y < ch - 1; y++) { pushIfBg(0, y); pushIfBg(cw - 1, y); }
-      while (head < tail) {
-        const cur = queue[head++];
-        const cx = cur % cw;
-        const cy = (cur - cx) / cw;
-        pushIfBg(cx - 1, cy);
-        pushIfBg(cx + 1, cy);
-        pushIfBg(cx, cy - 1);
-        pushIfBg(cx, cy + 1);
-      }
-    }
-
-    // 2. Foreground bounding box & pixel fill factor
-    let minX = cw, maxX = -1, minY = ch, maxY = -1, fgCount = 0;
-    for (let y = 0; y < ch; y++) {
-      for (let x = 0; x < cw; x++) {
-        if (!bgMask[y * cw + x]) {
-          fgCount++;
-          if (x < minX) minX = x;
-          if (x > maxX) maxX = x;
-          if (y < minY) minY = y;
-          if (y > maxY) maxY = y;
-        }
-      }
-    }
-    if (maxX <= minX || maxY <= minY || fgCount < 16) {
-      return null;
-    }
-
-    const fgW = maxX - minX + 1;
-    const fgH = maxY - minY + 1;
-    const hToWRatio = fgH / Math.max(1, fgW);
-    const fillRatio = fgCount / Math.max(1, fgW * fgH);
-
-    // 3. Extract 64 vertical slices from bottom (k=0, maxY) to top (k=63, minY)
-    const SLICES = 64;
-    const rawR = new Array(SLICES).fill(0.5);
-    let maxSpan = 0;
-    const sliceSpans = new Array(SLICES).fill(0);
-    for (let k = 0; k < SLICES; k++) {
-      const y = Math.max(minY, Math.min(maxY, Math.round(maxY - (k / (SLICES - 1)) * (fgH - 1))));
-      let rMin = cw, rMax = -1;
-      for (let dy = -1; dy <= 1; dy++) {
-        const sy = Math.max(minY, Math.min(maxY, y + dy));
-        for (let x = minX; x <= maxX; x++) {
-          if (!bgMask[sy * cw + x]) {
-            if (x < rMin) rMin = x;
-            if (x > rMax) rMax = x;
-          }
-        }
-      }
-      const span = rMax >= rMin ? (rMax - rMin + 1) : 0;
-      sliceSpans[k] = span;
-      if (span > maxSpan) maxSpan = span;
-    }
-    maxSpan = Math.max(1, maxSpan);
-    for (let k = 0; k < SLICES; k++) {
-      rawR[k] = Math.max(0.16, Math.min(1.0, sliceSpans[k] / maxSpan));
-    }
-    const rSamples = smoothProfileSamples(rawR, 2);
-
-    // Normalize after smoothing so peak radius === 1.0
-    const peak = Math.max(...rSamples, 0.25);
-    for (let k = 0; k < SLICES; k++) rSamples[k] = Math.max(0.18, Math.min(1.0, rSamples[k] / peak));
-
-    let neckRadiusNorm = rSamples[61] || 0.34;
-    for (let k = 54; k < SLICES; k++) {
-      if (rSamples[k] < neckRadiusNorm) neckRadiusNorm = rSamples[k];
-    }
-
-    // 4. Sample surface color & optical finish from central interior body (y = 32%..74% height)
-    const colSamples = [];
-    const yS0 = Math.round(minY + fgH * 0.32);
-    const yS1 = Math.round(minY + fgH * 0.74);
-    for (let y = yS0; y <= yS1; y++) {
-      for (let x = minX + Math.round(fgW * 0.25); x <= maxX - Math.round(fgW * 0.25); x++) {
-        if (!bgMask[y * cw + x]) {
-          const idx = (y * cw + x) * 4;
-          colSamples.push([data[idx], data[idx + 1], data[idx + 2]]);
-        }
-      }
-    }
-    let bodyColorHex = "#E8EFF6";
-    let finishId = "pet_gloss";
-    if (colSamples.length > 8) {
-      let sumR = 0, sumG = 0, sumB = 0;
-      colSamples.forEach(cRgb => { sumR += cRgb[0]; sumG += cRgb[1]; sumB += cRgb[2]; });
-      const mr = Math.round(sumR / colSamples.length);
-      const mg = Math.round(sumG / colSamples.length);
-      const mb = Math.round(sumB / colSamples.length);
-      bodyColorHex = "#" + [mr, mg, mb].map(n => Math.max(0, Math.min(255, n)).toString(16).padStart(2, "0")).join("");
-      const maxC = Math.max(mr, mg, mb), minC = Math.min(mr, mg, mb);
-      const sat = maxC > 0 ? (maxC - minC) / maxC : 0;
-      const lum = (0.299 * mr + 0.587 * mg + 0.114 * mb) / 255;
-      if (mg > mr + 14 && mg > mb + 10 && lum < 0.45) finishId = "wine_green";
-      else if (mr > mb + 34 && mg >= mb + 12 && lum < 0.68) finishId = "amber";
-      else if (sat < 0.14 && lum >= 0.80) finishId = "hdpe_white";
-      else if (sat < 0.18 && lum >= 0.62 && lum < 0.80) finishId = "alu_brushed";
-      else if (lum < 0.36) finishId = "wine_green";
-      else finishId = "pet_gloss";
-    }
-
-    return {
-      rSamples,
-      hToWRatio,
-      fillRatio,
-      neckRadiusNorm,
-      bodyColorHex,
-      finishId,
-      fgW,
-      fgH
-    };
-  } catch (e) {
-    return null;
-  }
-}
-
-function analyzeTopViewGeometry(img) {
-  const seg = segmentSilhouetteFromPhoto(img);
-  if (!seg) return null;
-  // Estimate concentric inner opening/neck ring by sampling radial luminance variance in central ROI
-  let innerRingRatio = seg.fillRatio > 0.84 ? 0.62 : 0.44;
-  try {
-    const c = document.createElement("canvas");
-    c.width = 64; c.height = 64;
-    const ctx = c.getContext("2d", { willReadFrequently: true });
-    ctx.drawImage(img, 0, 0, 64, 64);
-    const data = ctx.getImageData(0, 0, 64, 64).data;
-    let bestGrad = 0, bestR = 14;
-    for (let rad = 5; rad <= 26; rad++) {
-      let lumSum = 0, lumPrev = 0;
-      for (let a = 0; a < 16; a++) {
-        const ang = (a / 16) * Math.PI * 2;
-        const x = Math.round(32 + rad * Math.cos(ang));
-        const y = Math.round(32 + rad * Math.sin(ang));
-        const px = Math.round(32 + (rad - 2) * Math.cos(ang));
-        const py = Math.round(32 + (rad - 2) * Math.sin(ang));
-        const i1 = (y * 64 + x) * 4, i0 = (py * 64 + px) * 4;
-        lumSum += (data[i1] + data[i1 + 1] + data[i1 + 2]) / 3;
-        lumPrev += (data[i0] + data[i0 + 1] + data[i0 + 2]) / 3;
-      }
-      const g = Math.abs(lumSum - lumPrev) / 16;
-      if (g > bestGrad) { bestGrad = g; bestR = rad; }
-    }
-    if (bestGrad > 8) innerRingRatio = Math.max(0.22, Math.min(0.88, bestR / 28));
-  } catch (e) {}
-  return { ...seg, innerRingRatio };
-}
-
-function analyzeBottomViewGeometry(img) {
-  const seg = segmentSilhouetteFromPhoto(img);
-  if (!seg) return null;
-  const isRectangularFootprint = seg.fillRatio > 0.82 || Math.abs(seg.hToWRatio - 1.0) > 0.14;
-  return { ...seg, isRectangularFootprint };
-}
-
-function parseDatasheetMetadata(rawText, fileName) {
-  const txt = String(rawText || "") + " " + String(fileName || "");
-  if (!txt.trim()) return { extractedFields: {}, hasAnyDimension: false };
-  const out = { extractedFields: {} };
-  const toMm = (numStr, unitStr) => {
-    const val = Number(String(numStr).replace(",", "."));
-    const u = String(unitStr || "mm").toLowerCase();
-    if (!Number.isFinite(val)) return 0;
-    if (u === "cm") return Math.round(val * 10);
-    if (u === "in") return Math.round(val * 25.4);
-    return Math.round(val);
-  };
-
-  const pairMatch = txt.match(/(\d+(?:[.,]\d+)?)\s*[xX×]\s*(\d+(?:[.,]\d+)?)(?:\s*[xX×]\s*(\d+(?:[.,]\d+)?))?\s*(mm|cm|in)\\b/i);
-  if (pairMatch) {
-    const u = pairMatch[4];
-    const a = toMm(pairMatch[1], u), b = toMm(pairMatch[2], u), c = pairMatch[3] ? toMm(pairMatch[3], u) : 0;
-    if (a >= 20 && a <= 420 && b >= 20 && b <= 320) {
-      if (c > 0) {
-        out.wMm = a; out.dMm = b; out.hMm = c;
-        out.extractedFields.width = { mm: a, raw: `${pairMatch[1]} ${u}` };
-        out.extractedFields.depth = { mm: b, raw: `${pairMatch[2]} ${u}` };
-        out.extractedFields.height = { mm: c, raw: `${pairMatch[3]} ${u}` };
-      } else if (a > b) {
-        out.hMm = a; out.wMm = b;
-        out.extractedFields.height = { mm: a, raw: `${pairMatch[1]} ${u}` };
-        out.extractedFields.width = { mm: b, raw: `${pairMatch[2]} ${u}` };
-      } else {
-        out.wMm = a; out.hMm = b;
-        out.extractedFields.width = { mm: a, raw: `${pairMatch[1]} ${u}` };
-        out.extractedFields.height = { mm: b, raw: `${pairMatch[2]} ${u}` };
-      }
-    }
-  }
-
-  const hMatch = txt.match(/(?:altezza(?:\s*totale)?|height|total\s*height|\\bH)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\\b/i);
-  if (hMatch) {
-    out.hMm = toMm(hMatch[1], hMatch[2]);
-    out.extractedFields.height = { mm: out.hMm, raw: `${hMatch[1]} ${hMatch[2]}` };
-  }
-  const wMatch = txt.match(/(?:diametro(?:\s*esterno)?|outer\s*diameter|diameter|diam\.?|Ø|larghezza|width|\\bW|\\bD)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\\b/i);
-  if (wMatch) {
-    out.wMm = toMm(wMatch[1], wMatch[2]);
-    out.extractedFields.width = { mm: out.wMm, raw: `${wMatch[1]} ${wMatch[2]}` };
-  }
-  const dMatch = txt.match(/(?:profondit[aà]|depth)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\\b/i);
-  if (dMatch) {
-    out.dMm = toMm(dMatch[1], dMatch[2]);
-    out.extractedFields.depth = { mm: out.dMm, raw: `${dMatch[1]} ${dMatch[2]}` };
-  }
-  const printMatch = txt.match(/(?:area\s*stampabile|printable\s*area|zona\s*stampa|etichetta(?:\s*max)?|label\s*area)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*[xX×]\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)\\b/i);
-  if (printMatch) {
-    out.printableWmm = toMm(printMatch[1], printMatch[3]);
-    out.printableHmm = toMm(printMatch[2], printMatch[3]);
-    out.extractedFields.printable = { wMm: out.printableWmm, hMm: out.printableHmm, raw: `${printMatch[1]}×${printMatch[2]} ${printMatch[3]}` };
-  }
-  const neckDiamMatch = txt.match(/(?:collo(?:\s*esterno)?|neck\s*diam(?:eter)?|imboccatura)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm)\\b/i);
-  if (neckDiamMatch) {
-    out.neckOuterMm = toMm(neckDiamMatch[1], neckDiamMatch[2]);
-  }
-  const threadPitchMatch = txt.match(/(?:filetto|filettatura|thread(?:\s*pitch)?|passo)\s*[:=\-]?\s*([^\\n,;]{2,26})/i);
-  if (threadPitchMatch) {
-    out.threadSpec = threadPitchMatch[1].trim();
-  }
-  const neckMatch = txt.match(/(24\/410|28\/410|58\/400|70\/400|Bague\s*29\s*mm|29\s*mm|SOT\s*202|Zip\s*220\s*mm)/i);
-  if (neckMatch) {
-    const tok = neckMatch[1].toUpperCase();
-    if (tok.includes("24")) out.neck = "24/410";
-    else if (tok.includes("28")) out.neck = "28/410";
-    else if (tok.includes("58")) out.neck = "58/400";
-    else if (tok.includes("70")) out.neck = "70/400";
-    else if (tok.includes("29")) out.neck = "Bague 29mm";
-    else if (tok.includes("202")) out.neck = "SOT 202";
-    else if (tok.includes("ZIP")) out.neck = "Zip 220mm";
-    out.extractedFields.neck = { raw: neckMatch[1], spec: out.neck };
-  }
-  const volMatch = txt.match(/(?:capacit[aà]|volume|vol\.?|contenuto)?\s*\\b(\d+(?:[.,]\d+)?)\s*(ml|cl|g)\\b/i);
-  if (volMatch) {
-    out.vol = `${volMatch[1]} ${volMatch[2].toLowerCase()}`;
-    out.extractedFields.vol = { raw: out.vol };
-  }
-  const wtMatch = txt.match(/(?:peso|weight|grammatura)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(g|gr)\\b/i);
-  if (wtMatch) {
-    out.weightG = Math.round(Number(String(wtMatch[1]).replace(",", ".")));
-    out.extractedFields.weight = { raw: `${wtMatch[1]} ${wtMatch[2]}`, g: out.weightG };
-  }
-  const wallMatch = txt.match(/(?:spessore(?:\s*parete)?|wall\s*thickness)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm)\\b/i);
-  if (wallMatch) {
-    out.wallMm = Number(String(wallMatch[1]).replace(",", "."));
-    out.extractedFields.wall = { raw: `${wallMatch[1]} ${wallMatch[2]}`, mm: out.wallMm };
-  }
-  if (/\\b(?:hdpe|polietilene)\\b/i.test(txt)) out.finishId = "hdpe_white";
-  else if (/\\b(?:vetro\s*verde|green\s*glass)\\b/i.test(txt)) out.finishId = "wine_green";
-  else if (/\\b(?:ambrato|amber\s*glass)\\b/i.test(txt)) out.finishId = "amber";
-  else if (/\\b(?:satinato|frosted)\\b/i.test(txt)) out.finishId = "frosted";
-  else if (/\\b(?:alluminio|aluminum|alu)\\b/i.test(txt)) out.finishId = "alu_brushed";
-  else if (/\\b(?:pet\s*cristallo|clear\s*pet)\\b/i.test(txt)) out.finishId = "clear_pet";
-  else if (/\\b(?:pet|rpet)\\b/i.test(txt)) out.finishId = "pet_gloss";
-
-  out.hasAnyDimension = !!(out.hMm || out.wMm || out.dMm);
-  return out;
-}
-
-function validateCustomContainerDimensions(vesselLike) {
-  const targetH = Number(vesselLike.hMm) || 165;
-  const targetW = Number(vesselLike.wMm) || 56;
-  const targetD = Number(vesselLike.dMm || vesselLike.wMm) || targetW;
-  const out = {
-    passed: true,
-    measWMm: targetW,
-    measDMm: targetD,
-    measHMm: targetH,
-    maxErrMm: 0,
-    warnings: []
-  };
-  if (typeof THREE !== "undefined" && typeof createParametricVesselGeometry === "function") {
-    try {
-      const geo = createParametricVesselGeometry(vesselLike, 64, 64, 0.0, 1.0, 1.0, false);
-      const box = new THREE.Box3().setFromBufferAttribute(geo.attributes.position);
-      const sz = box.getSize(new THREE.Vector3());
-      const totalH = getVesselTotalHeight(vesselLike);
-      const mmPerUnit = targetH / Math.max(0.1, totalH);
-      out.measWMm = Number((sz.x * mmPerUnit).toFixed(1));
-      out.measHMm = Number((sz.y * mmPerUnit).toFixed(1));
-      out.measDMm = Number((sz.z * mmPerUnit).toFixed(1));
-      out.maxErrMm = Number(Math.max(
-        Math.abs(out.measWMm - targetW),
-        Math.abs(out.measDMm - targetD),
-        Math.abs(out.measHMm - targetH)
-      ).toFixed(2));
-      out.passed = out.maxErrMm <= 1.2;
-      geo.dispose();
-    } catch (e) {}
-  }
-  return out;
-}
-
-function reconstructCustomVesselFromUploads() {
-  const imgs = state.customPhotoImages || [];
-  const frontSeg = segmentSilhouetteFromPhoto(imgs[0]);
-  const backSeg = segmentSilhouetteFromPhoto(imgs[1]);
-  const leftSeg = segmentSilhouetteFromPhoto(imgs[2]);
-  const rightSeg = segmentSilhouetteFromPhoto(imgs[3]);
-  const topSeg = analyzeTopViewGeometry(imgs[4]);
-  const botSeg = analyzeBottomViewGeometry(imgs[5]);
-  const photoSegCount = [frontSeg, backSeg, leftSeg, rightSeg, topSeg, botSeg].filter(Boolean).length;
-
-  const parsedDs = parseDatasheetMetadata(state.customDatasheetText || "", state.customDatasheetFile || "");
-  state.customDatasheetAudit = parsedDs;
-
-  if (!frontSeg && !backSeg && !leftSeg && !rightSeg) {
-    state.customReconstructed = null;
-    return null;
-  }
-
-  // Fuse Front + Back profiles symmetrically
-  const fRef = frontSeg || backSeg || leftSeg || rightSeg;
-  const rFrontSamples = fRef.rSamples.map((rv, k) => {
-    if (frontSeg && backSeg) return (frontSeg.rSamples[k] + backSeg.rSamples[k]) * 0.5;
-    return rv;
-  });
-  let frontBackDiffSum = 0;
-  if (frontSeg && backSeg) {
-    for (let k = 0; k < 64; k++) frontBackDiffSum += Math.abs(frontSeg.rSamples[k] - backSeg.rSamples[k]);
-  }
-  const frontBackSymmetryPct = frontSeg && backSeg ? Math.round(Math.max(0, 100 - (frontBackDiffSum / 64) * 180)) : 96;
-
-  // Fuse Left + Right lateral profiles
-  const sRef = leftSeg || rightSeg;
-  const rSideSamples = rFrontSamples.map((rv, k) => {
-    if (leftSeg && rightSeg) return (leftSeg.rSamples[k] + rightSeg.rSamples[k]) * 0.5;
-    if (sRef) return sRef.rSamples[k];
-    return rv;
-  });
-
-  const footprintSeg = botSeg || topSeg;
-  const footprintFill = footprintSeg ? footprintSeg.fillRatio : 0.785;
-  const superellipseN = footprintFill > 0.86 ? 3.8 : (footprintFill > 0.82 ? 2.8 : 2.0);
-  const dToWRatio = ((frontSeg || backSeg) && sRef && sRef.hToWRatio > 0.2)
-    ? Math.max(0.45, Math.min(1.45, fRef.hToWRatio / sRef.hToWRatio))
-    : 1.0;
-
-  let shape = "cyl_tall";
-  const topNeckHint = topSeg ? topSeg.innerRingRatio : fRef.neckRadiusNorm;
-  if (fRef.hToWRatio < 1.25 && Math.max(fRef.neckRadiusNorm, topNeckHint) > 0.58) shape = "jar_lux";
-  else if (fRef.hToWRatio > 3.20) shape = "wine_bordeaux";
-  else if (superellipseN >= 2.75 || Math.abs(dToWRatio - 1.0) > 0.16) shape = "square_soft";
-  else if (fRef.neckRadiusNorm > 0.78 && fRef.finishId === "alu_brushed") shape = "alu_can";
-
-  let wMm = shape === "jar_lux" ? 74 : (shape === "wine_bordeaux" ? 76 : (shape === "square_soft" ? 68 : 58));
-  let hMm = shape === "jar_lux"
-    ? Math.max(48, Math.min(130, Math.round(wMm * fRef.hToWRatio)))
-    : Math.max(75, Math.min(320, Math.round(wMm * fRef.hToWRatio)));
-  let dMm = (shape === "square_soft") ? Math.max(28, Math.min(200, Math.round(wMm * dToWRatio))) : wMm;
-
-  let neck = "24/410";
-  if (shape === "jar_lux") neck = wMm >= 78 ? "70/400" : "58/400";
-  else if (shape === "wine_bordeaux") neck = "Bague 29mm";
-  else if (shape === "alu_can") neck = "SOT 202";
-  else if (wMm >= 62 || fRef.neckRadiusNorm > 0.44) neck = "28/410";
-
-  // Authoritative override from technical datasheet where extracted
-  if (parsedDs.hMm) hMm = parsedDs.hMm;
-  if (parsedDs.wMm) {
-    wMm = parsedDs.wMm;
-    dMm = parsedDs.dMm || (Math.abs(dToWRatio - 1.0) <= 0.08 ? wMm : Math.round(wMm * dToWRatio));
-  }
-  if (parsedDs.dMm) dMm = parsedDs.dMm;
-  if (parsedDs.neck) neck = parsedDs.neck;
-
-  // Detect surface zone transitions (heel, printable flat/low-taper zone, shoulder, neck) from rFrontSamples
-  let vHeelEnd = 0.05;
-  for (let k = 2; k <= 12; k++) {
-    if (rFrontSamples[k] >= 0.94) { vHeelEnd = Number((k / 63).toFixed(2)); break; }
-  }
-  let vShoulderStart = shape === "jar_lux" ? 0.74 : (shape === "wine_bordeaux" ? 0.50 : 0.62);
-  for (let k = Math.round(vHeelEnd * 63) + 6; k < 56; k++) {
-    if (rFrontSamples[k] < 0.90) { vShoulderStart = Number((Math.max(0.35, (k - 1) / 63)).toFixed(2)); break; }
-  }
-  const vPrintableMin = Math.max(0.04, Math.min(0.14, vHeelEnd));
-  const vPrintableMax = Math.min(0.84, Math.max(vPrintableMin + 0.30, vShoulderStart + 0.04));
-
-  const finishId = parsedDs.finishId || fRef.finishId || "pet_gloss";
-  const targetNeckR = shape === "jar_lux" ? 0.76 : (shape === "wine_bordeaux" ? 0.28 : (shape === "alu_can" ? 0.86 : 0.34));
-  const rFrontCal = rFrontSamples.slice();
-  const rSideCal = rSideSamples.slice();
-  if (shape !== "jar_lux" && shape !== "alu_can") {
-    for (let k = 54; k < 64; k++) {
-      const t = (k - 54) / 9;
-      rFrontCal[k] = rFrontCal[k] * (1 - t) + targetNeckR * t;
-      rSideCal[k] = rSideCal[k] * (1 - t) + targetNeckR * t;
-    }
-  }
-
-  const radCm = (wMm + dMm) * 0.025;
-  const fillH = hMm * (shape === "jar_lux" ? 0.072 : 0.068);
-  const estMl = Math.max(30, Math.round((Math.PI * radCm * radCm * fillH) / 5) * 5);
-  const vol = parsedDs.vol || `${estMl} ml`;
-
-  const provenance = {
-    height: parsedDs.extractedFields?.height ? { val: parsedDs.extractedFields.height.raw, norm: `${hMm} mm`, src: "ds" } : { val: `${hMm} mm`, norm: `${hMm} mm`, src: "ai" },
-    width: parsedDs.extractedFields?.width ? { val: parsedDs.extractedFields.width.raw, norm: `${wMm} mm`, src: "ds" } : { val: `${wMm} mm`, norm: `${wMm} mm`, src: "ai" },
-    depth: parsedDs.extractedFields?.depth ? { val: parsedDs.extractedFields.depth.raw, norm: `${dMm} mm`, src: "ds" } : { val: `${dMm} mm`, norm: `${dMm} mm`, src: "ai" },
-    neck: parsedDs.extractedFields?.neck ? { val: neck, src: "ds" } : { val: neck, src: "ai" },
-    vol: parsedDs.extractedFields?.vol ? { val: vol, src: "ds" } : { val: `${vol} (est.)`, src: "ai" },
-    printable: parsedDs.extractedFields?.printable ? { val: parsedDs.extractedFields.printable.raw, src: "ds" } : { val: `${Math.round(Math.PI * wMm)} × ${Math.round((vPrintableMax - vPrintableMin) * hMm)} mm`, src: "ai" }
-  };
-
-  const warnings = [];
-  if (parsedDs.hMm && parsedDs.wMm && fRef.hToWRatio > 0.2) {
-    const dsRatio = parsedDs.hMm / Math.max(1, parsedDs.wMm);
-    const ratioGap = Math.abs(dsRatio - fRef.hToWRatio) / Math.max(dsRatio, fRef.hToWRatio);
-    if (ratioGap > 0.38) {
-      warnings.push(`Discrepanza tra rapporto scheda (${dsRatio.toFixed(2)}:1) e foto frontali (${fRef.hToWRatio.toFixed(2)}:1). Applicate le quote certificate della scheda.`);
-    }
-  }
-  if (state.customDatasheetFile && !parsedDs.hasAnyDimension) {
-    warnings.push("Scheda tecnica priva di testo dimensionale leggibile: quote dedotte dalle 6 foto (consigliato PDF testuale con misure).");
-  }
-
-  const unverifiedDetails = [];
-  if (!parsedDs.wallMm) unverifiedDetails.push("Spessore parete interna (non visibile dalle 6 viste esterne)");
-  if (!parsedDs.weightG) unverifiedDetails.push("Grammatura esatta / distribuzione resina sul fondo");
-  if (!parsedDs.threadSpec && !parsedDs.neckOuterMm) unverifiedDetails.push("Passo e tolleranza fine filettatura interna");
-
-  const tempVesselForCheck = {
-    id: "custom_preview_check",
-    isCustomVessel: true,
-    shape,
-    neck,
-    hMm,
-    wMm,
-    dMm,
-    customProfile: {
-      rFrontSamples: rFrontCal,
-      rSideSamples: rSideCal,
-      superellipseN,
-      neckOuterMm: parsedDs.neckOuterMm || 0
-    }
-  };
-  const dimValidation = validateCustomContainerDimensions(tempVesselForCheck);
-  if (!dimValidation.passed) {
-    warnings.push(`Errore tolleranza mesh 3D: scarto massimo ${dimValidation.maxErrMm} mm rispetto alle specifiche.`);
-  } else if (warnings.length > 0) {
-    dimValidation.warnings = warnings;
-  }
-
-  state.customReconstructed = {
-    shape,
-    hMm,
-    wMm,
-    dMm,
-    vol,
-    neck,
-    neckOuterMm: parsedDs.neckOuterMm || 0,
-    threadSpec: parsedDs.threadSpec || "",
-    weightG: parsedDs.weightG || (shape === "wine_bordeaux" ? 950 : 280),
-    wallMm: parsedDs.wallMm || 0,
-    printableWmm: parsedDs.printableWmm || 0,
-    printableHmm: parsedDs.printableHmm || 0,
-    vPrintableMin,
-    vPrintableMax,
-    vHeelEnd,
-    vShoulderStart,
-    finishId,
-    customBodyColor: fRef.bodyColorHex || "#E8EFF6",
-    rFrontSamples: rFrontCal,
-    rSideSamples: rSideCal,
-    superellipseN,
-    hToWRatio: fRef.hToWRatio,
-    dToWRatio,
-    frontBackSymmetryPct,
-    topNeckRatio: topSeg ? topSeg.innerRingRatio : fRef.neckRadiusNorm,
-    bottomFillRatio: botSeg ? botSeg.fillRatio : footprintFill,
-    photoCount: photoSegCount,
-    provenance,
-    unverifiedDetails,
-    dimValidation,
-    warnings
-  };
-  state.customSpecs = {
-    ...state.customSpecs,
-    shape,
-    hMm,
-    wMm,
-    dMm,
-    vol,
-    neck,
-    finishId
-  };
-  return state.customReconstructed;
-}
-
-function renderCustomSilhouettePreviewSVG(recon) {
-  if (!recon || !Array.isArray(recon.rFrontSamples)) {
-    return `<svg width="56" height="76" viewBox="0 0 56 76"><rect x="14" y="18" width="28" height="48" rx="6" fill="none" stroke="#CBD5E1" stroke-width="1.8" stroke-dasharray="3 3"/><rect x="21" y="10" width="14" height="8" rx="2" fill="none" stroke="#CBD5E1" stroke-width="1.6"/></svg>`;
-  }
-  const rArr = recon.rFrontSamples;
-  const n = rArr.length;
-  const cx = 28, topY = 8, botY = 70, maxR = 20;
-  const leftPts = [], rightPts = [];
-  for (let i = n - 1; i >= 0; i--) {
-    const v = i / (n - 1);
-    const y = botY - v * (botY - topY);
-    const rx = Math.max(2.8, rArr[i] * maxR);
-    rightPts.push(`${(cx + rx).toFixed(1)},${y.toFixed(1)}`);
-    leftPts.unshift(`${(cx - rx).toFixed(1)},${y.toFixed(1)}`);
-  }
-  const poly = [...rightPts, ...leftPts].join(" ");
-  const col = recon.customBodyColor || "#DCEEF8";
-  return `<svg width="56" height="76" viewBox="0 0 56 76" aria-label="Profilo 3D estratto">
-    <polygon points="${poly}" fill="${escapeHtml(col)}" fill-opacity="0.72" stroke="#18181B" stroke-width="1.8" stroke-linejoin="round"/>
-  </svg>`;
-}
-
-async function handleCustomUpload(type, idx, inputEl) {
+function handleCustomUpload(type, idx, inputEl) {
   const file = inputEl && inputEl.files && inputEl.files[0];
   if (!file) return;
   if (type === "datasheet") {
     state.customDatasheetFile = file.name;
-    let ab = null;
-    try { ab = await file.arrayBuffer(); } catch (e) {}
-    const extracted = extractTextFromPDFBuffer(ab, file.name);
-    state.customDatasheetText = extracted.slice(0, 131072);
-    if (file.type && file.type.startsWith("image/")) {
-      const dataReader = new FileReader();
-      dataReader.onload = () => {
-        state.customDatasheetDataUrl = String(dataReader.result || "");
-        reconstructCustomVesselFromUploads();
-        renderCustomVesselView();
-      };
-      dataReader.readAsDataURL(file);
-    } else {
-      state.customDatasheetDataUrl = "";
-      reconstructCustomVesselFromUploads();
-      renderCustomVesselView();
-    }
   } else {
     state.customPhotoFiles[idx] = file.name;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = String(reader.result || "");
-      state.customPhotoDataUrls[idx] = dataUrl;
-      const img = new Image();
-      img.onload = () => {
-        if (!state.customPhotoImages) state.customPhotoImages = [null, null, null, null, null, null];
-        state.customPhotoImages[idx] = img;
-        reconstructCustomVesselFromUploads();
-        renderCustomVesselView();
-      };
-      img.src = dataUrl;
-    };
-    reader.readAsDataURL(file);
   }
-}
-
-function handleCustomMultiPhotoUpload(inputEl) {
-  const files = inputEl && inputEl.files ? [...inputEl.files] : [];
-  if (files.length === 0) return;
-  let pending = Math.min(6, files.length);
-  files.slice(0, 6).forEach((f, offset) => {
-    let slotIdx = state.customPhotoFiles.findIndex((existing, i) => i >= offset && !existing);
-    if (slotIdx < 0) slotIdx = offset % 6;
-    state.customPhotoFiles[slotIdx] = f.name;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = String(reader.result || "");
-      state.customPhotoDataUrls[slotIdx] = dataUrl;
-      const img = new Image();
-      img.onload = () => {
-        if (!state.customPhotoImages) state.customPhotoImages = [null, null, null, null, null, null];
-        state.customPhotoImages[slotIdx] = img;
-        pending -= 1;
-        if (pending <= 0) {
-          reconstructCustomVesselFromUploads();
-          renderCustomVesselView();
-        }
-      };
-      img.src = dataUrl;
-    };
-    reader.readAsDataURL(f);
-  });
-}
-
-function applyCustomVesselToStudio() {
-  const l = state.lang;
-  const uploadedPhotos = state.customPhotoFiles.filter(Boolean).length;
-  const hasDatasheet = Boolean(state.customDatasheetFile);
-  if (!hasDatasheet || uploadedPhotos < 6) {
-    const errEl = document.getElementById("cvValidationMsg");
-    if (errEl) {
-      errEl.textContent = l === "it"
-        ? `Devi caricare tutti i file richiesti per procedere (${hasDatasheet ? "scheda OK" : "manca scheda tecnica"} · ${uploadedPhotos}/6 foto caricate).`
-        : `All required files must be uploaded before continuing (${hasDatasheet ? "datasheet OK" : "missing datasheet"} · ${uploadedPhotos}/6 photos).`;
-    }
-    return;
-  }
-
-  const nameInput = document.getElementById("inpCustName");
-  const cleanDefaultIt = "Contenitore Personalizzato";
-  const cleanDefaultEn = "Custom Container";
-  const typedName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : "";
-  const finalNameIt = typedName || cleanDefaultIt;
-  const finalNameEn = typedName || cleanDefaultEn;
-  state.customSpecs.nameIt = finalNameIt;
-  state.customSpecs.nameEn = finalNameEn;
-
-  const recon = reconstructCustomVesselFromUploads() || state.customReconstructed;
-  const s = recon || state.customSpecs;
-  const allFinishes = [...RIGID_FINISHES, ...POUCH_FINISHES];
-  const finObj = allFinishes.find(f => f.id === s.finishId) || RIGID_FINISHES[0];
-  const dimStr = (s.shape === "square_soft" || s.shape === "doypack")
-    ? `${s.wMm} × ${s.dMm} × ${s.hMm} mm`
-    : `Ø ${s.wMm} × H ${s.hMm} mm`;
-
-  const badgeMap = {
-    cyl_tall: ["FLACONE CILINDRICO", "CYLINDRICAL BOTTLE"],
-    square_soft: ["FLACONE QUADRO", "SQUARE BOTTLE"],
-    wine_bordeaux: ["BOTTIGLIA", "BOTTLE"],
-    jar_lux: ["VASO", "JAR"],
-    alu_can: ["LATTINA", "CAN"],
-    doypack: ["DOYPACK", "DOYPACK"]
-  };
-  const bPair = badgeMap[s.shape] || ["CONTENITORE 3D", "3D CONTAINER"];
-  const catMap = {
-    cyl_tall: "cylindrical",
-    square_soft: "square",
-    wine_bordeaux: "wine",
-    jar_lux: "jars",
-    alu_can: "cans",
-    doypack: "flexibles"
-  };
-
-  const activeId = `custom_${Date.now().toString(36)}`;
-  const customVesselObj = {
-    id: activeId,
-    isCustomVessel: true,
-    engine: s.shape === "doypack" ? "B" : "A",
-    catGroup: catMap[s.shape] || "cylindrical",
-    neck: s.neck || "24/410",
-    shape: s.shape || "cyl_tall",
-    vol: s.vol || "250 ml",
-    matIt: finObj.it,
-    matEn: finObj.en,
-    hMm: s.hMm,
-    wMm: s.wMm,
-    dMm: s.dMm,
-    weightG: s.weightG || (s.shape === "wine_bordeaux" ? 950 : (s.shape === "doypack" ? 650 : 280)),
-    maxShoulderTD: 54,
-    defaultFinish: s.finishId || "pet_gloss",
-    defaultWrap: s.shape === "doypack" ? "pouch" : "sleeve",
-    liquidColor: "#DCEEF8",
-    vendor: l === "it" ? "Contenitore Cliente (CAD 1:1)" : "Client Container (1:1 CAD)",
-    it: finalNameIt,
-    en: finalNameEn,
-    subIt: dimStr,
-    subEn: dimStr,
-    badgeIt: bPair[0],
-    badgeEn: bPair[1],
-    customProfile: recon ? {
-      rFrontSamples: recon.rFrontSamples,
-      rSideSamples: recon.rSideSamples,
-      superellipseN: recon.superellipseN,
-      customBodyColor: recon.customBodyColor,
-      neckOuterMm: recon.neckOuterMm || 0,
-      threadSpec: recon.threadSpec || "",
-      printableWmm: recon.printableWmm || 0,
-      printableHmm: recon.printableHmm || 0,
-      vPrintableMin: recon.vPrintableMin,
-      vPrintableMax: recon.vPrintableMax,
-      vHeelEnd: recon.vHeelEnd,
-      vShoulderStart: recon.vShoulderStart,
-      provenance: recon.provenance,
-      unverifiedDetails: recon.unverifiedDetails,
-      dimValidation: recon.dimValidation
-    } : null
-  };
-
-  customVesselObj.dimsSignature = getVesselDimsSignature(customVesselObj);
-  state.activeCustomVessel = customVesselObj;
-  generatePhotorealisticVesselThumbnails([activeId]);
-  state.customVesselMode = false;
-  resetVesselConfigState(activeId);
-  switchMainView("studio");
-  rebuild3DProduct();
-  renderAllUI();
+  renderCustomVesselView();
 }
 
 function renderCustomVesselView() {
   const host = document.getElementById("customVesselStage");
   if (!host || !state.customVesselMode) return;
   const l = state.lang;
-  const s = state.customSpecs;
-  const recon = state.customReconstructed;
   const slots = [
     { it: "1. Lato Frontale", en: "1. Front Side", subIt: "Vista frontale dritta al centro", subEn: "Straight centered front view" },
     { it: "2. Lato Posteriore", en: "2. Back Side", subIt: "Vista posteriore a 180°", subEn: "180° rear side view" },
@@ -10022,99 +7236,13 @@ function renderCustomVesselView() {
     { it: "6. Vista Dal Basso (Sotto)", en: "6. Bottom View", subIt: "Fondo e profilo di appoggio", subEn: "Base and bottom footprint" }
   ];
   const uploadedPhotos = state.customPhotoFiles.filter(Boolean).length;
-  const hasDatasheet = Boolean(state.customDatasheetFile);
-  const allReady = hasDatasheet && uploadedPhotos === 6;
-
-  let auditCardHtml = "";
-  if (recon) {
-    const prov = recon.provenance || {};
-    const dv = recon.dimValidation || {};
-    const hasWarn = recon.warnings && recon.warnings.length > 0;
-    const srcPill = (p) => (p && p.src === "ds")
-      ? `<span class="cv-src-pill ds">${l === "it" ? "SCHEDA TECNICA" : "DATASHEET"}</span>`
-      : `<span class="cv-src-pill ai">${l === "it" ? "STIMA AI 6-FOTO" : "AI 6-VIEW EST."}</span>`;
-    auditCardHtml = `
-      <div class="cv-audit-card ${hasWarn ? "warn" : ""}" id="cvReconAuditCard">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="cv-silhouette-box">${renderCustomSilhouettePreviewSVG(recon)}</div>
-            <div>
-              <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--crimson);">
-                ${l === "it" ? "ANALISI 6 VISTE + VALIDAZIONE 3D" : "6-VIEW ANALYSIS + 3D VALIDATION"}
-              </span>
-              <div style="font-size:13px; font-weight:800; color:var(--ink);">
-                ${dv.passed
-                  ? (l === "it" ? `Mesh 3D validata (${dv.measWMm} × ${dv.measDMm} × ${dv.measHMm} mm · Δ ${dv.maxErrMm} mm)` : `3D mesh validated (${dv.measWMm} × ${dv.measDMm} × ${dv.measHMm} mm · Δ ${dv.maxErrMm} mm)`)
-                  : (l === "it" ? "Verifica tolleranza geometrica richiesta" : "Geometric tolerance check needed")}
-              </div>
-              <div style="font-size:11px; color:var(--slate);">
-                ${l === "it"
-                  ? `Simmetria fronte/retro ${recon.frontBackSymmetryPct}% · Sezione superellisse n=${recon.superellipseN.toFixed(1)} · Zona stampabile v=${Math.round(recon.vPrintableMin * 100)}–${Math.round(recon.vPrintableMax * 100)}%`
-                  : `Front/back symmetry ${recon.frontBackSymmetryPct}% · Cross-section n=${recon.superellipseN.toFixed(1)} · Printable band v=${Math.round(recon.vPrintableMin * 100)}–${Math.round(recon.vPrintableMax * 100)}%`}
-              </div>
-            </div>
-          </div>
-          <span class="spec-tag ${dv.passed && !hasWarn ? "ok" : "clash"}">${dv.passed ? "1:1 VALIDATO ✓" : "VERIFICA ⚠"}</span>
-        </div>
-
-        <div class="cv-audit-grid">
-          <div class="cv-audit-cell">
-            <span class="cv-audit-k">${l === "it" ? "ALTEZZA" : "HEIGHT"}</span>
-            <span class="cv-audit-v">${escapeHtml(prov.height?.val || `${recon.hMm} mm`)}</span>
-            ${srcPill(prov.height)}
-          </div>
-          <div class="cv-audit-cell">
-            <span class="cv-audit-k">${l === "it" ? "LARGHEZZA / PROFONDITÀ" : "WIDTH / DEPTH"}</span>
-            <span class="cv-audit-v">${escapeHtml(prov.width?.val || `${recon.wMm} mm`)} × ${escapeHtml(prov.depth?.val || `${recon.dMm} mm`)}</span>
-            ${srcPill(prov.width)}
-          </div>
-          <div class="cv-audit-cell">
-            <span class="cv-audit-k">${l === "it" ? "COLLO / FILETTO" : "NECK / THREAD"}</span>
-            <span class="cv-audit-v">${escapeHtml(recon.neck)}${recon.threadSpec ? ` (${escapeHtml(recon.threadSpec)})` : ""}</span>
-            ${srcPill(prov.neck)}
-          </div>
-          <div class="cv-audit-cell">
-            <span class="cv-audit-k">${l === "it" ? "AREA STAMPABILE" : "PRINTABLE AREA"}</span>
-            <span class="cv-audit-v">${escapeHtml(prov.printable?.val || "Calcolata da 3D")}</span>
-            ${srcPill(prov.printable)}
-          </div>
-        </div>
-
-        ${hasWarn ? `
-          <div class="cv-unverified-box" style="border-color:#F59E0B; color:#92400E;">
-            <strong>${l === "it" ? "Avvisi di coerenza:" : "Consistency notices:"}</strong> ${escapeHtml(recon.warnings.join(" "))}
-          </div>
-        ` : ""}
-
-        ${recon.unverifiedDetails && recon.unverifiedDetails.length > 0 ? `
-          <div class="cv-unverified-box">
-            <strong>${l === "it" ? "Dettagli non deducibili senza specifica interna:" : "Details not deducible without internal CAD spec:"}</strong>
-            ${escapeHtml(recon.unverifiedDetails.join("; "))}.
-          </div>
-        ` : ""}
-      </div>
-    `;
-  } else if (state.customDatasheetAudit && state.customDatasheetFile) {
-    const ds = state.customDatasheetAudit;
-    auditCardHtml = `
-      <div class="cv-audit-card" id="cvReconAuditCard">
-        <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--green);">
-          ${l === "it" ? "SPECIFICHE ESTRATTE DALLA SCHEDA TECNICA" : "EXTRACTED DATASHEET SPECS"}
-        </span>
-        <div style="font-family:var(--mono); font-size:11.5px; font-weight:700; color:var(--ink);">
-          ${ds.hMm ? `H: ${ds.hMm} mm · ` : ""}${ds.wMm ? `Ø/L: ${ds.wMm} mm · ` : ""}${ds.neck ? `Collo: ${ds.neck} · ` : ""}${ds.printableWmm ? `Stampabile: ${ds.printableWmm}×${ds.printableHmm} mm · ` : ""}${ds.vol || ""}
-        </div>
-        <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Carica tutte e 6 le viste fotografiche per ricostruire e validare la mesh 3D." : "Upload all 6 photo angles to reconstruct and validate the 3D geometry."}</div>
-      </div>
-    `;
-  }
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
       <div class="brown-hdr-bar">
         <div>
           <h1 class="brown-hdr-title">${l === "it" ? "Digitalizzazione Contenitore Personalizzato" : "Custom Container 3D Digitization"}</h1>
-          <p class="cat-sub-minimal">${l === "it" ? "Carica scheda tecnica e tutte e 6 le foto: il motore ricava automaticamente sagoma 3D, sezione, collo e dimensioni reali 1:1" : "Upload datasheet and all 6 views: the engine automatically extracts true 3D silhouette, cross-section, neck and 1:1 dimensions"}</p>
+          <p class="cat-sub-minimal">${l === "it" ? "Ricrea il tuo contenitore nello Studio 3D" : "Recreate your container in the 3D Studio"}</p>
         </div>
       </div>
 
@@ -10122,72 +7250,65 @@ function renderCustomVesselView() {
         <div class="custom-blueprint-grid">
           <div class="custom-bp-left">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "REQUISITO 01 · SCHEDA TECNICA E RICOSTRUZIONE" : "REQUIREMENT 01 · DATASHEET & RECONSTRUCTION"}</span>
-              <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica la scheda tecnica del contenitore" : "Upload container technical datasheet"}</h2>
-              <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Necessaria insieme alle 6 viste fotografiche per ricostruire con precisione la tua bottiglia o vasetto reale." : "Required together with all 6 photo angles to reconstruct your exact physical container in 3D."}</p>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "REQUISITO 01 · SCHEDA TECNICA" : "REQUIREMENT 01 · TECHNICAL DATASHEET"}</span>
+              <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica la foto o il file della scheda tecnica del contenitore" : "Upload photo or file of your container technical datasheet"}</h2>
+              <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Necessaria per acquisire le quote esatte (altezza, diametro, filettatura collo, capacità e materiale)." : "Required to capture exact dimensions (height, diameter, neck finish, capacity and material)."}</p>
             </div>
 
-            <div class="cv-field">
-              <label class="cv-label" for="inpCustName">${l === "it" ? "Nome Contenitore" : "Container Name"}</label>
-              <input id="inpCustName" class="cv-input" type="text" maxlength="48" value="${escapeHtml(l === "it" ? s.nameIt : s.nameEn)}" oninput="state.customSpecs.nameIt=this.value; state.customSpecs.nameEn=this.value;">
-            </div>
-
-            <label class="upload-datasheet-box cv-datasheet-lg ${hasDatasheet ? "loaded" : ""}">
-              ${state.customDatasheetDataUrl
-                ? `<img class="upload-ds-thumb" style="width:96px; height:96px;" src="${state.customDatasheetDataUrl}" alt="Datasheet">`
-                : `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="${hasDatasheet ? "#147A3B" : "#C2180E"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>`}
-              <div style="width:100%; min-inline-size:0;">
-                <div style="font-size:15px; font-weight:800; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${hasDatasheet ? `✓ ${escapeHtml(state.customDatasheetFile)}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
-                <div style="font-size:12px; color:var(--slate); margin-top:5px; line-height:1.45;">${l === "it" ? "JPG, PNG, PDF · Estrazione automatica quote meccaniche, filettatura e sagoma 3D" : "JPG, PNG, PDF · Automatic extraction of mechanical dimensions, neck finish and 3D profile"}</div>
+            <label class="upload-datasheet-box ${state.customDatasheetFile ? "loaded" : ""}">
+              <div>
+                <div style="font-size:13px; font-weight:800; color:var(--ink);">${state.customDatasheetFile ? `✓ ${state.customDatasheetFile}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
+                <div style="font-size:11px; color:var(--slate); margin-top:2px;">${l === "it" ? "Formati supportati: JPG, PNG, PDF · Quote meccaniche e collo" : "Supported formats: JPG, PNG, PDF · Mechanical specs and neck"}</div>
               </div>
-              <span class="spec-tag ${hasDatasheet ? "ok" : ""}" style="font-size:11px; padding:6px 14px;">${hasDatasheet ? (l === "it" ? "SCHEDA CARICATA ✓" : "DATASHEET UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
-              <input id="customDatasheetInput" type="file" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
+              <span class="spec-tag ${state.customDatasheetFile ? "ok" : ""}">${state.customDatasheetFile ? (l === "it" ? "CARICATA ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
+              <input type="file" accept="image/*,.pdf" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
             </label>
 
-            <div id="cvValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);"></div>
+            <div class="custom-spec-checklist">
+              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PIPELINE PARAMETRICA" : "PARAMETRIC PIPELINE"}</div>
+              <div>01 // ${l === "it" ? "Estrazione quote H × Ø e collo" : "Extract H × Ø dimensions and neck finish"}</div>
+              <div>02 // ${l === "it" ? "Calibrazione mesh WebGL e curve spalla" : "WebGL mesh calibration and shoulder curves"}</div>
+              <div>03 // ${l === "it" ? "Validazione TD% e filetti 1:1" : "TD% shrink physics and 1:1 thread lock"}</div>
+            </div>
           </div>
 
           <div class="custom-bp-right">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
               <div>
                 <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "REQUISITO 02 · ACQUISIZIONE FOTOGRAFICA MULTI-ANGOLO" : "REQUIREMENT 02 · MULTI-ANGLE PHOTO CAPTURE"}</span>
-                <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica tutte e 6 le viste del tuo contenitore" : "Upload all 6 views of your container"}</h2>
-                <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Le viste frontale, posteriore, laterali, dall'alto e dal basso ricreano fedelmente la tua geometria reale." : "Front, back, left, right, top, and bottom views faithfully reconstruct your exact physical bottle."}</p>
+                <h2 style="font-family:var(--display); font-size:17px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Carica almeno 6 foto da tutti i lati del contenitore" : "Upload at least 6 photos from all sides of the container"}</h2>
+                <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Carica le 4 viste laterali, la vista da sopra e la vista da sotto per permettere la ricostruzione parametrica 3D." : "Upload all 4 lateral sides, top view and bottom view to enable parametric 3D reconstruction."}</p>
               </div>
-              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <label class="cv-multi-btn">
-                  <span>${l === "it" ? "+ Carica più foto" : "+ Batch upload"}</span>
-                  <input type="file" accept="image/*" multiple style="display:none;" onchange="handleCustomMultiPhotoUpload(this)">
-                </label>
-                <span class="spec-tag ${uploadedPhotos === 6 ? "ok" : ""}">${uploadedPhotos} / 6 ${l === "it" ? "FOTO" : "PHOTOS"}</span>
-              </div>
+              <span class="spec-tag ${uploadedPhotos === 6 ? "ok" : ""}">${uploadedPhotos} / 6 ${l === "it" ? "FOTO" : "PHOTOS"}</span>
             </div>
 
             <div class="upload-slot-grid">
               ${slots.map((sl, idx) => {
                 const fName = state.customPhotoFiles[idx];
-                const fUrl = state.customPhotoDataUrls[idx];
                 return `
                   <label class="upload-slot ${fName ? "loaded" : ""}">
-                    ${fUrl ? `<img class="upload-slot-thumb" src="${fUrl}" alt="${escapeHtml(fName)}">` : ""}
                     <span class="upload-slot-num">${fName ? "✓ CARICATA" : `FOTO 0${idx + 1}`}</span>
                     <span class="upload-slot-title">${l === "it" ? sl.it : sl.en}</span>
-                    <span class="upload-slot-sub" style="max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${fName ? escapeHtml(fName) : (l === "it" ? sl.subIt : sl.subEn)}</span>
+                    <span class="upload-slot-sub">${fName ? fName : (l === "it" ? sl.subIt : sl.subEn)}</span>
                     <input type="file" accept="image/*" style="display:none;" onchange="handleCustomUpload('photo', ${idx}, this)">
                   </label>
                 `;
               }).join("")}
             </div>
-
-            ${auditCardHtml}
           </div>
         </div>
 
+        <p class="demo-red-text">
+          ${l === "it"
+            ? "Anteprima dimostrativa: funzione ancora in fase di sviluppo"
+            : "Demonstrative preview: feature still in development"}
+        </p>
+
         <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; border-top:1.5px solid var(--border); padding-top:12px;">
-          <button type="button" class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="state.customVesselMode=false; switchMainView('catalog');">
+          <button class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="state.customVesselMode=false; switchMainView('catalog');">
             ${l === "it" ? "Torna al Marketplace" : "Back to Marketplace"}
           </button>
-          <button type="button" class="cta-btn" id="btnCustomProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" ${allReady ? "" : "disabled"} onclick="applyCustomVesselToStudio()">
+          <button class="cta-btn" id="btnCustomProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" disabled>
             ${l === "it" ? "Ricrea nel Configuratore 3D" : "Recreate in 3D Configurator"}
           </button>
         </div>
@@ -10196,1382 +7317,86 @@ function renderCustomVesselView() {
   `;
 }
 
-// ==================== ISO/IEC 18004 REAL SCANNABLE QR CODE ENCODER (BYTE MODE, EC LEVEL L) ====================
-const QR_LEVEL_L_SPEC = [
-  null,
-  [1, 21, 26, 7, 1, 19, 0, 0, []],
-  [2, 25, 44, 10, 1, 34, 0, 0, [6, 18]],
-  [3, 29, 70, 15, 1, 55, 0, 0, [6, 22]],
-  [4, 33, 100, 20, 1, 80, 0, 0, [6, 26]],
-  [5, 37, 134, 26, 1, 108, 0, 0, [6, 30]],
-  [6, 41, 172, 18, 2, 68, 0, 0, [6, 34]],
-  [7, 45, 196, 20, 2, 78, 0, 0, [6, 22, 38]],
-  [8, 49, 242, 24, 2, 97, 0, 0, [6, 24, 42]],
-  [9, 53, 292, 30, 2, 116, 0, 0, [6, 26, 46]],
-  [10, 57, 346, 18, 2, 68, 2, 69, [6, 28, 50]],
-  [11, 61, 404, 20, 4, 81, 0, 0, [6, 30, 54]],
-  [12, 65, 466, 24, 2, 92, 2, 93, [6, 32, 58]]
-];
-
-const QR_GF_EXP = new Uint8Array(512);
-const QR_GF_LOG = new Uint8Array(256);
-(() => {
-  let x = 1;
-  for (let i = 0; i < 255; i++) {
-    QR_GF_EXP[i] = x;
-    QR_GF_EXP[i + 255] = x;
-    QR_GF_LOG[x] = i;
-    x <<= 1;
-    if (x & 0x100) x ^= 0x11d;
-  }
-})();
-
-function qrGfMul(a, b) {
-  return (a === 0 || b === 0) ? 0 : QR_GF_EXP[QR_GF_LOG[a] + QR_GF_LOG[b]];
-}
-
-function qrRsGeneratorPoly(ecCount) {
-  let poly = [1];
-  for (let i = 0; i < ecCount; i++) {
-    const next = new Array(poly.length + 1).fill(0);
-    const factor = QR_GF_EXP[i];
-    for (let j = 0; j < poly.length; j++) {
-      next[j] ^= poly[j];
-      next[j + 1] ^= qrGfMul(poly[j], factor);
-    }
-    poly = next;
-  }
-  return poly;
-}
-
-function qrRsComputeEc(dataBytes, ecCount) {
-  const gen = qrRsGeneratorPoly(ecCount);
-  const work = new Array(dataBytes.length + ecCount).fill(0);
-  for (let i = 0; i < dataBytes.length; i++) work[i] = dataBytes[i];
-  for (let i = 0; i < dataBytes.length; i++) {
-    const coef = work[i];
-    if (coef !== 0) {
-      for (let j = 0; j < gen.length; j++) {
-        work[i + j] ^= qrGfMul(gen[j], coef);
-      }
-    }
-  }
-  return work.slice(dataBytes.length);
-}
-
-function qrBchFormatInfo(ecBits2, maskPattern) {
-  const data = (ecBits2 << 3) | maskPattern;
-  let d = data << 10;
-  const gen = 0x537;
-  for (let bit = 14; bit >= 10; bit--) {
-    if ((d >> bit) & 1) d ^= gen << (bit - 10);
-  }
-  return ((data << 10) | d) ^ 0x5412;
-}
-
-function qrBchVersionInfo(ver) {
-  let d = ver << 12;
-  const gen = 0x1F25;
-  for (let bit = 17; bit >= 12; bit--) {
-    if ((d >> bit) & 1) d ^= gen << (bit - 12);
-  }
-  return (ver << 12) | d;
-}
-
-function encodeQRMatrix(text) {
-  const utf8 = new TextEncoder().encode(text);
-  let spec = null;
-  for (let v = 1; v < QR_LEVEL_L_SPEC.length; v++) {
-    const s = QR_LEVEL_L_SPEC[v];
-    const dataCwTotal = s[4] * s[5] + s[6] * s[7];
-    const countBits = v >= 10 ? 16 : 8;
-    if (4 + countBits + utf8.length * 8 <= dataCwTotal * 8) {
-      spec = s;
-      break;
-    }
-  }
-  if (!spec) spec = QR_LEVEL_L_SPEC[QR_LEVEL_L_SPEC.length - 1];
-
-  const [ver, N, , ecPerBlock, g1Count, g1Data, g2Count, g2Data, alignCenters] = spec;
-  const totalDataCw = g1Count * g1Data + g2Count * g2Data;
-  const countBits = ver >= 10 ? 16 : 8;
-  const maxBytePayload = Math.floor((totalDataCw * 8 - 4 - countBits) / 8);
-  const payload = utf8.slice(0, maxBytePayload);
-
-  // Bit buffer
-  const bits = [];
-  const pushBits = (val, n) => {
-    for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1);
-  };
-  pushBits(0b0100, 4);
-  pushBits(payload.length, countBits);
-  for (let i = 0; i < payload.length; i++) pushBits(payload[i], 8);
-  const maxDataBits = totalDataCw * 8;
-  const term = Math.min(4, maxDataBits - bits.length);
-  for (let i = 0; i < term; i++) bits.push(0);
-  while (bits.length % 8 !== 0) bits.push(0);
-  const padBytes = [0xEC, 0x11];
-  let padIdx = 0;
-  while (bits.length < maxDataBits) {
-    pushBits(padBytes[padIdx % 2], 8);
-    padIdx++;
-  }
-
-  const dataCw = [];
-  for (let i = 0; i < bits.length; i += 8) {
-    let b = 0;
-    for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
-    dataCw.push(b);
-  }
-
-  // Split blocks & compute RS parity
-  const dataBlocks = [];
-  const ecBlocks = [];
-  let cursor = 0;
-  for (let b = 0; b < g1Count; b++) {
-    const slice = dataCw.slice(cursor, cursor + g1Data);
-    cursor += g1Data;
-    dataBlocks.push(slice);
-    ecBlocks.push(qrRsComputeEc(slice, ecPerBlock));
-  }
-  for (let b = 0; b < g2Count; b++) {
-    const slice = dataCw.slice(cursor, cursor + g2Data);
-    cursor += g2Data;
-    dataBlocks.push(slice);
-    ecBlocks.push(qrRsComputeEc(slice, ecPerBlock));
-  }
-
-  const interleaved = [];
-  const maxDataLen = Math.max(g1Data, g2Data);
-  for (let i = 0; i < maxDataLen; i++) {
-    for (let b = 0; b < dataBlocks.length; b++) {
-      if (i < dataBlocks[b].length) interleaved.push(dataBlocks[b][i]);
-    }
-  }
-  for (let i = 0; i < ecPerBlock; i++) {
-    for (let b = 0; b < ecBlocks.length; b++) interleaved.push(ecBlocks[b][i]);
-  }
-
-  const streamBits = [];
-  for (let i = 0; i < interleaved.length; i++) {
-    for (let bit = 7; bit >= 0; bit--) streamBits.push((interleaved[i] >> bit) & 1);
-  }
-
-  // Base matrix & reserved mask
-  const baseMod = Array.from({ length: N }, () => Array(N).fill(0));
+// ==================== AUGMENTED REALITY (AR) FICTITIOUS QR CODE OVERLAY ====================
+function buildFictitiousQRSVG(seedStr) {
+  const N = 25;
+  const grid = Array.from({ length: N }, () => Array(N).fill(false));
   const reserved = Array.from({ length: N }, () => Array(N).fill(false));
 
-  function setFixed(r, c, val) {
-    if (r < 0 || r >= N || c < 0 || c >= N) return;
-    baseMod[r][c] = val ? 1 : 0;
-    reserved[r][c] = true;
-  }
-
-  function placeFinder(r0, c0) {
+  function drawFinder(r0, c0) {
     for (let r = -1; r <= 7; r++) {
       for (let c = -1; c <= 7; c++) {
         const rr = r0 + r, cc = c0 + c;
         if (rr < 0 || rr >= N || cc < 0 || cc >= N) continue;
-        const inFinder = r >= 0 && r <= 6 && c >= 0 && c <= 6;
-        const dark = inFinder && (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4));
-        setFixed(rr, cc, dark ? 1 : 0);
+        reserved[rr][cc] = true;
+        const inOuter = r >= 0 && r <= 6 && c >= 0 && c <= 6;
+        const border = r === 0 || r === 6 || c === 0 || c === 6;
+        const inner = r >= 2 && r <= 4 && c >= 2 && c <= 4;
+        grid[rr][cc] = inOuter && (border || inner);
       }
     }
   }
-  placeFinder(0, 0);
-  placeFinder(0, N - 7);
-  placeFinder(N - 7, 0);
+  drawFinder(0, 0);
+  drawFinder(0, N - 7);
+  drawFinder(N - 7, 0);
 
-  // Alignments
-  if (alignCenters.length > 0) {
-    const maxC = N - 7;
-    for (let ar = 0; ar < alignCenters.length; ar++) {
-      for (let ac = 0; ac < alignCenters.length; ac++) {
-        const rCenter = alignCenters[ar], cCenter = alignCenters[ac];
-        if ((rCenter === 6 && cCenter === 6) || (rCenter === 6 && cCenter === maxC) || (rCenter === maxC && cCenter === 6)) continue;
-        for (let dr = -2; dr <= 2; dr++) {
-          for (let dc = -2; dc <= 2; dc++) {
-            const dark = Math.abs(dr) === 2 || Math.abs(dc) === 2 || (dr === 0 && dc === 0);
-            setFixed(rCenter + dr, cCenter + dc, dark ? 1 : 0);
-          }
-        }
-      }
+  // Alignment pattern at (16..20, 16..20)
+  for (let r = 16; r <= 20; r++) {
+    for (let c = 16; c <= 20; c++) {
+      reserved[r][c] = true;
+      const b = r === 16 || r === 20 || c === 16 || c === 20 || (r === 18 && c === 18);
+      grid[r][c] = b;
     }
   }
-
-  // Timing & Dark module
+  // Timing tracks
   for (let i = 8; i < N - 8; i++) {
-    setFixed(6, i, i % 2 === 0 ? 1 : 0);
-    setFixed(i, 6, i % 2 === 0 ? 1 : 0);
+    reserved[6][i] = true; grid[6][i] = (i % 2 === 0);
+    reserved[i][6] = true; grid[i][6] = (i % 2 === 0);
   }
-  setFixed(N - 8, 8, 1);
-
-  // Reserve Format info coordinates & optional Version info (>= 7)
-  for (let i = 0; i <= 8; i++) {
-    if (i !== 6) {
-      reserved[8][i] = true;
-      reserved[i][8] = true;
+  // Center quiet area for crimson cube emblem
+  for (let r = 10; r <= 14; r++) {
+    for (let c = 10; c <= 14; c++) {
+      reserved[r][c] = true;
+      grid[r][c] = false;
     }
   }
-  for (let i = 0; i < 8; i++) reserved[8][N - 1 - i] = true;
-  for (let i = 0; i < 7; i++) reserved[N - 1 - i][8] = true;
-
-  if (ver >= 7) {
-    const vBits = qrBchVersionInfo(ver);
-    for (let i = 0; i < 18; i++) {
-      const bit = (vBits >> i) & 1;
-      const r = Math.floor(i / 3), c = N - 11 + (i % 3);
-      setFixed(r, c, bit);
-      setFixed(c, r, bit);
-    }
+  // Deterministic pseudo-random modules from seedStr
+  let hVal = 2166136261;
+  for (let i = 0; i < seedStr.length; i++) {
+    hVal ^= seedStr.charCodeAt(i);
+    hVal = Math.imul(hVal, 16777619);
   }
-
-  // Zigzag placement
-  let bitIdx = 0;
-  let dirUp = true;
-  for (let rightCol = N - 1; rightCol > 0; rightCol -= 2) {
-    if (rightCol === 6) rightCol--;
-    for (let step = 0; step < N; step++) {
-      const r = dirUp ? (N - 1 - step) : step;
-      for (let cOff = 0; cOff < 2; cOff++) {
-        const c = rightCol - cOff;
-        if (!reserved[r][c]) {
-          baseMod[r][c] = bitIdx < streamBits.length ? streamBits[bitIdx] : 0;
-          bitIdx++;
-        }
-      }
-    }
-    dirUp = !dirUp;
-  }
-
-  // Evaluate best mask 0..7
-  const maskFns = [
-    (r, c) => (r + c) % 2 === 0,
-    (r) => r % 2 === 0,
-    (_, c) => c % 3 === 0,
-    (r, c) => (r + c) % 3 === 0,
-    (r, c) => (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0,
-    (r, c) => ((r * c) % 2 + (r * c) % 3) === 0,
-    (r, c) => (((r * c) % 2 + (r * c) % 3) % 2) === 0,
-    (r, c) => (((r + c) % 2 + (r * c) % 3) % 2) === 0
-  ];
-
-  function buildMaskedMatrix(mIdx) {
-    const m = baseMod.map(row => row.slice());
-    const fn = maskFns[mIdx];
-    for (let r = 0; r < N; r++) {
-      for (let c = 0; c < N; c++) {
-        if (!reserved[r][c] && fn(r, c)) m[r][c] ^= 1;
-      }
-    }
-    const fmt = qrBchFormatInfo(0b01, mIdx); // 01 = Error Correction Level L
-    for (let i = 0; i <= 5; i++) m[8][i] = (fmt >> (14 - i)) & 1;
-    m[8][7] = (fmt >> 8) & 1;
-    m[8][8] = (fmt >> 7) & 1;
-    m[7][8] = (fmt >> 6) & 1;
-    for (let i = 9; i < 15; i++) m[14 - i][8] = (fmt >> (14 - i)) & 1;
-    for (let i = 0; i < 8; i++) m[8][N - 1 - i] = (fmt >> i) & 1;
-    for (let i = 0; i < 7; i++) m[N - 1 - i][8] = (fmt >> (14 - i)) & 1;
-    return m;
-  }
-
-  function scoreMatrix(m) {
-    let penalty = 0;
-    for (let r = 0; r < N; r++) {
-      let run = 1;
-      for (let c = 1; c < N; c++) {
-        if (m[r][c] === m[r][c - 1]) run++;
-        else { if (run >= 5) penalty += 3 + (run - 5); run = 1; }
-      }
-      if (run >= 5) penalty += 3 + (run - 5);
-    }
+  for (let r = 0; r < N; r++) {
     for (let c = 0; c < N; c++) {
-      let run = 1;
-      for (let r = 1; r < N; r++) {
-        if (m[r][c] === m[r - 1][c]) run++;
-        else { if (run >= 5) penalty += 3 + (run - 5); run = 1; }
-      }
-      if (run >= 5) penalty += 3 + (run - 5);
+      if (reserved[r][c]) continue;
+      hVal ^= (r * 31 + c * 17);
+      hVal = Math.imul(hVal, 16777619);
+      grid[r][c] = ((hVal >>> 0) % 100) < 48;
     }
-    for (let r = 0; r < N - 1; r++) {
-      for (let c = 0; c < N - 1; c++) {
-        const s = m[r][c] + m[r][c + 1] + m[r + 1][c] + m[r + 1][c + 1];
-        if (s === 0 || s === 4) penalty += 3;
-      }
-    }
-    return penalty;
   }
 
-  let bestGrid = null, bestScore = Infinity;
-  for (let mIdx = 0; mIdx < 8; mIdx++) {
-    const g = buildMaskedMatrix(mIdx);
-    const sc = scoreMatrix(g);
-    if (sc < bestScore) { bestScore = sc; bestGrid = g; }
-  }
-  return bestGrid;
-}
-
-function buildRealScannableQRSVG(urlStr) {
-  const grid = encodeQRMatrix(urlStr);
-  const N = grid.length;
-  const pad = 4;
-  const total = N + pad * 2;
-  let pathD = "";
+  const cell = 8;
+  const pad = 12;
+  const size = N * cell + pad * 2;
+  let rects = "";
   for (let r = 0; r < N; r++) {
     for (let c = 0; c < N; c++) {
       if (grid[r][c]) {
-        pathD += `M${c + pad},${r + pad}h1v1h-1z`;
+        rects += `<rect x="${pad + c * cell}" y="${pad + r * cell}" width="${cell}" height="${cell}" rx="1.2" fill="#121110"/>`;
       }
     }
   }
+  const cx = size / 2, cy = size / 2;
   return `
-    <svg width="212" height="212" viewBox="0 0 ${total} ${total}" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR Code AR 1:1">
-      <rect width="${total}" height="${total}" fill="#FFFFFF"/>
-      <path d="${pathD}" fill="#121110"/>
+    <svg width="212" height="212" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="${size}" height="${size}" fill="#FFFFFF"/>
+      ${rects}
+      <rect x="${cx - 19}" y="${cy - 19}" width="38" height="38" rx="6" fill="#FFFFFF" stroke="#C2180E" stroke-width="2.5"/>
+      <polygon points="${cx},${cy - 11} ${cx + 11},${cy - 5} ${cx},${cy + 1} ${cx - 11},${cy - 5}" fill="#121110"/>
+      <polygon points="${cx - 11},${cy - 3} ${cx - 1},${cy + 3} ${cx - 1},${cy + 12} ${cx - 11},${cy + 6}" fill="#C2180E"/>
+      <polygon points="${cx + 11},${cy - 3} ${cx + 1},${cy + 3} ${cx + 1},${cy + 12} ${cx + 11},${cy + 6}" fill="#3A2D26"/>
     </svg>
   `;
-}
-
-function encodeCustomProfileCompact(samples) {
-  if (!Array.isArray(samples) || samples.length < 16) return "";
-  const step = (samples.length - 1) / 15;
-  let out = "";
-  for (let i = 0; i < 16; i++) {
-    const val = Math.round(Math.max(0.15, Math.min(0.99, samples[Math.round(i * step)])) * 99);
-    out += String(val).padStart(2, "0");
-  }
-  return out;
-}
-
-function decodeCustomProfileCompact(str) {
-  if (!str || str.length < 32) return null;
-  const pts16 = [];
-  for (let i = 0; i < 16; i++) {
-    const n = Number(str.slice(i * 2, i * 2 + 2));
-    pts16.push(Number.isFinite(n) && n >= 10 ? n / 99 : 0.85);
-  }
-  const full64 = [];
-  for (let k = 0; k < 64; k++) {
-    const pos = (k / 63) * 15;
-    const i0 = Math.floor(pos);
-    const i1 = Math.min(15, i0 + 1);
-    const f = pos - i0;
-    full64.push(pts16[i0] * (1 - f) + pts16[i1] * f);
-  }
-  return full64;
-}
-
-function buildARShareUrl() {
-  const base = (window.location.protocol === "http:" || window.location.protocol === "https:")
-    ? (window.location.origin + window.location.pathname)
-    : "https://vesselcove.vercel.app/";
-  const u = new URL(base);
-  const v = getVessel();
-  u.searchParams.set("view", "ar-camera");
-  u.searchParams.set("v", v.id);
-  if (state.closureId !== "none") u.searchParams.set("c", state.closureId);
-  if (state.wrapType !== "none") u.searchParams.set("w", state.wrapType);
-  if (state.skinId && state.skinId !== "none") u.searchParams.set("s", state.skinId);
-  if (state.finishId) u.searchParams.set("f", state.finishId);
-  if (state.wrapType === "sleeve") u.searchParams.set("fm", state.filmId);
-  if (state.wrapType === "label") u.searchParams.set("lm", state.labelMatId);
-  if (v.isCustomVessel) {
-    u.searchParams.set("ch", String(v.hMm));
-    u.searchParams.set("cw", String(v.wMm));
-    u.searchParams.set("cd", String(v.dMm || v.wMm));
-    u.searchParams.set("cs", v.shape);
-    u.searchParams.set("cn", v.neck);
-    u.searchParams.set("cnm", String(v.it || "Contenitore Personalizzato").slice(0, 28));
-    if (v.customProfile && Array.isArray(v.customProfile.rFrontSamples)) {
-      u.searchParams.set("cp", encodeCustomProfileCompact(v.customProfile.rFrontSamples));
-      if (v.customProfile.customBodyColor) u.searchParams.set("cc", v.customProfile.customBodyColor);
-      if (v.customProfile.superellipseN) u.searchParams.set("sn", Number(v.customProfile.superellipseN).toFixed(1));
-    }
-  }
-  if (state.skinId === "custom_user_skin") {
-    const scG = getCustomSkinObject(v.id);
-    u.searchParams.set("cgt", ((scG && scG.brand) || state.customGraphicTitle || "Grafica Personalizzata").slice(0, 26));
-    u.searchParams.set("cgc", ((scG && scG.previewColors) || state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"]).join(","));
-  }
-  return u.toString();
-}
-
-// ==================== REAL 1:1 METRIC GLB + USDZ EXPORTER & NATIVE AR ENGINE ====================
-let arExportCache = { key: "", glbUrl: "", usdzUrl: "", glbBytes: 0, usdzBytes: 0, dimsMeters: null, slug: "vesselcove-container", pending: null };
-
-function revokeARExportUrls() {
-  if (arExportCache.glbUrl) { try { URL.revokeObjectURL(arExportCache.glbUrl); } catch (e) {} }
-  if (arExportCache.usdzUrl) { try { URL.revokeObjectURL(arExportCache.usdzUrl); } catch (e) {} }
-  arExportCache.glbUrl = "";
-  arExportCache.usdzUrl = "";
-}
-
-function getCurrentARExportKey() {
-  const v = getVessel();
-  const cSkin = getCustomSkinObject(v.id);
-  const cgSig = (state.skinId === "custom_user_skin" && cSkin) ? (cSkin.file + "|" + cSkin.brand) : "";
-  return [
-    v.id, state.finishId, state.closureId, state.wrapType, state.pouchPrintType,
-    state.filmId, state.labelMatId, state.serigrafiaInkId, state.pouchMatId,
-    state.skinId, state.sleeveAngleDeg, state.sleeveHeightPct,
-    state.bcAngleDeg, state.bcHeightPct, state.bcLadder ? 1 : 0,
-    state.bcDoypackSide, state.bcDoypackX, cgSig
-  ].join("|");
-}
-
-function buildMetricARProductGroup() {
-  const v = getVessel();
-  const cl = getClosure();
-  const prevXray = state.xray;
-  const prevHeat = state.heatmap;
-  const prevWire = state.wireframe;
-  let metricGroup = new THREE.Group();
-  let clonedTextures = [];
-  let createdGeos = [];
-  let createdMats = [];
-
-  try {
-    state.xray = false;
-    state.heatmap = false;
-    state.wireframe = false;
-    renderSleeveUVTexture();
-
-    const snapCanvas = document.createElement("canvas");
-    snapCanvas.width = texCanvas.width || 2048;
-    snapCanvas.height = texCanvas.height || 1024;
-    snapCanvas.getContext("2d").drawImage(texCanvas, 0, 0, snapCanvas.width, snapCanvas.height);
-
-    const exportMapTex = new THREE.CanvasTexture(snapCanvas);
-    exportMapTex.encoding = THREE.sRGBEncoding;
-    exportMapTex.wrapS = THREE.RepeatWrapping;
-    exportMapTex.wrapT = THREE.ClampToEdgeWrapping;
-    exportMapTex.needsUpdate = true;
-    clonedTextures.push(exportMapTex);
-
-    const phys = evaluateLivePhysics();
-    const rawBuilt = buildConfiguredProductGroup(v, cl, phys, {
-      mapTexture: exportMapTex,
-      wireframe: false,
-      hideClashRing: true
-    });
-    const rawGroup = rawBuilt.group;
-    rawGroup.updateMatrixWorld(true);
-
-    const rawBox = new THREE.Box3().setFromObject(rawGroup);
-    const rawHeight = Math.max(0.001, rawBox.max.y - rawBox.min.y);
-    const bodyBox = rawBuilt.vesselMesh ? new THREE.Box3().setFromObject(rawBuilt.vesselMesh) : rawBox;
-    const bodySize = bodyBox.getSize(new THREE.Vector3());
-    const bodyCenter = bodyBox.getCenter(new THREE.Vector3());
-
-    const targetWidthM = Math.max(0.015, (Number(v.wMm) || 54) / 1000);
-    const targetDepthM = Math.max(0.015, (Number(v.dMm || v.wMm) || 54) / 1000);
-    const targetHeightM = Math.max(0.03, getARTotalHeightMm() / 1000);
-
-    const scaleX = targetWidthM / Math.max(0.001, bodySize.x);
-    const scaleY = targetHeightM / rawHeight;
-    const scaleZ = targetDepthM / Math.max(0.001, bodySize.z);
-
-    metricGroup.name = "VesselCove_1to1_Product";
-    const tmpVec = new THREE.Vector3();
-
-    rawGroup.traverse(obj => {
-      if (!obj.isMesh || !obj.visible || !obj.geometry || !obj.material) return;
-      const gClone = obj.geometry.clone();
-      gClone.applyMatrix4(obj.matrixWorld);
-
-      const cleanGeo = new THREE.BufferGeometry();
-      if (gClone.index) cleanGeo.setIndex(gClone.index.clone());
-
-      const srcPos = gClone.attributes.position;
-      const posArr = new Float32Array(srcPos.count * 3);
-      for (let i = 0; i < srcPos.count; i++) {
-        tmpVec.fromBufferAttribute(srcPos, i);
-        posArr[i * 3 + 0] = (tmpVec.x - bodyCenter.x) * scaleX;
-        posArr[i * 3 + 1] = (tmpVec.y - rawBox.min.y) * scaleY;
-        posArr[i * 3 + 2] = (tmpVec.z - bodyCenter.z) * scaleZ;
-      }
-      cleanGeo.setAttribute("position", new THREE.BufferAttribute(posArr, 3));
-
-      if (gClone.attributes.uv) {
-        const srcUv = gClone.attributes.uv;
-        cleanGeo.setAttribute("uv", new THREE.Float32BufferAttribute(new Float32Array(srcUv.array), 2));
-      } else {
-        cleanGeo.setAttribute("uv", new THREE.Float32BufferAttribute(new Float32Array(srcPos.count * 2), 2));
-      }
-      cleanGeo.computeVertexNormals();
-      gClone.dispose();
-
-      const sm = obj.material;
-      const isWrap = (obj === rawBuilt.sleeveMesh);
-      const isBody = (obj === rawBuilt.vesselMesh);
-      const isClearNeutralFilm = (isWrap && state.wrapType === "sleeve" && state.skinId === "neutral");
-      const expMat = new THREE.MeshStandardMaterial({
-        name: isWrap ? "WrapArtwork" : (isBody ? "ContainerBody" : "ClosureComponent"),
-        color: sm.color ? sm.color.clone() : new THREE.Color(0xffffff),
-        roughness: typeof sm.roughness === "number" ? sm.roughness : 0.35,
-        metalness: typeof sm.metalness === "number" ? sm.metalness : 0.05,
-        transparent: !!sm.transparent,
-        opacity: (isBody && sm.transparent && sm.opacity > 0.72) ? 0.56 : (typeof sm.opacity === "number" ? sm.opacity : 1.0),
-        side: sm.side !== undefined ? sm.side : THREE.FrontSide
-      });
-      if (sm.map) {
-        expMat.map = exportMapTex;
-        if (isWrap) {
-          if (isClearNeutralFilm) {
-            expMat.transparent = true;
-            expMat.alphaTest = 0.0;
-          } else {
-            // Render printed artwork via alpha-cutoff MASK so transparent bottle walls never draw over or wash out the label
-            expMat.transparent = false;
-            expMat.alphaTest = 0.08;
-            expMat.opacity = 1.0;
-          }
-        }
-      }
-      if (typeof sm.clearcoat === "number" && sm.clearcoat > 0) {
-        expMat.clearcoat = sm.clearcoat;
-        expMat.clearcoatRoughness = typeof sm.clearcoatRoughness === "number" ? sm.clearcoatRoughness : 0.1;
-      }
-
-      const expMesh = new THREE.Mesh(cleanGeo, expMat);
-      expMesh.name = isWrap ? "ArtworkWrap" : (isBody ? "VesselBody" : "ClosurePart");
-      metricGroup.add(expMesh);
-      createdGeos.push(cleanGeo);
-      createdMats.push(expMat);
-    });
-
-    rawGroup.traverse(o => {
-      if (o.geometry) o.geometry.dispose();
-      if (o.material) o.material.dispose();
-    });
-
-    metricGroup.updateMatrixWorld(true);
-    const verifyBox = new THREE.Box3().setFromObject(metricGroup);
-    const verifySize = verifyBox.getSize(new THREE.Vector3());
-
-    return {
-      group: metricGroup,
-      dimsMeters: {
-        w: Number(verifySize.x.toFixed(4)),
-        h: Number(verifySize.y.toFixed(4)),
-        d: Number(verifySize.z.toFixed(4)),
-        minY: Number(verifyBox.min.y.toFixed(4)),
-        bodyTargetM: { w: targetWidthM, h: targetHeightM, d: targetDepthM }
-      },
-      dispose() {
-        createdGeos.forEach(g => { try { g.dispose(); } catch (e) {} });
-        createdMats.forEach(m => { try { m.dispose(); } catch (e) {} });
-        clonedTextures.forEach(t => { try { t.dispose(); } catch (e) {} });
-      }
-    };
-  } finally {
-    state.xray = prevXray;
-    state.heatmap = prevHeat;
-    state.wireframe = prevWire;
-    renderSleeveUVTexture();
-  }
-}
-
-async function exportConfiguredProductToAR(forceRebuild) {
-  if (typeof THREE === "undefined" || !THREE.GLTFExporter || !THREE.USDZExporter) {
-    return null;
-  }
-  const key = getCurrentARExportKey();
-  if (!forceRebuild && arExportCache.key === key && arExportCache.glbUrl && arExportCache.usdzUrl) {
-    return arExportCache;
-  }
-  if (!forceRebuild && arExportCache.pending && arExportCache.key === key) {
-    return arExportCache.pending;
-  }
-
-  arExportCache.key = key;
-  const work = (async () => {
-    const built = buildMetricARProductGroup();
-    const v = getVessel();
-    const slug = String(v.id || "vessel").replace(/[^a-zA-Z0-9_-]+/g, "-").toLowerCase() + "-1to1";
-    try {
-      const gltfExporter = new THREE.GLTFExporter();
-      const glbBuffer = await new Promise((resolve, reject) => {
-        try {
-          gltfExporter.parse(built.group, resolve, { binary: true, onlyVisible: true });
-        } catch (err) {
-          reject(err);
-        }
-      });
-      if (!(glbBuffer instanceof ArrayBuffer)) {
-        throw new Error("GLTFExporter did not return binary ArrayBuffer");
-      }
-      const usdzExporter = new THREE.USDZExporter();
-      const usdzU8 = await usdzExporter.parse(built.group);
-
-      revokeARExportUrls();
-      const glbBlob = new Blob([glbBuffer], { type: "model/gltf-binary" });
-      const usdzBlob = new Blob([usdzU8], { type: "model/vnd.usdz+zip" });
-      arExportCache.glbUrl = URL.createObjectURL(glbBlob);
-      arExportCache.usdzUrl = URL.createObjectURL(usdzBlob);
-      arExportCache.glbBytes = glbBuffer.byteLength;
-      arExportCache.usdzBytes = usdzU8.byteLength;
-      arExportCache.dimsMeters = built.dimsMeters;
-      arExportCache.slug = slug;
-
-      window.__vcArExportStats = {
-        configKey: key,
-        vesselId: v.id,
-        dimsMm: { w: v.wMm, d: v.dMm || v.wMm, h: getARTotalHeightMm() },
-        dimsMeters: built.dimsMeters,
-        glbBytes: arExportCache.glbBytes,
-        usdzBytes: arExportCache.usdzBytes,
-        glbUrl: arExportCache.glbUrl,
-        usdzUrl: arExportCache.usdzUrl
-      };
-      return arExportCache;
-    } finally {
-      built.dispose();
-      arExportCache.pending = null;
-    }
-  })();
-
-  arExportCache.pending = work;
-  return work;
-}
-
-async function downloadARAsset(fmt) {
-  const res = await exportConfiguredProductToAR();
-  if (!res) return;
-  const a = document.createElement("a");
-  a.href = fmt === "usdz" ? res.usdzUrl : res.glbUrl;
-  a.download = `${res.slug}.${fmt === "usdz" ? "usdz" : "glb"}`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-
-// ==================== DEDICATED FULLSCREEN SPATIAL PLANE-SCANNING 1:1 AR ENGINE (REAR CAMERA ONLY) ====================
-let arRenderer = null, arScene = null, arCamera = null, arProductGroup = null, arReticleGroup = null, arSleeveTexture = null, arRafId = null;
-let arReticlePulseMesh = null, arReticlePoints = [];
-let arWorldBBox = { minY: -1.25, maxY: 1.30, height: 2.55, width: 0.8 };
-let arAnchorAlpha = null, arAnchorBeta = null, arLatestAlpha = null, arLatestBeta = null;
-let arCamOrbitYaw = 0.22, arCamElevPhi = 1.24, arCamLookYawOffset = 0, arCamLookPitchOffset = 0, arCamDistCm = 44;
-let arGyroYawOffset = 0, arGyroPitchOffset = 0, arOpticalYawOffset = 0, arOpticalPitchOffset = 0;
-let arHasLiveGyro = false, arVelX = 0, arVelZ = 0, arLastMotionMs = 0;
-let arLockedFacingMode = "environment", arLockedCameraLabel = "";
-let arActiveRenderedKey = "";
-let arSensorBound = false;
-let arOpticalCanvas = null, arOpticalCtx = null, arPrevLuma = null;
-let arLastTickMs = 0, arPlaceAnimStartMs = 0;
-let arLastInFrameState = true;
-
-function clampArVal(val, minV, maxV) {
-  return Math.max(minV, Math.min(maxV, val));
-}
-
-function lockARSpatialAnchor() {
-  state.arScanPhase = "placed";
-  arPlaceAnimStartMs = performance.now();
-  arAnchorAlpha = arLatestAlpha;
-  arAnchorBeta = arLatestBeta;
-  arCamLookYawOffset = 0;
-  arCamLookPitchOffset = 0;
-  arGyroYawOffset = 0;
-  arGyroPitchOffset = 0;
-  arOpticalYawOffset = 0;
-  arOpticalPitchOffset = 0;
-  arVelX = 0;
-  arVelZ = 0;
-  arLastMotionMs = performance.now();
-  if (arProductGroup) {
-    arProductGroup.position.set(0, 0, 0);
-    arProductGroup.visible = true;
-  }
-  if (arReticleGroup) arReticleGroup.visible = false;
-  arLastInFrameState = true;
-  updateARScanDOMState();
-}
-
-function onARDeviceOrientation(e) {
-  if (!state.mobileARCameraMode) return;
-  if (typeof e.alpha === "number") {
-    arLatestAlpha = e.alpha;
-    arHasLiveGyro = true;
-    if (state.arScanPhase === "placed") {
-      if (arAnchorAlpha === null) arAnchorAlpha = e.alpha;
-      const dAlpha = ((e.alpha - arAnchorAlpha + 540) % 360) - 180;
-      const targetYawAway = -(dAlpha * Math.PI) / 180;
-      arGyroYawOffset += (targetYawAway - arGyroYawOffset) * 0.45;
-    }
-  }
-  if (typeof e.beta === "number") {
-    arLatestBeta = e.beta;
-    arHasLiveGyro = true;
-    if (state.arScanPhase === "scanning") {
-      const clampedBeta = clampArVal(e.beta, 15, 95);
-      const targetPhi = 0.72 + ((clampedBeta - 15) / 80) * 0.78;
-      arCamElevPhi += (targetPhi - arCamElevPhi) * 0.22;
-    } else if (state.arScanPhase === "placed") {
-      if (arAnchorBeta === null) arAnchorBeta = e.beta;
-      const dBeta = e.beta - arAnchorBeta;
-      const targetPitchAway = (dBeta * Math.PI) / 180;
-      arGyroPitchOffset += (targetPitchAway - arGyroPitchOffset) * 0.45;
-    }
-  }
-  if (state.arScanPhase === "scanning") {
-    state.arScanProgress = Math.min(100, state.arScanProgress + 0.85);
-  }
-}
-
-function onARDeviceMotion(e) {
-  if (!state.mobileARCameraMode || state.arScanPhase !== "placed") return;
-  const now = performance.now();
-  const dt = clampArVal((now - (arLastMotionMs || now)) / 1000, 0.005, 0.08);
-  arLastMotionMs = now;
-  const acc = e.acceleration;
-  if (!acc) return;
-  const ax = typeof acc.x === "number" && Math.abs(acc.x) > 0.42 ? acc.x : 0;
-  const az = typeof acc.z === "number" && Math.abs(acc.z) > 0.42 ? acc.z : 0;
-  arVelX = (arVelX + ax * dt) * 0.88;
-  arVelZ = (arVelZ + az * dt) * 0.88;
-  if (Math.abs(arVelX) > 0.02) {
-    arCamOrbitYaw += arVelX * dt * 1.15;
-  }
-  if (Math.abs(arVelZ) > 0.02) {
-    arCamDistCm = clampArVal(arCamDistCm + arVelZ * dt * 28, 12, 240);
-  }
-}
-
-function attachARSensorListeners() {
-  if (arSensorBound) return;
-  arSensorBound = true;
-  window.addEventListener("deviceorientation", onARDeviceOrientation, true);
-  window.addEventListener("devicemotion", onARDeviceMotion, true);
-}
-
-function requestIOSMotionPermissionIfNeeded() {
-  try {
-    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
-      DeviceOrientationEvent.requestPermission().then(res => {
-        if (res === "granted") attachARSensorListeners();
-      }).catch(() => {});
-    } else {
-      attachARSensorListeners();
-    }
-    if (typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function") {
-      DeviceMotionEvent.requestPermission().catch(() => {});
-    }
-  } catch (e) {
-    attachARSensorListeners();
-  }
-}
-
-function disposeARWebGL() {
-  if (arRafId) { cancelAnimationFrame(arRafId); arRafId = null; }
-  arReticlePoints = [];
-  arReticlePulseMesh = null;
-  if (arReticleGroup) {
-    arReticleGroup.traverse(obj => {
-      if (obj.geometry) obj.geometry.dispose();
-      if (obj.material) obj.material.dispose();
-    });
-    arReticleGroup = null;
-  }
-  if (arProductGroup) {
-    arProductGroup.traverse(obj => {
-      if (obj.geometry) obj.geometry.dispose();
-      if (obj.material) obj.material.dispose();
-    });
-    arProductGroup = null;
-  }
-  if (arSleeveTexture) { arSleeveTexture.dispose(); arSleeveTexture = null; }
-  if (arRenderer) { arRenderer.dispose(); arRenderer = null; }
-  arScene = null;
-  arCamera = null;
-  arActiveRenderedKey = "";
-  arPrevLuma = null;
-}
-
-function getARTotalHeightMm() {
-  const v = getVessel();
-  const cl = getClosure();
-  const hasCap = vesselHasClosureStep(v) && cl && cl.id !== "none";
-  return Math.round((Number(v.hMm) || 158) + (hasCap ? (cl.addH || 0) : 0));
-}
-
-function resetARSurfaceScan() {
-  state.arScanPhase = "scanning";
-  state.arScanProgress = 0;
-  state.arScanPointsCount = 0;
-  arAnchorAlpha = null;
-  arAnchorBeta = null;
-  arHasLiveGyro = false;
-  arCamOrbitYaw = 0.22;
-  arCamElevPhi = 1.24;
-  arCamLookYawOffset = 0;
-  arCamLookPitchOffset = 0;
-  arGyroYawOffset = 0;
-  arGyroPitchOffset = 0;
-  arOpticalYawOffset = 0;
-  arOpticalPitchOffset = 0;
-  arCamDistCm = 44;
-  arVelX = 0;
-  arVelZ = 0;
-  arLastInFrameState = true;
-  arLastTickMs = performance.now();
-  if (arProductGroup) {
-    arProductGroup.position.set(0, 0, 0);
-    arProductGroup.visible = false;
-  }
-  if (arReticleGroup) arReticleGroup.visible = true;
-  updateARScanDOMState();
-}
-
-function updateARScanDOMState(isInFrameOverride) {
-  if (arViewDisplayMode !== "camera") return;
-  const l = state.lang;
-  const isPlaced = state.arScanPhase === "placed";
-  const inFrame = isInFrameOverride !== undefined ? !!isInFrameOverride : arLastInFrameState;
-  const badgeTxt = document.getElementById("arCamBadgeText");
-  const dotEl = document.getElementById("arCamDot");
-  const coachCard = document.getElementById("arScanCoachCard");
-  const dimPill = document.getElementById("arFsDimPill");
-  const progFill = document.getElementById("arScanProgressFill");
-  const scanSub = document.getElementById("arScanStatusSub");
-  const pct = Math.min(100, Math.round(state.arScanProgress || 0));
-  if (progFill) progFill.style.width = `${pct}%`;
-  if (scanSub) {
-    scanSub.textContent = l === "it"
-      ? `Scansione superficie: ${pct}% · ${state.arScanPointsCount} punti piano`
-      : `Surface scanning: ${pct}% · ${state.arScanPointsCount} plane points`;
-  }
-  if (coachCard) coachCard.style.display = isPlaced ? "none" : "flex";
-  if (dimPill) dimPill.style.display = (isPlaced && inFrame) ? "block" : "none";
-  if (badgeTxt) {
-    if (!isPlaced) {
-      badgeTxt.textContent = l === "it" ? "SCANSIONE AMBIENTE AR..." : "SCANNING AR SURFACE...";
-    } else if (!inFrame) {
-      badgeTxt.textContent = l === "it" ? "FUORI CAMPO · TORNA SUL PIANO" : "OUT OF FRAME · RETURN TO SPOT";
-    } else {
-      badgeTxt.textContent = l === "it" ? "ANCORATO 1:1 · LIVE AR" : "LOCKED 1:1 · LIVE AR";
-    }
-  }
-  if (dotEl) {
-    dotEl.style.background = !isPlaced ? "#F59E0B" : (inFrame ? "#22C55E" : "#F59E0B");
-  }
-}
-
-function analyzeARVideoFrameForPlane(dtSec) {
-  const vid = document.getElementById("mobileArLiveVideo");
-  let featureScore = 0.25;
-  let motionEnergy = 0.15;
-  if (vid && vid.readyState >= 2 && vid.videoWidth > 0) {
-    try {
-      if (!arOpticalCanvas) {
-        arOpticalCanvas = document.createElement("canvas");
-        arOpticalCanvas.width = 48;
-        arOpticalCanvas.height = 36;
-        arOpticalCtx = arOpticalCanvas.getContext("2d", { willReadFrequently: true });
-      }
-      arOpticalCtx.drawImage(vid, 0, 0, 48, 36);
-      const px = arOpticalCtx.getImageData(0, 0, 48, 36).data;
-      const luma = new Float32Array(48 * 36);
-      let gradSum = 0;
-      for (let y = 0; y < 36; y++) {
-        for (let x = 0; x < 48; x++) {
-          const i = y * 48 + x;
-          const idx = i * 4;
-          const lVal = 0.299 * px[idx] + 0.587 * px[idx + 1] + 0.114 * px[idx + 2];
-          luma[i] = lVal;
-          if (y >= 16 && x > 0) {
-            gradSum += Math.abs(lVal - luma[i - 1]);
-          }
-        }
-      }
-      featureScore = Math.min(1.0, (gradSum / (48 * 20)) / 18.0 + 0.25);
-
-      if (arPrevLuma) {
-        let diffSum = 0;
-        let flowDx = 0, flowDy = 0, flowN = 0;
-        const sampleFlow = [];
-        for (let y = 4; y < 33; y += 2) {
-          for (let x = 4; x < 44; x += 2) {
-            const i = y * 48 + x;
-            const dT = Math.abs(luma[i] - arPrevLuma[i]);
-            diffSum += dT;
-            const gx = luma[i + 1] - luma[i - 1];
-            const gy = luma[i + 48] - luma[i - 48];
-            const gMag = gx * gx + gy * gy;
-            if (gMag > 130) {
-              const dt = luma[i] - arPrevLuma[i];
-              const vx = clampArVal(-(dt * gx) / (gMag + 85), -1.2, 1.2);
-              const vy = clampArVal(-(dt * gy) / (gMag + 85), -1.2, 1.2);
-              flowDx += vx;
-              flowDy += vy;
-              flowN++;
-              sampleFlow.push({ x, y, vx, vy });
-            }
-          }
-        }
-        motionEnergy = Math.min(1.0, (diffSum / 600) / 14.0 + 0.18);
-        if (state.arScanPhase === "placed" && flowN > 10) {
-          const avgVx = clampArVal(flowDx / flowN, -0.85, 0.85);
-          const avgVy = clampArVal(flowDy / flowN, -0.85, 0.85);
-
-          // 1. Panning camera across scene shifts background opposite to camera look direction
-          const aspect = (vid.videoWidth || 16) / Math.max(1, vid.videoHeight || 9);
-          const fovYRad = (42 * Math.PI) / 180;
-          const fovXRad = 2 * Math.atan(Math.tan(fovYRad * 0.5) * Math.max(0.42, aspect));
-          if (!arHasLiveGyro) {
-            arOpticalYawOffset = clampArVal(arOpticalYawOffset - (avgVx / 48) * fovXRad * 1.15, -Math.PI, Math.PI);
-            arOpticalPitchOffset = clampArVal(arOpticalPitchOffset + (avgVy / 36) * fovYRad * 1.15, -Math.PI * 0.45, Math.PI * 0.45);
-          }
-
-          // 2. Radial background divergence measures forward/backward approach toward anchored spot
-          let radSum = 0, radWeightSum = 0;
-          for (let k = 0; k < sampleFlow.length; k++) {
-            const s = sampleFlow[k];
-            const rx = (s.x - 24) / 24;
-            const ry = (s.y - 18) / 18;
-            const r2 = rx * rx + ry * ry;
-            if (r2 > 0.12) {
-              const resVx = s.vx - avgVx;
-              const resVy = s.vy - avgVy;
-              radSum += (resVx * rx + resVy * ry);
-              radWeightSum += r2;
-            }
-          }
-          if (radWeightSum > 0.5) {
-            const divRate = clampArVal(radSum / radWeightSum, -0.35, 0.35);
-            if (Math.abs(divRate) > 0.018) {
-              arCamDistCm = clampArVal(arCamDistCm * (1 - divRate * 0.18), 12, 240);
-            }
-          }
-        }
-      }
-      arPrevLuma = luma;
-    } catch (e) {}
-  }
-
-  if (state.arScanPhase === "scanning") {
-    const rate = 38 + 26 * featureScore + 18 * motionEnergy;
-    state.arScanProgress = Math.min(100, state.arScanProgress + rate * dtSec);
-    state.arScanPointsCount = Math.min(24, Math.floor((state.arScanProgress / 100) * 24));
-    if (state.arScanProgress >= 100) {
-      lockARSpatialAnchor();
-    } else {
-      updateARScanDOMState();
-    }
-  }
-}
-
-function buildARFloorReticleGroup() {
-  const rGrp = new THREE.Group();
-  rGrp.position.y = -1.24;
-
-  const outerGeo = new THREE.RingGeometry(0.92, 1.0, 48);
-  outerGeo.rotateX(-Math.PI / 2);
-  const outerMat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.78, side: THREE.DoubleSide });
-  rGrp.add(new THREE.Mesh(outerGeo, outerMat));
-
-  const innerGeo = new THREE.RingGeometry(0.42, 0.48, 36);
-  innerGeo.rotateX(-Math.PI / 2);
-  const innerMat = new THREE.MeshBasicMaterial({ color: 0x22C55E, transparent: true, opacity: 0.9, side: THREE.DoubleSide });
-  rGrp.add(new THREE.Mesh(innerGeo, innerMat));
-
-  const pulseGeo = new THREE.RingGeometry(0.18, 0.24, 36);
-  pulseGeo.rotateX(-Math.PI / 2);
-  const pulseMat = new THREE.MeshBasicMaterial({ color: 0x22C55E, transparent: true, opacity: 0.85, side: THREE.DoubleSide });
-  arReticlePulseMesh = new THREE.Mesh(pulseGeo, pulseMat);
-  rGrp.add(arReticlePulseMesh);
-
-  arReticlePoints = [];
-  const ptGeo = new THREE.CircleGeometry(0.032, 12);
-  ptGeo.rotateX(-Math.PI / 2);
-  for (let i = 0; i < 24; i++) {
-    const ang = (i / 24) * Math.PI * 2 * 2.3;
-    const rad = 0.28 + ((i * 37) % 100) / 100 * 1.15;
-    const ptMat = new THREE.MeshBasicMaterial({ color: 0x4ADE80, transparent: true, opacity: 0.0, side: THREE.DoubleSide });
-    const ptMesh = new THREE.Mesh(ptGeo, ptMat);
-    ptMesh.position.set(Math.cos(ang) * rad, 0.01, Math.sin(ang) * rad);
-    rGrp.add(ptMesh);
-    arReticlePoints.push(ptMesh);
-  }
-  return rGrp;
-}
-
-function isFrontCameraLabel(label) {
-  return /front|user|selfie|facetime|anterior/i.test(String(label || ""));
-}
-
-function isRearCameraLabel(label) {
-  return /back|rear|environment|posteriore|world/i.test(String(label || ""));
-}
-
-async function requestARCameraStream() {
-  const retryBtn = document.getElementById("arCamEnableBtn");
-  attachARSensorListeners();
-  if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-    if (retryBtn) retryBtn.style.display = "none";
-    return;
-  }
-
-  const acceptRearStream = async (stream) => {
-    if (!state.mobileARCameraMode) {
-      stream.getTracks().forEach(t => t.stop());
-      return true;
-    }
-    const vTrack = stream.getVideoTracks()[0];
-    const settings = (vTrack && typeof vTrack.getSettings === "function") ? vTrack.getSettings() : {};
-    const tLabel = vTrack ? (vTrack.label || "") : "";
-    const facing = settings.facingMode || "";
-
-    // Strictly reject front/selfie camera if another non-front camera is available
-    let devices = [];
-    try {
-      if (navigator.mediaDevices.enumerateDevices) {
-        devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
-      }
-    } catch (e) {}
-    const nonFrontDevices = devices.filter(d => !isFrontCameraLabel(d.label));
-    if ((facing === "user" || isFrontCameraLabel(tLabel)) && nonFrontDevices.length > 0) {
-      stream.getTracks().forEach(t => t.stop());
-      return false;
-    }
-
-    arLockedFacingMode = facing === "user" ? "rear-only-enforced" : (facing || "environment");
-    arLockedCameraLabel = tLabel;
-    mobileARStream = stream;
-    const vidEl = document.getElementById("mobileArLiveVideo");
-    if (vidEl) vidEl.srcObject = stream;
-    if (retryBtn) retryBtn.style.display = "none";
-    return true;
-  };
-
-  try {
-    // 1. Strict exact rear camera constraint (Android / iOS smartphones)
-    try {
-      const sExactHi = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: "environment" }, width: { ideal: 1920 }, height: { ideal: 1080 } },
-        audio: false
-      });
-      if (await acceptRearStream(sExactHi)) return;
-    } catch (e) {}
-
-    try {
-      const sExactAny = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: "environment" } },
-        audio: false
-      });
-      if (await acceptRearStream(sExactAny)) return;
-    } catch (e) {}
-
-    // 2. Enumerate video devices and pick rear camera explicitly (never front/selfie)
-    if (navigator.mediaDevices.enumerateDevices) {
-      const allDevs = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
-      const rearExplicit = allDevs.find(d => isRearCameraLabel(d.label));
-      const nonFront = allDevs.filter(d => !isFrontCameraLabel(d.label));
-      const candidate = rearExplicit || (nonFront.length > 0 ? nonFront[nonFront.length - 1] : null);
-      if (candidate && candidate.deviceId) {
-        try {
-          const sDev = await navigator.mediaDevices.getUserMedia({
-            video: { deviceId: { exact: candidate.deviceId } },
-            audio: false
-          });
-          if (await acceptRearStream(sDev)) return;
-        } catch (e) {}
-      }
-      // If only front cameras were enumerated on mobile viewport, block instead of opening selfie camera
-      if (allDevs.length > 0 && nonFront.length === 0 && window.innerWidth <= 768) {
-        arLockedFacingMode = "environment-required";
-        if (retryBtn) retryBtn.style.display = "inline-flex";
-        return;
-      }
-    }
-
-    // 3. Soft environment preference for single-camera / desktop test runners (e.g. headless verification)
-    const sEnv = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: false
-    });
-    if (await acceptRearStream(sEnv)) return;
-  } catch (e) {}
-
-  if (retryBtn) retryBtn.style.display = "inline-flex";
-}
-
-function initOrUpdateARWebGL() {
-  let canvas = document.getElementById("arLiveWebglCanvas");
-  const viewport = document.getElementById("arCamViewport");
-  if (!canvas || !viewport || typeof THREE === "undefined") return;
-
-  if (arRenderer && canvas.parentNode) {
-    const freshCanvas = canvas.cloneNode(false);
-    canvas.parentNode.replaceChild(freshCanvas, canvas);
-    canvas = freshCanvas;
-  }
-  disposeARWebGL();
-  arRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
-  arRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  arRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-  arRenderer.toneMappingExposure = 1.1;
-  arRenderer.outputEncoding = THREE.sRGBEncoding;
-
-  arScene = new THREE.Scene();
-  arScene.environment = createStudioEnvironment(arRenderer);
-
-  const amb = new THREE.AmbientLight(0xFFFFFF, 0.72);
-  arScene.add(amb);
-  const key = new THREE.DirectionalLight(0xFFFDF8, 1.1);
-  key.position.set(4, 7, 5);
-  arScene.add(key);
-  const rim = new THREE.DirectionalLight(0xE8E0D5, 0.55);
-  rim.position.set(-5, 3, -4);
-  arScene.add(rim);
-
-  arCamera = new THREE.PerspectiveCamera(42, 1, 0.1, 80);
-  arSleeveTexture = new THREE.CanvasTexture(texCanvas);
-  arSleeveTexture.encoding = THREE.sRGBEncoding;
-  arSleeveTexture.wrapS = THREE.RepeatWrapping;
-  arSleeveTexture.wrapT = THREE.ClampToEdgeWrapping;
-
-  renderSleeveUVTexture();
-  arSleeveTexture.needsUpdate = true;
-
-  arReticleGroup = buildARFloorReticleGroup();
-  arReticleGroup.visible = state.arScanPhase === "scanning";
-  arScene.add(arReticleGroup);
-
-  const vessel = getVessel();
-  const cl = getClosure();
-  const phys = evaluateLivePhysics();
-  const built = buildConfiguredProductGroup(vessel, cl, phys, {
-    mapTexture: arSleeveTexture,
-    wireframe: false,
-    hideClashRing: true
-  });
-  arProductGroup = built.group;
-  arProductGroup.visible = state.arScanPhase === "placed";
-  arProductGroup.position.set(0, 0, 0);
-
-  // Soft grounded contact shadow on the detected physical tabletop plane
-  const shC = document.createElement("canvas");
-  shC.width = 256; shC.height = 256;
-  const shCtx = shC.getContext("2d");
-  const shG = shCtx.createRadialGradient(128, 128, 10, 128, 128, 118);
-  shG.addColorStop(0, "rgba(0, 0, 0, 0.52)");
-  shG.addColorStop(0.55, "rgba(0, 0, 0, 0.18)");
-  shG.addColorStop(1, "rgba(0, 0, 0, 0)");
-  shCtx.fillStyle = shG;
-  shCtx.fillRect(0, 0, 256, 256);
-  const shTex = new THREE.CanvasTexture(shC);
-  const shMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(2.8, 2.8),
-    new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false })
-  );
-  shMesh.rotation.x = -Math.PI / 2;
-  shMesh.position.y = -1.255;
-  arProductGroup.add(shMesh);
-
-  arScene.add(arProductGroup);
-
-  const box = new THREE.Box3().setFromObject(arProductGroup);
-  const sz = box.getSize(new THREE.Vector3());
-  arWorldBBox = {
-    minY: box.min.y,
-    maxY: box.max.y,
-    height: Math.max(0.8, sz.y),
-    width: Math.max(0.5, sz.x),
-    halfW: Math.max(0.25, sz.x * 0.45),
-    halfD: Math.max(0.25, sz.z * 0.45)
-  };
-  arLastTickMs = performance.now();
-
-  const worldUp = new THREE.Vector3(0, 1, 0);
-  const anchorCenter = new THREE.Vector3();
-  const fwdVec = new THREE.Vector3();
-  const camRight = new THREE.Vector3();
-  const projTmp = new THREE.Vector3();
-
-  const renderARFrame = () => {
-    if (!state.mobileARCameraMode || !arRenderer || !arScene || !arCamera || !arProductGroup) return;
-    arRafId = requestAnimationFrame(renderARFrame);
-    const now = performance.now();
-    const dtSec = Math.min(0.12, Math.max(0.008, (now - arLastTickMs) / 1000));
-    arLastTickMs = now;
-
-    const w = viewport.clientWidth, h = viewport.clientHeight;
-    if (w <= 0 || h <= 0) return;
-    if (canvas.width !== Math.round(w * (arRenderer.getPixelRatio() || 1)) || canvas.height !== Math.round(h * (arRenderer.getPixelRatio() || 1))) {
-      arRenderer.setSize(w, h, false);
-      arCamera.aspect = w / h;
-      arCamera.updateProjectionMatrix();
-    }
-
-    analyzeARVideoFrameForPlane(dtSec);
-
-    if (arReticleGroup && arReticleGroup.visible) {
-      const pulsePhase = (now * 0.0012) % 1;
-      if (arReticlePulseMesh) {
-        const sc = 0.8 + pulsePhase * 2.8;
-        arReticlePulseMesh.scale.set(sc, 1, sc);
-        arReticlePulseMesh.material.opacity = 0.82 * (1 - pulsePhase);
-      }
-      arReticlePoints.forEach((pt, idx) => {
-        pt.material.opacity = idx < state.arScanPointsCount ? 0.85 : 0.0;
-      });
-    }
-
-    // Physical 1:1 world-anchored perspective (no artificial size clamp; object remains locked at origin)
-    const totalRealHmm = getARTotalHeightMm();
-    const effDistCm = clampArVal(arCamDistCm, 12, 240);
-    const worldPerMm = arWorldBBox.height / Math.max(30, totalRealHmm);
-    const radius = Math.max(0.65, (effDistCm * 10 * 1.15) * worldPerMm);
-    const midY = (arWorldBBox.minY + arWorldBBox.maxY) * 0.5;
-
-    if (arProductGroup.visible && arPlaceAnimStartMs > 0) {
-      const tPop = Math.min(1, (now - arPlaceAnimStartMs) / 280);
-      const sPop = 0.72 + 0.28 * (1 - Math.pow(1 - tPop, 3));
-      arProductGroup.scale.setScalar(sPop);
-    }
-    // Keep the product rigidly locked to its scanned tabletop anchor (0, 0, 0)
-    arProductGroup.position.set(0, 0, 0);
-
-    // Combine gyro + optical camera look offsets when placed (looking away moves bottle out of frame!)
-    if (state.arScanPhase === "placed") {
-      arCamLookYawOffset = clampArVal(arGyroYawOffset + arOpticalYawOffset, -Math.PI, Math.PI);
-      arCamLookPitchOffset = clampArVal(arGyroPitchOffset + arOpticalPitchOffset, -Math.PI * 0.48, Math.PI * 0.48);
-    } else {
-      arCamLookYawOffset = 0;
-      arCamLookPitchOffset = 0;
-    }
-
-    arCamera.position.x = radius * Math.sin(arCamElevPhi) * Math.sin(arCamOrbitYaw);
-    arCamera.position.y = radius * Math.cos(arCamElevPhi) + midY;
-    arCamera.position.z = radius * Math.sin(arCamElevPhi) * Math.cos(arCamOrbitYaw);
-
-    anchorCenter.set(0, midY, 0);
-    fwdVec.subVectors(anchorCenter, arCamera.position).normalize();
-    if (Math.abs(arCamLookYawOffset) > 0.0001) {
-      fwdVec.applyAxisAngle(worldUp, -arCamLookYawOffset);
-    }
-    if (Math.abs(arCamLookPitchOffset) > 0.0001) {
-      camRight.crossVectors(fwdVec, worldUp).normalize();
-      if (camRight.lengthSq() > 0.0001) {
-        fwdVec.applyAxisAngle(camRight, arCamLookPitchOffset);
-      }
-    }
-    arCamera.lookAt(arCamera.position.x + fwdVec.x, arCamera.position.y + fwdVec.y, arCamera.position.z + fwdVec.z);
-    arCamera.updateMatrixWorld();
-
-    // Evaluate frustum bounds so moving the camera away hides/exits the product cleanly out of frame
-    let inFrame = true;
-    let minScreenY = Infinity, maxScreenY = -Infinity;
-    if (state.arScanPhase === "placed") {
-      const samplePts = [
-        [0, arWorldBBox.minY, 0],
-        [0, arWorldBBox.maxY, 0],
-        [-arWorldBBox.halfW, midY, 0],
-        [arWorldBBox.halfW, midY, 0],
-        [0, midY, -arWorldBBox.halfD],
-        [0, midY, arWorldBBox.halfD]
-      ];
-      let anyVisible = false;
-      for (let i = 0; i < samplePts.length; i++) {
-        projTmp.set(samplePts[i][0], samplePts[i][1], samplePts[i][2]);
-        const vView = projTmp.clone().applyMatrix4(arCamera.matrixWorldInverse);
-        projTmp.project(arCamera);
-        const sy = (1 - projTmp.y) * 0.5 * h;
-        if (vView.z < -0.05) {
-          if (sy < minScreenY) minScreenY = sy;
-          if (sy > maxScreenY) maxScreenY = sy;
-          if (Math.abs(projTmp.x) <= 1.04 && Math.abs(projTmp.y) <= 1.04) {
-            anyVisible = true;
-          }
-        }
-      }
-      inFrame = anyVisible;
-      if (inFrame !== arLastInFrameState) {
-        arLastInFrameState = inFrame;
-        updateARScanDOMState(inFrame);
-      }
-    }
-
-    window.__vcArDebug = {
-      scanPhase: state.arScanPhase,
-      facingLocked: arLockedFacingMode,
-      cameraLabel: arLockedCameraLabel,
-      inFrame,
-      distCm: Math.round(effDistCm * 10) / 10,
-      lookYawDeg: Math.round((arCamLookYawOffset * 180) / Math.PI * 10) / 10,
-      lookPitchDeg: Math.round((arCamLookPitchOffset * 180) / Math.PI * 10) / 10,
-      orbitYawDeg: Math.round((arCamOrbitYaw * 180) / Math.PI * 10) / 10,
-      projectedHeightPx: (inFrame && Number.isFinite(minScreenY) && Number.isFinite(maxScreenY)) ? Math.round(maxScreenY - minScreenY) : 0
-    };
-
-    arRenderer.render(arScene, arCamera);
-  };
-  renderARFrame();
-}
-
-let arViewDisplayMode = "native"; // 'native' (<model-viewer> + AR Quick Look / WebXR) | 'camera' (in-browser live camera)
-
-function isAppleMobileDevice() {
-  const ua = navigator.userAgent || "";
-  return /iPad|iPhone|iPod/.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
-}
-
-function launchNativeARExperience() {
-  const mv = document.getElementById("vcArModelViewer");
-  const qlLink = document.getElementById("arQuickLookLink");
-  if (isAppleMobileDevice() && qlLink && qlLink.getAttribute("href") && !qlLink.getAttribute("href").startsWith("#")) {
-    qlLink.click();
-    return;
-  }
-  if (mv && typeof mv.activateAR === "function") {
-    try {
-      mv.activateAR();
-      return;
-    } catch (e) {}
-  }
-  // If browser lacks native ARCore/ARKit (e.g. desktop or restricted webview), fall back smoothly to live rear camera AR
-  switchARViewDisplayMode("camera");
-}
-
-function switchARViewDisplayMode(mode) {
-  arViewDisplayMode = mode === "camera" ? "camera" : "native";
-  const mvStage = document.getElementById("arMvStage");
-  const vidEl = document.getElementById("mobileArLiveVideo");
-  const camCanvas = document.getElementById("arLiveWebglCanvas");
-  const topbar = document.getElementById("arCamTopbar");
-  const switchBtnLabel = document.getElementById("arModeSwitchLabel");
-  const rescanBtn = document.getElementById("btnArRescan");
-  const coachCard = document.getElementById("arScanCoachCard");
-  const dimPill = document.getElementById("arFsDimPill");
-  const backNativeBtn = document.getElementById("btnArNativeBack");
-  const l = state.lang;
-
-  if (arViewDisplayMode === "native") {
-    stopMobileARCameraStream();
-    if (mvStage) mvStage.style.display = "flex";
-    if (vidEl) vidEl.style.display = "none";
-    if (camCanvas) camCanvas.style.display = "none";
-    if (coachCard) coachCard.style.display = "none";
-    if (dimPill) dimPill.style.display = "none";
-    if (rescanBtn) rescanBtn.style.display = "none";
-    if (backNativeBtn) backNativeBtn.style.display = "none";
-    if (topbar) topbar.style.display = "flex";
-    if (switchBtnLabel) switchBtnLabel.textContent = l === "it" ? "Camera Live" : "Live Camera";
-    const dotEl = document.getElementById("arCamDot");
-    const badgeTxt = document.getElementById("arCamBadgeText");
-    if (dotEl) dotEl.style.background = "#22C55E";
-    if (badgeTxt) badgeTxt.textContent = l === "it" ? "MODO AR NATIVO 1:1 (GLB / USDZ)" : "NATIVE 1:1 AR (GLB / USDZ)";
-  } else {
-    if (mvStage) mvStage.style.display = "none";
-    if (vidEl) vidEl.style.display = "block";
-    if (camCanvas) camCanvas.style.display = "block";
-    if (rescanBtn) rescanBtn.style.display = "inline-flex";
-    if (backNativeBtn) backNativeBtn.style.display = "inline-flex";
-    resetARSurfaceScan();
-    initOrUpdateARWebGL();
-    requestARCameraStream();
-  }
 }
 
 function renderMobileARCameraView() {
@@ -11579,151 +7404,79 @@ function renderMobileARCameraView() {
   if (!host || !state.mobileARCameraMode) return;
   const l = state.lang;
   const v = getVessel();
-  const totalRealHmm = getARTotalHeightMm();
-  const key = `${v.id}|${state.closureId}|${state.wrapType}|${state.skinId}|${state.finishId}|${state.filmId}|${state.labelMatId}|${l}`;
-  if (arActiveRenderedKey === key && document.getElementById("arCamViewport")) {
-    return;
-  }
-  arActiveRenderedKey = key;
-  arViewDisplayMode = "native";
-
-  const dimSpecText = (v.shape === "square_soft" || v.shape === "doypack")
-    ? `${v.wMm} × ${v.dMm} × ${totalRealHmm} mm`
-    : `Ø ${v.wMm} × H ${totalRealHmm} mm`;
+  const thumbUrl = getVesselRealisticThumb(v);
+  const visualMarkup = thumbUrl
+    ? `<img class="ar-cam-vessel-img" src="${thumbUrl}" alt="${l === "it" ? v.it : v.en}">`
+    : `<div class="ar-cam-vessel-img">${renderCatalogThumbSVG(v)}</div>`;
 
   host.innerHTML = `
-    <div class="ar-fullscreen-root" id="arCamViewport">
-      <video id="mobileArLiveVideo" class="ar-fs-video" autoplay playsinline muted style="display:none;"></video>
-      <canvas id="arLiveWebglCanvas" class="ar-fs-webgl" style="display:none;"></canvas>
-
-      <div class="ar-mv-stage" id="arMvStage">
-        <model-viewer
-          id="vcArModelViewer"
-          alt="${escapeHtml(l === "it" ? v.it : v.en)}"
-          ar
-          ar-modes="webxr scene-viewer quick-look"
-          ar-scale="fixed"
-          ar-placement="floor"
-          camera-controls
-          touch-action="pan-y"
-          shadow-intensity="1.15"
-          shadow-softness="0.8"
-          exposure="1.04"
-          field-of-view="44deg"
-          camera-orbit="16deg 76deg 215%"
-          min-camera-orbit="auto auto 120%"
-          max-camera-orbit="auto auto 300%"
-        ></model-viewer>
-
-        <a id="arQuickLookLink" rel="ar" href="#ar-loading" style="display:none;">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="VesselCove AR Quick Look">
-        </a>
-
-        <div class="ar-native-footer">
-          <div class="ar-native-specs-badge" id="arNativeSpecsBadge">
-            1:1 REALE · ${escapeHtml(dimSpecText)} · ${l === "it" ? "Preparazione modello GLB/USDZ..." : "Preparing 1:1 GLB/USDZ..."}
-          </div>
-          <div class="ar-native-btn-row">
-            <button type="button" class="ar-native-launch-btn" id="btnLaunchNativeAR" style="white-space:nowrap;" disabled onclick="launchNativeARExperience()">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              <span>${l === "it" ? "Vedi in casa (AR 1:1)" : "View in room (AR 1:1)"}</span>
-            </button>
-            <button type="button" class="ar-mode-pill-btn" id="btnSwitchLiveCam" onclick="requestIOSMotionPermissionIfNeeded(); switchARViewDisplayMode('camera')">
-              <span id="arModeSwitchLabel">${l === "it" ? "Camera Live" : "Live Camera"}</span>
-            </button>
-          </div>
+    <div class="custom-vessel-inner">
+      <div class="brown-hdr-bar">
+        <div>
+          <h1 class="brown-hdr-title">${l === "it" ? "Realtà Aumentata in Tempo Reale" : "Live Augmented Reality Camera"}</h1>
+          <p class="cat-sub-minimal">${l === "it" ? "Inquadra una superficie con la fotocamera per visualizzare il contenitore dal vivo in scala 1:1" : "Point your camera at any surface to preview the container live at 1:1 scale"}</p>
         </div>
       </div>
 
-      <div class="ar-fs-topbar" id="arCamTopbar">
-        <div class="ar-fs-status-pill">
-          <span class="ar-cam-dot" id="arCamDot" style="background:#F59E0B;"></span>
-          <span id="arCamBadgeText">${l === "it" ? "GENERAZIONE MODELLO 1:1..." : "BUILDING 1:1 AR MODEL..."}</span>
+      <div class="custom-panel-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:15px; font-weight:800; color:var(--ink);">${l === "it" ? v.it : v.en}</div>
+            <div style="font-family:var(--mono); font-size:11.5px; color:var(--slate); margin-top:2px;">${l === "it" ? v.subIt : v.subEn}</div>
+          </div>
+          <span class="spec-tag ok">${l === "it" ? "SCALA REALE 1:1" : "TRUE 1:1 SCALE"}</span>
         </div>
-        <div class="ar-fs-actions-group">
-          <button type="button" class="ar-fs-icon-btn" id="btnArNativeBack" onclick="switchARViewDisplayMode('native')" title="${l === "it" ? "Vista 1:1 Nativa" : "Native 1:1 AR View"}" aria-label="${l === "it" ? "Vista 1:1 Nativa" : "Native 1:1 AR View"}" style="display:none;">3D</button>
-          <button type="button" class="ar-fs-icon-btn" id="btnArRescan" onclick="resetARSurfaceScan()" title="${l === "it" ? "Riscansiona piano" : "Rescan surface"}" aria-label="${l === "it" ? "Riscansiona piano" : "Rescan surface"}" style="display:none;">↻</button>
-          <button type="button" class="ar-fs-icon-btn" id="btnArClose" onclick="closeMobileARCameraStudio()" title="${l === "it" ? "Chiudi AR" : "Close AR"}" aria-label="${l === "it" ? "Chiudi AR" : "Close AR"}">✕</button>
-        </div>
-      </div>
 
-      <div class="ar-fs-scan-coach" id="arScanCoachCard" style="display:none;">
-        <svg class="ar-fs-scan-icon" viewBox="0 0 44 32" fill="none" stroke="#FFFFFF" stroke-width="1.8">
-          <rect x="15" y="3" width="14" height="26" rx="3" fill="rgba(255,255,255,0.12)"/>
-          <line x1="20" y1="25" x2="24" y2="25" stroke-linecap="round"/>
-          <path d="M9 12c-3 2-3 6 0 8M35 12c3 2 3 6 0 8" stroke="#22C55E" stroke-linecap="round"/>
-        </svg>
-        <div style="font-size:14px; font-weight:800; letter-spacing:-0.01em;">
-          ${l === "it" ? "Scansiona l'ambiente circostante" : "Scan your surroundings"}
+        <div class="ar-cam-viewport">
+          <video id="mobileArLiveVideo" class="ar-cam-video" autoplay playsinline muted></video>
+          <div class="ar-cam-grid-floor"></div>
+          <span class="ar-cam-corner tl"></span>
+          <span class="ar-cam-corner tr"></span>
+          <span class="ar-cam-corner bl"></span>
+          <span class="ar-cam-corner br"></span>
+          <div class="ar-cam-badge">
+            <span class="ar-cam-dot"></span>
+            <span>${l === "it" ? "FOTOCAMERA AR ATTIVA · RILEVAMENTO PIANO" : "AR CAMERA ACTIVE · PLANE TRACKING"}</span>
+          </div>
+          <div class="ar-cam-reticle">
+            ${visualMarkup}
+            <div class="ar-cam-floor-ring"></div>
+          </div>
         </div>
-        <div style="font-size:11.5px; color:rgba(255,255,255,0.82); line-height:1.4;">
+
+        <p class="demo-red-text">
           ${l === "it"
-            ? "Inquadra una superficie piana e muovi lentamente la fotocamera per ancorare il prodotto in scala reale 1:1"
-            : "Point your camera at a flat surface and move slowly to anchor the 3D product at true 1:1 scale"}
-        </div>
-        <div class="ar-fs-progress-track">
-          <div class="ar-fs-progress-fill" id="arScanProgressFill"></div>
-        </div>
-        <div id="arScanStatusSub" style="font-family:var(--mono); font-size:10.5px; color:#94A3B8; font-weight:700;">
-          ${l === "it" ? "Scansione superficie: 0% · 0 punti piano" : "Surface scanning: 0% · 0 plane points"}
-        </div>
-        <button type="button" class="ar-cam-enable-btn" id="arCamEnableBtn" style="display:none;" onclick="requestARCameraStream()">
-          ${l === "it" ? "Consenti Accesso Fotocamera" : "Allow Camera Access"}
-        </button>
-      </div>
+            ? "Anteprima dimostrativa: funzione ancora in fase di sviluppo"
+            : "Demonstrative preview: feature still in development"}
+        </p>
 
-      <div class="ar-fs-dim-pill" id="arFsDimPill" style="display:none;">
-        1:1 · ${escapeHtml(dimSpecText)} · ${l === "it" ? "Muoviti intorno al prodotto" : "Walk around 360°"}
+        <div style="display:flex; justify-content:center; align-items:center; border-top:1.5px solid var(--border); padding-top:12px;">
+          <button class="cta-btn white" style="width:100%; max-width:280px; padding:0 22px;" onclick="closeMobileARCameraStudio()">
+            ${l === "it" ? "Torna allo Studio 3D" : "Back to 3D Studio"}
+          </button>
+        </div>
       </div>
     </div>
   `;
 
-  exportConfiguredProductToAR().then(res => {
-    if (!state.mobileARCameraMode || !res) return;
-    const mv = document.getElementById("vcArModelViewer");
-    const qlLink = document.getElementById("arQuickLookLink");
-    const launchBtn = document.getElementById("btnLaunchNativeAR");
-    const specsBadge = document.getElementById("arNativeSpecsBadge");
-    const dotEl = document.getElementById("arCamDot");
-    const badgeTxt = document.getElementById("arCamBadgeText");
-
-    if (mv) {
-      mv.setAttribute("src", res.glbUrl);
-      mv.setAttribute("ios-src", `${res.usdzUrl}#allowsContentScaling=0`);
-    }
-    if (qlLink) {
-      qlLink.setAttribute("href", `${res.usdzUrl}#allowsContentScaling=0`);
-      qlLink.setAttribute("download", `${res.slug}.usdz`);
-    }
-    if (launchBtn) launchBtn.disabled = false;
-    if (specsBadge) {
-      const dm = res.dimsMeters;
-      specsBadge.textContent = `1:1 · ${Math.round(dm.w * 1000)} × ${Math.round(dm.h * 1000)} × ${Math.round(dm.d * 1000)} mm · GLB ${(res.glbBytes / 1024).toFixed(0)} KB · USDZ ${(res.usdzBytes / 1024).toFixed(0)} KB`;
-    }
-    if (arViewDisplayMode === "native") {
-      if (dotEl) dotEl.style.background = "#22C55E";
-      if (badgeTxt) badgeTxt.textContent = l === "it" ? "MODO AR NATIVO 1:1 (GLB / USDZ)" : "NATIVE 1:1 AR (GLB / USDZ)";
-    }
-  });
-}
-
-function copyARShareUrl(btnEl, urlStr) {
-  const l = state.lang;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(urlStr).then(() => {
-      if (btnEl) {
-        const orig = btnEl.textContent;
-        btnEl.textContent = l === "it" ? "Link copiato ✓" : "Link copied ✓";
-        setTimeout(() => { btnEl.textContent = orig; }, 1800);
-      }
-    }).catch(() => {});
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
+      .then(stream => {
+        if (!state.mobileARCameraMode) {
+          stream.getTracks().forEach(t => t.stop());
+          return;
+        }
+        mobileARStream = stream;
+        const vidEl = document.getElementById("mobileArLiveVideo");
+        if (vidEl) vidEl.srcObject = stream;
+      })
+      .catch(() => {});
   }
 }
 
 function toggleARModal(openVal) {
   const wantOpen = (openVal !== undefined) ? !!openVal : !state.arModalOpen;
   if (wantOpen && window.innerWidth <= 768) {
-    requestIOSMotionPermissionIfNeeded();
     openMobileARCameraStudio();
     return;
   }
@@ -11735,398 +7488,40 @@ function toggleARModal(openVal) {
   if (!state.arModalOpen) return;
   const l = state.lang;
   const v = getVessel();
-  const arUrl = buildARShareUrl();
-  const qrSvg = buildRealScannableQRSVG(arUrl);
-  const safeArUrl = escapeHtml(arUrl);
-  const totalRealHmm = getARTotalHeightMm();
+  const qrSvg = buildFictitiousQRSVG(`${v.id}-${state.closureId}-${state.wrapType}-${state.skinId}`);
   card.innerHTML = `
     <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
       <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--crimson); letter-spacing:0.1em;">${l === "it" ? "REALTÀ AUMENTATA · SCALA REALE 1:1" : "AUGMENTED REALITY · REAL 1:1 SCALE"}</span>
       <button type="button" style="border:none; background:transparent; cursor:pointer; font-size:16px; font-weight:800; color:var(--slate);" onclick="toggleARModal(false)">✕</button>
     </div>
-    <h3 style="font-size:17px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Visualizza il prodotto nella tua stanza" : "View the product in your room"}</h3>
+    <h3 style="font-size:17px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Visualizza il prodotto sul tuo tavolo" : "View the product on your desk"}</h3>
     <div style="font-family:var(--mono); font-size:12px; font-weight:700; color:var(--espresso); text-align:center; line-height:1.45;">
-      <div>${escapeHtml(l === "it" ? v.it : v.en)}</div>
-      <div style="color:var(--slate); font-weight:600; margin-top:2px;">${v.wMm} × ${v.dMm || v.wMm} × ${totalRealHmm} mm (1:1)</div>
+      <div>${l === "it" ? v.it : v.en}</div>
+      <div style="color:var(--slate); font-weight:600; margin-top:2px;">${l === "it" ? v.subIt : v.subEn}</div>
     </div>
     <div class="ar-qr-frame">${qrSvg}</div>
     <p style="font-size:12px; color:var(--charcoal); line-height:1.45;">
       ${l === "it"
-        ? "Inquadra il QR code con lo smartphone per aprire il visualizzatore AR nativo (ARKit / ARCore) in scala reale 1:1 senza installare app."
-        : "Scan this QR code on your smartphone to launch native AR (ARKit / ARCore) at locked true 1:1 real-world dimensions."}
+        ? "Inquadra questo QR code con la fotocamera dello smartphone per aprire la vista in realtà aumentata e posizionare il contenitore nelle sue dimensioni reali dove preferisci."
+        : "Scan this QR code with your smartphone camera to open the augmented reality viewer and place the container at true 1:1 scale on any surface."}
     </p>
-    <div class="ar-qr-actions">
-      <button type="button" class="cta-btn white" style="flex:1;" onclick="copyARShareUrl(this, '${safeArUrl}')">${l === "it" ? "Copia link AR" : "Copy AR link"}</button>
-      <button type="button" class="cta-btn" style="flex:1;" onclick="requestIOSMotionPermissionIfNeeded(); openMobileARCameraStudio()">${l === "it" ? "Apri Vista AR" : "Open AR View"}</button>
-    </div>
-    <div class="ar-export-row">
-      <button type="button" class="ar-dl-pill" onclick="downloadARAsset('glb')">↓ .GLB (Android / WebXR)</button>
-      <button type="button" class="ar-dl-pill" onclick="downloadARAsset('usdz')">↓ .USDZ (Apple AR Quick Look)</button>
-    </div>
+    <p class="demo-red-text" style="text-align:center; width:100%; margin:2px 0 0;">
+      ${l === "it" ? "Anteprima dimostrativa: funzione ancora in fase di sviluppo" : "Demonstrative preview: feature still in development"}
+    </p>
   `;
-  exportConfiguredProductToAR();
 }
 
-// ==================== USER PROFILE, SAVED CUSTOM CONTAINERS, FAVORITES & REQUESTS ====================
+// ==================== USER PROFILE, FAVORITES & SUBMITTED REQUESTS PERSISTENCE ====================
 const REQUEST_STORAGE_KEY = "vesselcove_submitted_requests_v19";
 const FAVORITES_STORAGE_KEY = "vesselcove_favorite_vessels_v25";
-const SAVED_CUSTOM_VESSELS_KEY = "vesselcove_saved_custom_vessels_v30";
 const ACCEPTANCE_DEADLINE_DAYS = 3;
-
-function loadSavedCustomVessels() {
-  try {
-    const raw = localStorage.getItem(SAVED_CUSTOM_VESSELS_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        state.savedCustomVessels = parsed;
-        parsed.forEach(cv => {
-          if (cv.thumbDataUrl) VESSEL_REALISTIC_THUMBS[cv.id] = cv.thumbDataUrl;
-          const targetVid = cv.isCustomVessel ? cv.id : (cv.baseVesselId || cv.id);
-          if (cv.customGraphic && cv.customGraphic.dataUrl) {
-            if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
-            const cgImg = new Image();
-            const cgRec = { ...cv.customGraphic, imageObj: null };
-            cgImg.onload = () => {
-              cgRec.imageObj = cgImg;
-              if (state.vesselId === targetVid && state.skinId === "custom_user_skin") {
-                customUploadedImageObj = cgImg;
-                rebuild3DProduct();
-              }
-            };
-            cgImg.src = cv.customGraphic.dataUrl;
-            cgRec.imageObj = cgImg;
-            if (!state.customGraphicsByVessel[targetVid]) {
-              state.customGraphicsByVessel[targetVid] = cgRec;
-            }
-          }
-        });
-      }
-    }
-  } catch {}
-}
-
-function persistSavedCustomVessels() {
-  try {
-    const serializable = (state.savedCustomVessels || []).map(cv => {
-      const copy = { ...cv };
-      if (copy.customGraphic) {
-        copy.customGraphic = {
-          title: copy.customGraphic.title,
-          file: copy.customGraphic.file,
-          dataUrl: copy.customGraphic.dataUrl,
-          width: copy.customGraphic.width,
-          height: copy.customGraphic.height,
-          physicalWmm: copy.customGraphic.physicalWmm || 0,
-          physicalHmm: copy.customGraphic.physicalHmm || 0,
-          bleedMm: copy.customGraphic.bleedMm || 0,
-          labelLayout: copy.customGraphic.labelLayout || "single",
-          validatedWrapType: copy.customGraphic.validatedWrapType || "",
-          vesselDimsSignature: copy.customGraphic.vesselDimsSignature || "",
-          audit: copy.customGraphic.audit || null,
-          colors: copy.customGraphic.colors,
-          embeddedBc: copy.customGraphic.embeddedBc
-        };
-      }
-      return copy;
-    });
-    localStorage.setItem(SAVED_CUSTOM_VESSELS_KEY, JSON.stringify(serializable));
-  } catch {}
-}
-
-function captureStudioDraftSnapshot(v) {
-  try {
-    if (typeof THREE !== "undefined" && renderer && scene && camera) {
-      const tmpW = 360, tmpH = 360;
-      const offC = document.createElement("canvas");
-      offC.width = tmpW;
-      offC.height = tmpH;
-      const offR = new THREE.WebGLRenderer({ canvas: offC, antialias: true, alpha: true, preserveDrawingBuffer: true });
-      offR.setPixelRatio(1);
-      offR.setSize(tmpW, tmpH, false);
-      offR.toneMapping = THREE.ACESFilmicToneMapping;
-      offR.toneMappingExposure = 1.08;
-      offR.outputEncoding = THREE.sRGBEncoding;
-
-      const offS = new THREE.Scene();
-      offS.environment = createPackshotEnvironment(offR);
-      const amb = new THREE.AmbientLight(0xF1F5F9, 0.34);
-      offS.add(amb);
-      const key = new THREE.DirectionalLight(0xFFFFFF, 1.25);
-      key.position.set(4.5, 6.2, 5.2);
-      offS.add(key);
-      const fill = new THREE.DirectionalLight(0xCBD5E1, 0.45);
-      fill.position.set(-4.8, 2.0, 2.5);
-      offS.add(fill);
-
-      const snapTex = new THREE.CanvasTexture(texCanvas);
-      snapTex.encoding = THREE.sRGBEncoding;
-      snapTex.wrapS = THREE.RepeatWrapping;
-      snapTex.wrapT = THREE.ClampToEdgeWrapping;
-      renderSleeveUVTexture();
-      snapTex.needsUpdate = true;
-
-      const cl = getClosure();
-      const phys = evaluateLivePhysics();
-      const built = buildConfiguredProductGroup(v, cl, phys, {
-        mapTexture: snapTex,
-        wireframe: false,
-        hideClashRing: true
-      });
-      offS.add(built.group);
-
-      const box = new THREE.Box3().setFromObject(built.group);
-      const center = box.getCenter(new THREE.Vector3());
-      const sz = box.getSize(new THREE.Vector3());
-      const maxDim = Math.max(sz.x, sz.y, sz.z, 1.5);
-      const offCam = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
-      const dist = maxDim * 2.18;
-      const theta = camSpherical ? camSpherical.theta : 0.32;
-      const phi = 1.32;
-      offCam.position.set(
-        dist * Math.sin(phi) * Math.sin(theta),
-        center.y + dist * Math.cos(phi),
-        dist * Math.sin(phi) * Math.cos(theta)
-      );
-      offCam.lookAt(center);
-      offR.clear();
-      offR.render(offS, offCam);
-
-      const dataUrl = offC.toDataURL("image/png");
-      offS.remove(built.group);
-      built.group.traverse(obj => {
-        if (obj.geometry) obj.geometry.dispose();
-        if (obj.material) obj.material.dispose();
-      });
-      snapTex.dispose();
-      offR.dispose();
-      return dataUrl;
-    }
-  } catch (e) {}
-  return getVesselRealisticThumb(v) || "";
-}
-
-function buildDraftConfigSummary(v) {
-  const cl = getClosure();
-  const finList = [...RIGID_FINISHES, ...POUCH_FINISHES];
-  const fin = finList.find(f => f.id === state.finishId);
-  const skin = getSkin();
-  const phys = evaluateLivePhysics();
-
-  const partsIt = [];
-  const partsEn = [];
-  if (fin) { partsIt.push(fin.it); partsEn.push(fin.en); }
-  if (vesselHasClosureStep(v) && cl && cl.id !== "none") {
-    partsIt.push(cl.it);
-    partsEn.push(cl.en);
-  } else if (vesselHasClosureStep(v)) {
-    partsIt.push("Senza chiusura");
-    partsEn.push("No closure");
-  }
-  if (!hasWrap()) {
-    partsIt.push("Neutro senza grafica");
-    partsEn.push("No artwork wrap");
-  } else if (isDoypack()) {
-    partsIt.push(state.pouchPrintType === "flexo" ? "Stampa Flexo" : "Stampa Digitale");
-    partsEn.push(state.pouchPrintType === "flexo" ? "Flexo Print" : "Digital Print");
-    if (skin && skin.brand) { partsIt.push(skin.brand); partsEn.push(skin.brand); }
-  } else {
-    const modeIt = isSerigrafiaMode() ? "Serigrafia 360°" : (isLabelMode() ? "Etichetta" : "Sleeve 360°");
-    const modeEn = isSerigrafiaMode() ? "360° Silk-Screen" : (isLabelMode() ? "Label" : "360° Sleeve");
-    const skinLbl = skin ? skin.brand : "";
-    partsIt.push(skinLbl ? `${modeIt} (${skinLbl})` : modeIt);
-    partsEn.push(skinLbl ? `${modeEn} (${skinLbl})` : modeEn);
-  }
-  partsIt.push(phys.isBulk ? `Sparsi ${phys.packQty} pz` : `Scatola ${phys.packQty} pz`);
-  partsEn.push(phys.isBulk ? `Loose ${phys.packQty} pcs` : `Box ${phys.packQty} pcs`);
-
-  return {
-    it: partsIt.join(" · "),
-    en: partsEn.join(" · ")
-  };
-}
-
-function saveCurrentCustomVesselToProfile() {
-  const v = getVessel();
-  if (!v) return;
-  const oldVid = v.id;
-  const isCustom = !!v.isCustomVessel;
-  const baseVesselId = v.baseVesselId || v.id;
-  const targetDraftId = state.currentDraftId || `draft_${Date.now()}`;
-  state.currentDraftId = targetDraftId;
-
-  const activeCustomGraphic = state.customGraphicsByVessel ? (state.customGraphicsByVessel[oldVid] || state.customGraphicsByVessel[baseVesselId]) : null;
-  if (isCustom && oldVid !== targetDraftId) {
-    v.id = targetDraftId;
-    state.vesselId = targetDraftId;
-    if (activeCustomGraphic && state.customGraphicsByVessel) {
-      state.customGraphicsByVessel[targetDraftId] = activeCustomGraphic;
-      delete state.customGraphicsByVessel[oldVid];
-    }
-  }
-
-  const snapUrl = captureStudioDraftSnapshot(v);
-  if (snapUrl) VESSEL_REALISTIC_THUMBS[targetDraftId] = snapUrl;
-  const summary = buildDraftConfigSummary(v);
-
-  const savedEntry = {
-    ...v,
-    id: targetDraftId,
-    baseVesselId: isCustom ? targetDraftId : baseVesselId,
-    isCustomVessel: isCustom,
-    isProductionDraft: true,
-    dimsSignature: getVesselDimsSignature(v),
-    savedAt: new Date().toLocaleDateString(state.lang === "it" ? "it-IT" : "en-US"),
-    draftSummaryIt: summary.it,
-    draftSummaryEn: summary.en,
-    thumbDataUrl: snapUrl || getVesselRealisticThumb(v) || "",
-    savedConfig: {
-      finishId: state.finishId,
-      closureId: state.closureId,
-      wrapType: state.wrapType,
-      labelLayout: state.labelLayout || "single",
-      pouchPrintType: state.pouchPrintType,
-      filmId: state.filmId,
-      labelMatId: state.labelMatId,
-      serigrafiaInkId: state.serigrafiaInkId,
-      pouchMatId: state.pouchMatId,
-      skinId: state.skinId,
-      sleeveAngleDeg: state.sleeveAngleDeg,
-      sleeveHeightPct: state.sleeveHeightPct,
-      bcAngleDeg: state.bcAngleDeg,
-      bcHeightPct: state.bcHeightPct,
-      bcLadder: state.bcLadder,
-      bcDoypackSide: state.bcDoypackSide,
-      bcDoypackX: state.bcDoypackX,
-      boxMode: state.boxMode,
-      boxQty: state.boxQty,
-      bulkQty: state.bulkQty,
-      boxDivider: state.boxDivider,
-      boxBoard: state.boxBoard
-    },
-    customGraphic: activeCustomGraphic ? {
-      title: activeCustomGraphic.title,
-      file: activeCustomGraphic.file,
-      dataUrl: activeCustomGraphic.dataUrl,
-      width: activeCustomGraphic.width,
-      height: activeCustomGraphic.height,
-      physicalWmm: activeCustomGraphic.physicalWmm || 0,
-      physicalHmm: activeCustomGraphic.physicalHmm || 0,
-      bleedMm: activeCustomGraphic.bleedMm || 0,
-      labelLayout: activeCustomGraphic.labelLayout || state.labelLayout || "single",
-      validatedWrapType: activeCustomGraphic.validatedWrapType || state.wrapType,
-      vesselDimsSignature: activeCustomGraphic.vesselDimsSignature || getVesselDimsSignature(v),
-      audit: activeCustomGraphic.audit || null,
-      colors: activeCustomGraphic.colors,
-      embeddedBc: activeCustomGraphic.embeddedBc
-    } : null
-  };
-
-  if (!Array.isArray(state.savedCustomVessels)) state.savedCustomVessels = [];
-  const exIdx = state.savedCustomVessels.findIndex(item => item.id === targetDraftId);
-  if (exIdx >= 0) state.savedCustomVessels[exIdx] = savedEntry;
-  else state.savedCustomVessels.unshift(savedEntry);
-  if (isCustom) state.activeCustomVessel = savedEntry;
-  persistSavedCustomVessels();
-
-  const btn = document.getElementById("btnSaveCustomVessel");
-  if (btn) {
-    const l = state.lang;
-    btn.dataset.justSaved = "1";
-    btn.textContent = l === "it" ? "Salvato ✓" : "Saved ✓";
-    setTimeout(() => {
-      const bNow = document.getElementById("btnSaveCustomVessel");
-      if (bNow) {
-        delete bNow.dataset.justSaved;
-        bNow.textContent = state.lang === "it" ? "Salva" : "Save";
-      }
-    }, 1800);
-  }
-}
-
-function deleteSavedCustomVessel(vid, evt) {
-  if (evt && typeof evt.stopPropagation === "function") evt.stopPropagation();
-  state.savedCustomVessels = (state.savedCustomVessels || []).filter(item => item.id !== vid);
-  if (state.customGraphicsByVessel && state.customGraphicsByVessel[vid]) {
-    delete state.customGraphicsByVessel[vid];
-  }
-  if (state.activeCustomVessel && state.activeCustomVessel.id === vid) {
-    state.activeCustomVessel = null;
-  }
-  if (state.currentDraftId === vid) {
-    state.currentDraftId = null;
-  }
-  if (state.vesselId === vid) {
-    resetVesselConfigState("serum_250");
-  }
-  persistSavedCustomVessels();
-  renderProfileView();
-}
-
-function openSavedCustomVesselInStudio(draftId) {
-  const saved = (state.savedCustomVessels || []).find(item => item.id === draftId);
-  if (!saved) return;
-  const isCustom = !!saved.isCustomVessel;
-  const targetVid = isCustom ? saved.id : (saved.baseVesselId || "serum_250");
-  state.activeCustomVessel = isCustom ? saved : null;
-  let restoredImg = null;
-  if (saved.customGraphic && saved.customGraphic.dataUrl) {
-    if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
-    const cgImg = new Image();
-    const cgRec = {
-      ...saved.customGraphic,
-      vesselDimsSignature: saved.customGraphic.vesselDimsSignature || getVesselDimsSignature(saved),
-      imageObj: null
-    };
-    cgImg.onload = () => {
-      cgRec.imageObj = cgImg;
-      if (state.vesselId === targetVid && state.skinId === "custom_user_skin") {
-        customUploadedImageObj = cgImg;
-        rebuild3DProduct();
-        renderAllUI();
-      }
-    };
-    cgImg.src = saved.customGraphic.dataUrl;
-    cgRec.imageObj = cgImg;
-    state.customGraphicsByVessel[targetVid] = cgRec;
-    restoredImg = cgImg;
-  }
-  resetVesselConfigState(targetVid);
-  state.currentDraftId = saved.id;
-  if (restoredImg) customUploadedImageObj = restoredImg;
-  if (saved.savedConfig) {
-    Object.assign(state, saved.savedConfig);
-    state.vesselId = targetVid;
-  }
-  if (saved.customGraphic) {
-    state.customGraphicTitle = saved.customGraphic.title || state.customGraphicTitle;
-    state.customGraphicFile = saved.customGraphic.file || "";
-    state.customGraphicDataUrl = saved.customGraphic.dataUrl || "";
-    state.customGraphicWidth = saved.customGraphic.width || 0;
-    state.customGraphicHeight = saved.customGraphic.height || 0;
-    state.customGraphicPhysicalWmm = saved.customGraphic.physicalWmm || 0;
-    state.customGraphicPhysicalHmm = saved.customGraphic.physicalHmm || 0;
-    state.labelLayout = (saved.savedConfig && saved.savedConfig.labelLayout) || saved.customGraphic.labelLayout || "single";
-    state.customGraphicConformant = true;
-  }
-  state.selectedSuppliers = isCustom ? {} : { container: 0 };
-  state.filieraStep = 1;
-  switchMainView("studio");
-  rebuild3DProduct();
-  renderAllUI();
-}
 
 function loadFavoriteVessels() {
   try {
     const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        // Purge any legacy custom containers from favorites so they never appear in Marketplace or Favorites
-        const cleaned = parsed.filter(id => id && !String(id).startsWith("custom") && VESSELS.some(v => v.id === id));
-        state.favoriteVessels = cleaned;
-        if (cleaned.length !== parsed.length) saveFavoriteVessels();
-      }
+      if (Array.isArray(parsed)) state.favoriteVessels = parsed;
     }
   } catch {}
 }
@@ -12237,7 +7632,6 @@ function renderProfileView() {
   const reqs = state.submittedRequests;
   const favIds = Array.isArray(state.favoriteVessels) ? state.favoriteVessels : [];
   const favVessels = favIds.map(id => VESSELS.find(v => v.id === id)).filter(Boolean);
-  const savedCustoms = Array.isArray(state.savedCustomVessels) ? state.savedCustomVessels : [];
 
   const favsHtml = favVessels.length === 0
     ? `
@@ -12276,50 +7670,6 @@ function renderProfileView() {
       </div>
     `;
 
-  const customSavedHtml = savedCustoms.length === 0
-    ? `
-      <div style="text-align:center; padding:26px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
-        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessuna bozza di produzione salvata" : "No production drafts saved yet"}</div>
-        <p style="font-size:12px; color:var(--slate); margin-top:5px;">
-          ${l === "it"
-            ? "Configura qualsiasi contenitore nello Studio 3D e clicca su Salva accanto a Conferma per ritrovarlo qui con tutte le modifiche."
-            : "Configure any container in 3D Studio and click Save beside Confirm to find it here with all modifications."}
-        </p>
-      </div>
-    `
-    : `
-      <div class="fav-prof-grid">
-        ${savedCustoms.map(v => {
-          const fallbackBase = !v.isCustomVessel ? findVesselByIdAnywhere(v.baseVesselId) : null;
-          const thumbSrc = v.thumbDataUrl || getVesselRealisticThumb(v) || (fallbackBase ? getVesselRealisticThumb(fallbackBase) : "") || "";
-          const visualTag = thumbSrc
-            ? `<img class="cat-real-img" src="${thumbSrc}" alt="${escapeHtml(l === "it" ? v.it : v.en)}">`
-            : renderCatalogThumbSVG(v);
-          const draftLine = l === "it" ? (v.draftSummaryIt || "") : (v.draftSummaryEn || "");
-          return `
-            <div class="fav-prof-card" onclick="openSavedCustomVesselInStudio('${v.id}')" style="cursor:pointer;">
-              <div class="fav-prof-stage">${visualTag}</div>
-              <div class="cat-meta-body">
-                <div class="cat-title-row">
-                  <div class="cat-meta-title">${escapeHtml(l === "it" ? v.it : v.en)}</div>
-                  <button type="button" class="fav-heart-btn" data-del-custom="${v.id}" onclick="deleteSavedCustomVessel('${v.id}', event)" title="${l === "it" ? "Elimina bozza" : "Delete draft"}" aria-label="${l === "it" ? "Elimina bozza" : "Delete draft"}">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                  </button>
-                </div>
-                ${draftLine ? `<div style="font-size:11px; font-weight:700; color:var(--crimson); background:var(--crimson-soft); border:1px solid rgba(194,24,14,0.18); padding:4px 9px; border-radius:8px; line-height:1.35;">${escapeHtml(draftLine)}</div>` : ""}
-                ${renderVesselTwoColSpecs(v, l)}
-                <div class="cat-meta-footer">
-                  <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); openSavedCustomVesselInStudio('${v.id}')">
-                    ${l === "it" ? "Seleziona" : "Select"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    `;
-
   const reqsHtml = reqs.length === 0
     ? `
       <div style="text-align:center; padding:32px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
@@ -12339,8 +7689,8 @@ function renderProfileView() {
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <span style="font-family:var(--mono); font-size:11px; font-weight:800; color:var(--crimson);">${req.id}</span>
             </div>
-            <div style="font-size:15.5px; font-weight:800; color:var(--ink); margin-top:7px;">${escapeHtml(l === "it" ? req.vesselIt : req.vesselEn)}</div>
-            <div class="req-spec-line">${escapeHtml(req.summaryLine)}</div>
+            <div style="font-size:15.5px; font-weight:800; color:var(--ink); margin-top:7px;">${l === "it" ? req.vesselIt : req.vesselEn}</div>
+            <div class="req-spec-line">${req.summaryLine}</div>
           </div>
           <div style="text-align:right; flex-shrink:0;">
             <div style="font-family:var(--mono); font-size:17px; font-weight:800; color:var(--ink);">${formatEuro(req.totalCost)}</div>
@@ -12451,24 +7801,6 @@ function renderProfileView() {
           ${favsHtml}
         </div>
 
-        <div class="profile-card" id="profileCustomVesselsCard">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-            <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "LE TUE BOZZE STUDIO 3D" : "YOUR 3D STUDIO DRAFTS"}</span>
-              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Bozze di Produzione" : "Production Drafts"}</h2>
-            </div>
-            <span class="spec-tag">${savedCustoms.length} ${savedCustoms.length === 1 ? (l === "it" ? "BOZZA" : "DRAFT") : (l === "it" ? "BOZZE" : "DRAFTS")}</span>
-          </div>
-
-          <p style="font-size:12px; color:var(--slate); line-height:1.4; margin:0;">
-            ${l === "it"
-              ? "Configurazioni e contenitori salvati nello Studio 3D con tutte le modifiche pronte per essere riprese."
-              : "Configurations and containers saved from 3D Studio with all modifications ready to resume."}
-          </p>
-
-          ${customSavedHtml}
-        </div>
-
         <div class="profile-card">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
             <div>
@@ -12568,35 +7900,15 @@ function updateBarcodePositionFromSlider(angleDeg, heightPct) {
   updateFastTelemetryUI();
 }
 
-function syncSleevePositionSliderUI() {
-  const hEl = document.getElementById("slvHeightRange");
-  const aEl = document.getElementById("slvAngleRange");
-  const hVal = document.getElementById("slvHeightVal");
-  const aVal = document.getElementById("slvAngleVal");
-  if (hEl) {
-    hEl.value = String(state.sleeveHeightPct);
-    hEl.style.setProperty("--control-value", String(state.sleeveHeightPct));
-    hEl.setAttribute("aria-valuetext", `${state.sleeveHeightPct}%`);
-  }
-  if (aEl) {
-    aEl.value = String(state.sleeveAngleDeg);
-    aEl.style.setProperty("--control-value", String(state.sleeveAngleDeg));
-    aEl.setAttribute("aria-valuetext", `${state.sleeveAngleDeg}°`);
-  }
-  if (hVal) hVal.textContent = `${state.sleeveHeightPct}%`;
-  if (aVal) aVal.textContent = `${state.sleeveAngleDeg}°`;
-}
-
 function updateSleevePositionFromSlider(angleDeg, heightPct) {
   if (angleDeg !== null) {
-    state.sleeveAngleDeg = Math.max(-180, Math.min(180, Math.round(Number(angleDeg))));
+    state.sleeveAngleDeg = Number(angleDeg);
     camSpherical.theta = 0.24 - (state.sleeveAngleDeg / 180) * Math.PI * 0.85;
   }
   if (heightPct !== null) {
-    state.sleeveHeightPct = Math.max(10, Math.min(88, Math.round(Number(heightPct))));
+    state.sleeveHeightPct = Number(heightPct);
     clampBarcodeToSleeve();
   }
-  syncSleevePositionSliderUI();
   if (sleeveMesh && sleeveMesh.geometry) applyDynamicWrapMeshDeformation(sleeveMesh.geometry, getVessel());
   renderSleeveUVTexture();
   updateFastTelemetryUI();
@@ -12610,9 +7922,8 @@ function swapSupplier() {
 function proceedToPillars() {
   const phys = evaluateLivePhysics();
   if (phys.status === "r") return;
-  const v = getVessel();
   state.filieraStep = 1;
-  state.selectedSuppliers = (v && v.isCustomVessel) ? {} : { container: 0 };
+  state.selectedSuppliers = { container: 0 };
   switchMainView("pillars");
 }
 
@@ -12867,27 +8178,23 @@ function renderInspector() {
   } else if (state.inspTab === 2) {
     const availSkins = getAvailableSkinsForWrap(state.wrapType);
     const skinPills = availSkins.map(s => {
-      const cgSrc = s.dataUrl || state.customGraphicDataUrl;
-      const swatchHtml = (s.id === "custom_user_skin" && cgSrc)
-        ? `<img src="${cgSrc}" alt="${escapeHtml(s.brand)}" style="width:22px; height:28px; border-radius:3px; object-fit:cover; border:1px solid var(--border); flex-shrink:0;">`
-        : (s.id === "neutral" && s.styleType === "neutral_clear"
-            ? `<div style="width:22px; height:28px; border-radius:3px; border:1px dashed var(--slate); background:repeating-linear-gradient(45deg, #F8FAFC, #F8FAFC 4px, #E2E8F0 4px, #E2E8F0 8px); flex-shrink:0;"></div>`
-            : `<div style="display:flex; flex-direction:column; width:22px; height:28px; border-radius:3px; overflow:hidden; border:1px solid var(--border); flex-shrink:0;">
-                <span style="flex:2; background:${s.previewColors[0]};"></span>
-                <span style="flex:1; background:${s.previewColors[1]};"></span>
-                <span style="flex:1; background:${s.previewColors[2]};"></span>
-              </div>`);
+      const swatchHtml = s.id === "neutral" && s.styleType === "neutral_clear"
+        ? `<div style="width:22px; height:28px; border-radius:3px; border:1px dashed var(--slate); background:repeating-linear-gradient(45deg, #F8FAFC, #F8FAFC 4px, #E2E8F0 4px, #E2E8F0 8px); flex-shrink:0;"></div>`
+        : `<div style="display:flex; flex-direction:column; width:22px; height:28px; border-radius:3px; overflow:hidden; border:1px solid var(--border); flex-shrink:0;">
+            <span style="flex:2; background:${s.previewColors[0]};"></span>
+            <span style="flex:1; background:${s.previewColors[1]};"></span>
+            <span style="flex:1; background:${s.previewColors[2]};"></span>
+          </div>`;
       const sTitle = s.id === "neutral"
         ? (s.styleType === "neutral_clear" ? (l === "it" ? "Neutra Trasparente" : "Clear Neutral") : (l === "it" ? "Bianca Senza Scritte" : "Blank White"))
-        : (s.id === "custom_user_skin" ? escapeHtml(s.brand) : `${escapeHtml(s.brand)} ${escapeHtml(s.brandSub)}`);
-      const sMeta = escapeHtml(l === "it" ? s.descIt : s.descEn);
+        : `${s.brand} ${s.brandSub}`;
       return `
         <button class="prod-item ${s.id === state.skinId && hasWrap() ? "active" : ""}" onclick="selectSkin('${s.id}')">
-          <div style="display:flex; align-items:center; gap:9px; min-inline-size:0; width:100%;">
+          <div style="display:flex; align-items:center; gap:9px;">
             ${swatchHtml}
-            <div style="min-inline-size:0; flex:1;">
-              <div class="prod-title" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sTitle}</div>
-              <div class="prod-meta" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sMeta}</div>
+            <div>
+              <div class="prod-title">${sTitle}</div>
+              <div class="prod-meta">${l === "it" ? s.descIt : s.descEn}</div>
             </div>
           </div>
         </button>
@@ -13008,38 +8315,6 @@ function renderInspector() {
       return;
     }
 
-    const buildPositioningCardHtml = () => {
-      const labelMode = isLabelMode();
-      const hDesc = labelMode
-        ? (l === "it" ? `Altezza Etichetta (${state.sleeveHeightPct}%)` : `Label Height (${state.sleeveHeightPct}%)`)
-        : (l === "it" ? `Altezza Sleeve (${state.sleeveHeightPct}%)` : `Sleeve Height (${state.sleeveHeightPct}%)`);
-      const aDesc = l === "it" ? `Rotazione 360° (${state.sleeveAngleDeg}°)` : `Horizontal Rotation (${state.sleeveAngleDeg}°)`;
-      return `
-        <div class="sec-block${animCls}">
-          <div class="sec-hdr">
-            <span>${l === "it" ? "POSIZIONAMENTO IN TEMPO REALE" : "REAL-TIME POSITIONING"}</span>
-            <span class="spec-tag ${phys.sleeveStatus === "err" ? "clash" : "ok"}">${labelMode ? "CURVATURA" : "TD"} ${phys.sleeveTD}%</span>
-          </div>
-          <div class="slv-pos-card">
-            <div class="slv-pos-row">
-              <div class="slv-pos-hdr">
-                <label for="slvHeightRange">${l === "it" ? "Altezza Verticale" : "Vertical Height"}</label>
-                <span class="slv-pos-val" id="slvHeightVal">${state.sleeveHeightPct}%</span>
-              </div>
-              <input id="slvHeightRange" type="range" class="vc-range-slider" min="10" max="88" step="1" value="${state.sleeveHeightPct}" aria-valuetext="${hDesc}" style="--attr-min:10; --attr-max:88; --control-value:${state.sleeveHeightPct};" oninput="updateSleevePositionFromSlider(null, this.value)">
-            </div>
-            <div class="slv-pos-row">
-              <div class="slv-pos-hdr">
-                <label for="slvAngleRange">${l === "it" ? "Posizione Orizzontale 360°" : "Horizontal Position 360°"}</label>
-                <span class="slv-pos-val" id="slvAngleVal">${state.sleeveAngleDeg}°</span>
-              </div>
-              <input id="slvAngleRange" type="range" class="vc-range-slider" min="-180" max="180" step="1" value="${state.sleeveAngleDeg}" aria-valuetext="${aDesc}" style="--attr-min:-180; --attr-max:180; --control-value:${state.sleeveAngleDeg};" oninput="updateSleevePositionFromSlider(this.value, null)">
-            </div>
-          </div>
-        </div>
-      `;
-    };
-
     if (isLabelMode()) {
       const labelPaperPills = LABEL_PAPERS.map(p => `
         <button class="opt-pill ${p.id === state.labelMatId ? "active" : ""}" onclick="state.labelMatId='${p.id}'; rebuild3DProduct(); renderAllUI();">
@@ -13055,8 +8330,6 @@ function renderInspector() {
           <div class="sec-hdr"><span>${l === "it" ? "CARTA E FILM ADESIVO ETICHETTA" : "ADHESIVE LABEL SUBSTRATE"}</span></div>
           <div class="grid-2">${labelPaperPills}</div>
         </div>
-
-        ${buildPositioningCardHtml()}
 
         <div class="sec-block${animCls}">
           <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
@@ -13081,7 +8354,6 @@ function renderInspector() {
         <div class="sec-hdr"><span>${l === "it" ? "MATERIALE FILM TERMORETRAIBILE" : "SHRINK SLEEVE FILM MATERIAL"}</span></div>
         <div class="grid-2">${filmPills}</div>
       </div>
-      ${buildPositioningCardHtml()}
       <div class="sec-block${animCls}">
         <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
         <div class="prod-list">${skinPills}</div>
@@ -13453,34 +8725,32 @@ function buildSupplyChainSteps(phys) {
     en: "Certified European primary container manufacturer with inline dimensional control."
   };
 
-  // STEP 1 (LOCKED / NON-MODIFICABILE): Container Factory — omitted when user brings their own custom container
-  if (!v.isCustomVessel) {
-    steps.push({
-      key: "container",
-      lockedFixed: true,
-      tagIt: "CONTENITORE PRIMARIO",
-      tagEn: "PRIMARY CONTAINER",
-      labelIt: "Contenitore primario",
-      labelEn: "Primary container",
-      cls: "ok",
-      badge: `${v.neck} · ${v.vol}`,
-      title: l === "it" ? v.it : v.en,
-      spec: `${l === "it" ? v.matIt : v.matEn} · ${l === "it" ? v.subIt : v.subEn}`,
-      options: [
-        {
-          name: v.vendor,
-          sponsored: false,
-          price: 260,
-          rating: "4.9",
-          reviews: 128,
-          cert: "ISO 9001 · ISO 15378 · BRCGS",
-          leadIt: "5 gg",
-          leadEn: "5 days",
-          sub: l === "it" ? vProf.it : vProf.en
-        }
-      ]
-    });
-  }
+  // STEP 1 (LOCKED / NON-MODIFICABILE): Container Factory already selected in Marketplace
+  steps.push({
+    key: "container",
+    lockedFixed: true,
+    tagIt: "CONTENITORE PRIMARIO",
+    tagEn: "PRIMARY CONTAINER",
+    labelIt: "Contenitore primario",
+    labelEn: "Primary container",
+    cls: "ok",
+    badge: `${v.neck} · ${v.vol}`,
+    title: l === "it" ? v.it : v.en,
+    spec: `${l === "it" ? v.matIt : v.matEn} · ${l === "it" ? v.subIt : v.subEn}`,
+    options: [
+      {
+        name: v.vendor,
+        sponsored: false,
+        price: 260,
+        rating: "4.9",
+        reviews: 128,
+        cert: "ISO 9001 · ISO 15378 · BRCGS",
+        leadIt: "5 gg",
+        leadEn: "5 days",
+        sub: l === "it" ? vProf.it : vProf.en
+      }
+    ]
+  });
 
   // STEP 2 (if closure selected): [0]=Sponsored, [1]=Lowest Price, [2..3]=Others
   if (cl.id !== "none" && !pouchMode && v.shape !== "alu_can") {
@@ -14226,13 +9496,6 @@ function updateFastTelemetryUI() {
   document.getElementById("ui_ship_note").textContent = t.shipNote;
   document.getElementById("val_sp_lot").textContent = `${prefix}${formatEuro(chain.minBaseCost)}`;
 
-  const btnSaveCustom = document.getElementById("btnSaveCustomVessel");
-  if (btnSaveCustom) {
-    btnSaveCustom.style.display = "flex";
-    btnSaveCustom.textContent = btnSaveCustom.dataset.justSaved === "1"
-      ? (l === "it" ? "Salvato ✓" : "Saved ✓")
-      : (l === "it" ? "Salva" : "Save");
-  }
   const btnChk = document.getElementById("btnCheckout");
   if (phys.status === "r") {
     btnChk.disabled = true;
@@ -14365,7 +9628,7 @@ function createThumbDoypackTexture() {
   return tex;
 }
 
-function generatePhotorealisticVesselThumbnails(onlyIds) {
+function generatePhotorealisticVesselThumbnails() {
   if (typeof THREE === "undefined") return;
   try {
     const W = 440, H = 440;
@@ -14417,15 +9680,9 @@ function generatePhotorealisticVesselThumbnails(onlyIds) {
     const offCam = new THREE.PerspectiveCamera(28, W / H, 0.1, 40);
     const doypackTex = createThumbDoypackTexture();
 
-    const targetList = Array.isArray(onlyIds) && onlyIds.length > 0
-      ? onlyIds.map(id => findVesselByIdAnywhere(id)).filter(Boolean)
-      : VESSELS;
-
-    targetList.forEach(v => {
+    VESSELS.forEach(v => {
       const grp = new THREE.Group();
       const totalH = getVesselTotalHeight(v);
-      const { wFactor, dFactor } = getCustomVesselScaleFactors(v);
-      const uniformRadial = (v.shape === "jar_lux" || v.shape === "alu_can");
       const pouchMode = v.shape === "doypack";
       const vGeo = createParametricVesselGeometry(v, pouchMode ? 112 : 96, pouchMode ? 84 : 110, 0.0, 1.0, 1.0, false);
 
@@ -14455,7 +9712,6 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
       }
 
       let vMat;
-      const custHex = v.customProfile && v.customProfile.customBodyColor;
       if (pouchMode) {
         vMat = new THREE.MeshPhysicalMaterial({
           map: doypackTex,
@@ -14469,9 +9725,9 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x475569, 0.42, 0.0);
       } else if (v.defaultFinish === "pet_gloss") {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color(custHex || "#D2E4F3"),
+          color: 0xD2E4F3,
           transparent: true,
-          opacity: custHex ? 0.88 : 0.72,
+          opacity: 0.72,
           roughness: 0.05,
           metalness: 0.05,
           reflectivity: 1.0,
@@ -14483,7 +9739,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x334155, 0.68, 0.28);
       } else if (v.defaultFinish === "hdpe_white") {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color(custHex || "#EDF0F5"),
+          color: 0xEDF0F5,
           roughness: 0.44,
           metalness: 0.03,
           clearcoat: 0.22,
@@ -14493,7 +9749,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x64748B, 0.44, 0.0);
       } else if (v.defaultFinish === "wine_green") {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color(custHex || "#062311"),
+          color: 0x062311,
           transparent: true,
           opacity: 0.96,
           roughness: 0.06,
@@ -14506,7 +9762,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x031209, 0.55, 0.04);
       } else if (v.defaultFinish === "alu_brushed") {
         vMat = new THREE.MeshStandardMaterial({
-          color: new THREE.Color(custHex || "#CFD5DD"),
+          color: 0xCFD5DD,
           roughness: 0.20,
           metalness: 0.92,
           envMapIntensity: 1.18,
@@ -14515,7 +9771,7 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
         addStudioFresnelRim(vMat, 0x334155, 0.36, 0.0);
       } else {
         vMat = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color(custHex || "#E2DFD7"),
+          color: 0xE2DFD7,
           transparent: true,
           opacity: 0.88,
           roughness: 0.36,
@@ -14539,7 +9795,6 @@ gl_FragColor.a = clamp(gl_FragColor.a + _fr * uRimAlpha, 0.0, 1.0);
               : new THREE.TorusGeometry(0.214, 0.019, 14, 48));
         lipGeo.rotateX(Math.PI / 2);
         const lipMesh = new THREE.Mesh(lipGeo, vMat);
-        if (uniformRadial) lipMesh.scale.set(wFactor, 1, dFactor);
         lipMesh.position.y = -1.25 + totalH;
         grp.add(lipMesh);
       }
@@ -14657,7 +9912,7 @@ function renderCatalogView() {
     </button>
   `).join("");
 
-  const filtered = VESSELS.filter(v => !v.isCustomVessel && (state.activeCatGroup === "all" || v.catGroup === state.activeCatGroup));
+  const filtered = VESSELS.filter(v => state.activeCatGroup === "all" || v.catGroup === state.activeCatGroup);
   document.getElementById("catGrid").innerHTML = filtered.map(v => {
     const isFav = isVesselFavorite(v.id);
     const thumbUrl = getVesselRealisticThumb(v);
@@ -14702,10 +9957,8 @@ function renderPillarsView() {
   if (!canFill && state.copackerFilling) state.copackerFilling = false;
   const fillingConflict = phys.isBulk && state.copackerFilling;
 
-  // Step 1 (container) is pre-selected only for Marketplace containers (custom containers skip primary container factory)
-  if (!v.isCustomVessel && state.selectedSuppliers.container === undefined) {
-    state.selectedSuppliers.container = 0;
-  }
+  // Step 1 (container) is always fixed/pre-selected at index 0
+  if (state.selectedSuppliers.container === undefined) state.selectedSuppliers.container = 0;
 
   const maxUnlocked = getFilieraMaxUnlocked(steps);
   if (!state.filieraStep || state.filieraStep < 1) state.filieraStep = 1;
@@ -14861,8 +10114,8 @@ function renderPillarsView() {
 
           <div class="supplier-list-rich" id="activeSupplierList">${optsHtml}</div>
 
-          <div class="filiera-nav-row" ${cur === 1 ? 'style="justify-content:flex-end;"' : ""}>
-            ${cur > 1 ? `<button id="btnFilieraPrev" class="cta-btn white" style="width:auto; min-width:200px; padding:0 24px;" onclick="prevFilieraStep()">${l === "it" ? "Torna indietro" : "Go back"}</button>` : ""}
+          <div class="filiera-nav-row">
+            <button id="btnFilieraPrev" class="cta-btn white" style="width:auto; min-width:200px; padding:0 24px;" onclick="prevFilieraStep()">${l === "it" ? "Torna indietro" : "Go back"}</button>
             <button id="btnFilieraNext" class="cta-btn" style="width:auto; min-width:220px; padding:0 24px;" ${hasSel ? "" : "disabled"} onclick="nextFilieraStep()">
               ${l === "it" ? "Conferma" : "Confirm"}
             </button>
@@ -14895,25 +10148,6 @@ function renderPillarsView() {
           ? `${allowedFillTypes.slice(0, -1).map(f => f.en.toLowerCase()).join(", ")}, or ${allowedFillTypes[allowedFillTypes.length - 1].en.toLowerCase()}`
           : "");
     const minFillCost = canFill ? Math.min(...allowedFillTypes.map(f => f.cost)) : 220;
-
-    const copackerTargetName = copackerChosen ? copackerChosen.name : (l === "it" ? "il Co-Packer" : "Co-Packer");
-    const opNoteStyle = "font-size:11.5px; color:var(--crimson-dark); line-height:1.4; background:#FFFFFF; border:1px solid var(--border-light); padding:8px 10px; border-radius:5px;";
-    const opNoteCustomEmptyHtml = v.isCustomVessel
-      ? `<div id="filieraOpNote" style="${opNoteStyle}">
-          ${l === "it"
-            ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerTargetName}</strong> i flaconi da lavorare.`
-            : `Operational note: you must manually ship to <strong>${copackerTargetName}</strong> the containers to be processed.`}
-        </div>`
-      : "";
-    const opNoteFillingHtml = `<div id="filieraOpNote" style="${opNoteStyle}">
-      ${v.isCustomVessel
-        ? (l === "it"
-            ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerTargetName}</strong> i flaconi da lavorare e il contenuto sfuso da imbottigliare/dosare.`
-            : `Operational note: you must manually ship to <strong>${copackerTargetName}</strong> the containers to be processed and the bulk contents to be bottled/dosed.`)
-        : (l === "it"
-            ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerTargetName}</strong> il contenuto sfuso da imbottigliare/dosare.`
-            : `Operational note: you must manually ship bulk contents to <strong>${copackerTargetName}</strong>.`)}
-    </div>`;
 
     const fillingControlsHtml = `
       <div class="filling-mode-grid">
@@ -14964,7 +10198,6 @@ function renderPillarsView() {
                         ? "Riempimento non disponibile: seleziona una chiusura nello Studio 3D per poter sigillare il contenitore."
                         : "Filling unavailable: select a closure in the 3D Studio to seal the container.")))}
         </p>
-        ${opNoteCustomEmptyHtml}
       ` : (state.copackerFilling ? `
         <div class="filling-box">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -14981,9 +10214,13 @@ function renderPillarsView() {
               `;
             }).join("")}
           </div>
-          ${opNoteFillingHtml}
+          <div style="font-size:11.5px; color:var(--crimson-dark); line-height:1.4; background:#FFFFFF; border:1px solid var(--border-light); padding:8px 10px; border-radius:5px;">
+            ${l === "it"
+              ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerChosen ? copackerChosen.name : "il Co-Packer"}</strong> il contenuto sfuso da imbottigliare/dosare.`
+              : `Operational note: you must manually ship bulk contents to <strong>${copackerChosen ? copackerChosen.name : "Co-Packer"}</strong>.`}
+          </div>
         </div>
-      ` : opNoteCustomEmptyHtml)}
+      ` : "")}
     `;
 
     const allProdSelected = steps.every(s => s.lockedFixed || state.selectedSuppliers[s.key] !== undefined);
@@ -15153,99 +10390,11 @@ function openCheckoutModal() {
 window.addEventListener("DOMContentLoaded", () => {
   loadSubmittedRequests();
   loadFavoriteVessels();
-  loadSavedCustomVessels();
   initWebGL();
   generatePhotorealisticVesselThumbnails();
   updateFavoritesBadges();
   const qs = new URLSearchParams(window.location.search);
-  const rawVidParam = qs.get("v") || qs.get("vessel") || "serum_250";
-  let bootVid = rawVidParam;
-  if (qs.get("ch") || qs.get("cw") || String(rawVidParam).startsWith("custom")) {
-    const existingSaved = (state.savedCustomVessels || []).find(item => item.id === rawVidParam);
-    if (existingSaved && !qs.get("cp")) {
-      state.activeCustomVessel = existingSaved;
-      bootVid = existingSaved.id;
-    } else {
-      const cs = qs.get("cs") || "cyl_tall";
-      const ch = Math.max(45, Math.min(350, Number(qs.get("ch")) || 165));
-      const cw = Math.max(25, Math.min(260, Number(qs.get("cw")) || 56));
-      const cd = Math.max(25, Math.min(260, Number(qs.get("cd")) || cw));
-      const cn = qs.get("cn") || "24/410";
-      const cFin = qs.get("f") || "pet_gloss";
-      const cnm = qs.get("cnm") ? qs.get("cnm").slice(0, 40) : "Contenitore Personalizzato";
-      const allF = [...RIGID_FINISHES, ...POUCH_FINISHES];
-      const finO = allF.find(f => f.id === cFin) || RIGID_FINISHES[0];
-      const dimS = (cs === "square_soft" || cs === "doypack") ? `${cw} × ${cd} × ${ch} mm` : `Ø ${cw} × H ${ch} mm`;
-      const radCm = (cw + cd) * 0.025;
-      const fillH = ch * (cs === "jar_lux" ? 0.072 : 0.068);
-      const estMl = Math.max(30, Math.round((Math.PI * radCm * radCm * fillH) / 5) * 5);
-      const decSamples = decodeCustomProfileCompact(qs.get("cp"));
-      const activeCid = "custom_active";
-      state.activeCustomVessel = {
-        id: activeCid,
-        isCustomVessel: true,
-        engine: cs === "doypack" ? "B" : "A",
-        catGroup: "cylindrical",
-        neck: cn,
-        shape: cs,
-        vol: `${estMl} ml`,
-        matIt: finO.it,
-        matEn: finO.en,
-        hMm: ch, wMm: cw, dMm: cd,
-        weightG: 280,
-        maxShoulderTD: 54,
-        defaultFinish: cFin,
-        defaultWrap: cs === "doypack" ? "pouch" : "sleeve",
-        liquidColor: "#DCEEF8",
-        vendor: "Contenitore Cliente (CAD 1:1)",
-        it: cnm,
-        en: cnm,
-        subIt: dimS,
-        subEn: dimS,
-        badgeIt: "PERSONALIZZATO",
-        badgeEn: "CUSTOM 3D",
-        customProfile: decSamples ? {
-          rFrontSamples: decSamples,
-          rSideSamples: decSamples,
-          superellipseN: Number(qs.get("sn")) || 2.0,
-          customBodyColor: qs.get("cc") || "#E8EFF6"
-        } : null
-      };
-      generatePhotorealisticVesselThumbnails([activeCid]);
-      bootVid = activeCid;
-    }
-  }
-  resetVesselConfigState(bootVid);
-  if (qs.get("cgt")) {
-    const cgTitle = qs.get("cgt").slice(0, 28);
-    const cgFile = cgTitle + ".png";
-    const cgCols = qs.get("cgc") ? qs.get("cgc").split(",").slice(0, 3) : state.customGraphicColors;
-    const pC = buildSynthesizedProofCanvas(cgTitle, cgFile, "1:1 AR", cgCols);
-    const pUrl = pC.toDataURL("image/png");
-    state.customGraphicTitle = cgTitle;
-    state.customGraphicFile = cgFile;
-    state.customGraphicColors = cgCols;
-    state.customGraphicDataUrl = pUrl;
-    state.customGraphicConformant = true;
-    if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
-    state.customGraphicsByVessel[bootVid] = {
-      title: cgTitle,
-      file: cgFile,
-      dataUrl: pUrl,
-      width: pC.width,
-      height: pC.height,
-      colors: cgCols,
-      imageObj: pC,
-      embeddedBc: null
-    };
-    customUploadedImageObj = pC;
-  }
-  if (qs.get("f")) state.finishId = qs.get("f");
-  if (qs.get("c")) state.closureId = qs.get("c");
-  if (qs.get("w")) state.wrapType = qs.get("w");
-  if (qs.get("s")) state.skinId = qs.get("s");
-  if (qs.get("fm")) state.filmId = qs.get("fm");
-  if (qs.get("lm")) state.labelMatId = qs.get("lm");
+  resetVesselConfigState(qs.get("vessel") || "serum_250");
   if (qs.get("custom") === "1") state.customVesselMode = true;
   if (qs.get("customgraphic") === "1") state.customGraphicMode = true;
   if (qs.get("wrap")) {
@@ -15331,14 +10480,7 @@ window.addEventListener("DOMContentLoaded", () => {
 </body>
 </html>
 """
-    html = (
-        html.replace("__VC_LOGO__", logo_b64)
-        .replace("__VC_FAVICON__", favicon_b64)
-        .replace("__THREE_JS__", three_js)
-        .replace("__FFLATE_JS__", fflate_js)
-        .replace("__GLTF_EXPORTER_JS__", gltf_exp_js)
-        .replace("__USDZ_EXPORTER_JS__", usdz_exp_js)
-    )
+    html = html.replace("__VC_LOGO__", logo_b64).replace("__VC_FAVICON__", favicon_b64).replace("__THREE_JS__", three_js)
     out_file = BASE_DIR / "index.html"
     out_file.write_text(html, encoding="utf-8")
     print(f"Wrote {out_file} ({len(html)} bytes)")

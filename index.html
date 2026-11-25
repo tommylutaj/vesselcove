@@ -3988,8 +3988,19 @@
   .app-header { position: relative; z-index: 60; transition: box-shadow .25s ease, border-color .25s ease; }
   .app-header.hdr-raised { box-shadow: 0 8px 24px rgba(30, 20, 14, 0.18); border-bottom-color: transparent; }
 
-  .lp-hero { min-height: calc(100vh - 66px); display: flex; align-items: center; }
+  .lp-hero { min-height: calc(100vh - 54px); display: flex; align-items: center; }
   .lp-hero > .lp-wrap { width: 100%; }
+
+  /* Profile split layout: left header+card stay fixed, right cards scroll */
+  @media (min-width: 1025px) {
+    #viewProfile .profile-view { overflow: hidden !important; height: 100% !important; padding: 0 !important; }
+    #viewProfile .profile-grid { height: 100%; align-items: stretch; gap: 0; grid-template-columns: 380px 1fr; }
+    #viewProfile .profile-left-col { padding: 16px 14px 32px 24px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+    #viewProfile .profile-right-col { height: 100%; overflow-y: auto; padding: 28px 24px 48px 14px; }
+  }
+  @media (max-width: 1024px) {
+    #viewProfile .profile-left-col { display: flex; flex-direction: column; gap: 12px; }
+  }
 
   .lp-section.lp-light { background: #FFFFFF; border-top: none !important; }
   .lp-section.lp-light + .lp-section { border-top: none; }
@@ -4034,7 +4045,7 @@
   .vc-cat-d { font-size: 13.5px; color: rgba(245,237,228,0.6); line-height: 1.45; }
   .vc-cat-c { margin-top: 10px; font-size: 12.5px; font-weight: 800; color: #F0897F; }
   @media (max-width: 1180px) { .lp-dirpage .sup-dir-grid, .vc-cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 700px) { .lp-dirpage .sup-dir-grid, .vc-cat-tiles { grid-template-columns: 1fr; } .lp-hero { min-height: calc(100svh - 60px); } }
+  @media (max-width: 700px) { .lp-dirpage .sup-dir-grid, .vc-cat-tiles { grid-template-columns: 1fr; } .lp-hero { min-height: calc(100svh - 48px); } }
 </style>
 </head>
 <body>
@@ -7525,6 +7536,7 @@ function resetVesselConfigState(vid) {
 }
 
 function selectVesselFromMarketplace(vid) {
+  state.skipMarketplaceNav = false;
   state.currentDraftId = null;
   state.customVesselMode = false;
   state.customGraphicMode = false;
@@ -7846,7 +7858,19 @@ function showNavTabsElement(el) {
   el.hidden = false;
 }
 
+function updateNavStepperSteps() {
+  const skip = !!state.skipMarketplaceNav;
+  const cat = document.getElementById("navCatalog");
+  const st = document.querySelector("#navStudio .step-tag");
+  const pl = document.querySelector("#navPillars .step-tag");
+  if (cat) cat.style.display = skip ? "none" : "";
+  if (st) st.textContent = skip ? "01" : "02";
+  if (pl) pl.textContent = skip ? "02" : "03";
+}
+
 function switchMainView(v) {
+  if (v === "catalog" || v === "home") state.skipMarketplaceNav = false;
+  updateNavStepperSteps();
   if (v !== "profile" && state.mainView !== "profile") {
     state.prevViewBeforeProfile = v;
   }
@@ -7900,6 +7924,7 @@ function switchMainView(v) {
 
 // ==================== CUSTOM CONTAINER UPLOAD, CUSTOM GRAPHIC & MOBILE AR CAMERA (UNDER 02 STUDIO 3D) ====================
 function openCustomVesselStudio() {
+  state.skipMarketplaceNav = true;
   state.customGraphicMode = false;
   state.mobileARCameraMode = false;
   state.customVesselMode = true;
@@ -8445,6 +8470,8 @@ function openProfileView(focusSection) {
   requestAnimationFrame(() => {
     const pv = document.querySelector("#viewProfile .profile-view");
     if (pv) pv.scrollTop = 0;
+    const pr = document.querySelector("#viewProfile .profile-right-col");
+    if (pr) pr.scrollTop = 0;
     if (focusSection === "favorites" && window.innerWidth <= 1024) {
       const el = document.getElementById("profileFavoritesCard");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -8825,16 +8852,16 @@ function renderProfileView() {
   const greenVerifiedSeal = `<svg class="verified-seal" width="18" height="18" viewBox="0 0 24 24" aria-label="${l === "it" ? "Account verificato" : "Verified account"}"><path fill="#147A3B" d="M12 1.5l2.27 1.78 2.84-.29 1.08 2.64 2.52 1.38-.52 2.8 1.58 2.38-1.88 2.16.18 2.85-2.74.93-1.52 2.42-2.81-.68L12 22.5l-2.27-1.78-2.84.29-1.08-2.64-2.52-1.38.52-2.8-1.58-2.38 1.88-2.16-.18-2.85 2.74-.93 1.52-2.42 2.81.68L12 1.5z"/><path fill="#FFFFFF" d="M10.4 15.6l-3.3-3.3 1.4-1.4 1.9 1.9 4.9-4.9 1.4 1.4-6.3 6.3z"/></svg>`;
 
   host.innerHTML = `
-    <div class="brown-hdr-bar">
-      <div>
-        <div class="lp-eyebrow vc-eyebrow">${l === "it" ? "Il tuo account" : "Your account"}</div>
-        <h1 class="brown-hdr-title">${l === "it" ? "Area personale" : "Personal area"}</h1>
-        <p class="cat-sub-minimal">${l === "it" ? "Preferiti, bozze di produzione e richieste inviate." : "Favorites, production drafts and sent requests."}</p>
-      </div>
-    </div>
-
     <div class="profile-grid">
-      <div class="profile-card">
+      <div class="profile-left-col">
+        <div class="brown-hdr-bar">
+          <div>
+            <div class="lp-eyebrow vc-eyebrow">${l === "it" ? "Il tuo account" : "Your account"}</div>
+            <h1 class="brown-hdr-title">${l === "it" ? "Area personale" : "Personal area"}</h1>
+            <p class="cat-sub-minimal">${l === "it" ? "Preferiti, bozze di produzione e richieste inviate." : "Favorites, production drafts and sent requests."}</p>
+          </div>
+        </div>
+        <div class="profile-card">
         <div style="display:flex; align-items:center; gap:12px;">
           <div class="profile-avatar-lg">TL</div>
           <div>
@@ -8876,8 +8903,9 @@ function renderProfileView() {
           </div>
         </div>
       </div>
+      </div>
 
-      <div style="display:flex; flex-direction:column; gap:18px;">
+      <div class="profile-right-col" style="display:flex; flex-direction:column; gap:18px;">
         <div class="profile-card" id="profileFavoritesCard">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
             <div>
@@ -11380,7 +11408,7 @@ function renderPillarsView() {
   document.getElementById("pillarsPortalBody").innerHTML = `
     <div class="brown-hdr-bar">
       <div>
-        <div class="lp-eyebrow vc-eyebrow">03 · ${l === "it" ? "Filiera" : "Supply chain"}</div>
+        <div class="lp-eyebrow vc-eyebrow">${state.skipMarketplaceNav ? "02" : "03"} · ${l === "it" ? "Filiera" : "Supply chain"}</div>
         <h1 class="brown-hdr-title">${l === "it" ? "Scegli i tuoi fornitori" : "Choose your suppliers"}</h1>
         <p class="cat-sub-minimal">${l === "it" ? "Componi la filiera desiderata per richiedere la prova" : "Compose your desired supply chain to request a trial"}</p>
       </div>

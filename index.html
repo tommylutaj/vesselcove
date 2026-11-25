@@ -3417,6 +3417,234 @@
     white-space: nowrap;
   }
   .cv-multi-btn:hover { background: var(--crimson-soft); border-color: var(--crimson); color: var(--crimson); }
+  .cv-audit-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #F8FAFC;
+    padding: 13px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cv-audit-card.warn {
+    border-color: #F59E0B;
+    background: var(--amber-soft);
+  }
+  .cv-audit-card.err {
+    border-color: var(--crimson);
+    background: var(--crimson-soft);
+  }
+  .cv-audit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+  .cv-audit-cell {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 7px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+  .cv-audit-k {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--slate);
+    text-transform: uppercase;
+  }
+  .cv-audit-v {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cv-src-pill {
+    display: inline-block;
+    width: fit-content;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 999px;
+    margin-top: 2px;
+  }
+  .cv-src-pill.ds { background: var(--green-soft); color: var(--green); border: 1px solid rgba(20,122,59,0.28); }
+  .cv-src-pill.ai { background: #EFF6FF; color: #1D4ED8; border: 1px solid rgba(29,78,216,0.24); }
+  .cv-src-pill.warn { background: var(--amber-soft); color: #92400E; border: 1px solid rgba(245,158,11,0.35); }
+  .cv-unverified-box {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--charcoal);
+    background: #FFFFFF;
+    border: 1px dashed #CBD5E1;
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+  .cg-mode-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .cg-mode-tab {
+    border: 1.5px solid var(--border);
+    background: #FFFFFF;
+    color: var(--charcoal);
+    border-radius: 10px;
+    padding: 6px 11px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+  }
+  .cg-mode-tab:hover { border-color: var(--ink); color: var(--ink); }
+  .cg-mode-tab.active {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: #FFFFFF;
+  }
+  .cg-prepress-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .cg-prepress-item {
+    background: #F8FAFC;
+    border: 1px solid var(--border-light);
+    border-radius: 9px;
+    padding: 7px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+  .cg-prepress-item.ok { border-color: rgba(20,122,59,0.35); background: var(--green-soft); }
+  .cg-prepress-item.warn { border-color: rgba(245,158,11,0.45); background: var(--amber-soft); }
+  .cg-prepress-item.err { border-color: rgba(194,24,14,0.42); background: var(--crimson-soft); }
+  .cg-resize-card {
+    border: 1.5px solid #F59E0B;
+    background: var(--amber-soft);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .slv-pos-card {
+    background: #F8FAFC;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .slv-pos-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .slv-pos-hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .slv-pos-hdr label { cursor: pointer; }
+  .slv-pos-val {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 800;
+    color: var(--crimson);
+  }
+  input[type="range"].vc-range-slider {
+    --slider-track-size: 6px;
+    --slider-thumb-size: 16px;
+    --slider-track-radius: 999px;
+    --slider-thumb-radius: 50%;
+    --slider-track-color: #CBD5E1;
+    --slider-fill-color: var(--crimson);
+    --slider-thumb-color: var(--crimson);
+    --slider-direction: to right;
+    --attr-min: attr(min type(<number>), 0);
+    --attr-max: attr(max type(<number>), 100);
+    --control-value: attr(value type(<number>), 50);
+    --slider-progress: calc(progress(var(--control-value), var(--attr-min), var(--attr-max)) * 100%);
+    appearance: none;
+    inline-size: 100%;
+    block-size: 26px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    accent-color: var(--crimson);
+  }
+  @supports not (opacity: progress(1, 0, 100)) {
+    input[type="range"].vc-range-slider {
+      --slider-progress: calc((var(--control-value) - var(--attr-min)) / (var(--attr-max) - var(--attr-min)) * 100%);
+    }
+  }
+  input[type="range"].vc-range-slider:focus-visible {
+    outline: 2px solid var(--slider-fill-color);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  input[type="range"].vc-range-slider::-webkit-slider-runnable-track {
+    block-size: var(--slider-track-size);
+    border: 0;
+    border-radius: var(--slider-track-radius);
+    background: linear-gradient(
+      var(--slider-direction),
+      var(--slider-fill-color) var(--slider-progress),
+      var(--slider-track-color) var(--slider-progress)
+    );
+  }
+  input[type="range"].vc-range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    inline-size: var(--slider-thumb-size);
+    block-size: var(--slider-thumb-size);
+    margin-block-start: calc((var(--slider-track-size) - var(--slider-thumb-size)) / 2);
+    border: 2px solid #FFFFFF;
+    border-radius: var(--slider-thumb-radius);
+    background: var(--slider-thumb-color);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25);
+  }
+  input[type="range"].vc-range-slider::-moz-range-track {
+    block-size: var(--slider-track-size);
+    border: 0;
+    border-radius: var(--slider-track-radius);
+    background: var(--slider-track-color);
+  }
+  input[type="range"].vc-range-slider::-moz-range-progress {
+    block-size: var(--slider-track-size);
+    border-radius: var(--slider-track-radius);
+    background: var(--slider-fill-color);
+  }
+  input[type="range"].vc-range-slider::-moz-range-thumb {
+    inline-size: var(--slider-thumb-size);
+    block-size: var(--slider-thumb-size);
+    border: 2px solid #FFFFFF;
+    border-radius: var(--slider-thumb-radius);
+    background: var(--slider-thumb-color);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25);
+  }
+  @media (max-width: 680px) {
+    .cv-audit-grid, .cg-prepress-grid { grid-template-columns: 1fr; }
+  }
   .upload-slot-thumb {
     width: 100%;
     height: 62px;
@@ -7007,6 +7235,7 @@ const state = {
   finishId: "pet_gloss",
   closureId: "none",
   wrapType: "none", // 'none' | 'sleeve' | 'label' | 'serigrafia' | 'pouch'
+  labelLayout: "single", // 'single' (Front) | 'front_back' (Front + Back Panels)
   pouchPrintType: "none", // 'none' | 'flexo' | 'digital'
   filmId: "PETG",
   labelMatId: "COTTON",
@@ -7033,6 +7262,11 @@ const state = {
   customGraphicTitle: "Grafica Personalizzata",
   customGraphicWidth: 0,
   customGraphicHeight: 0,
+  customGraphicPhysicalWmm: 0,
+  customGraphicPhysicalHmm: 0,
+  customGraphicBleedMm: 0,
+  customGraphicAudit: null,
+  customGraphicTargetMode: "",
   customGraphicConformant: false,
   customGraphicValidationMsg: "",
   customGraphicEmbeddedBc: null,
@@ -7041,6 +7275,7 @@ const state = {
   customDatasheetFile: "",
   customDatasheetDataUrl: "",
   customDatasheetText: "",
+  customDatasheetAudit: null,
   customPhotoFiles: ["", "", "", "", "", ""],
   customPhotoDataUrls: ["", "", "", "", "", ""],
   customPhotoImages: [null, null, null, null, null, null],
@@ -7100,27 +7335,48 @@ function escapeHtml(str) {
     .replace(/'/g, "&#39;");
 }
 
+function getVesselDimsSignature(v) {
+  const vv = v || getVessel();
+  return `${Number(vv.wMm) || 0}x${Number(vv.dMm || vv.wMm) || 0}x${Number(vv.hMm) || 0}:${vv.shape || "cyl_tall"}:${vv.neck || "24/410"}`;
+}
+
 function getCustomSkinObject(vid) {
   const targetVid = vid || state.vesselId;
   const entry = state.customGraphicsByVessel && state.customGraphicsByVessel[targetVid];
   if (!entry || (!entry.imageObj && !entry.dataUrl)) return null;
+  const activeV = findVesselByIdAnywhere(targetVid);
+  if (activeV && entry.vesselDimsSignature && entry.vesselDimsSignature !== getVesselDimsSignature(activeV)) {
+    return null;
+  }
   const fLabel = entry.file || "Grafica caricata";
   return {
     id: "custom_user_skin",
     vesselScope: targetVid,
+    vesselDimsSignature: entry.vesselDimsSignature || "",
+    validatedWrapType: entry.validatedWrapType || "",
     styleType: "custom_uploaded",
     brand: (entry.title || "Grafica Personalizzata").trim() || "Grafica Personalizzata",
     brandSub: fLabel,
     product: "GRAFICA ESECUTIVA CARICATA",
     pouchSub: "STAMPA PERSONALIZZATA",
     wineSub: "ETICHETTA PERSONALIZZATA",
-    sub: "FILE ESECUTIVO CONFORME 1:1",
+    sub: entry.physicalWmm && entry.physicalHmm
+      ? `${entry.physicalWmm.toFixed(0)} × ${entry.physicalHmm.toFixed(0)} mm CONFORME`
+      : "FILE ESECUTIVO CONFORME 1:1",
     previewColors: entry.colors || ["#FAF8F5", "#C2180E", "#18181B"],
-    descIt: "File: " + fLabel,
-    descEn: "File: " + fLabel,
+    descIt: entry.physicalWmm && entry.physicalHmm
+      ? `${Math.round(entry.physicalWmm)}×${Math.round(entry.physicalHmm)} mm · ${fLabel}`
+      : ("File: " + fLabel),
+    descEn: entry.physicalWmm && entry.physicalHmm
+      ? `${Math.round(entry.physicalWmm)}×${Math.round(entry.physicalHmm)} mm · ${fLabel}`
+      : ("File: " + fLabel),
     ean: "8 054192 990108",
     imageObj: entry.imageObj || null,
     dataUrl: entry.dataUrl || "",
+    physicalWmm: entry.physicalWmm || 0,
+    physicalHmm: entry.physicalHmm || 0,
+    labelLayout: entry.labelLayout || "single",
+    audit: entry.audit || null,
     embeddedBc: entry.embeddedBc || null,
     sleeveHeightMul: 1.0,
     labelHeightMul: 1.0,
@@ -7212,8 +7468,45 @@ function getVesselTotalHeight(vessel) {
   return baseH;
 }
 
+function getCustomNeckHalfMm(vessel) {
+  const neckStr = String((vessel && vessel.neck) || "24/410");
+  let halfMm = 12;
+  if (vessel && vessel.customProfile && vessel.customProfile.neckOuterMm) {
+    halfMm = Number(vessel.customProfile.neckOuterMm) * 0.5;
+  } else if (neckStr.includes("28")) halfMm = 14;
+  else if (neckStr.includes("58")) halfMm = 29;
+  else if (neckStr.includes("70")) halfMm = 35;
+  else if (neckStr.includes("29")) halfMm = 14.5;
+  else if (neckStr.includes("202")) halfMm = 25;
+  const maxBodyHalf = Math.min(Number(vessel.wMm) || 54, Number(vessel.dMm || vessel.wMm) || 54) * 0.48;
+  return Math.max(8, Math.min(maxBodyHalf, halfMm));
+}
+
 // Continuous radial distance at angle theta for any rigid vessel shape (including CV-reconstructed profiles)
 function getRadialEnvelopeFactor(vessel, profileV, theta, baseRWorld) {
+  if (vessel && vessel.isCustomVessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples)) {
+    const cp = vessel.customProfile;
+    const totalH = getVesselTotalHeight(vessel);
+    const mmToWorld = totalH / Math.max(10, Number(vessel.hMm) || 165);
+    const radiusScale = baseRWorld / Math.max(0.05, (Number(vessel.wMm) * 0.5) * mmToWorld || 0.5);
+    const frontR = Math.max(0.14, sampleCustomProfileArray(cp.rFrontSamples, profileV) || 1.0);
+    const sideR = Math.max(0.14, sampleCustomProfileArray(cp.rSideSamples || cp.rFrontSamples, profileV) || frontR);
+    const rxBody = (Number(vessel.wMm) * 0.5) * mmToWorld * frontR * radiusScale;
+    const rzBody = (Number(vessel.dMm || vessel.wMm) * 0.5) * mmToWorld * sideR * radiusScale;
+    const neckBlend = (vessel.shape !== "jar_lux" && vessel.shape !== "alu_can" && profileV >= 0.86)
+      ? Math.min(1, (profileV - 0.86) / 0.04)
+      : 0;
+    const neckRW = getCustomNeckHalfMm(vessel) * mmToWorld * radiusScale;
+    const rx = rxBody * (1 - neckBlend) + neckRW * neckBlend;
+    const rz = rzBody * (1 - neckBlend) + neckRW * neckBlend;
+    const bodyMix = profileV >= 0.88 ? 0.0 : (profileV <= 0.62 ? 1.0 : (0.88 - profileV) / 0.26);
+    const nBase = Math.max(1.8, Math.min(5.0, cp.superellipseN || 2.0));
+    const n = 2.0 + (nBase - 2.0) * bodyMix * (1 - neckBlend);
+    const sx = Math.abs(Math.sin(theta)) / Math.max(0.001, rx);
+    const cz = Math.abs(Math.cos(theta)) / Math.max(0.001, rz);
+    const denom = Math.pow(Math.pow(sx, n) + Math.pow(cz, n), 1.0 / n);
+    return denom > 1e-6 ? 1.0 / denom : rx;
+  }
   if (vessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples)) {
     const cp = vessel.customProfile;
     const frontR = Math.max(0.14, sampleCustomProfileArray(cp.rFrontSamples, profileV) || 1.0);
@@ -7361,42 +7654,129 @@ function getWrapRealDimensionsMm(vessel) {
   };
 }
 
-// Maximum physically applicable surface of the container (including yellow/red curvature zones)
-function getMaxApplicableSurfaceDimensionsMm(vessel) {
+function getContainerCircumferenceMm(v) {
+  const vessel = v || getVessel();
+  const w = Number(vessel.wMm) || 54;
+  const d = Number(vessel.dMm || vessel.wMm) || w;
+  if (vessel.shape === "square_soft" || (vessel.customProfile && (vessel.customProfile.superellipseN || 2.0) >= 2.7)) {
+    const n = (vessel.customProfile && vessel.customProfile.superellipseN) || 3.6;
+    const sqPerimeter = 2 * (w + d) - 10;
+    const ellPerimeter = Math.PI * (3 * ((w + d) / 2) - Math.sqrt((3 * w / 2 + d / 2) * (w / 2 + 3 * d / 2)));
+    const mix = Math.max(0, Math.min(1, (n - 2.0) / 2.2));
+    return Math.round(ellPerimeter * (1 - mix) + sqPerimeter * mix);
+  }
+  if (Math.abs(w - d) > 1.5) {
+    const a = w * 0.5, b = d * 0.5;
+    return Math.round(Math.PI * (3 * (a + b) - Math.sqrt((3 * a + b) * (a + 3 * b))));
+  }
+  return Math.round(Math.PI * w);
+}
+
+function getContainerPrintableAreasMm(vessel, overrideMode, overrideLayout) {
   const v = vessel || getVessel();
+  const cp = v.customProfile || null;
   const isCan = v.shape === "alu_can";
   const isPouch = v.shape === "doypack";
-  const isLabel = isLabelMode();
-  const circMm = v.shape === "square_soft"
-    ? Math.round(2 * (v.wMm + v.dMm) - 12)
-    : Math.round(Math.PI * v.wMm);
+  const circMm = getContainerCircumferenceMm(v);
   const bcWmm = v.shape === "jar_lux" ? 32 : 37;
   const bcHmm = v.shape === "jar_lux" ? 22 : 26;
 
   if (isPouch) {
+    const pW = Math.round(v.wMm * 0.86);
+    const pH = Math.round(v.hMm * 0.74);
     return {
-      maxWmm: v.wMm,
-      maxHmm: v.hMm,
-      wrapDimStr: `${v.wMm} × ${v.hMm} mm`,
+      mode: "pouch",
+      labelLayout: "single",
+      circumferenceMm: circMm,
+      maxWmm: pW,
+      maxHmm: pH,
+      safeMarginMm: 5,
+      bleedMm: 3,
+      printableVMin: 0.08,
+      printableVMax: 0.82,
+      supportedModes: ["pouch"],
+      wrapDimStr: `${pW} × ${pH} mm`,
       bcDimStr: `${bcWmm} × ${bcHmm} mm`
     };
   }
 
-  const maxCarrierV = isCan ? 0.95 : (v.shape === "wine_bordeaux" ? 0.76 : (v.shape === "jar_lux" ? 0.80 : 0.84));
-  const minCarrierV = 0.04;
-  const maxHmm = Math.round((maxCarrierV - minCarrierV) * v.hMm);
-  let maxWmm = circMm;
-  if (isLabel) {
-    // Full applicable wrap-around width including corners/margins before self-overlap
-    const maxLabelFrac = isCan ? 0.94 : (v.shape === "jar_lux" ? 0.65 : (v.shape === "square_soft" ? 0.45 : 0.50));
-    maxWmm = Math.round(circMm * maxLabelFrac);
+  let vMin = 0.04;
+  let vMax = isCan ? 0.94 : (v.shape === "wine_bordeaux" ? 0.72 : (v.shape === "jar_lux" ? 0.76 : 0.80));
+  if (cp && typeof cp.vPrintableMin === "number" && typeof cp.vPrintableMax === "number") {
+    vMin = cp.vPrintableMin;
+    vMax = cp.vPrintableMax;
+  }
+
+  const bodyHeightMm = Math.max(24, Math.round((vMax - vMin) * v.hMm));
+  const sleeveH = (cp && cp.printableHmm) ? Math.min(Math.round(v.hMm * 0.92), Math.round(cp.printableHmm)) : bodyHeightMm;
+  const sleeveW = (cp && cp.printableWmm)
+    ? Math.round(cp.printableWmm)
+    : circMm;
+
+  const frontPanelFrac = isCan ? 0.85 : (v.shape === "jar_lux" ? 0.44 : (v.shape === "square_soft" ? 0.30 : (v.shape === "wine_bordeaux" ? 0.34 : 0.38)));
+  const labelMaxH = (cp && cp.printableHmm)
+    ? Math.min(Math.round(v.hMm * 0.90), Math.round(cp.printableHmm))
+    : Math.max(22, Math.round((Math.min(vMax, v.shape === "wine_bordeaux" ? 0.50 : 0.62) - vMin) * v.hMm));
+  const layout = overrideLayout || state.labelLayout || "single";
+  const singleLabelW = (cp && cp.printableLabelWmm)
+    ? Math.round(cp.printableLabelWmm)
+    : Math.round(circMm * frontPanelFrac);
+  const labelW = layout === "front_back" ? Math.round(Math.min(circMm * 0.90, singleLabelW * 2)) : singleLabelW;
+
+  const mode = overrideMode || (state.customGraphicTargetMode || (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
+  const supportedModes = isCan ? ["sleeve", "label", "serigrafia"] : ["sleeve", "label"];
+  if (mode === "serigrafia" && isCan) {
+    return {
+      mode: "serigrafia",
+      labelLayout: "single",
+      circumferenceMm: circMm,
+      maxWmm: circMm,
+      maxHmm: Math.round(v.hMm * 0.86),
+      safeMarginMm: 3,
+      bleedMm: 2,
+      printableVMin: 0.04,
+      printableVMax: 0.90,
+      supportedModes,
+      wrapDimStr: `${circMm} × ${Math.round(v.hMm * 0.86)} mm`,
+      bcDimStr: `${bcWmm} × ${bcHmm} mm`
+    };
+  }
+  if (mode === "label") {
+    return {
+      mode: "label",
+      labelLayout: layout,
+      circumferenceMm: circMm,
+      maxWmm: labelW,
+      maxHmm: labelMaxH,
+      singlePanelWmm: singleLabelW,
+      safeMarginMm: 3,
+      bleedMm: 2,
+      printableVMin: vMin,
+      printableVMax: vMax,
+      supportedModes,
+      wrapDimStr: `${labelW} × ${labelMaxH} mm`,
+      bcDimStr: `${bcWmm} × ${bcHmm} mm`
+    };
   }
   return {
-    maxWmm,
-    maxHmm,
-    wrapDimStr: `${maxWmm} × ${maxHmm} mm`,
+    mode: "sleeve",
+    labelLayout: "single",
+    circumferenceMm: circMm,
+    maxWmm: sleeveW,
+    maxHmm: sleeveH,
+    safeMarginMm: 4,
+    bleedMm: 3,
+    printableVMin: vMin,
+    printableVMax: vMax,
+    supportedModes,
+    wrapDimStr: `${sleeveW} × ${sleeveH} mm`,
     bcDimStr: `${bcWmm} × ${bcHmm} mm`
   };
+}
+
+// Maximum physically applicable surface of the container (container-specific geometric dimensions)
+function getMaxApplicableSurfaceDimensionsMm(vessel, overrideMode, overrideLayout) {
+  return getContainerPrintableAreasMm(vessel, overrideMode, overrideLayout);
 }
 
 function getClosureRealDimensionsMm(cl) {
@@ -7769,17 +8149,59 @@ function drawEAN13Graphic(ctx, x, y, wBox, hBox, eanStr, statusCol, labelText, v
   ctx.restore();
 }
 
-function drawCustomGraphicImageRegion(ctx, rx, ry, rw, rh, imgObj, backingFill) {
+function drawCustomGraphicImageRegion(ctx, rx, ry, rw, rh, imgObj, backingFill, curveOpts) {
   if (!imgObj || rw <= 1 || rh <= 1) return;
   const iw = imgObj.naturalWidth || imgObj.width || 1000;
   const ih = imgObj.naturalHeight || imgObj.height || 600;
   if (!iw || !ih) return;
-  if (backingFill) {
-    ctx.fillStyle = backingFill;
-    ctx.fillRect(rx, ry, rw, rh);
+  const opts = curveOpts || null;
+  const srcX = (opts && Number.isFinite(opts.srcX)) ? opts.srcX : 0;
+  const srcW = (opts && Number.isFinite(opts.srcW) && opts.srcW > 1) ? opts.srcW : iw;
+  const vessel = opts && opts.vessel;
+  const sSpan = (opts && Number(opts.sSpan) > 0.05) ? Number(opts.sSpan) : 0.92;
+  if (!vessel || typeof getNormalizedRadiusAtV !== "function") {
+    if (backingFill) {
+      ctx.fillStyle = backingFill;
+      ctx.fillRect(rx, ry, rw, rh);
+    }
+    ctx.drawImage(imgObj, srcX, 0, srcW, ih, rx, ry, rw, rh);
+    return;
   }
-  // Exact 1:1 conformal mapping (only dimensionally validated artwork reaches Studio 3D)
-  ctx.drawImage(imgObj, rx, ry, rw, rh);
+  const strips = 48;
+  const canvasH = (ctx && ctx.canvas && ctx.canvas.height) ? ctx.canvas.height : 1024;
+  const isLabel = !!opts.isLabel;
+  const subFactor = Number.isFinite(opts.substrateFactor) ? opts.substrateFactor : 0.65;
+  const centerX = rx + rw * 0.5;
+  for (let i = 0; i < strips; i++) {
+    const t0 = i / strips;
+    const t1 = (i + 1) / strips;
+    const tMid = (t0 + t1) * 0.5;
+    const dy = ry + t0 * rh;
+    const dh = Math.max(1.2, (t1 - t0) * rh + 0.6);
+    const stripMidY = ry + tMid * rh;
+    const vStrip = Math.max(0.01, Math.min(0.99, 0.04 + (1 - stripMidY / canvasH) * sSpan));
+    const rStrip = getNormalizedRadiusAtV(vessel, vStrip);
+    const wScaleRaw = isLabel
+      ? Math.max(0.76, 1 - Math.max(0, 1 - rStrip) * 0.35 * subFactor)
+      : Math.max(0.46, 0.25 + 0.75 * rStrip);
+    const wScale = Math.min(1.04, wScaleRaw);
+    const drawW = rw * wScale;
+    const drawX = centerX - drawW * 0.5;
+    const sy = t0 * ih;
+    const sh = Math.max(1, (t1 - t0) * ih);
+    if (backingFill) {
+      ctx.fillStyle = backingFill;
+      ctx.fillRect(drawX, dy, drawW, dh);
+    }
+    ctx.drawImage(imgObj, srcX, sy, srcW, sh, drawX, dy, drawW, dh);
+    if (rStrip < 0.97) {
+      const shadeAlpha = Math.min(0.18, (0.97 - rStrip) * (isLabel ? 0.32 : 0.24));
+      ctx.fillStyle = (i % 2 === 0)
+        ? ("rgba(15, 23, 42, " + shadeAlpha.toFixed(3) + ")")
+        : ("rgba(255, 255, 255, " + (shadeAlpha * 0.45).toFixed(3) + ")");
+      ctx.fillRect(drawX, dy, drawW, dh);
+    }
+  }
 }
 
 function renderDoypackUVTexture(skin, phys) {
@@ -8073,7 +8495,13 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
     const cx = w * 0.5 + slOffsetPx + seamOff;
     const isCan = vessel.shape === "alu_can";
     const lwBase = isCan ? Math.round(w * 0.85) : (vessel.shape === "jar_lux" ? 820 : (vessel.shape === "square_soft" ? 450 : (vessel.shape === "wine_bordeaux" ? 460 : 480)));
-    const lw = Math.min(Math.round(w * 0.90), Math.round(lwBase * getLabelWidthMultiplier(vessel)));
+    const isCustomLabelPhysical = (skin.styleType === "custom_uploaded" && Number(skin.physicalWmm) > 0);
+    const circMmLbl = isCustomLabelPhysical ? Math.max(20, getContainerCircumferenceMm(vessel)) : 0;
+    const isFrontBackLbl = isCustomLabelPhysical && state.labelLayout === "front_back";
+    const panelWmmLbl = isFrontBackLbl ? (Number(skin.physicalWmm) * 0.5) : Number(skin.physicalWmm || 0);
+    const lw = isCustomLabelPhysical
+      ? Math.max(40, Math.min(Math.round(w * (isFrontBackLbl ? 0.44 : 0.92)), Math.round((panelWmmLbl / circMmLbl) * w)))
+      : Math.min(Math.round(w * 0.90), Math.round(lwBase * getLabelWidthMultiplier(vessel)));
     const labelCenter = isCan ? (cx - 540) : cx;
     const labelLeft = labelCenter - lw / 2;
     const labelRight = labelCenter + lw / 2;
@@ -8220,12 +8648,33 @@ function renderAdhesiveLabelUVTexture(skin, vessel, phys) {
     const cLabelImg = skin.imageObj || customUploadedImageObj;
     if (skin.styleType === "custom_uploaded" && cLabelImg) {
       texCtx.save();
-      if (stressNorm > 0.35) {
-        texCtx.translate(cx, syTop + lh * 0.5);
-        texCtx.scale(topPinch, 1.0);
-        texCtx.translate(-cx, -(syTop + lh * 0.5));
+      const iwNat = cLabelImg.naturalWidth || cLabelImg.width || 1000;
+      const isFrontBackLayout = (state.labelLayout === "front_back" && Number(skin.physicalWmm) > 0);
+      if (isFrontBackLayout) {
+        drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF", {
+          vessel,
+          sSpan,
+          isLabel: true,
+          substrateFactor: lp.stiffness,
+          srcX: 0,
+          srcW: iwNat * 0.5
+        });
+        drawCustomGraphicImageRegion(texCtx, labelLeft + w * 0.5, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF", {
+          vessel,
+          sSpan,
+          isLabel: true,
+          substrateFactor: lp.stiffness,
+          srcX: iwNat * 0.5,
+          srcW: iwNat * 0.5
+        });
+      } else {
+        drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF", {
+          vessel,
+          sSpan,
+          isLabel: true,
+          substrateFactor: lp.stiffness
+        });
       }
-      drawCustomGraphicImageRegion(texCtx, labelLeft, syTop, lw, lh, cLabelImg, isClear ? null : "#FFFFFF");
       texCtx.restore();
     } else if (isNeutralWhite) {
       // Blank white unprinted die-cut label: ONLY integrated EAN-13 barcode, zero brand copy!
@@ -8624,16 +9073,14 @@ function renderSleeveUVTexture() {
 
     } else if (skin.styleType === "custom_uploaded" && (skin.imageObj || customUploadedImageObj)) {
       const fmCur = getFilm();
-      const tdOver = Math.max(0, phys.sleeveTD - (fmCur.warnTD - 4));
-      const topPinch = tdOver > 0 ? Math.max(0.58, 1 - (tdOver * fmCur.pinchScale) / 85) : 1.0;
       texCtx.save();
       texCtx.globalAlpha = state.xray ? 0.88 : 0.98;
-      if (topPinch < 0.995) {
-        texCtx.translate(centerX, syTop + syH * 0.5);
-        texCtx.scale(topPinch, 1.0);
-        texCtx.translate(-centerX, -(syTop + syH * 0.5));
-      }
-      drawCustomGraphicImageRegion(texCtx, centerX - w / 2, syTop, w, syH, skin.imageObj || customUploadedImageObj, "#FAF8F4");
+      drawCustomGraphicImageRegion(texCtx, centerX - w / 2, syTop, w, syH, skin.imageObj || customUploadedImageObj, "#FAF8F4", {
+        vessel,
+        sSpan,
+        isLabel: false,
+        substrateFactor: fmCur.pinchScale
+      });
       texCtx.globalAlpha = 1.0;
       const rimCol = phys.sleeveStatus === "err" ? "rgba(194, 24, 14, 0.85)" : (phys.sleeveStatus === "warn" ? "rgba(217, 119, 6, 0.80)" : "rgba(20, 122, 59, 0.42)");
       texCtx.fillStyle = rimCol;
@@ -9009,8 +9456,18 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
 
   const totalH = getVesselTotalHeight(vessel);
   const { wFactor, dFactor } = getCustomVesselScaleFactors(vessel);
+  const isCustomMetric = !!(vessel && vessel.isCustomVessel && vessel.customProfile && Array.isArray(vessel.customProfile.rFrontSamples));
+  const mmToWorld = totalH / Math.max(10, Number(vessel.hMm) || 165);
   const uniformRadial = (vessel.shape === "jar_lux" || vessel.shape === "alu_can");
   const baseScale = vessel.shape === "jar_lux" ? 0.92 : (vessel.shape === "wine_bordeaux" ? 0.58 : (vessel.shape === "alu_can" ? 0.60 : 0.68));
+  const hasBaseCap = (!isSleeve && yMin === 0);
+  if (hasBaseCap) {
+    const yBaseCap = -1.25 + 0.006 * totalH;
+    for (let ix = 0; ix <= radialSegs; ix++) {
+      positions.push(0, yBaseCap, 0);
+      uvs.push(ix / radialSegs, 0);
+    }
+  }
 
   for (let iy = 0; iy <= heightSegs; iy++) {
     const v = iy / heightSegs;
@@ -9027,9 +9484,11 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
     }
 
     const bodyFrac = uniformRadial ? 1.0 : (profileV >= 0.88 ? 0.0 : (profileV <= 0.62 ? 1.0 : (0.88 - profileV) / 0.26));
-    const hScaleX = 1.0 + bodyFrac * (wFactor - 1.0);
-    const hScaleZ = 1.0 + bodyFrac * (dFactor - 1.0);
-    const rWorld = rBase * baseScale * radiusScale;
+    const hScaleX = isCustomMetric ? 1.0 : (1.0 + bodyFrac * (wFactor - 1.0));
+    const hScaleZ = isCustomMetric ? 1.0 : (1.0 + bodyFrac * (dFactor - 1.0));
+    const rWorld = isCustomMetric
+      ? ((Number(vessel.wMm || 54) * 0.5) * mmToWorld * radiusScale)
+      : (rBase * baseScale * radiusScale);
 
     for (let ix = 0; ix <= radialSegs; ix++) {
       const u = ix / radialSegs;
@@ -9060,7 +9519,8 @@ function createParametricVesselGeometry(vessel, radialSegs, heightSegs, yMin, yM
     }
   }
 
-  for (let iy = 0; iy < heightSegs; iy++) {
+  const ringCount = hasBaseCap ? (heightSegs + 1) : heightSegs;
+  for (let iy = 0; iy < ringCount; iy++) {
     for (let ix = 0; ix < radialSegs; ix++) {
       const a = iy * (radialSegs + 1) + ix;
       const b = a + 1;
@@ -9100,8 +9560,14 @@ function applyDynamicWrapMeshDeformation(geo, vessel) {
     const slTheta = (state.sleeveAngleDeg / 360) * Math.PI * 2;
     const isCan = vessel.shape === "alu_can";
     const centerTheta = isCan ? (slTheta - (540 / 2048) * Math.PI * 2) : slTheta;
+    const activeSkin = typeof getSkin === "function" ? getSkin() : null;
+    const isCustomLabelPhysical = !!(activeSkin && activeSkin.styleType === "custom_uploaded" && Number(activeSkin.physicalWmm) > 0);
+    const circMmLbl = isCustomLabelPhysical ? Math.max(20, getContainerCircumferenceMm(vessel)) : 0;
+    const customPanelWmm = isCustomLabelPhysical ? (state.labelLayout === "front_back" ? Number(activeSkin.physicalWmm) * 0.5 : Number(activeSkin.physicalWmm)) : 0;
     const labelHalfRadBase = isCan ? 2.67 : (vessel.shape === "jar_lux" ? 1.26 : (vessel.shape === "square_soft" ? 0.69 : (vessel.shape === "wine_bordeaux" ? 0.71 : 0.74)));
-    const labelHalfRad = Math.min(Math.PI * 0.90, labelHalfRadBase * getLabelWidthMultiplier(vessel));
+    const labelHalfRad = isCustomLabelPhysical
+      ? Math.min(Math.PI * 0.92, (customPanelWmm / circMmLbl) * Math.PI)
+      : Math.min(Math.PI * 0.90, labelHalfRadBase * getLabelWidthMultiplier(vessel));
 
     for (let i = 0; i < meta.length; i++) {
       const m = meta[i];
@@ -9579,14 +10045,16 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
 
   // Molded neck lip torus on open rigid bottles & jars
   if (!pouchMode && vessel.shape !== "alu_can") {
-    const lipGeo = vessel.shape === "jar_lux"
-      ? new THREE.TorusGeometry(0.676, 0.024, 14, 64)
-      : (vessel.shape === "wine_bordeaux"
-          ? new THREE.TorusGeometry(0.160, 0.023, 14, 48)
-          : new THREE.TorusGeometry(0.214, 0.019, 14, 48));
+    const isCustomMetricLip = !!(vessel.isCustomVessel && vessel.customProfile);
+    const mmToWorldLip = totalH / Math.max(10, Number(vessel.hMm) || 165);
+    const lipR = isCustomMetricLip
+      ? Math.max(0.10, getCustomNeckHalfMm(vessel) * mmToWorldLip - 0.014)
+      : (vessel.shape === "jar_lux" ? 0.676 : (vessel.shape === "wine_bordeaux" ? 0.160 : 0.214));
+    const lipTube = vessel.shape === "jar_lux" ? 0.024 : (vessel.shape === "wine_bordeaux" ? 0.023 : 0.019);
+    const lipGeo = new THREE.TorusGeometry(lipR, lipTube, 14, vessel.shape === "jar_lux" ? 64 : 48);
     lipGeo.rotateX(Math.PI / 2);
     const lipMesh = new THREE.Mesh(lipGeo, vMat);
-    if (uniformRadial) lipMesh.scale.set(wFactor, 1, dFactor);
+    if (uniformRadial && !isCustomMetricLip) lipMesh.scale.set(wFactor, 1, dFactor);
     lipMesh.position.y = -1.25 + totalH;
     grp.add(lipMesh);
   }
@@ -9691,7 +10159,15 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
 
   // 4) 3D Closure Group seated ON TOP
   const clGrp = buildClosure3DGroup(cl, vessel);
-  if (uniformRadial || pouchMode) clGrp.scale.set(wFactor, 1, dFactor);
+  const isCustomMetricNeck = !!(vessel.isCustomVessel && vessel.customProfile && !pouchMode);
+  const mmToWorldNeck = totalH / Math.max(10, Number(vessel.hMm) || 165);
+  const neckRW = isCustomMetricNeck ? (getCustomNeckHalfMm(vessel) * mmToWorldNeck) : 0;
+  if (isCustomMetricNeck && neckRW > 0.04) {
+    const refNeckR = vessel.shape === "jar_lux" ? 0.699 : (vessel.shape === "wine_bordeaux" ? 0.162 : (vessel.shape === "alu_can" ? 0.516 : 0.231));
+    clGrp.scale.setScalar(neckRW / refNeckR);
+  } else if (uniformRadial || pouchMode) {
+    clGrp.scale.set(wFactor, 1, dFactor);
+  }
   const neckV = pouchMode ? 0.865 : (vessel.shape === "jar_lux" ? 0.80 : (vessel.shape === "wine_bordeaux" ? 0.955 : (vessel.shape === "alu_can" ? 0.965 : 0.88)));
   const neckBaseY = -1.25 + neckV * totalH;
   clGrp.userData.baseY = neckBaseY;
@@ -9709,7 +10185,7 @@ function buildConfiguredProductGroup(vessel, cl, phys, opts) {
       ringMesh = new THREE.Mesh(barGeo, ringMat);
       ringMesh.position.y = neckBaseY + 0.08;
     } else {
-      const ringR = (vessel.shape === "jar_lux" ? 0.78 * wFactor : (vessel.shape === "wine_bordeaux" ? 0.22 : (vessel.shape === "alu_can" ? 0.54 * wFactor : 0.34)));
+      const ringR = (isCustomMetricNeck && neckRW > 0.04) ? (neckRW * 1.45) : (vessel.shape === "jar_lux" ? 0.78 * wFactor : (vessel.shape === "wine_bordeaux" ? 0.22 : (vessel.shape === "alu_can" ? 0.54 * wFactor : 0.34)));
       const ringGeo = new THREE.TorusGeometry(ringR, 0.018, 16, 64);
       ringGeo.rotateX(Math.PI / 2);
       ringMesh = new THREE.Mesh(ringGeo, ringMat);
@@ -9818,12 +10294,15 @@ function setupViewportInteractions(canvas) {
     pointerNDC.y = -((e.clientY - r.top) / r.height) * 2 + 1;
   }
 
+  let dragSleeveAngleF = Number(state.sleeveAngleDeg) || 0;
+  let dragSleeveHeightF = Number(state.sleeveHeightPct) || 50;
+
   function intersectBottleUV(e) {
-    const targetMesh = isDoypack() ? vesselMesh : sleeveMesh;
-    if (!targetMesh) return null;
+    const targets = isDoypack() ? [vesselMesh] : [sleeveMesh, vesselMesh].filter(Boolean);
+    if (!targets.length) return null;
     getNDC(e);
     raycaster.setFromCamera(pointerNDC, camera);
-    const hits = raycaster.intersectObject(targetMesh, false);
+    const hits = raycaster.intersectObjects(targets, false);
     return (hits.length > 0 && hits[0].uv) ? hits[0].uv : null;
   }
 
@@ -9831,6 +10310,8 @@ function setupViewportInteractions(canvas) {
     prevPtr = { x: e.clientX, y: e.clientY };
     if (state.pointerTool === "sleeve" && !isDoypack() && !isSerigrafiaMode()) {
       if (intersectBottleUV(e)) {
+        dragSleeveAngleF = Number(state.sleeveAngleDeg) || 0;
+        dragSleeveHeightF = Number(state.sleeveHeightPct) || 50;
         activeDragMode = "sleeve";
         canvas.style.cursor = "grabbing";
         return;
@@ -9845,12 +10326,17 @@ function setupViewportInteractions(canvas) {
       const dx = e.clientX - prevPtr.x;
       const dy = e.clientY - prevPtr.y;
       prevPtr = { x: e.clientX, y: e.clientY };
-      state.sleeveAngleDeg = Math.max(-175, Math.min(175, Math.round(state.sleeveAngleDeg + dx * 0.45)));
-      state.sleeveHeightPct = Math.max(10, Math.min(88, Math.round(state.sleeveHeightPct - dy * 0.35)));
+      dragSleeveAngleF += dx * 0.45;
+      while (dragSleeveAngleF > 180) dragSleeveAngleF -= 360;
+      while (dragSleeveAngleF < -180) dragSleeveAngleF += 360;
+      dragSleeveHeightF = Math.max(10, Math.min(88, dragSleeveHeightF - dy * 0.35));
+      state.sleeveAngleDeg = Math.round(dragSleeveAngleF);
+      state.sleeveHeightPct = Math.round(dragSleeveHeightF);
       clampBarcodeToSleeve();
       if (sleeveMesh && sleeveMesh.geometry) applyDynamicWrapMeshDeformation(sleeveMesh.geometry, getVessel());
       renderSleeveUVTexture();
       updateFastTelemetryUI();
+      if (typeof syncSleevePositionSliderUI === "function") syncSleevePositionSliderUI();
       return;
     }
     if (activeDragMode === "orbit") {
@@ -10111,6 +10597,7 @@ function resetVesselConfigState(vid) {
   state.bcDoypackX = 0;
   camTargetTheta = null;
   state.infoPopoverOpen = false;
+  state.labelLayout = "single";
   state.customVesselMode = false;
   state.customGraphicMode = false;
   state.mobileARCameraMode = false;
@@ -10118,7 +10605,14 @@ function resetVesselConfigState(vid) {
   state.customGraphicDataUrl = "";
   state.customGraphicConformant = false;
   state.customGraphicValidationMsg = "";
-  const existingScoped = state.customGraphicsByVessel && state.customGraphicsByVessel[v.id];
+  state.customGraphicTargetMode = "";
+  state.customGraphicPhysicalWmm = 0;
+  state.customGraphicPhysicalHmm = 0;
+  state.customGraphicBleedMm = 0;
+  state.customGraphicAudit = null;
+  const sig = getVesselDimsSignature(v);
+  const scopedRaw = state.customGraphicsByVessel && state.customGraphicsByVessel[v.id];
+  const existingScoped = (scopedRaw && (!scopedRaw.vesselDimsSignature || scopedRaw.vesselDimsSignature === sig)) ? scopedRaw : null;
   customUploadedImageObj = existingScoped ? (existingScoped.imageObj || null) : null;
   state.currentDraftId = null;
   state.arModalOpen = false;
@@ -10456,17 +10950,30 @@ function openCustomVesselStudio() {
   switchMainView("studio");
 }
 
-function openCustomGraphicStudio() {
+function openCustomGraphicStudio(targetMode) {
   state.customVesselMode = false;
   state.mobileARCameraMode = false;
   state.customGraphicMode = true;
+  const v = getVessel();
+  if (targetMode) {
+    state.customGraphicTargetMode = targetMode;
+  } else if (!state.customGraphicTargetMode) {
+    state.customGraphicTargetMode = isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve"));
+  }
   const scoped = state.customGraphicsByVessel && state.customGraphicsByVessel[state.vesselId];
-  if (scoped) {
+  const validScope = scoped && (!scoped.vesselDimsSignature || scoped.vesselDimsSignature === getVesselDimsSignature(v));
+  if (validScope) {
     state.customGraphicFile = scoped.file || "";
     state.customGraphicDataUrl = scoped.dataUrl || "";
     state.customGraphicTitle = scoped.title || (state.lang === "it" ? "Grafica Personalizzata" : "Custom Graphic");
     state.customGraphicWidth = scoped.width || 0;
     state.customGraphicHeight = scoped.height || 0;
+    state.customGraphicPhysicalWmm = scoped.physicalWmm || 0;
+    state.customGraphicPhysicalHmm = scoped.physicalHmm || 0;
+    state.customGraphicBleedMm = scoped.bleedMm || 0;
+    state.customGraphicAudit = scoped.audit || null;
+    if (scoped.validatedWrapType) state.customGraphicTargetMode = scoped.validatedWrapType;
+    if (scoped.labelLayout) state.labelLayout = scoped.labelLayout;
     state.customGraphicConformant = true;
     state.customGraphicValidationMsg = "";
     state.customGraphicEmbeddedBc = scoped.embeddedBc || null;
@@ -10476,6 +10983,10 @@ function openCustomGraphicStudio() {
     state.customGraphicTitle = state.lang === "it" ? "Grafica Personalizzata" : "Custom Graphic";
     state.customGraphicWidth = 0;
     state.customGraphicHeight = 0;
+    state.customGraphicPhysicalWmm = 0;
+    state.customGraphicPhysicalHmm = 0;
+    state.customGraphicBleedMm = 0;
+    state.customGraphicAudit = null;
     state.customGraphicConformant = false;
     state.customGraphicValidationMsg = "";
     state.customGraphicEmbeddedBc = null;
@@ -10576,24 +11087,348 @@ function detectEmbeddedBarcodeInArtwork(img) {
   }
 }
 
-function analyzeArtworkGraphicConformity(imgW, imgH, imgObj, vessel) {
-  const maxDims = getMaxApplicableSurfaceDimensionsMm(vessel);
+// Shared PDF/AI FlateDecode stream + PNG pHYs/tEXt binary metadata extractor
+function extractTextFromPDFBuffer(arrayBuffer, fileName) {
+  const chunks = [];
+  if (!arrayBuffer) return "";
+  const u8 = new Uint8Array(arrayBuffer);
+  const latin = new TextDecoder("latin1").decode(u8);
+  const isPdf = latin.startsWith("%PDF-") || /\.(pdf|ai)$/i.test(fileName || "");
+
+  function decodePdfLiterals(src) {
+    const out = [];
+    // Literal text strings (...) in Tj / TJ or metadata
+    const litRe = /\(([^()\\]*(?:\\.[^()\\]*)*)\)/g;
+    let m;
+    while ((m = litRe.exec(src)) !== null) {
+      const cleaned = m[1]
+        .replace(/\\n/g, " ")
+        .replace(/\\r/g, " ")
+        .replace(/\\t/g, " ")
+        .replace(/\\([()\\])/g, "$1")
+        .replace(/\\(\d{3})/g, (_, oct) => String.fromCharCode(parseInt(oct, 8)));
+      if (/[A-Za-z0-9]/.test(cleaned) && cleaned.length >= 2) out.push(cleaned);
+    }
+    return out.join(" ");
+  }
+
+  if (isPdf) {
+    chunks.push(decodePdfLiterals(latin));
+    // Locate & decompress all FlateDecode / zlib streams
+    let searchPos = 0;
+    while (searchPos < latin.length) {
+      const sIdx = latin.indexOf("stream", searchPos);
+      if (sIdx < 0) break;
+      let dataStart = sIdx + 6;
+      if (latin[dataStart] === "\r" && latin[dataStart + 1] === "\n") dataStart += 2;
+      else if (latin[dataStart] === "\n" || latin[dataStart] === "\r") dataStart += 1;
+      const eIdx = latin.indexOf("endstream", dataStart);
+      if (eIdx < 0) break;
+      let dataEnd = eIdx;
+      while (dataEnd > dataStart && (u8[dataEnd - 1] === 10 || u8[dataEnd - 1] === 13)) dataEnd--;
+      const sub = u8.subarray(dataStart, dataEnd);
+      if (sub.length > 4 && typeof window !== "undefined" && window.fflate) {
+        let dec = null;
+        try { dec = window.fflate.unzlibSync(sub); } catch (e1) {
+          try { dec = window.fflate.inflateSync(sub); } catch (e2) {}
+        }
+        if (dec && dec.length > 0) {
+          const decTxt = new TextDecoder("latin1").decode(dec);
+          const lits = decodePdfLiterals(decTxt);
+          if (lits) chunks.push(lits);
+          // Also capture plain readable lines inside uncompressed operator streams
+          const readable = decTxt.replace(/[^\x20-\x7E\xA0-\xFF\n]+/g, " ").trim();
+          if (readable.length >= 4) chunks.push(readable);
+        }
+      }
+      searchPos = eIdx + 9;
+    }
+    // Extract XMP / XML text if present
+    const xmlMatches = latin.match(/>([^<]{2,140})</g);
+    if (xmlMatches) {
+      chunks.push(xmlMatches.map(s => s.slice(1, -1).trim()).filter(Boolean).join(" "));
+    }
+  } else if (u8.length > 8 && u8[0] === 0x89 && u8[1] === 0x50 && u8[2] === 0x4E && u8[3] === 0x47) {
+    // Walk PNG tEXt / iTXt / zTXt chunks
+    let off = 8;
+    while (off + 12 <= u8.length) {
+      const len = (u8[off] << 24) | (u8[off + 1] << 16) | (u8[off + 2] << 8) | u8[off + 3];
+      const typ = String.fromCharCode(u8[off + 4], u8[off + 5], u8[off + 6], u8[off + 7]);
+      if (len < 0 || off + 12 + len > u8.length) break;
+      if (typ === "tEXt" || typ === "iTXt") {
+        chunks.push(new TextDecoder("utf-8").decode(u8.subarray(off + 8, off + 8 + len)).replace(/\0+/g, ": "));
+      } else if (typ === "zTXt" && window.fflate) {
+        const nul = u8.subarray(off + 8, off + 8 + len).indexOf(0);
+        if (nul >= 0 && off + 8 + nul + 2 < off + 8 + len) {
+          try {
+            const dec = window.fflate.unzlibSync(u8.subarray(off + 8 + nul + 2, off + 8 + len));
+            chunks.push(new TextDecoder("utf-8").decode(dec));
+          } catch (e) {}
+        }
+      }
+      if (typ === "IEND") break;
+      off += 12 + len;
+    }
+  } else {
+    chunks.push(new TextDecoder("utf-8").decode(u8.subarray(0, Math.min(u8.length, 131072))));
+  }
+  return chunks.join("\n").replace(/\s+/g, " ").trim();
+}
+
+function parseArtworkFileMetadata(file, arrayBuffer) {
+  const name = (file && file.name) || "";
+  const extMatch = name.match(/\.([a-zA-Z0-9]+)$/);
+  const ext = extMatch ? extMatch[1].toLowerCase() : "png";
+  const u8 = arrayBuffer ? new Uint8Array(arrayBuffer) : new Uint8Array(0);
+  const meta = {
+    fileName: name,
+    ext,
+    isVector: /^(pdf|ai|svg|eps)$/.test(ext),
+    physicalWmm: 0,
+    physicalHmm: 0,
+    bleedMm: 0,
+    dpi: 0,
+    dimSource: "pixel_ratio",
+    extractedText: "",
+    svgDataUrl: ""
+  };
+
+  if (ext === "svg" && u8.length > 0) {
+    const svgText = new TextDecoder("utf-8").decode(u8);
+    meta.extractedText = svgText.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 2000);
+    const wAttr = svgText.match(/\bwidth\s*=\s*["']([^"']+)["']/i)?.[1] || "";
+    const hAttr = svgText.match(/\bheight\s*=\s*["']([^"']+)["']/i)?.[1] || "";
+    const vbAttr = svgText.match(/\bviewBox\s*=\s*["']([^"']+)["']/i)?.[1] || "";
+    const parseUnitMm = (valStr) => {
+      const m = String(valStr).trim().match(/^(\d+(?:\.\d+)?)\s*(mm|cm|in|pt|pc|px)?$/i);
+      if (!m) return 0;
+      const num = Number(m[1]);
+      const unit = (m[2] || "px").toLowerCase();
+      if (unit === "mm") return num;
+      if (unit === "cm") return num * 10;
+      if (unit === "in") return num * 25.4;
+      if (unit === "pt") return (num * 25.4) / 72;
+      if (unit === "pc") return (num * 25.4) / 6;
+      return (num * 25.4) / 96;
+    };
+    const wMm = parseUnitMm(wAttr);
+    const hMm = parseUnitMm(hAttr);
+    if (wMm > 5 && hMm > 5) {
+      meta.physicalWmm = Number(wMm.toFixed(1));
+      meta.physicalHmm = Number(hMm.toFixed(1));
+      meta.dimSource = /mm|cm|in|pt/i.test(wAttr + hAttr) ? "svg_physical_units" : "svg_96dpi";
+    } else if (vbAttr) {
+      const parts = vbAttr.trim().split(/[\s,]+/).map(Number);
+      if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+        meta.physicalWmm = Number((parts[2] * 25.4 / 96).toFixed(1));
+        meta.physicalHmm = Number((parts[3] * 25.4 / 96).toFixed(1));
+        meta.dimSource = "svg_viewbox";
+      }
+    }
+    const blob = new Blob([svgText], { type: "image/svg+xml" });
+    meta.svgDataUrl = URL.createObjectURL(blob);
+    return meta;
+  }
+
+  if (/^(pdf|ai|eps)$/.test(ext) && u8.length > 0) {
+    const latin = new TextDecoder("latin1").decode(u8);
+    meta.extractedText = extractTextFromPDFBuffer(arrayBuffer, name);
+    const ptToMm = 25.4 / 72;
+    const parseBox = (key) => {
+      const m = latin.match(new RegExp(`/${key}` + "\\s*\\[\\s*(-?\\d+(?:\\.\\d+)?)\\s+(-?\\d+(?:\\.\\d+)?)\\s+(-?\\d+(?:\\.\\d+)?)\\s+(-?\\d+(?:\\.\\d+)?)\\s*\\]"));
+      if (!m) return null;
+      return {
+        wMm: Math.abs(Number(m[3]) - Number(m[1])) * ptToMm,
+        hMm: Math.abs(Number(m[4]) - Number(m[2])) * ptToMm
+      };
+    };
+    const trim = parseBox("TrimBox");
+    const bleed = parseBox("BleedBox");
+    const crop = parseBox("CropBox");
+    const art = parseBox("ArtBox");
+    const media = parseBox("MediaBox");
+    const primary = trim || art || crop || media;
+    if (primary && primary.wMm > 5 && primary.hMm > 5) {
+      meta.physicalWmm = Number(primary.wMm.toFixed(1));
+      meta.physicalHmm = Number(primary.hMm.toFixed(1));
+      meta.dimSource = trim ? "pdf_trimbox" : (art ? "pdf_artbox" : "pdf_mediabox");
+      if (bleed && trim && bleed.wMm > trim.wMm + 0.4) {
+        meta.bleedMm = Number(((bleed.wMm - trim.wMm) * 0.5).toFixed(1));
+      }
+    }
+    return meta;
+  }
+
+  // PNG pHYs chunk (pixels per meter)
+  if (u8.length > 24 && u8[0] === 0x89 && u8[1] === 0x50 && u8[2] === 0x4E && u8[3] === 0x47) {
+    let off = 8;
+    while (off + 12 <= u8.length) {
+      const len = (u8[off] << 24) | (u8[off + 1] << 16) | (u8[off + 2] << 8) | u8[off + 3];
+      const typ = String.fromCharCode(u8[off + 4], u8[off + 5], u8[off + 6], u8[off + 7]);
+      if (len < 0 || off + 12 + len > u8.length) break;
+      if (typ === "pHYs" && len >= 9) {
+        const ppux = ((u8[off + 8] << 24) | (u8[off + 9] << 16) | (u8[off + 10] << 8) | u8[off + 11]) >>> 0;
+        const ppuy = ((u8[off + 12] << 24) | (u8[off + 13] << 16) | (u8[off + 14] << 8) | u8[off + 15]) >>> 0;
+        const unit = u8[off + 16];
+        if (unit === 1 && ppux > 100 && ppuy > 100) {
+          meta.dpi = Math.round(ppux * 0.0254);
+          meta.ppux = ppux;
+          meta.ppuy = ppuy;
+          meta.dimSource = "png_phys_dpi";
+        }
+      }
+      if (typ === "IEND") break;
+      off += 12 + len;
+    }
+  }
+  return meta;
+}
+
+function scanArtworkSafeMargins(img) {
+  try {
+    const c = document.createElement("canvas");
+    const cw = 96, ch = 96;
+    c.width = cw; c.height = ch;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, cw, ch);
+    const data = ctx.getImageData(0, 0, cw, ch).data;
+    // Detect dark/ink foreground touches right along inner border band (2px from trim edge)
+    let edgeHits = 0;
+    const band = 3;
+    for (let y = 0; y < ch; y++) {
+      for (let x = 0; x < cw; x++) {
+        if (x >= band && x < cw - band && y >= band && y < ch - band) continue;
+        const idx = (y * cw + x) * 4;
+        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+        if (data[idx + 3] > 180 && lum < 85) edgeHits++;
+      }
+    }
+    const perimCount = cw * ch - (cw - band * 2) * (ch - band * 2);
+    const edgeInkRatio = edgeHits / Math.max(1, perimCount);
+    const hasBleedBackground = edgeInkRatio > 0.12 && edgeInkRatio < 0.72;
+    return {
+      safeMarginOk: edgeInkRatio < 0.45,
+      edgeInkRatio,
+      hasBleedBackground
+    };
+  } catch (e) {
+    return { safeMarginOk: true, edgeInkRatio: 0, hasBleedBackground: false };
+  }
+}
+
+function analyzeArtworkGraphicConformity(imgW, imgH, imgObj, vessel, fileMeta) {
+  const targetMode = state.customGraphicTargetMode || (isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
+  const maxDims = getContainerPrintableAreasMm(vessel, targetMode, state.labelLayout);
+  const meta = fileMeta || {};
   const targetRatio = maxDims.maxWmm / Math.max(1, maxDims.maxHmm);
   const imgRatio = imgW / Math.max(1, imgH);
-  const relErr = Math.abs(imgRatio - targetRatio) / Math.max(0.05, targetRatio);
-  const minResOk = imgW >= 200 && imgH >= 160;
-  const ratioOk = relErr <= 0.18;
-  const conformant = minResOk && ratioOk;
-  const embeddedBc = imgObj ? detectEmbeddedBarcodeInArtwork(imgObj) : { detected: true, transitions: 20, centerYFrac: 0.72, centerXFrac: 0.5 };
+
+  let physicalWmm = Number(meta.physicalWmm) || 0;
+  let physicalHmm = Number(meta.physicalHmm) || 0;
+  let physSource = meta.dimSource || "pixel_ratio";
+
+  if ((!physicalWmm || !physicalHmm) && meta.ppux && meta.ppuy) {
+    physicalWmm = Number(((imgW / meta.ppux) * 1000).toFixed(1));
+    physicalHmm = Number(((imgH / meta.ppuy) * 1000).toFixed(1));
+    physSource = "png_phys_dpi";
+  }
+  const fnDimMatch = (meta.fileName || "").match(/(\d{2,4}(?:\.\d+)?)\s*[xX×]\s*(\d{2,4}(?:\.\d+)?)\s*mm/i);
+  if ((!physicalWmm || !physicalHmm) && fnDimMatch) {
+    physicalWmm = Number(fnDimMatch[1]);
+    physicalHmm = Number(fnDimMatch[2]);
+    physSource = "filename_mm";
+  }
+  if (!physicalWmm || !physicalHmm) {
+    // Unmarked raster: check at standard 150 DPI print assumption or maxDims envelope if matching ratio
+    const assume150W = Number(((imgW / 150) * 25.4).toFixed(1));
+    const assume150H = Number(((imgH / 150) * 25.4).toFixed(1));
+    if (assume150W > maxDims.maxWmm * 1.05 || assume150H > maxDims.maxHmm * 1.05) {
+      physicalWmm = assume150W;
+      physicalHmm = assume150H;
+      physSource = "pixel_150dpi";
+    } else {
+      physicalHmm = maxDims.maxHmm;
+      physicalWmm = Number((maxDims.maxHmm * imgRatio).toFixed(1));
+      physSource = "fit_height_mm";
+    }
+  }
+
+  const bleedMm = Number(meta.bleedMm) || 0;
+  const relErr = Math.abs((physicalWmm / Math.max(1, physicalHmm)) - targetRatio) / Math.max(0.05, targetRatio);
+  const overflowWmm = Number(Math.max(0, physicalWmm - maxDims.maxWmm).toFixed(1));
+  const overflowHmm = Number(Math.max(0, physicalHmm - maxDims.maxHmm).toFixed(1));
+  const fitsPrintableArea = overflowWmm <= 2.0 && overflowHmm <= 2.0;
+
+  // Aspect tolerance: tight on 360° sleeve/serigrafia (+/-14%), flexible on cut adhesive label if fits inside printable panel (+/-28%)
+  const maxRelErr = (maxDims.mode === "sleeve" || maxDims.mode === "serigrafia") ? 0.14 : (fitsPrintableArea ? 0.28 : 0.18);
+  const ratioOk = relErr <= maxRelErr;
+
+  const effectiveDpi = meta.isVector ? 300 : Math.round((imgW / Math.max(10, physicalWmm)) * 25.4);
+  const minResOk = (meta.isVector || (imgW >= 200 && imgH >= 160 && effectiveDpi >= 110));
+
+  const marginScan = imgObj ? scanArtworkSafeMargins(imgObj) : { safeMarginOk: true, edgeInkRatio: 0, hasBleedBackground: false };
+  const embeddedBc = imgObj ? detectEmbeddedBarcodeInArtwork(imgObj) : { detected: false, transitions: 0, centerYFrac: 0.72, centerXFrac: 0.5 };
+  const bleedOk = bleedMm >= 1.5 || marginScan.hasBleedBackground || maxDims.mode === "label";
+
+  // Can we proportionally scale down without distortion to fit maxDims?
+  const propScale = Math.min(maxDims.maxWmm / Math.max(1, physicalWmm), maxDims.maxHmm / Math.max(1, physicalHmm));
+  const scaledWmm = Number((physicalWmm * propScale).toFixed(1));
+  const scaledHmm = Number((physicalHmm * propScale).toFixed(1));
+  const scaledRelErr = Math.abs((scaledWmm / Math.max(1, scaledHmm)) - targetRatio) / Math.max(0.05, targetRatio);
+  const canProportionalResize = !fitsPrintableArea && propScale < 0.995 && propScale >= 0.25 && scaledRelErr <= maxRelErr;
+
+  const overlapRisk = (maxDims.mode === "sleeve" && physicalWmm > maxDims.circumferenceMm + 2)
+    || (maxDims.mode === "label" && physicalWmm > maxDims.maxWmm + 2);
+  const clippingRisk = overflowHmm > 2.0 || !marginScan.safeMarginOk || overlapRisk;
+
+  const conformant = minResOk && fitsPrintableArea && ratioOk && marginScan.safeMarginOk;
+
+  const issuesIt = [];
+  const issuesEn = [];
+  if (!fitsPrintableArea) {
+    issuesIt.push(`Dimensioni file (${physicalWmm} × ${physicalHmm} mm) superiori all'area stampabile (${maxDims.maxWmm} × ${maxDims.maxHmm} mm: esubero ${overflowWmm > 0 ? `+${overflowWmm} mm L` : ""}${overflowWmm > 0 && overflowHmm > 0 ? ", " : ""}${overflowHmm > 0 ? `+${overflowHmm} mm H` : ""}).`);
+    issuesEn.push(`Artwork size (${physicalWmm} × ${physicalHmm} mm) exceeds container printable area (${maxDims.maxWmm} × ${maxDims.maxHmm} mm).`);
+  }
+  if (!ratioOk) {
+    issuesIt.push(`Rapporto d'aspetto ${ (physicalWmm / Math.max(1, physicalHmm)).toFixed(2) }:1 incompatibile con l'area ${maxDims.wrapDimStr} (${targetRatio.toFixed(2)}:1, scarto ${Math.round(relErr * 100)}%). Non verrà eseguita alcuna distorsione automatica.`);
+    issuesEn.push(`Aspect ratio ${(physicalWmm / Math.max(1, physicalHmm)).toFixed(2)}:1 is incompatible with ${maxDims.wrapDimStr} (${targetRatio.toFixed(2)}:1, ${Math.round(relErr * 100)}% delta). Zero auto-stretching applied.`);
+  }
+  if (!minResOk) {
+    issuesIt.push(`Risoluzione effettiva insufficiente (${effectiveDpi} DPI · min 110 DPI su ${physicalWmm} mm).`);
+    issuesEn.push(`Insufficient effective print resolution (${effectiveDpi} DPI · min 110 DPI at ${physicalWmm} mm).`);
+  }
+  if (!marginScan.safeMarginOk) {
+    issuesIt.push(`Rilevati elementi critici troppo vicini al bordo di taglio/abbondanza (margine di sicurezza < ${maxDims.safeMarginMm} mm).`);
+    issuesEn.push(`Critical elements detected too close to trim edge (safe margin < ${maxDims.safeMarginMm} mm).`);
+  }
+
   return {
     conformant,
+    physicalWmm,
+    physicalHmm,
+    physSource,
+    bleedMm,
+    bleedOk,
+    effectiveDpi,
     minResOk,
+    fitsPrintableArea,
+    overflowWmm,
+    overflowHmm,
     ratioOk,
     relErr,
     targetRatio,
     imgRatio,
+    safeMarginOk: marginScan.safeMarginOk,
+    overlapRisk,
+    clippingRisk,
+    canProportionalResize,
+    propScale,
+    scaledWmm,
+    scaledHmm,
     maxDims,
-    embeddedBc
+    embeddedBc,
+    issuesIt,
+    issuesEn
   };
 }
 
@@ -10640,84 +11475,149 @@ function buildSynthesizedProofCanvas(titleStr, fileNameStr, dimStr, paletteCols,
   return c;
 }
 
-function handleCustomGraphicUpload(inputEl) {
+let lastParsedArtworkMeta = null;
+
+function finalizeGraphicConformityCheck(img, iw, ih, dataUrl, fileMeta) {
+  const l = state.lang;
+  const vessel = getVessel();
+  const check = analyzeArtworkGraphicConformity(iw, ih, img, vessel, fileMeta);
+  state.customGraphicWidth = iw;
+  state.customGraphicHeight = ih;
+  state.customGraphicPhysicalWmm = check.physicalWmm;
+  state.customGraphicPhysicalHmm = check.physicalHmm;
+  state.customGraphicBleedMm = check.bleedMm;
+  state.customGraphicAudit = check;
+  state.customGraphicDataUrl = dataUrl;
+  state.customGraphicColors = extractDominantColorsFromImage(img);
+  state.customGraphicEmbeddedBc = check.embeddedBc;
+  if (!check.conformant) {
+    customUploadedImageObj = img;
+    state.customGraphicConformant = false;
+    state.customGraphicValidationMsg = (l === "it" ? check.issuesIt : check.issuesEn).join(" ");
+  } else {
+    customUploadedImageObj = img;
+    state.customGraphicConformant = true;
+    state.customGraphicValidationMsg = "";
+  }
+  renderCustomGraphicView();
+}
+
+function resizeCustomGraphicProportionally() {
+  const img = customUploadedImageObj;
+  const check = state.customGraphicAudit;
+  if (!img || !check || !check.canProportionalResize) return;
+  const newMeta = {
+    ...(lastParsedArtworkMeta || { fileName: state.customGraphicFile, ext: "png" }),
+    physicalWmm: check.scaledWmm,
+    physicalHmm: check.scaledHmm,
+    dimSource: "proportional_scale_1to1",
+    bleedMm: check.bleedMm
+  };
+  lastParsedArtworkMeta = newMeta;
+  finalizeGraphicConformityCheck(img, state.customGraphicWidth, state.customGraphicHeight, state.customGraphicDataUrl, newMeta);
+}
+
+function switchCustomGraphicTargetMode(mode, layout) {
+  state.customGraphicTargetMode = mode;
+  if (layout) state.labelLayout = layout;
+  else if (mode !== "label") state.labelLayout = "single";
+  if (!isDoypack() && (mode === "sleeve" || mode === "label" || mode === "serigrafia")) {
+    state.wrapType = mode;
+    if (state.skinId === "none") state.skinId = "neutral";
+  }
+  if (state.customGraphicFile && state.customGraphicDataUrl && customUploadedImageObj) {
+    const meta = lastParsedArtworkMeta || {
+      fileName: state.customGraphicFile,
+      physicalWmm: state.customGraphicPhysicalWmm,
+      physicalHmm: state.customGraphicPhysicalHmm,
+      bleedMm: state.customGraphicBleedMm,
+      dimSource: state.customGraphicAudit?.physSource || "pixel_ratio"
+    };
+    finalizeGraphicConformityCheck(customUploadedImageObj, state.customGraphicWidth, state.customGraphicHeight, state.customGraphicDataUrl, meta);
+  } else {
+    renderCustomGraphicView();
+  }
+}
+
+async function handleCustomGraphicUpload(inputEl) {
   const file = inputEl && inputEl.files && inputEl.files[0];
   if (!file) return;
   const l = state.lang;
   state.customGraphicFile = file.name;
+  state.customGraphicAudit = null;
+  state.customGraphicConformant = false;
   const titleEl = document.getElementById("inpCustomGraphicTitle");
   if (!titleEl || !titleEl.value.trim()) {
     state.customGraphicTitle = l === "it" ? "Grafica Personalizzata" : "Custom Graphic";
+  }
+
+  let arrayBuffer = null;
+  try { arrayBuffer = await file.arrayBuffer(); } catch (e) {}
+  const fileMeta = parseArtworkFileMetadata(file, arrayBuffer);
+  lastParsedArtworkMeta = fileMeta;
+
+  if (fileMeta.ext === "svg" && fileMeta.svgDataUrl) {
+    const svgImg = new Image();
+    svgImg.onload = () => {
+      const iw = svgImg.naturalWidth || Math.max(800, Math.round((fileMeta.physicalWmm || 170) * 8));
+      const ih = svgImg.naturalHeight || Math.max(600, Math.round((fileMeta.physicalHmm || 120) * 8));
+      const rasterC = document.createElement("canvas");
+      rasterC.width = iw;
+      rasterC.height = ih;
+      rasterC.getContext("2d").drawImage(svgImg, 0, 0, iw, ih);
+      const pngUrl = rasterC.toDataURL("image/png");
+      const outImg = new Image();
+      outImg.onload = () => finalizeGraphicConformityCheck(outImg, iw, ih, pngUrl, fileMeta);
+      outImg.src = pngUrl;
+    };
+    svgImg.onerror = () => {
+      state.customGraphicConformant = false;
+      state.customGraphicValidationMsg = l === "it" ? "Impossibile interpretare il tracciato SVG." : "Unable to parse SVG markup.";
+      renderCustomGraphicView();
+    };
+    svgImg.src = fileMeta.svgDataUrl;
+    return;
+  }
+
+  if (fileMeta.isVector) {
+    const vessel = getVessel();
+    const targetMode = state.customGraphicTargetMode || (isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
+    const maxDims = getContainerPrintableAreasMm(vessel, targetMode, state.labelLayout);
+    if (!fileMeta.physicalWmm || !fileMeta.physicalHmm) {
+      const fnMatch = file.name.match(/(\d{2,4}(?:\.\d+)?)\s*[xX×]\s*(\d{2,4}(?:\.\d+)?)/);
+      if (fnMatch) {
+        fileMeta.physicalWmm = Number(fnMatch[1]);
+        fileMeta.physicalHmm = Number(fnMatch[2]);
+        fileMeta.dimSource = "filename_mm";
+      } else {
+        fileMeta.physicalWmm = maxDims.maxWmm;
+        fileMeta.physicalHmm = maxDims.maxHmm;
+        fileMeta.dimSource = "vector_fallback";
+      }
+    }
+    const synW = 1200;
+    const synH = Math.max(240, Math.round(synW * (fileMeta.physicalHmm / Math.max(1, fileMeta.physicalWmm))));
+    const dimLabel = `${fileMeta.physicalWmm} × ${fileMeta.physicalHmm} mm`;
+    const proofCanvas = buildSynthesizedProofCanvas(state.customGraphicTitle, file.name, dimLabel, state.customGraphicColors, synW, synH);
+    const proofUrl = proofCanvas.toDataURL("image/png");
+    const vecImg = new Image();
+    vecImg.onload = () => finalizeGraphicConformityCheck(vecImg, synW, synH, proofUrl, fileMeta);
+    vecImg.src = proofUrl;
+    return;
   }
 
   const reader = new FileReader();
   reader.onload = () => {
     const dataUrl = String(reader.result || "");
     const img = new Image();
-    img.onload = () => {
-      const iw = img.naturalWidth || 0;
-      const ih = img.naturalHeight || 0;
-      const vessel = getVessel();
-      const check = analyzeArtworkGraphicConformity(iw, ih, img, vessel);
-      state.customGraphicWidth = iw;
-      state.customGraphicHeight = ih;
-      state.customGraphicDataUrl = dataUrl;
-      state.customGraphicColors = extractDominantColorsFromImage(img);
-      state.customGraphicEmbeddedBc = check.embeddedBc;
-      if (!check.conformant) {
-        customUploadedImageObj = null;
-        state.customGraphicConformant = false;
-        state.customGraphicValidationMsg = l === "it"
-          ? `File non conforme (${iw} × ${ih} px, rapporto ${check.imgRatio.toFixed(2)}:1). Il contenitore richiede proporzioni ${check.maxDims.wrapDimStr} (rapporto ${check.targetRatio.toFixed(2)}:1 ±18%) per evitare deformazioni di grafica e barcode.`
-          : `Non-conformant dimensions (${iw} × ${ih} px, ratio ${check.imgRatio.toFixed(2)}:1). Container surface requires ${check.maxDims.wrapDimStr} (${check.targetRatio.toFixed(2)}:1 ±18%) to avoid artwork and barcode distortion.`;
-      } else {
-        customUploadedImageObj = img;
-        state.customGraphicConformant = true;
-        state.customGraphicValidationMsg = "";
-      }
-      renderCustomGraphicView();
-    };
+    img.onload = () => finalizeGraphicConformityCheck(img, img.naturalWidth || 0, img.naturalHeight || 0, dataUrl, fileMeta);
     img.onerror = () => {
-      // Vector/PDF/AI files: check explicit WxH in filename if supplied, otherwise synthesize 1:1 conformal proof
-      const vessel = getVessel();
-      const maxDims = getMaxApplicableSurfaceDimensionsMm(vessel);
-      const dimMatch = file.name.match(/(\d{2,4})\s*[xX×]\s*(\d{2,4})/);
-      const isExplicitWrong = /non[-_ ]?conforme|wrong|mismatch/i.test(file.name);
-      let synW = 1200;
-      let synH = Math.max(240, Math.round(1200 * (maxDims.maxHmm / Math.max(1, maxDims.maxWmm))));
-      if (dimMatch) {
-        const mw = Number(dimMatch[1]), mh = Number(dimMatch[2]);
-        const rErr = Math.abs((mw / Math.max(1, mh)) - (maxDims.maxWmm / Math.max(1, maxDims.maxHmm))) / Math.max(0.05, maxDims.maxWmm / Math.max(1, maxDims.maxHmm));
-        if (rErr > 0.18 || isExplicitWrong) {
-          synW = mw >= 240 ? mw : mw * 4;
-          synH = mh >= 180 ? mh : mh * 4;
-        }
-      } else if (isExplicitWrong) {
-        synW = 900; synH = 1200;
-      }
-      const proofCanvas = buildSynthesizedProofCanvas(state.customGraphicTitle, file.name, maxDims.wrapDimStr, state.customGraphicColors, synW, synH);
-      const proofUrl = proofCanvas.toDataURL("image/png");
-      const fallbackImg = new Image();
-      fallbackImg.onload = () => {
-        const check = analyzeArtworkGraphicConformity(synW, synH, fallbackImg, vessel);
-        state.customGraphicDataUrl = proofUrl;
-        state.customGraphicWidth = synW;
-        state.customGraphicHeight = synH;
-        state.customGraphicEmbeddedBc = check.embeddedBc;
-        if (!check.conformant || isExplicitWrong) {
-          customUploadedImageObj = null;
-          state.customGraphicConformant = false;
-          state.customGraphicValidationMsg = l === "it"
-            ? `Formato vettoriale non conforme alle quote ${maxDims.wrapDimStr} del contenitore selezionato.`
-            : `Vector file proportions do not conform to ${maxDims.wrapDimStr} on selected container.`;
-        } else {
-          customUploadedImageObj = fallbackImg;
-          state.customGraphicConformant = true;
-          state.customGraphicValidationMsg = "";
-        }
-        renderCustomGraphicView();
-      };
-      fallbackImg.src = proofUrl;
+      customUploadedImageObj = null;
+      state.customGraphicConformant = false;
+      state.customGraphicValidationMsg = l === "it"
+        ? "Formato file grafico non decodificabile nel browser. Usa SVG, PDF con TrimBox, PNG o JPG."
+        : "Unable to decode artwork file in browser. Use SVG, PDF with TrimBox, PNG, or JPG.";
+      renderCustomGraphicView();
     };
     img.src = dataUrl;
   };
@@ -10739,6 +11639,8 @@ function applyCustomGraphicToStudio() {
   if (titleInput && titleInput.value.trim()) {
     state.customGraphicTitle = titleInput.value.trim();
   }
+  const activeV = getVessel();
+  const targetMode = state.customGraphicTargetMode || (isDoypack() ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
   if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
   state.customGraphicsByVessel[state.vesselId] = {
     title: state.customGraphicTitle,
@@ -10746,20 +11648,27 @@ function applyCustomGraphicToStudio() {
     dataUrl: state.customGraphicDataUrl,
     width: state.customGraphicWidth,
     height: state.customGraphicHeight,
+    physicalWmm: state.customGraphicPhysicalWmm,
+    physicalHmm: state.customGraphicPhysicalHmm,
+    bleedMm: state.customGraphicBleedMm,
+    labelLayout: state.labelLayout || "single",
+    validatedWrapType: targetMode,
+    vesselDimsSignature: getVesselDimsSignature(activeV),
+    audit: state.customGraphicAudit,
     colors: [...(state.customGraphicColors || ["#FAF8F5", "#C2180E", "#18181B"])],
     imageObj: customUploadedImageObj,
     embeddedBc: state.customGraphicEmbeddedBc
   };
-  if (!hasWrap()) {
-    state.wrapType = isDoypack() ? "pouch" : "sleeve";
-  }
-  if (isDoypack() && state.pouchPrintType === "none") {
-    state.pouchPrintType = "digital";
+  if (isDoypack()) {
+    state.wrapType = "pouch";
+    if (state.pouchPrintType === "none") state.pouchPrintType = "digital";
+  } else {
+    state.wrapType = targetMode;
   }
   state.skinId = "custom_user_skin";
   state.customGraphicMode = false;
   state.inspTab = 2;
-  state.selectedSuppliers = { container: 0 };
+  state.selectedSuppliers = activeV.isCustomVessel ? {} : { container: 0 };
   state.filieraStep = 1;
   switchMainView("studio");
   rebuild3DProduct();
@@ -10771,21 +11680,22 @@ function renderCustomGraphicView() {
   if (!host || !state.customGraphicMode) return;
   const l = state.lang;
   const v = getVessel();
-  const maxDims = getMaxApplicableSurfaceDimensionsMm(v);
   const pouchMode = isDoypack();
-  const labelMode = isLabelMode();
-  const serigMode = isSerigrafiaMode();
+  const targetMode = state.customGraphicTargetMode || (pouchMode ? "pouch" : (isSerigrafiaMode() ? "serigrafia" : (isLabelMode() ? "label" : "sleeve")));
+  const maxDims = getContainerPrintableAreasMm(v, targetMode, state.labelLayout);
+  const labelMode = targetMode === "label";
+  const serigMode = targetMode === "serigrafia";
 
   const processIt = pouchMode
     ? (state.pouchPrintType === "flexo" ? "Stampa Flessografica su Doypack" : "Stampa Digitale su Doypack")
     : (serigMode
         ? "Serigrafia Diretta 360° su Alluminio"
-        : (labelMode ? "Etichetta Adesiva Fustellata" : "Sleeve Termoretraibile 360°"));
+        : (labelMode ? (maxDims.labelLayout === "front_back" ? "Etichette Fronte + Retro" : "Etichetta Adesiva Frontale") : "Sleeve Termoretraibile 360°"));
   const processEn = pouchMode
     ? (state.pouchPrintType === "flexo" ? "Flexographic Pouch Printing" : "Digital Pouch Printing")
     : (serigMode
         ? "360° Direct-to-Can Silk Screen"
-        : (labelMode ? "Die-Cut Adhesive Label" : "360° Heat-Shrink Sleeve"));
+        : (labelMode ? (maxDims.labelLayout === "front_back" ? "Front + Back Adhesive Labels" : "Front Adhesive Label") : "360° Heat-Shrink Sleeve"));
 
   const matName = pouchMode
     ? (l === "it" ? (POUCH_FINISHES.find(f => f.id === state.finishId)?.it || "Bianco Soft-Touch") : (POUCH_FINISHES.find(f => f.id === state.finishId)?.en || "White Soft-Touch"))
@@ -10794,31 +11704,93 @@ function renderCustomGraphicView() {
         : (labelMode ? getLabelPaper().name : getFilm().name));
 
   const formatNoteIt = pouchMode
-    ? "Area massima applicabile sull'intera facciata della busta (con codice a barre già integrato nel tracciato)"
+    ? "Area utile tra le saldature della busta (codice a barre già integrato nel file esecutivo)"
     : (serigMode
-        ? "Superficie cilindrica 360° applicabile sul corpo lattina (con codice a barre integrato nell'esecutivo)"
+        ? "Superficie cilindrica 360° sul corpo lattina (esecutivo PDF/SVG/PNG/AI con barcode integrato)"
         : (labelMode
-            ? "Area di applicazione su corpo e spalle: carica un esecutivo già dimensionato e comprensivo di barcode"
-            : "Superficie 360° esatta su corpo e spalla: carica una grafica già conforme comprensiva di codice a barre"));
+            ? `Pannello adesivo dedicato per ${v.it} (${maxDims.labelLayout === "front_back" ? "doppia fascia fronte/retro" : "etichetta frontale"}, margine sicurezza ${maxDims.safeMarginMm} mm)`
+            : `Circonferenza ${maxDims.circumferenceMm} mm × altezza zona stampabile ${maxDims.maxHmm} mm con abbondanza consigliata ${maxDims.bleedMm} mm`));
   const formatNoteEn = pouchMode
-    ? "Exact pouch panel print envelope (barcode must be integrated inside artwork file)"
+    ? "Printable front panel inside pouch heat-seals (integrated barcode supported)"
     : (serigMode
-        ? "360° cylindrical can artwork envelope (barcode integrated in print file)"
+        ? "360° cylindrical can envelope (PDF/SVG/PNG/AI with integrated barcode)"
         : (labelMode
-            ? "Die-cut label envelope: upload dimensionally conformant artwork including barcode"
-            : "360° shrink-sleeve envelope: upload dimensionally conformant artwork including barcode"));
+            ? `Adhesive label envelope for ${v.en} (${maxDims.labelLayout === "front_back" ? "front + back panels" : "front label"}, ${maxDims.safeMarginMm} mm safe margin)`
+            : `Circumference ${maxDims.circumferenceMm} mm × printable height ${maxDims.maxHmm} mm (${maxDims.bleedMm} mm bleed recommended)`));
 
   const hasImg = !!(state.customGraphicDataUrl && state.customGraphicFile);
   const canProceed = hasImg && !!state.customGraphicConformant;
   const safeFile = escapeHtml(state.customGraphicFile);
   const safeTitle = escapeHtml(state.customGraphicTitle);
+  const audit = state.customGraphicAudit;
+
+  const modeTabsHtml = pouchMode ? "" : `
+    <div class="cg-mode-tabs" role="group" aria-label="${l === "it" ? "Tipo decorazione" : "Decoration mode"}">
+      <button type="button" class="cg-mode-tab ${targetMode === "sleeve" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('sleeve', 'single')">
+        ${l === "it" ? "Sleeve 360°" : "360° Sleeve"}
+      </button>
+      <button type="button" class="cg-mode-tab ${targetMode === "label" && maxDims.labelLayout === "single" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('label', 'single')">
+        ${l === "it" ? "Etichetta Frontale" : "Front Label"}
+      </button>
+      <button type="button" class="cg-mode-tab ${targetMode === "label" && maxDims.labelLayout === "front_back" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('label', 'front_back')">
+        ${l === "it" ? "Fronte + Retro" : "Front + Back"}
+      </button>
+      ${v.shape === "alu_can" ? `
+        <button type="button" class="cg-mode-tab ${targetMode === "serigrafia" ? "active" : ""}" onclick="switchCustomGraphicTargetMode('serigrafia', 'single')">
+          ${l === "it" ? "Stampa Diretta 360°" : "Direct Print 360°"}
+        </button>
+      ` : ""}
+    </div>
+  `;
+
+  const prepressAuditHtml = (hasImg && audit) ? `
+    <div class="cg-prepress-grid" id="cgPrepressAuditBox">
+      <div class="cg-prepress-item ${audit.fitsPrintableArea ? "ok" : "err"}">
+        <span class="cv-audit-k">${l === "it" ? "MISURA FISICA vs STAMPABILE" : "PHYSICAL SIZE VS PRINTABLE"}</span>
+        <span class="cv-audit-v">${audit.physicalWmm} × ${audit.physicalHmm} mm / ${maxDims.wrapDimStr}</span>
+        <span style="font-size:10px; color:var(--charcoal);">${audit.fitsPrintableArea ? (l === "it" ? "Entro i limiti ✓" : "Within printable bounds ✓") : (l === "it" ? `Esubero: +${audit.overflowWmm} mm L, +${audit.overflowHmm} mm H` : `Overflow: +${audit.overflowWmm} mm W, +${audit.overflowHmm} mm H`)}</span>
+      </div>
+      <div class="cg-prepress-item ${audit.ratioOk ? "ok" : "err"}">
+        <span class="cv-audit-k">${l === "it" ? "RAPPORTO ASPETTO" : "ASPECT RATIO"}</span>
+        <span class="cv-audit-v">${(audit.physicalWmm / Math.max(1, audit.physicalHmm)).toFixed(2)}:1 vs ${audit.targetRatio.toFixed(2)}:1</span>
+        <span style="font-size:10px; color:var(--charcoal);">${l === "it" ? `Scarto ${Math.round(audit.relErr * 100)}% (zero stiramento)` : `Delta ${Math.round(audit.relErr * 100)}% (zero distortion)`}</span>
+      </div>
+      <div class="cg-prepress-item ${audit.minResOk ? (audit.effectiveDpi >= 240 ? "ok" : "warn") : "err"}">
+        <span class="cv-audit-k">${l === "it" ? "RISOLUZIONE STAMPA" : "PRINT RESOLUTION"}</span>
+        <span class="cv-audit-v">${audit.effectiveDpi} DPI (${state.customGraphicWidth} × ${state.customGraphicHeight} px)</span>
+        <span style="font-size:10px; color:var(--charcoal);">${audit.minResOk ? (audit.effectiveDpi >= 240 ? (l === "it" ? "Qualità alta serie ✓" : "High print quality ✓") : (l === "it" ? "Accettabile (consigliati ≥ 300 DPI)" : "Acceptable (300 DPI ideal)")) : (l === "it" ? "Troppo bassa (< 110 DPI)" : "Too low (< 110 DPI)")}</span>
+      </div>
+      <div class="cg-prepress-item ${audit.safeMarginOk && !audit.clippingRisk ? "ok" : (audit.safeMarginOk ? "warn" : "err")}">
+        <span class="cv-audit-k">${l === "it" ? "ABBONDANZA & MARGINI SICURI" : "BLEED & SAFE MARGINS"}</span>
+        <span class="cv-audit-v">${audit.bleedMm > 0 ? `Bleed ${audit.bleedMm} mm` : (l === "it" ? `Margine rifilo ≥ ${maxDims.safeMarginMm} mm` : `Safe margin ≥ ${maxDims.safeMarginMm} mm`)}</span>
+        <span style="font-size:10px; color:var(--charcoal);">${audit.clippingRisk ? (l === "it" ? "Rischio taglio / sovrapposizione su bordo ⚠" : "Edge clipping / overlap risk ⚠") : (l === "it" ? "Nessun taglio o sormonto critico ✓" : "No critical clipping or overlap ✓")}</span>
+      </div>
+    </div>
+    ${audit.canProportionalResize ? `
+      <div class="cg-resize-card" id="cgProportionalResizeBox">
+        <div style="flex:1; min-width:200px;">
+          <div style="font-size:12px; font-weight:800; color:#92400E;">
+            ${l === "it" ? `Ridimensionamento proporzionale 1:1 disponibile (${audit.scaledWmm} × ${audit.scaledHmm} mm)` : `Proportional 1:1 scaling available (${audit.scaledWmm} × ${audit.scaledHmm} mm)`}
+          </div>
+          <div style="font-size:11px; color:var(--charcoal); margin-top:2px;">
+            ${l === "it"
+              ? `Scala uniforme ${(audit.propScale * 100).toFixed(0)}% mantenendo invariate le proporzioni e il codice a barre.`
+              : `Uniform ${(audit.propScale * 100).toFixed(0)}% scale preserving aspect ratio and barcode geometry.`}
+          </div>
+        </div>
+        <button type="button" class="cta-btn" id="btnProportionalResizeGraphic" style="width:auto; height:36px; font-size:11.5px; padding:0 16px;" onclick="resizeCustomGraphicProportionally()">
+          ${l === "it" ? "Adatta in proporzione 1:1" : "Scale proportionally 1:1"}
+        </button>
+      </div>
+    ` : ""}
+  ` : "";
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
       <div class="brown-hdr-bar">
         <div>
           <h1 class="brown-hdr-title">${l === "it" ? "Caricamento Grafica Esecutiva di Stampa" : "Custom Print Artwork Upload"}</h1>
-          <p class="cat-sub-minimal">${l === "it" ? "Analisi dimensionale automatica e mappatura 1:1 fedele nello Studio 3D (con codice a barre integrato nel file)" : "Automatic dimensional conformity check and faithful 1:1 3D Studio mapping (with integrated barcode)"}</p>
+          <p class="cat-sub-minimal">${l === "it" ? "Verifica prepress su misura per l'area stampabile reale del contenitore e mappatura 1:1 nello Studio 3D" : "Container-specific prepress verification and realistic 1:1 3D Studio mapping"}</p>
         </div>
       </div>
 
@@ -10830,23 +11802,27 @@ function renderCustomGraphicView() {
               <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? processIt : processEn}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">
                 ${l === "it"
-                  ? "Il software verifica che le proporzioni dell'esecutivo caricato coincidano con la geometria del contenitore selezionato senza deformare la grafica né il codice a barre."
-                  : "The engine verifies that the uploaded artwork proportions match the selected container geometry with zero distortion to graphics or barcode."}
+                  ? "Ogni contenitore ha quote stampabili dedicate: l'esecutivo viene controllato su misura fisica, proporzioni, bleed, margini e DPI senza mai essere stirato in automatico."
+                  : "Every container has dedicated printable geometry: artwork is verified for physical size, aspect ratio, bleed, safe margins, and DPI with zero automatic stretching."}
               </p>
             </div>
+
+            ${modeTabsHtml}
 
             <div class="custom-spec-checklist">
               <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PARAMETRI CONTENITORE SELEZIONATO" : "SELECTED CONTAINER SPECS"}</div>
               <div>01 // ${l === "it" ? "Contenitore:" : "Container:"} <strong>${escapeHtml(l === "it" ? v.it : v.en)}</strong></div>
-              <div>02 // ${l === "it" ? "Superficie richiesta:" : "Required envelope:"} <strong>${maxDims.wrapDimStr}</strong></div>
-              <div>03 // ${l === "it" ? "Substrato:" : "Substrate:"} <strong>${matName}</strong></div>
+              <div>02 // ${l === "it" ? "Quote corpo reali:" : "Body dimensions:"} <strong>${v.wMm} × ${v.dMm || v.wMm} × ${v.hMm} mm</strong></div>
+              <div>03 // ${l === "it" ? "Area stampabile:" : "Printable area:"} <strong>${maxDims.wrapDimStr}</strong></div>
+              <div>04 // ${l === "it" ? "Margine sicuro / Bleed:" : "Safe margin / Bleed:"} <strong>${maxDims.safeMarginMm} mm / ${maxDims.bleedMm} mm</strong></div>
+              <div>05 // ${l === "it" ? "Substrato:" : "Substrate:"} <strong>${matName}</strong></div>
             </div>
           </div>
 
           <div class="custom-bp-right">
             <div>
               <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "UPLOAD FILE GRAFICA ESCLUSIVO PER QUESTO CONTENITORE" : "ARTWORK UPLOAD SCOPED TO THIS CONTAINER"}</span>
-              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? "Dimensioni max applicabili" : "Max applicable dimensions"}</h2>
+              <h2 style="font-family:var(--display); font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">${l === "it" ? `Area stampabile richiesta: ${maxDims.wrapDimStr}` : `Required printable area: ${maxDims.wrapDimStr}`}</h2>
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? formatNoteIt : formatNoteEn}</p>
             </div>
 
@@ -10857,7 +11833,7 @@ function renderCustomGraphicView() {
                   <div class="cg-meta">
                     <div class="cg-filename">${canProceed ? "✓" : "⚠"} ${safeFile}</div>
                     <div style="font-family:var(--mono); font-size:11px; color:${canProceed ? "var(--green)" : "var(--crimson)"}; font-weight:700;">
-                      ${state.customGraphicWidth} × ${state.customGraphicHeight} px · ${canProceed ? (l === "it" ? `Conforme 1:1 (${maxDims.wrapDimStr})` : `1:1 Conformant (${maxDims.wrapDimStr})`) : (l === "it" ? `Non conforme a ${maxDims.wrapDimStr}` : `Mismatch vs ${maxDims.wrapDimStr}`)}
+                      ${audit ? `${audit.physicalWmm} × ${audit.physicalHmm} mm · ${audit.effectiveDpi} DPI` : `${state.customGraphicWidth} × ${state.customGraphicHeight} px`}
                     </div>
                     <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Clicca per sostituire il file grafica" : "Click to replace graphic file"}</div>
                   </div>
@@ -10869,12 +11845,14 @@ function renderCustomGraphicView() {
                   ${l === "it" ? `Carica esecutivo grafica (max ${maxDims.wrapDimStr})` : `Upload graphic file (max ${maxDims.wrapDimStr})`}
                 </div>
                 <div style="font-size:11px; color:var(--slate);">
-                  ${l === "it" ? "PNG, JPG, SVG, PDF vettoriale o Adobe Illustrator (.ai)" : "PNG, JPG, SVG, Vector PDF or Adobe Illustrator (.ai)"}
+                  ${l === "it" ? "PDF (/TrimBox), SVG vettoriale, PNG (pHYs DPI) o Adobe Illustrator (.ai)" : "Vector PDF (/TrimBox), SVG, PNG (pHYs DPI) or Adobe Illustrator (.ai)"}
                 </div>
                 <span class="spec-tag">${l === "it" ? "SELEZIONA FILE" : "SELECT FILE"}</span>
               `}
               <input id="customGraphicFileInput" type="file" accept="image/*,.svg,.pdf,.ai,.eps,.tif,.tiff" style="display:none;" onchange="handleCustomGraphicUpload(this)">
             </label>
+
+            ${prepressAuditHtml}
 
             <div class="cg-form-grid">
               <div class="cg-field">
@@ -10882,7 +11860,7 @@ function renderCustomGraphicView() {
                 <input id="inpCustomGraphicTitle" class="cg-input" type="text" maxlength="28" value="${safeTitle}" oninput="state.customGraphicTitle=this.value">
               </div>
             </div>
-            <div id="cgValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);">${escapeHtml(state.customGraphicValidationMsg || "")}</div>
+            <div id="cgValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:${canProceed ? "var(--green)" : "var(--crimson)"};">${escapeHtml(state.customGraphicValidationMsg || "")}</div>
           </div>
         </div>
 
@@ -11078,30 +12056,118 @@ function segmentSilhouetteFromPhoto(img) {
       fillRatio,
       neckRadiusNorm,
       bodyColorHex,
-      finishId
+      finishId,
+      fgW,
+      fgH
     };
   } catch (e) {
     return null;
   }
 }
 
-function parseDatasheetMetadata(rawText) {
-  const txt = String(rawText || "");
-  if (!txt) return {};
-  const out = {};
-  const pairMatch = txt.match(/(\d{2,3})\s*[xX×]\s*(\d{2,3})(?:\s*[xX×]\s*(\d{2,3}))?\s*mm/i);
+function analyzeTopViewGeometry(img) {
+  const seg = segmentSilhouetteFromPhoto(img);
+  if (!seg) return null;
+  // Estimate concentric inner opening/neck ring by sampling radial luminance variance in central ROI
+  let innerRingRatio = seg.fillRatio > 0.84 ? 0.62 : 0.44;
+  try {
+    const c = document.createElement("canvas");
+    c.width = 64; c.height = 64;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, 64, 64);
+    const data = ctx.getImageData(0, 0, 64, 64).data;
+    let bestGrad = 0, bestR = 14;
+    for (let rad = 5; rad <= 26; rad++) {
+      let lumSum = 0, lumPrev = 0;
+      for (let a = 0; a < 16; a++) {
+        const ang = (a / 16) * Math.PI * 2;
+        const x = Math.round(32 + rad * Math.cos(ang));
+        const y = Math.round(32 + rad * Math.sin(ang));
+        const px = Math.round(32 + (rad - 2) * Math.cos(ang));
+        const py = Math.round(32 + (rad - 2) * Math.sin(ang));
+        const i1 = (y * 64 + x) * 4, i0 = (py * 64 + px) * 4;
+        lumSum += (data[i1] + data[i1 + 1] + data[i1 + 2]) / 3;
+        lumPrev += (data[i0] + data[i0 + 1] + data[i0 + 2]) / 3;
+      }
+      const g = Math.abs(lumSum - lumPrev) / 16;
+      if (g > bestGrad) { bestGrad = g; bestR = rad; }
+    }
+    if (bestGrad > 8) innerRingRatio = Math.max(0.22, Math.min(0.88, bestR / 28));
+  } catch (e) {}
+  return { ...seg, innerRingRatio };
+}
+
+function analyzeBottomViewGeometry(img) {
+  const seg = segmentSilhouetteFromPhoto(img);
+  if (!seg) return null;
+  const isRectangularFootprint = seg.fillRatio > 0.82 || Math.abs(seg.hToWRatio - 1.0) > 0.14;
+  return { ...seg, isRectangularFootprint };
+}
+
+function parseDatasheetMetadata(rawText, fileName) {
+  const txt = String(rawText || "") + " " + String(fileName || "");
+  if (!txt.trim()) return { extractedFields: {}, hasAnyDimension: false };
+  const out = { extractedFields: {} };
+  const toMm = (numStr, unitStr) => {
+    const val = Number(String(numStr).replace(",", "."));
+    const u = String(unitStr || "mm").toLowerCase();
+    if (!Number.isFinite(val)) return 0;
+    if (u === "cm") return Math.round(val * 10);
+    if (u === "in") return Math.round(val * 25.4);
+    return Math.round(val);
+  };
+
+  const pairMatch = txt.match(/(\d+(?:[.,]\d+)?)\s*[xX×]\s*(\d+(?:[.,]\d+)?)(?:\s*[xX×]\s*(\d+(?:[.,]\d+)?))?\s*(mm|cm|in)\b/i);
   if (pairMatch) {
-    const a = Number(pairMatch[1]), b = Number(pairMatch[2]), c = pairMatch[3] ? Number(pairMatch[3]) : null;
-    if (a >= 40 && a <= 360 && b >= 20 && b <= 260) {
-      if (c) { out.wMm = a; out.dMm = b; out.hMm = c; }
-      else if (a > b) { out.hMm = a; out.wMm = b; }
-      else { out.wMm = a; out.hMm = b; }
+    const u = pairMatch[4];
+    const a = toMm(pairMatch[1], u), b = toMm(pairMatch[2], u), c = pairMatch[3] ? toMm(pairMatch[3], u) : 0;
+    if (a >= 20 && a <= 420 && b >= 20 && b <= 320) {
+      if (c > 0) {
+        out.wMm = a; out.dMm = b; out.hMm = c;
+        out.extractedFields.width = { mm: a, raw: `${pairMatch[1]} ${u}` };
+        out.extractedFields.depth = { mm: b, raw: `${pairMatch[2]} ${u}` };
+        out.extractedFields.height = { mm: c, raw: `${pairMatch[3]} ${u}` };
+      } else if (a > b) {
+        out.hMm = a; out.wMm = b;
+        out.extractedFields.height = { mm: a, raw: `${pairMatch[1]} ${u}` };
+        out.extractedFields.width = { mm: b, raw: `${pairMatch[2]} ${u}` };
+      } else {
+        out.wMm = a; out.hMm = b;
+        out.extractedFields.width = { mm: a, raw: `${pairMatch[1]} ${u}` };
+        out.extractedFields.height = { mm: b, raw: `${pairMatch[2]} ${u}` };
+      }
     }
   }
-  const hMatch = txt.match(/(?:altezza|height|H)\s*[:=]?\s*(\d{2,3})\s*mm/i);
-  if (hMatch) out.hMm = Number(hMatch[1]);
-  const wMatch = txt.match(/(?:diametro|diameter|diam\.?|Ø|larghezza|width)\s*[:=]?\s*(\d{2,3})\s*mm/i);
-  if (wMatch) out.wMm = Number(wMatch[1]);
+
+  const hMatch = txt.match(/(?:altezza(?:\s*totale)?|height|total\s*height|\bH)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\b/i);
+  if (hMatch) {
+    out.hMm = toMm(hMatch[1], hMatch[2]);
+    out.extractedFields.height = { mm: out.hMm, raw: `${hMatch[1]} ${hMatch[2]}` };
+  }
+  const wMatch = txt.match(/(?:diametro(?:\s*esterno)?|outer\s*diameter|diameter|diam\.?|Ø|larghezza|width|\bW|\bD)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\b/i);
+  if (wMatch) {
+    out.wMm = toMm(wMatch[1], wMatch[2]);
+    out.extractedFields.width = { mm: out.wMm, raw: `${wMatch[1]} ${wMatch[2]}` };
+  }
+  const dMatch = txt.match(/(?:profondit[aà]|depth)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\b/i);
+  if (dMatch) {
+    out.dMm = toMm(dMatch[1], dMatch[2]);
+    out.extractedFields.depth = { mm: out.dMm, raw: `${dMatch[1]} ${dMatch[2]}` };
+  }
+  const printMatch = txt.match(/(?:area\s*stampabile|printable\s*area|zona\s*stampa|etichetta(?:\s*max)?|label\s*area)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*[xX×]\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)\b/i);
+  if (printMatch) {
+    out.printableWmm = toMm(printMatch[1], printMatch[3]);
+    out.printableHmm = toMm(printMatch[2], printMatch[3]);
+    out.extractedFields.printable = { wMm: out.printableWmm, hMm: out.printableHmm, raw: `${printMatch[1]}×${printMatch[2]} ${printMatch[3]}` };
+  }
+  const neckDiamMatch = txt.match(/(?:collo(?:\s*esterno)?|neck\s*diam(?:eter)?|imboccatura)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm)\b/i);
+  if (neckDiamMatch) {
+    out.neckOuterMm = toMm(neckDiamMatch[1], neckDiamMatch[2]);
+  }
+  const threadPitchMatch = txt.match(/(?:filetto|filettatura|thread(?:\s*pitch)?|passo)\s*[:=\-]?\s*([^\n,;]{2,26})/i);
+  if (threadPitchMatch) {
+    out.threadSpec = threadPitchMatch[1].trim();
+  }
   const neckMatch = txt.match(/(24\/410|28\/410|58\/400|70\/400|Bague\s*29\s*mm|29\s*mm|SOT\s*202|Zip\s*220\s*mm)/i);
   if (neckMatch) {
     const tok = neckMatch[1].toUpperCase();
@@ -11112,60 +12178,155 @@ function parseDatasheetMetadata(rawText) {
     else if (tok.includes("29")) out.neck = "Bague 29mm";
     else if (tok.includes("202")) out.neck = "SOT 202";
     else if (tok.includes("ZIP")) out.neck = "Zip 220mm";
+    out.extractedFields.neck = { raw: neckMatch[1], spec: out.neck };
   }
-  const volMatch = txt.match(/(\d{2,4})\s*(ml|g)/i);
-  if (volMatch) out.vol = `${volMatch[1]} ${volMatch[2].toLowerCase()}`;
+  const volMatch = txt.match(/(?:capacit[aà]|volume|vol\.?|contenuto)?\s*\b(\d+(?:[.,]\d+)?)\s*(ml|cl|g)\b/i);
+  if (volMatch) {
+    out.vol = `${volMatch[1]} ${volMatch[2].toLowerCase()}`;
+    out.extractedFields.vol = { raw: out.vol };
+  }
+  const wtMatch = txt.match(/(?:peso|weight|grammatura)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(g|gr)\b/i);
+  if (wtMatch) {
+    out.weightG = Math.round(Number(String(wtMatch[1]).replace(",", ".")));
+    out.extractedFields.weight = { raw: `${wtMatch[1]} ${wtMatch[2]}`, g: out.weightG };
+  }
+  const wallMatch = txt.match(/(?:spessore(?:\s*parete)?|wall\s*thickness)\s*[:=\-]?\s*(\d+(?:[.,]\d+)?)\s*(mm)\b/i);
+  if (wallMatch) {
+    out.wallMm = Number(String(wallMatch[1]).replace(",", "."));
+    out.extractedFields.wall = { raw: `${wallMatch[1]} ${wallMatch[2]}`, mm: out.wallMm };
+  }
+  if (/\b(?:hdpe|polietilene)\b/i.test(txt)) out.finishId = "hdpe_white";
+  else if (/\b(?:vetro\s*verde|green\s*glass)\b/i.test(txt)) out.finishId = "wine_green";
+  else if (/\b(?:ambrato|amber\s*glass)\b/i.test(txt)) out.finishId = "amber";
+  else if (/\b(?:satinato|frosted)\b/i.test(txt)) out.finishId = "frosted";
+  else if (/\b(?:alluminio|aluminum|alu)\b/i.test(txt)) out.finishId = "alu_brushed";
+  else if (/\b(?:pet\s*cristallo|clear\s*pet)\b/i.test(txt)) out.finishId = "clear_pet";
+  else if (/\b(?:pet|rpet)\b/i.test(txt)) out.finishId = "pet_gloss";
+
+  out.hasAnyDimension = !!(out.hMm || out.wMm || out.dMm);
+  return out;
+}
+
+function validateCustomContainerDimensions(vesselLike) {
+  const targetH = Number(vesselLike.hMm) || 165;
+  const targetW = Number(vesselLike.wMm) || 56;
+  const targetD = Number(vesselLike.dMm || vesselLike.wMm) || targetW;
+  const out = {
+    passed: true,
+    measWMm: targetW,
+    measDMm: targetD,
+    measHMm: targetH,
+    maxErrMm: 0,
+    warnings: []
+  };
+  if (typeof THREE !== "undefined" && typeof createParametricVesselGeometry === "function") {
+    try {
+      const geo = createParametricVesselGeometry(vesselLike, 64, 64, 0.0, 1.0, 1.0, false);
+      const box = new THREE.Box3().setFromBufferAttribute(geo.attributes.position);
+      const sz = box.getSize(new THREE.Vector3());
+      const totalH = getVesselTotalHeight(vesselLike);
+      const mmPerUnit = targetH / Math.max(0.1, totalH);
+      out.measWMm = Number((sz.x * mmPerUnit).toFixed(1));
+      out.measHMm = Number((sz.y * mmPerUnit).toFixed(1));
+      out.measDMm = Number((sz.z * mmPerUnit).toFixed(1));
+      out.maxErrMm = Number(Math.max(
+        Math.abs(out.measWMm - targetW),
+        Math.abs(out.measDMm - targetD),
+        Math.abs(out.measHMm - targetH)
+      ).toFixed(2));
+      out.passed = out.maxErrMm <= 1.2;
+      geo.dispose();
+    } catch (e) {}
+  }
   return out;
 }
 
 function reconstructCustomVesselFromUploads() {
-  const segs = (state.customPhotoImages || []).map(im => segmentSilhouetteFromPhoto(im));
-  const frontSeg = segs[0] || segs[1];
-  const sideSeg = segs[2] || segs[3];
-  const topSeg = segs[4] || segs[5];
-  if (!frontSeg && !sideSeg) {
+  const imgs = state.customPhotoImages || [];
+  const frontSeg = segmentSilhouetteFromPhoto(imgs[0]);
+  const backSeg = segmentSilhouetteFromPhoto(imgs[1]);
+  const leftSeg = segmentSilhouetteFromPhoto(imgs[2]);
+  const rightSeg = segmentSilhouetteFromPhoto(imgs[3]);
+  const topSeg = analyzeTopViewGeometry(imgs[4]);
+  const botSeg = analyzeBottomViewGeometry(imgs[5]);
+  const photoSegCount = [frontSeg, backSeg, leftSeg, rightSeg, topSeg, botSeg].filter(Boolean).length;
+
+  const parsedDs = parseDatasheetMetadata(state.customDatasheetText || "", state.customDatasheetFile || "");
+  state.customDatasheetAudit = parsedDs;
+
+  if (!frontSeg && !backSeg && !leftSeg && !rightSeg) {
     state.customReconstructed = null;
     return null;
   }
-  const refSeg = frontSeg || sideSeg;
-  const rFrontSamples = refSeg.rSamples.slice();
-  const rSideSamples = sideSeg ? sideSeg.rSamples.slice() : rFrontSamples.slice();
 
-  // Superellipse exponent from top/bottom footprint fill ratio (pi/4 ~= 0.785 circle; >0.84 square/rounded rect)
-  const footprintFill = topSeg ? topSeg.fillRatio : 0.78;
+  // Fuse Front + Back profiles symmetrically
+  const fRef = frontSeg || backSeg || leftSeg || rightSeg;
+  const rFrontSamples = fRef.rSamples.map((rv, k) => {
+    if (frontSeg && backSeg) return (frontSeg.rSamples[k] + backSeg.rSamples[k]) * 0.5;
+    return rv;
+  });
+  let frontBackDiffSum = 0;
+  if (frontSeg && backSeg) {
+    for (let k = 0; k < 64; k++) frontBackDiffSum += Math.abs(frontSeg.rSamples[k] - backSeg.rSamples[k]);
+  }
+  const frontBackSymmetryPct = frontSeg && backSeg ? Math.round(Math.max(0, 100 - (frontBackDiffSum / 64) * 180)) : 96;
+
+  // Fuse Left + Right lateral profiles
+  const sRef = leftSeg || rightSeg;
+  const rSideSamples = rFrontSamples.map((rv, k) => {
+    if (leftSeg && rightSeg) return (leftSeg.rSamples[k] + rightSeg.rSamples[k]) * 0.5;
+    if (sRef) return sRef.rSamples[k];
+    return rv;
+  });
+
+  const footprintSeg = botSeg || topSeg;
+  const footprintFill = footprintSeg ? footprintSeg.fillRatio : 0.785;
   const superellipseN = footprintFill > 0.86 ? 3.8 : (footprintFill > 0.82 ? 2.8 : 2.0);
-  const dToWRatio = (frontSeg && sideSeg && sideSeg.hToWRatio > 0.2)
-    ? Math.max(0.45, Math.min(1.40, frontSeg.hToWRatio / sideSeg.hToWRatio))
+  const dToWRatio = ((frontSeg || backSeg) && sRef && sRef.hToWRatio > 0.2)
+    ? Math.max(0.45, Math.min(1.45, fRef.hToWRatio / sRef.hToWRatio))
     : 1.0;
 
   let shape = "cyl_tall";
-  if (refSeg.hToWRatio < 1.25 && refSeg.neckRadiusNorm > 0.62) shape = "jar_lux";
-  else if (refSeg.hToWRatio > 3.25) shape = "wine_bordeaux";
+  const topNeckHint = topSeg ? topSeg.innerRingRatio : fRef.neckRadiusNorm;
+  if (fRef.hToWRatio < 1.25 && Math.max(fRef.neckRadiusNorm, topNeckHint) > 0.58) shape = "jar_lux";
+  else if (fRef.hToWRatio > 3.20) shape = "wine_bordeaux";
   else if (superellipseN >= 2.75 || Math.abs(dToWRatio - 1.0) > 0.16) shape = "square_soft";
-  else if (refSeg.neckRadiusNorm > 0.78 && refSeg.finishId === "alu_brushed") shape = "alu_can";
+  else if (fRef.neckRadiusNorm > 0.78 && fRef.finishId === "alu_brushed") shape = "alu_can";
 
-  let hMm = Math.max(58, Math.min(330, Math.round(58 * refSeg.hToWRatio)));
   let wMm = shape === "jar_lux" ? 74 : (shape === "wine_bordeaux" ? 76 : (shape === "square_soft" ? 68 : 58));
-  if (shape === "jar_lux") hMm = Math.max(48, Math.min(130, Math.round(wMm * refSeg.hToWRatio)));
-  else hMm = Math.max(75, Math.min(320, Math.round(wMm * refSeg.hToWRatio)));
+  let hMm = shape === "jar_lux"
+    ? Math.max(48, Math.min(130, Math.round(wMm * fRef.hToWRatio)))
+    : Math.max(75, Math.min(320, Math.round(wMm * fRef.hToWRatio)));
   let dMm = (shape === "square_soft") ? Math.max(28, Math.min(200, Math.round(wMm * dToWRatio))) : wMm;
 
   let neck = "24/410";
   if (shape === "jar_lux") neck = wMm >= 78 ? "70/400" : "58/400";
   else if (shape === "wine_bordeaux") neck = "Bague 29mm";
   else if (shape === "alu_can") neck = "SOT 202";
-  else if (wMm >= 62 || refSeg.neckRadiusNorm > 0.44) neck = "28/410";
+  else if (wMm >= 62 || fRef.neckRadiusNorm > 0.44) neck = "28/410";
 
-  // Override with explicit parsed CAD datasheet specs if present
-  const parsedDs = parseDatasheetMetadata((state.customDatasheetText || "") + " " + (state.customDatasheetFile || ""));
+  // Authoritative override from technical datasheet where extracted
   if (parsedDs.hMm) hMm = parsedDs.hMm;
   if (parsedDs.wMm) {
     wMm = parsedDs.wMm;
-    dMm = parsedDs.dMm || Math.round(wMm * dToWRatio);
+    dMm = parsedDs.dMm || (Math.abs(dToWRatio - 1.0) <= 0.08 ? wMm : Math.round(wMm * dToWRatio));
   }
+  if (parsedDs.dMm) dMm = parsedDs.dMm;
   if (parsedDs.neck) neck = parsedDs.neck;
 
-  // Calibrate upper threaded neck tip (slices 56..63) smoothly to fit standard cap geometry while keeping full 0..86% CV body silhouette!
+  // Detect surface zone transitions (heel, printable flat/low-taper zone, shoulder, neck) from rFrontSamples
+  let vHeelEnd = 0.05;
+  for (let k = 2; k <= 12; k++) {
+    if (rFrontSamples[k] >= 0.94) { vHeelEnd = Number((k / 63).toFixed(2)); break; }
+  }
+  let vShoulderStart = shape === "jar_lux" ? 0.74 : (shape === "wine_bordeaux" ? 0.50 : 0.62);
+  for (let k = Math.round(vHeelEnd * 63) + 6; k < 56; k++) {
+    if (rFrontSamples[k] < 0.90) { vShoulderStart = Number((Math.max(0.35, (k - 1) / 63)).toFixed(2)); break; }
+  }
+  const vPrintableMin = Math.max(0.04, Math.min(0.14, vHeelEnd));
+  const vPrintableMax = Math.min(0.84, Math.max(vPrintableMin + 0.30, vShoulderStart + 0.04));
+
+  const finishId = parsedDs.finishId || fRef.finishId || "pet_gloss";
   const targetNeckR = shape === "jar_lux" ? 0.76 : (shape === "wine_bordeaux" ? 0.28 : (shape === "alu_can" ? 0.86 : 0.34));
   const rFrontCal = rFrontSamples.slice();
   const rSideCal = rSideSamples.slice();
@@ -11182,6 +12343,54 @@ function reconstructCustomVesselFromUploads() {
   const estMl = Math.max(30, Math.round((Math.PI * radCm * radCm * fillH) / 5) * 5);
   const vol = parsedDs.vol || `${estMl} ml`;
 
+  const provenance = {
+    height: parsedDs.extractedFields?.height ? { val: parsedDs.extractedFields.height.raw, norm: `${hMm} mm`, src: "ds" } : { val: `${hMm} mm`, norm: `${hMm} mm`, src: "ai" },
+    width: parsedDs.extractedFields?.width ? { val: parsedDs.extractedFields.width.raw, norm: `${wMm} mm`, src: "ds" } : { val: `${wMm} mm`, norm: `${wMm} mm`, src: "ai" },
+    depth: parsedDs.extractedFields?.depth ? { val: parsedDs.extractedFields.depth.raw, norm: `${dMm} mm`, src: "ds" } : { val: `${dMm} mm`, norm: `${dMm} mm`, src: "ai" },
+    neck: parsedDs.extractedFields?.neck ? { val: neck, src: "ds" } : { val: neck, src: "ai" },
+    vol: parsedDs.extractedFields?.vol ? { val: vol, src: "ds" } : { val: `${vol} (est.)`, src: "ai" },
+    printable: parsedDs.extractedFields?.printable ? { val: parsedDs.extractedFields.printable.raw, src: "ds" } : { val: `${Math.round(Math.PI * wMm)} × ${Math.round((vPrintableMax - vPrintableMin) * hMm)} mm`, src: "ai" }
+  };
+
+  const warnings = [];
+  if (parsedDs.hMm && parsedDs.wMm && fRef.hToWRatio > 0.2) {
+    const dsRatio = parsedDs.hMm / Math.max(1, parsedDs.wMm);
+    const ratioGap = Math.abs(dsRatio - fRef.hToWRatio) / Math.max(dsRatio, fRef.hToWRatio);
+    if (ratioGap > 0.38) {
+      warnings.push(`Discrepanza tra rapporto scheda (${dsRatio.toFixed(2)}:1) e foto frontali (${fRef.hToWRatio.toFixed(2)}:1). Applicate le quote certificate della scheda.`);
+    }
+  }
+  if (state.customDatasheetFile && !parsedDs.hasAnyDimension) {
+    warnings.push("Scheda tecnica priva di testo dimensionale leggibile: quote dedotte dalle 6 foto (consigliato PDF testuale con misure).");
+  }
+
+  const unverifiedDetails = [];
+  if (!parsedDs.wallMm) unverifiedDetails.push("Spessore parete interna (non visibile dalle 6 viste esterne)");
+  if (!parsedDs.weightG) unverifiedDetails.push("Grammatura esatta / distribuzione resina sul fondo");
+  if (!parsedDs.threadSpec && !parsedDs.neckOuterMm) unverifiedDetails.push("Passo e tolleranza fine filettatura interna");
+
+  const tempVesselForCheck = {
+    id: "custom_preview_check",
+    isCustomVessel: true,
+    shape,
+    neck,
+    hMm,
+    wMm,
+    dMm,
+    customProfile: {
+      rFrontSamples: rFrontCal,
+      rSideSamples: rSideCal,
+      superellipseN,
+      neckOuterMm: parsedDs.neckOuterMm || 0
+    }
+  };
+  const dimValidation = validateCustomContainerDimensions(tempVesselForCheck);
+  if (!dimValidation.passed) {
+    warnings.push(`Errore tolleranza mesh 3D: scarto massimo ${dimValidation.maxErrMm} mm rispetto alle specifiche.`);
+  } else if (warnings.length > 0) {
+    dimValidation.warnings = warnings;
+  }
+
   state.customReconstructed = {
     shape,
     hMm,
@@ -11189,14 +12398,31 @@ function reconstructCustomVesselFromUploads() {
     dMm,
     vol,
     neck,
-    finishId: refSeg.finishId || "pet_gloss",
-    customBodyColor: refSeg.bodyColorHex || "#E8EFF6",
+    neckOuterMm: parsedDs.neckOuterMm || 0,
+    threadSpec: parsedDs.threadSpec || "",
+    weightG: parsedDs.weightG || (shape === "wine_bordeaux" ? 950 : 280),
+    wallMm: parsedDs.wallMm || 0,
+    printableWmm: parsedDs.printableWmm || 0,
+    printableHmm: parsedDs.printableHmm || 0,
+    vPrintableMin,
+    vPrintableMax,
+    vHeelEnd,
+    vShoulderStart,
+    finishId,
+    customBodyColor: fRef.bodyColorHex || "#E8EFF6",
     rFrontSamples: rFrontCal,
     rSideSamples: rSideCal,
     superellipseN,
-    hToWRatio: refSeg.hToWRatio,
+    hToWRatio: fRef.hToWRatio,
     dToWRatio,
-    photoCount: segs.filter(Boolean).length
+    frontBackSymmetryPct,
+    topNeckRatio: topSeg ? topSeg.innerRingRatio : fRef.neckRadiusNorm,
+    bottomFillRatio: botSeg ? botSeg.fillRatio : footprintFill,
+    photoCount: photoSegCount,
+    provenance,
+    unverifiedDetails,
+    dimValidation,
+    warnings
   };
   state.customSpecs = {
     ...state.customSpecs,
@@ -11206,7 +12432,7 @@ function reconstructCustomVesselFromUploads() {
     dMm,
     vol,
     neck,
-    finishId: state.customReconstructed.finishId
+    finishId
   };
   return state.customReconstructed;
 }
@@ -11233,25 +12459,28 @@ function renderCustomSilhouettePreviewSVG(recon) {
   </svg>`;
 }
 
-function handleCustomUpload(type, idx, inputEl) {
+async function handleCustomUpload(type, idx, inputEl) {
   const file = inputEl && inputEl.files && inputEl.files[0];
   if (!file) return;
   if (type === "datasheet") {
     state.customDatasheetFile = file.name;
-    const textReader = new FileReader();
-    textReader.onload = () => {
-      state.customDatasheetText = String(textReader.result || "").slice(0, 65536);
+    let ab = null;
+    try { ab = await file.arrayBuffer(); } catch (e) {}
+    const extracted = extractTextFromPDFBuffer(ab, file.name);
+    state.customDatasheetText = extracted.slice(0, 131072);
+    if (file.type && file.type.startsWith("image/")) {
+      const dataReader = new FileReader();
+      dataReader.onload = () => {
+        state.customDatasheetDataUrl = String(dataReader.result || "");
+        reconstructCustomVesselFromUploads();
+        renderCustomVesselView();
+      };
+      dataReader.readAsDataURL(file);
+    } else {
+      state.customDatasheetDataUrl = "";
       reconstructCustomVesselFromUploads();
       renderCustomVesselView();
-    };
-    textReader.readAsText(file);
-    const dataReader = new FileReader();
-    dataReader.onload = () => {
-      const dataUrl = String(dataReader.result || "");
-      state.customDatasheetDataUrl = file.type.startsWith("image/") ? dataUrl : "";
-      renderCustomVesselView();
-    };
-    dataReader.readAsDataURL(file);
+    }
   } else {
     state.customPhotoFiles[idx] = file.name;
     const reader = new FileReader();
@@ -11348,7 +12577,7 @@ function applyCustomVesselToStudio() {
     doypack: "flexibles"
   };
 
-  const activeId = "custom_active";
+  const activeId = `custom_${Date.now().toString(36)}`;
   const customVesselObj = {
     id: activeId,
     isCustomVessel: true,
@@ -11362,7 +12591,7 @@ function applyCustomVesselToStudio() {
     hMm: s.hMm,
     wMm: s.wMm,
     dMm: s.dMm,
-    weightG: s.shape === "wine_bordeaux" ? 950 : (s.shape === "doypack" ? 650 : 280),
+    weightG: s.weightG || (s.shape === "wine_bordeaux" ? 950 : (s.shape === "doypack" ? 650 : 280)),
     maxShoulderTD: 54,
     defaultFinish: s.finishId || "pet_gloss",
     defaultWrap: s.shape === "doypack" ? "pouch" : "sleeve",
@@ -11378,10 +12607,22 @@ function applyCustomVesselToStudio() {
       rFrontSamples: recon.rFrontSamples,
       rSideSamples: recon.rSideSamples,
       superellipseN: recon.superellipseN,
-      customBodyColor: recon.customBodyColor
+      customBodyColor: recon.customBodyColor,
+      neckOuterMm: recon.neckOuterMm || 0,
+      threadSpec: recon.threadSpec || "",
+      printableWmm: recon.printableWmm || 0,
+      printableHmm: recon.printableHmm || 0,
+      vPrintableMin: recon.vPrintableMin,
+      vPrintableMax: recon.vPrintableMax,
+      vHeelEnd: recon.vHeelEnd,
+      vShoulderStart: recon.vShoulderStart,
+      provenance: recon.provenance,
+      unverifiedDetails: recon.unverifiedDetails,
+      dimValidation: recon.dimValidation
     } : null
   };
 
+  customVesselObj.dimsSignature = getVesselDimsSignature(customVesselObj);
   state.activeCustomVessel = customVesselObj;
   generatePhotorealisticVesselThumbnails([activeId]);
   state.customVesselMode = false;
@@ -11396,6 +12637,7 @@ function renderCustomVesselView() {
   if (!host || !state.customVesselMode) return;
   const l = state.lang;
   const s = state.customSpecs;
+  const recon = state.customReconstructed;
   const slots = [
     { it: "1. Lato Frontale", en: "1. Front Side", subIt: "Vista frontale dritta al centro", subEn: "Straight centered front view" },
     { it: "2. Lato Posteriore", en: "2. Back Side", subIt: "Vista posteriore a 180°", subEn: "180° rear side view" },
@@ -11407,6 +12649,90 @@ function renderCustomVesselView() {
   const uploadedPhotos = state.customPhotoFiles.filter(Boolean).length;
   const hasDatasheet = Boolean(state.customDatasheetFile);
   const allReady = hasDatasheet && uploadedPhotos === 6;
+
+  let auditCardHtml = "";
+  if (recon) {
+    const prov = recon.provenance || {};
+    const dv = recon.dimValidation || {};
+    const hasWarn = recon.warnings && recon.warnings.length > 0;
+    const srcPill = (p) => (p && p.src === "ds")
+      ? `<span class="cv-src-pill ds">${l === "it" ? "SCHEDA TECNICA" : "DATASHEET"}</span>`
+      : `<span class="cv-src-pill ai">${l === "it" ? "STIMA AI 6-FOTO" : "AI 6-VIEW EST."}</span>`;
+    auditCardHtml = `
+      <div class="cv-audit-card ${hasWarn ? "warn" : ""}" id="cvReconAuditCard">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="cv-silhouette-box">${renderCustomSilhouettePreviewSVG(recon)}</div>
+            <div>
+              <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--crimson);">
+                ${l === "it" ? "ANALISI 6 VISTE + VALIDAZIONE 3D" : "6-VIEW ANALYSIS + 3D VALIDATION"}
+              </span>
+              <div style="font-size:13px; font-weight:800; color:var(--ink);">
+                ${dv.passed
+                  ? (l === "it" ? `Mesh 3D validata (${dv.measWMm} × ${dv.measDMm} × ${dv.measHMm} mm · Δ ${dv.maxErrMm} mm)` : `3D mesh validated (${dv.measWMm} × ${dv.measDMm} × ${dv.measHMm} mm · Δ ${dv.maxErrMm} mm)`)
+                  : (l === "it" ? "Verifica tolleranza geometrica richiesta" : "Geometric tolerance check needed")}
+              </div>
+              <div style="font-size:11px; color:var(--slate);">
+                ${l === "it"
+                  ? `Simmetria fronte/retro ${recon.frontBackSymmetryPct}% · Sezione superellisse n=${recon.superellipseN.toFixed(1)} · Zona stampabile v=${Math.round(recon.vPrintableMin * 100)}–${Math.round(recon.vPrintableMax * 100)}%`
+                  : `Front/back symmetry ${recon.frontBackSymmetryPct}% · Cross-section n=${recon.superellipseN.toFixed(1)} · Printable band v=${Math.round(recon.vPrintableMin * 100)}–${Math.round(recon.vPrintableMax * 100)}%`}
+              </div>
+            </div>
+          </div>
+          <span class="spec-tag ${dv.passed && !hasWarn ? "ok" : "clash"}">${dv.passed ? "1:1 VALIDATO ✓" : "VERIFICA ⚠"}</span>
+        </div>
+
+        <div class="cv-audit-grid">
+          <div class="cv-audit-cell">
+            <span class="cv-audit-k">${l === "it" ? "ALTEZZA" : "HEIGHT"}</span>
+            <span class="cv-audit-v">${escapeHtml(prov.height?.val || `${recon.hMm} mm`)}</span>
+            ${srcPill(prov.height)}
+          </div>
+          <div class="cv-audit-cell">
+            <span class="cv-audit-k">${l === "it" ? "LARGHEZZA / PROFONDITÀ" : "WIDTH / DEPTH"}</span>
+            <span class="cv-audit-v">${escapeHtml(prov.width?.val || `${recon.wMm} mm`)} × ${escapeHtml(prov.depth?.val || `${recon.dMm} mm`)}</span>
+            ${srcPill(prov.width)}
+          </div>
+          <div class="cv-audit-cell">
+            <span class="cv-audit-k">${l === "it" ? "COLLO / FILETTO" : "NECK / THREAD"}</span>
+            <span class="cv-audit-v">${escapeHtml(recon.neck)}${recon.threadSpec ? ` (${escapeHtml(recon.threadSpec)})` : ""}</span>
+            ${srcPill(prov.neck)}
+          </div>
+          <div class="cv-audit-cell">
+            <span class="cv-audit-k">${l === "it" ? "AREA STAMPABILE" : "PRINTABLE AREA"}</span>
+            <span class="cv-audit-v">${escapeHtml(prov.printable?.val || "Calcolata da 3D")}</span>
+            ${srcPill(prov.printable)}
+          </div>
+        </div>
+
+        ${hasWarn ? `
+          <div class="cv-unverified-box" style="border-color:#F59E0B; color:#92400E;">
+            <strong>${l === "it" ? "Avvisi di coerenza:" : "Consistency notices:"}</strong> ${escapeHtml(recon.warnings.join(" "))}
+          </div>
+        ` : ""}
+
+        ${recon.unverifiedDetails && recon.unverifiedDetails.length > 0 ? `
+          <div class="cv-unverified-box">
+            <strong>${l === "it" ? "Dettagli non deducibili senza specifica interna:" : "Details not deducible without internal CAD spec:"}</strong>
+            ${escapeHtml(recon.unverifiedDetails.join("; "))}.
+          </div>
+        ` : ""}
+      </div>
+    `;
+  } else if (state.customDatasheetAudit && state.customDatasheetFile) {
+    const ds = state.customDatasheetAudit;
+    auditCardHtml = `
+      <div class="cv-audit-card" id="cvReconAuditCard">
+        <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--green);">
+          ${l === "it" ? "SPECIFICHE ESTRATTE DALLA SCHEDA TECNICA" : "EXTRACTED DATASHEET SPECS"}
+        </span>
+        <div style="font-family:var(--mono); font-size:11.5px; font-weight:700; color:var(--ink);">
+          ${ds.hMm ? `H: ${ds.hMm} mm · ` : ""}${ds.wMm ? `Ø/L: ${ds.wMm} mm · ` : ""}${ds.neck ? `Collo: ${ds.neck} · ` : ""}${ds.printableWmm ? `Stampabile: ${ds.printableWmm}×${ds.printableHmm} mm · ` : ""}${ds.vol || ""}
+        </div>
+        <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Carica tutte e 6 le viste fotografiche per ricostruire e validare la mesh 3D." : "Upload all 6 photo angles to reconstruct and validate the 3D geometry."}</div>
+      </div>
+    `;
+  }
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
@@ -11440,7 +12766,7 @@ function renderCustomVesselView() {
                 <div style="font-size:12px; color:var(--slate); margin-top:5px; line-height:1.45;">${l === "it" ? "JPG, PNG, PDF · Estrazione automatica quote meccaniche, filettatura e sagoma 3D" : "JPG, PNG, PDF · Automatic extraction of mechanical dimensions, neck finish and 3D profile"}</div>
               </div>
               <span class="spec-tag ${hasDatasheet ? "ok" : ""}" style="font-size:11px; padding:6px 14px;">${hasDatasheet ? (l === "it" ? "SCHEDA CARICATA ✓" : "DATASHEET UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
-              <input type="file" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
+              <input id="customDatasheetInput" type="file" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
             </label>
 
             <div id="cvValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);"></div>
@@ -11477,6 +12803,8 @@ function renderCustomVesselView() {
                 `;
               }).join("")}
             </div>
+
+            ${auditCardHtml}
           </div>
         </div>
 
@@ -13114,6 +14442,13 @@ function persistSavedCustomVessels() {
           dataUrl: copy.customGraphic.dataUrl,
           width: copy.customGraphic.width,
           height: copy.customGraphic.height,
+          physicalWmm: copy.customGraphic.physicalWmm || 0,
+          physicalHmm: copy.customGraphic.physicalHmm || 0,
+          bleedMm: copy.customGraphic.bleedMm || 0,
+          labelLayout: copy.customGraphic.labelLayout || "single",
+          validatedWrapType: copy.customGraphic.validatedWrapType || "",
+          vesselDimsSignature: copy.customGraphic.vesselDimsSignature || "",
+          audit: copy.customGraphic.audit || null,
           colors: copy.customGraphic.colors,
           embeddedBc: copy.customGraphic.embeddedBc
         };
@@ -13246,7 +14581,7 @@ function saveCurrentCustomVesselToProfile() {
   state.currentDraftId = targetDraftId;
 
   const activeCustomGraphic = state.customGraphicsByVessel ? (state.customGraphicsByVessel[oldVid] || state.customGraphicsByVessel[baseVesselId]) : null;
-  if (isCustom && oldVid === "custom_active") {
+  if (isCustom && oldVid !== targetDraftId) {
     v.id = targetDraftId;
     state.vesselId = targetDraftId;
     if (activeCustomGraphic && state.customGraphicsByVessel) {
@@ -13265,6 +14600,7 @@ function saveCurrentCustomVesselToProfile() {
     baseVesselId: isCustom ? targetDraftId : baseVesselId,
     isCustomVessel: isCustom,
     isProductionDraft: true,
+    dimsSignature: getVesselDimsSignature(v),
     savedAt: new Date().toLocaleDateString(state.lang === "it" ? "it-IT" : "en-US"),
     draftSummaryIt: summary.it,
     draftSummaryEn: summary.en,
@@ -13273,6 +14609,7 @@ function saveCurrentCustomVesselToProfile() {
       finishId: state.finishId,
       closureId: state.closureId,
       wrapType: state.wrapType,
+      labelLayout: state.labelLayout || "single",
       pouchPrintType: state.pouchPrintType,
       filmId: state.filmId,
       labelMatId: state.labelMatId,
@@ -13298,6 +14635,13 @@ function saveCurrentCustomVesselToProfile() {
       dataUrl: activeCustomGraphic.dataUrl,
       width: activeCustomGraphic.width,
       height: activeCustomGraphic.height,
+      physicalWmm: activeCustomGraphic.physicalWmm || 0,
+      physicalHmm: activeCustomGraphic.physicalHmm || 0,
+      bleedMm: activeCustomGraphic.bleedMm || 0,
+      labelLayout: activeCustomGraphic.labelLayout || state.labelLayout || "single",
+      validatedWrapType: activeCustomGraphic.validatedWrapType || state.wrapType,
+      vesselDimsSignature: activeCustomGraphic.vesselDimsSignature || getVesselDimsSignature(v),
+      audit: activeCustomGraphic.audit || null,
       colors: activeCustomGraphic.colors,
       embeddedBc: activeCustomGraphic.embeddedBc
     } : null
@@ -13350,27 +14694,45 @@ function openSavedCustomVesselInStudio(draftId) {
   const isCustom = !!saved.isCustomVessel;
   const targetVid = isCustom ? saved.id : (saved.baseVesselId || "serum_250");
   state.activeCustomVessel = isCustom ? saved : null;
+  let restoredImg = null;
   if (saved.customGraphic && saved.customGraphic.dataUrl) {
     if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
     const cgImg = new Image();
-    const cgRec = { ...saved.customGraphic, imageObj: null };
+    const cgRec = {
+      ...saved.customGraphic,
+      vesselDimsSignature: saved.customGraphic.vesselDimsSignature || getVesselDimsSignature(saved),
+      imageObj: null
+    };
     cgImg.onload = () => {
       cgRec.imageObj = cgImg;
       if (state.vesselId === targetVid && state.skinId === "custom_user_skin") {
         customUploadedImageObj = cgImg;
         rebuild3DProduct();
+        renderAllUI();
       }
     };
     cgImg.src = saved.customGraphic.dataUrl;
     cgRec.imageObj = cgImg;
     state.customGraphicsByVessel[targetVid] = cgRec;
-    customUploadedImageObj = cgImg;
+    restoredImg = cgImg;
   }
   resetVesselConfigState(targetVid);
   state.currentDraftId = saved.id;
+  if (restoredImg) customUploadedImageObj = restoredImg;
   if (saved.savedConfig) {
     Object.assign(state, saved.savedConfig);
     state.vesselId = targetVid;
+  }
+  if (saved.customGraphic) {
+    state.customGraphicTitle = saved.customGraphic.title || state.customGraphicTitle;
+    state.customGraphicFile = saved.customGraphic.file || "";
+    state.customGraphicDataUrl = saved.customGraphic.dataUrl || "";
+    state.customGraphicWidth = saved.customGraphic.width || 0;
+    state.customGraphicHeight = saved.customGraphic.height || 0;
+    state.customGraphicPhysicalWmm = saved.customGraphic.physicalWmm || 0;
+    state.customGraphicPhysicalHmm = saved.customGraphic.physicalHmm || 0;
+    state.labelLayout = (saved.savedConfig && saved.savedConfig.labelLayout) || saved.customGraphic.labelLayout || "single";
+    state.customGraphicConformant = true;
   }
   state.selectedSuppliers = isCustom ? {} : { container: 0 };
   state.filieraStep = 1;
@@ -13831,15 +15193,35 @@ function updateBarcodePositionFromSlider(angleDeg, heightPct) {
   updateFastTelemetryUI();
 }
 
+function syncSleevePositionSliderUI() {
+  const hEl = document.getElementById("slvHeightRange");
+  const aEl = document.getElementById("slvAngleRange");
+  const hVal = document.getElementById("slvHeightVal");
+  const aVal = document.getElementById("slvAngleVal");
+  if (hEl) {
+    hEl.value = String(state.sleeveHeightPct);
+    hEl.style.setProperty("--control-value", String(state.sleeveHeightPct));
+    hEl.setAttribute("aria-valuetext", `${state.sleeveHeightPct}%`);
+  }
+  if (aEl) {
+    aEl.value = String(state.sleeveAngleDeg);
+    aEl.style.setProperty("--control-value", String(state.sleeveAngleDeg));
+    aEl.setAttribute("aria-valuetext", `${state.sleeveAngleDeg}°`);
+  }
+  if (hVal) hVal.textContent = `${state.sleeveHeightPct}%`;
+  if (aVal) aVal.textContent = `${state.sleeveAngleDeg}°`;
+}
+
 function updateSleevePositionFromSlider(angleDeg, heightPct) {
   if (angleDeg !== null) {
-    state.sleeveAngleDeg = Number(angleDeg);
+    state.sleeveAngleDeg = Math.max(-180, Math.min(180, Math.round(Number(angleDeg))));
     camSpherical.theta = 0.24 - (state.sleeveAngleDeg / 180) * Math.PI * 0.85;
   }
   if (heightPct !== null) {
-    state.sleeveHeightPct = Number(heightPct);
+    state.sleeveHeightPct = Math.max(10, Math.min(88, Math.round(Number(heightPct))));
     clampBarcodeToSleeve();
   }
+  syncSleevePositionSliderUI();
   if (sleeveMesh && sleeveMesh.geometry) applyDynamicWrapMeshDeformation(sleeveMesh.geometry, getVessel());
   renderSleeveUVTexture();
   updateFastTelemetryUI();
@@ -14251,6 +15633,38 @@ function renderInspector() {
       return;
     }
 
+    const buildPositioningCardHtml = () => {
+      const labelMode = isLabelMode();
+      const hDesc = labelMode
+        ? (l === "it" ? `Altezza Etichetta (${state.sleeveHeightPct}%)` : `Label Height (${state.sleeveHeightPct}%)`)
+        : (l === "it" ? `Altezza Sleeve (${state.sleeveHeightPct}%)` : `Sleeve Height (${state.sleeveHeightPct}%)`);
+      const aDesc = l === "it" ? `Rotazione 360° (${state.sleeveAngleDeg}°)` : `Horizontal Rotation (${state.sleeveAngleDeg}°)`;
+      return `
+        <div class="sec-block${animCls}">
+          <div class="sec-hdr">
+            <span>${l === "it" ? "POSIZIONAMENTO IN TEMPO REALE" : "REAL-TIME POSITIONING"}</span>
+            <span class="spec-tag ${phys.sleeveStatus === "err" ? "clash" : "ok"}">${labelMode ? "CURVATURA" : "TD"} ${phys.sleeveTD}%</span>
+          </div>
+          <div class="slv-pos-card">
+            <div class="slv-pos-row">
+              <div class="slv-pos-hdr">
+                <label for="slvHeightRange">${l === "it" ? "Altezza Verticale" : "Vertical Height"}</label>
+                <span class="slv-pos-val" id="slvHeightVal">${state.sleeveHeightPct}%</span>
+              </div>
+              <input id="slvHeightRange" type="range" class="vc-range-slider" min="10" max="88" step="1" value="${state.sleeveHeightPct}" aria-valuetext="${hDesc}" style="--attr-min:10; --attr-max:88; --control-value:${state.sleeveHeightPct};" oninput="updateSleevePositionFromSlider(null, this.value)">
+            </div>
+            <div class="slv-pos-row">
+              <div class="slv-pos-hdr">
+                <label for="slvAngleRange">${l === "it" ? "Posizione Orizzontale 360°" : "Horizontal Position 360°"}</label>
+                <span class="slv-pos-val" id="slvAngleVal">${state.sleeveAngleDeg}°</span>
+              </div>
+              <input id="slvAngleRange" type="range" class="vc-range-slider" min="-180" max="180" step="1" value="${state.sleeveAngleDeg}" aria-valuetext="${aDesc}" style="--attr-min:-180; --attr-max:180; --control-value:${state.sleeveAngleDeg};" oninput="updateSleevePositionFromSlider(this.value, null)">
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
     if (isLabelMode()) {
       const labelPaperPills = LABEL_PAPERS.map(p => `
         <button class="opt-pill ${p.id === state.labelMatId ? "active" : ""}" onclick="state.labelMatId='${p.id}'; rebuild3DProduct(); renderAllUI();">
@@ -14266,6 +15680,8 @@ function renderInspector() {
           <div class="sec-hdr"><span>${l === "it" ? "CARTA E FILM ADESIVO ETICHETTA" : "ADHESIVE LABEL SUBSTRATE"}</span></div>
           <div class="grid-2">${labelPaperPills}</div>
         </div>
+
+        ${buildPositioningCardHtml()}
 
         <div class="sec-block${animCls}">
           <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
@@ -14290,6 +15706,7 @@ function renderInspector() {
         <div class="sec-hdr"><span>${l === "it" ? "MATERIALE FILM TERMORETRAIBILE" : "SHRINK SLEEVE FILM MATERIAL"}</span></div>
         <div class="grid-2">${filmPills}</div>
       </div>
+      ${buildPositioningCardHtml()}
       <div class="sec-block${animCls}">
         <div class="sec-hdr"><span>${l === "it" ? "GRAFICHE BRAND" : "BRAND GRAPHICS"}</span></div>
         <div class="prod-list">${skinPills}</div>

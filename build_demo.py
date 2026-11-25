@@ -12,12 +12,18 @@ BASE_DIR = Path("/Users/thomas/.gemini/antigravity/scratch/vesselcove_demo")
 LOGO_PATH = Path("/Users/thomas/.gemini/antigravity/scratch/vesselcove_audit_2026/logos/vesselcove_official.png")
 FAVICON_PATH = BASE_DIR / "favicon.png"
 THREE_PATH = BASE_DIR / "vendor" / "three.min.js"
+FFLATE_PATH = BASE_DIR / "vendor" / "fflate.min.js"
+GLTF_EXP_PATH = BASE_DIR / "vendor" / "GLTFExporter.js"
+USDZ_EXP_PATH = BASE_DIR / "vendor" / "USDZExporter.js"
 
 
 def main():
     logo_b64 = "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
     favicon_b64 = "data:image/png;base64," + base64.b64encode(FAVICON_PATH.read_bytes()).decode("ascii")
     three_js = THREE_PATH.read_text(encoding="utf-8")
+    fflate_js = FFLATE_PATH.read_text(encoding="utf-8")
+    gltf_exp_js = GLTF_EXP_PATH.read_text(encoding="utf-8")
+    usdz_exp_js = USDZ_EXP_PATH.read_text(encoding="utf-8")
 
     html = """<!doctype html>
 <html lang="it">
@@ -31,6 +37,7 @@ def main():
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <style>
   :root {
     --bg-ivory: #F5F6F8;
@@ -3534,10 +3541,10 @@ def main():
     font-family: var(--mono);
     font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     min-width: 0;
     flex: 0 1 auto;
-    max-width: calc(100vw - 124px);
+    max-width: calc(100vw - 156px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -3642,6 +3649,124 @@ def main():
     padding: 8px 16px;
     cursor: pointer;
     white-space: nowrap;
+  }
+  .ar-mv-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: radial-gradient(circle at 50% 44%, #FFFFFF 0%, #F1F5F9 68%, #E2E8F0 100%);
+    display: flex;
+    flex-direction: column;
+  }
+  model-viewer#vcArModelViewer {
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
+    background: transparent;
+    --poster-color: transparent;
+  }
+  .ar-native-footer {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .ar-native-footer > * { pointer-events: auto; }
+  .ar-native-specs-badge {
+    padding: 6px 13px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.80);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    max-width: calc(100vw - 28px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ar-native-btn-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+  }
+  .ar-native-launch-btn {
+    flex: 1 1 auto;
+    height: 46px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    background: var(--crimson);
+    color: #FFFFFF;
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 800;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(194, 24, 14, 0.32);
+    text-decoration: none;
+  }
+  .ar-native-launch-btn:disabled {
+    opacity: 0.55;
+    cursor: wait;
+  }
+  .ar-mode-pill-btn {
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(24, 24, 27, 0.18);
+    background: rgba(255, 255, 255, 0.94);
+    color: #18181B;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.14);
+  }
+  .ar-export-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-light);
+    flex-wrap: wrap;
+  }
+  .ar-dl-pill {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink);
+    background: #F4F4F6;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .ar-dl-pill:hover {
+    border-color: var(--crimson);
+    background: var(--crimson-soft);
+    color: var(--crimson);
   }
   @media (max-width: 768px) {
     .cg-input, .cv-input { font-size: 16px; }
@@ -3859,6 +3984,9 @@ def main():
 
 <script>
 __THREE_JS__
+__FFLATE_JS__
+__GLTF_EXPORTER_JS__
+__USDZ_EXPORTER_JS__
 </script>
 <script>
 // ==================== BILINGUAL DICTIONARY ====================
@@ -9140,6 +9268,256 @@ function buildARShareUrl() {
   return u.toString();
 }
 
+// ==================== REAL 1:1 METRIC GLB + USDZ EXPORTER & NATIVE AR ENGINE ====================
+let arExportCache = { key: "", glbUrl: "", usdzUrl: "", glbBytes: 0, usdzBytes: 0, dimsMeters: null, slug: "vesselcove-container", pending: null };
+
+function revokeARExportUrls() {
+  if (arExportCache.glbUrl) { try { URL.revokeObjectURL(arExportCache.glbUrl); } catch (e) {} }
+  if (arExportCache.usdzUrl) { try { URL.revokeObjectURL(arExportCache.usdzUrl); } catch (e) {} }
+  arExportCache.glbUrl = "";
+  arExportCache.usdzUrl = "";
+}
+
+function getCurrentARExportKey() {
+  const v = getVessel();
+  const cSkin = getCustomSkinObject(v.id);
+  const cgSig = (state.skinId === "custom_user_skin" && cSkin) ? (cSkin.file + "|" + cSkin.brand) : "";
+  return [
+    v.id, state.finishId, state.closureId, state.wrapType, state.pouchPrintType,
+    state.filmId, state.labelMatId, state.serigrafiaInkId, state.pouchMatId,
+    state.skinId, state.sleeveAngleDeg, state.sleeveHeightPct,
+    state.bcAngleDeg, state.bcHeightPct, state.bcLadder ? 1 : 0,
+    state.bcDoypackSide, state.bcDoypackX, cgSig
+  ].join("|");
+}
+
+function buildMetricARProductGroup() {
+  const v = getVessel();
+  const cl = getClosure();
+  const prevXray = state.xray;
+  const prevHeat = state.heatmap;
+  const prevWire = state.wireframe;
+  let metricGroup = new THREE.Group();
+  let clonedTextures = [];
+  let createdGeos = [];
+  let createdMats = [];
+
+  try {
+    state.xray = false;
+    state.heatmap = false;
+    state.wireframe = false;
+    renderSleeveUVTexture();
+
+    const snapCanvas = document.createElement("canvas");
+    snapCanvas.width = texCanvas.width || 2048;
+    snapCanvas.height = texCanvas.height || 1024;
+    snapCanvas.getContext("2d").drawImage(texCanvas, 0, 0, snapCanvas.width, snapCanvas.height);
+
+    const exportMapTex = new THREE.CanvasTexture(snapCanvas);
+    exportMapTex.encoding = THREE.sRGBEncoding;
+    exportMapTex.wrapS = THREE.RepeatWrapping;
+    exportMapTex.wrapT = THREE.ClampToEdgeWrapping;
+    exportMapTex.needsUpdate = true;
+    clonedTextures.push(exportMapTex);
+
+    const phys = evaluateLivePhysics();
+    const rawBuilt = buildConfiguredProductGroup(v, cl, phys, {
+      mapTexture: exportMapTex,
+      wireframe: false,
+      hideClashRing: true
+    });
+    const rawGroup = rawBuilt.group;
+    rawGroup.updateMatrixWorld(true);
+
+    const rawBox = new THREE.Box3().setFromObject(rawGroup);
+    const rawHeight = Math.max(0.001, rawBox.max.y - rawBox.min.y);
+    const bodyBox = rawBuilt.vesselMesh ? new THREE.Box3().setFromObject(rawBuilt.vesselMesh) : rawBox;
+    const bodySize = bodyBox.getSize(new THREE.Vector3());
+    const bodyCenter = bodyBox.getCenter(new THREE.Vector3());
+
+    const targetWidthM = Math.max(0.015, (Number(v.wMm) || 54) / 1000);
+    const targetDepthM = Math.max(0.015, (Number(v.dMm || v.wMm) || 54) / 1000);
+    const targetHeightM = Math.max(0.03, getARTotalHeightMm() / 1000);
+
+    const scaleX = targetWidthM / Math.max(0.001, bodySize.x);
+    const scaleY = targetHeightM / rawHeight;
+    const scaleZ = targetDepthM / Math.max(0.001, bodySize.z);
+
+    metricGroup.name = "VesselCove_1to1_Product";
+    const tmpVec = new THREE.Vector3();
+
+    rawGroup.traverse(obj => {
+      if (!obj.isMesh || !obj.visible || !obj.geometry || !obj.material) return;
+      const gClone = obj.geometry.clone();
+      gClone.applyMatrix4(obj.matrixWorld);
+
+      const cleanGeo = new THREE.BufferGeometry();
+      if (gClone.index) cleanGeo.setIndex(gClone.index.clone());
+
+      const srcPos = gClone.attributes.position;
+      const posArr = new Float32Array(srcPos.count * 3);
+      for (let i = 0; i < srcPos.count; i++) {
+        tmpVec.fromBufferAttribute(srcPos, i);
+        posArr[i * 3 + 0] = (tmpVec.x - bodyCenter.x) * scaleX;
+        posArr[i * 3 + 1] = (tmpVec.y - rawBox.min.y) * scaleY;
+        posArr[i * 3 + 2] = (tmpVec.z - bodyCenter.z) * scaleZ;
+      }
+      cleanGeo.setAttribute("position", new THREE.BufferAttribute(posArr, 3));
+
+      if (gClone.attributes.uv) {
+        const srcUv = gClone.attributes.uv;
+        cleanGeo.setAttribute("uv", new THREE.Float32BufferAttribute(new Float32Array(srcUv.array), 2));
+      } else {
+        cleanGeo.setAttribute("uv", new THREE.Float32BufferAttribute(new Float32Array(srcPos.count * 2), 2));
+      }
+      cleanGeo.computeVertexNormals();
+      gClone.dispose();
+
+      const sm = obj.material;
+      const isWrap = (obj === rawBuilt.sleeveMesh);
+      const isBody = (obj === rawBuilt.vesselMesh);
+      const isClearNeutralFilm = (isWrap && state.wrapType === "sleeve" && state.skinId === "neutral");
+      const expMat = new THREE.MeshStandardMaterial({
+        name: isWrap ? "WrapArtwork" : (isBody ? "ContainerBody" : "ClosureComponent"),
+        color: sm.color ? sm.color.clone() : new THREE.Color(0xffffff),
+        roughness: typeof sm.roughness === "number" ? sm.roughness : 0.35,
+        metalness: typeof sm.metalness === "number" ? sm.metalness : 0.05,
+        transparent: !!sm.transparent,
+        opacity: (isBody && sm.transparent && sm.opacity > 0.72) ? 0.56 : (typeof sm.opacity === "number" ? sm.opacity : 1.0),
+        side: sm.side !== undefined ? sm.side : THREE.FrontSide
+      });
+      if (sm.map) {
+        expMat.map = exportMapTex;
+        if (isWrap) {
+          if (isClearNeutralFilm) {
+            expMat.transparent = true;
+            expMat.alphaTest = 0.0;
+          } else {
+            // Render printed artwork via alpha-cutoff MASK so transparent bottle walls never draw over or wash out the label
+            expMat.transparent = false;
+            expMat.alphaTest = 0.08;
+            expMat.opacity = 1.0;
+          }
+        }
+      }
+      if (typeof sm.clearcoat === "number" && sm.clearcoat > 0) {
+        expMat.clearcoat = sm.clearcoat;
+        expMat.clearcoatRoughness = typeof sm.clearcoatRoughness === "number" ? sm.clearcoatRoughness : 0.1;
+      }
+
+      const expMesh = new THREE.Mesh(cleanGeo, expMat);
+      expMesh.name = isWrap ? "ArtworkWrap" : (isBody ? "VesselBody" : "ClosurePart");
+      metricGroup.add(expMesh);
+      createdGeos.push(cleanGeo);
+      createdMats.push(expMat);
+    });
+
+    rawGroup.traverse(o => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) o.material.dispose();
+    });
+
+    metricGroup.updateMatrixWorld(true);
+    const verifyBox = new THREE.Box3().setFromObject(metricGroup);
+    const verifySize = verifyBox.getSize(new THREE.Vector3());
+
+    return {
+      group: metricGroup,
+      dimsMeters: {
+        w: Number(verifySize.x.toFixed(4)),
+        h: Number(verifySize.y.toFixed(4)),
+        d: Number(verifySize.z.toFixed(4)),
+        minY: Number(verifyBox.min.y.toFixed(4)),
+        bodyTargetM: { w: targetWidthM, h: targetHeightM, d: targetDepthM }
+      },
+      dispose() {
+        createdGeos.forEach(g => { try { g.dispose(); } catch (e) {} });
+        createdMats.forEach(m => { try { m.dispose(); } catch (e) {} });
+        clonedTextures.forEach(t => { try { t.dispose(); } catch (e) {} });
+      }
+    };
+  } finally {
+    state.xray = prevXray;
+    state.heatmap = prevHeat;
+    state.wireframe = prevWire;
+    renderSleeveUVTexture();
+  }
+}
+
+async function exportConfiguredProductToAR(forceRebuild) {
+  if (typeof THREE === "undefined" || !THREE.GLTFExporter || !THREE.USDZExporter) {
+    return null;
+  }
+  const key = getCurrentARExportKey();
+  if (!forceRebuild && arExportCache.key === key && arExportCache.glbUrl && arExportCache.usdzUrl) {
+    return arExportCache;
+  }
+  if (!forceRebuild && arExportCache.pending && arExportCache.key === key) {
+    return arExportCache.pending;
+  }
+
+  arExportCache.key = key;
+  const work = (async () => {
+    const built = buildMetricARProductGroup();
+    const v = getVessel();
+    const slug = String(v.id || "vessel").replace(/[^a-zA-Z0-9_-]+/g, "-").toLowerCase() + "-1to1";
+    try {
+      const gltfExporter = new THREE.GLTFExporter();
+      const glbBuffer = await new Promise((resolve, reject) => {
+        try {
+          gltfExporter.parse(built.group, resolve, { binary: true, onlyVisible: true });
+        } catch (err) {
+          reject(err);
+        }
+      });
+      if (!(glbBuffer instanceof ArrayBuffer)) {
+        throw new Error("GLTFExporter did not return binary ArrayBuffer");
+      }
+      const usdzExporter = new THREE.USDZExporter();
+      const usdzU8 = await usdzExporter.parse(built.group);
+
+      revokeARExportUrls();
+      const glbBlob = new Blob([glbBuffer], { type: "model/gltf-binary" });
+      const usdzBlob = new Blob([usdzU8], { type: "model/vnd.usdz+zip" });
+      arExportCache.glbUrl = URL.createObjectURL(glbBlob);
+      arExportCache.usdzUrl = URL.createObjectURL(usdzBlob);
+      arExportCache.glbBytes = glbBuffer.byteLength;
+      arExportCache.usdzBytes = usdzU8.byteLength;
+      arExportCache.dimsMeters = built.dimsMeters;
+      arExportCache.slug = slug;
+
+      window.__vcArExportStats = {
+        configKey: key,
+        vesselId: v.id,
+        dimsMm: { w: v.wMm, d: v.dMm || v.wMm, h: getARTotalHeightMm() },
+        dimsMeters: built.dimsMeters,
+        glbBytes: arExportCache.glbBytes,
+        usdzBytes: arExportCache.usdzBytes,
+        glbUrl: arExportCache.glbUrl,
+        usdzUrl: arExportCache.usdzUrl
+      };
+      return arExportCache;
+    } finally {
+      built.dispose();
+      arExportCache.pending = null;
+    }
+  })();
+
+  arExportCache.pending = work;
+  return work;
+}
+
+async function downloadARAsset(fmt) {
+  const res = await exportConfiguredProductToAR();
+  if (!res) return;
+  const a = document.createElement("a");
+  a.href = fmt === "usdz" ? res.usdzUrl : res.glbUrl;
+  a.download = `${res.slug}.${fmt === "usdz" ? "usdz" : "glb"}`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 // ==================== DEDICATED FULLSCREEN SPATIAL PLANE-SCANNING 1:1 AR ENGINE (REAR CAMERA ONLY) ====================
 let arRenderer = null, arScene = null, arCamera = null, arProductGroup = null, arReticleGroup = null, arSleeveTexture = null, arRafId = null;
 let arReticlePulseMesh = null, arReticlePoints = [];
@@ -9318,6 +9696,7 @@ function resetARSurfaceScan() {
 }
 
 function updateARScanDOMState(isInFrameOverride) {
+  if (arViewDisplayMode !== "camera") return;
   const l = state.lang;
   const isPlaced = state.arScanPhase === "placed";
   const inFrame = isInFrameOverride !== undefined ? !!isInFrameOverride : arLastInFrameState;
@@ -9342,7 +9721,7 @@ function updateARScanDOMState(isInFrameOverride) {
     } else if (!inFrame) {
       badgeTxt.textContent = l === "it" ? "FUORI CAMPO · TORNA SUL PIANO" : "OUT OF FRAME · RETURN TO SPOT";
     } else {
-      badgeTxt.textContent = l === "it" ? "ANCORATO 1:1 · MUOVITI ATTORNO" : "LOCKED 1:1 · WALK AROUND";
+      badgeTxt.textContent = l === "it" ? "ANCORATO 1:1 · LIVE AR" : "LOCKED 1:1 · LIVE AR";
     }
   }
   if (dotEl) {
@@ -9803,6 +10182,70 @@ function initOrUpdateARWebGL() {
   renderARFrame();
 }
 
+let arViewDisplayMode = "native"; // 'native' (<model-viewer> + AR Quick Look / WebXR) | 'camera' (in-browser live camera)
+
+function isAppleMobileDevice() {
+  const ua = navigator.userAgent || "";
+  return /iPad|iPhone|iPod/.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+}
+
+function launchNativeARExperience() {
+  const mv = document.getElementById("vcArModelViewer");
+  const qlLink = document.getElementById("arQuickLookLink");
+  if (isAppleMobileDevice() && qlLink && qlLink.getAttribute("href") && !qlLink.getAttribute("href").startsWith("#")) {
+    qlLink.click();
+    return;
+  }
+  if (mv && typeof mv.activateAR === "function") {
+    try {
+      mv.activateAR();
+      return;
+    } catch (e) {}
+  }
+  // If browser lacks native ARCore/ARKit (e.g. desktop or restricted webview), fall back smoothly to live rear camera AR
+  switchARViewDisplayMode("camera");
+}
+
+function switchARViewDisplayMode(mode) {
+  arViewDisplayMode = mode === "camera" ? "camera" : "native";
+  const mvStage = document.getElementById("arMvStage");
+  const vidEl = document.getElementById("mobileArLiveVideo");
+  const camCanvas = document.getElementById("arLiveWebglCanvas");
+  const topbar = document.getElementById("arCamTopbar");
+  const switchBtnLabel = document.getElementById("arModeSwitchLabel");
+  const rescanBtn = document.getElementById("btnArRescan");
+  const coachCard = document.getElementById("arScanCoachCard");
+  const dimPill = document.getElementById("arFsDimPill");
+  const backNativeBtn = document.getElementById("btnArNativeBack");
+  const l = state.lang;
+
+  if (arViewDisplayMode === "native") {
+    stopMobileARCameraStream();
+    if (mvStage) mvStage.style.display = "flex";
+    if (vidEl) vidEl.style.display = "none";
+    if (camCanvas) camCanvas.style.display = "none";
+    if (coachCard) coachCard.style.display = "none";
+    if (dimPill) dimPill.style.display = "none";
+    if (rescanBtn) rescanBtn.style.display = "none";
+    if (backNativeBtn) backNativeBtn.style.display = "none";
+    if (topbar) topbar.style.display = "flex";
+    if (switchBtnLabel) switchBtnLabel.textContent = l === "it" ? "Camera Live" : "Live Camera";
+    const dotEl = document.getElementById("arCamDot");
+    const badgeTxt = document.getElementById("arCamBadgeText");
+    if (dotEl) dotEl.style.background = "#22C55E";
+    if (badgeTxt) badgeTxt.textContent = l === "it" ? "MODO AR NATIVO 1:1 (GLB / USDZ)" : "NATIVE 1:1 AR (GLB / USDZ)";
+  } else {
+    if (mvStage) mvStage.style.display = "none";
+    if (vidEl) vidEl.style.display = "block";
+    if (camCanvas) camCanvas.style.display = "block";
+    if (rescanBtn) rescanBtn.style.display = "inline-flex";
+    if (backNativeBtn) backNativeBtn.style.display = "inline-flex";
+    resetARSurfaceScan();
+    initOrUpdateARWebGL();
+    requestARCameraStream();
+  }
+}
+
 function renderMobileARCameraView() {
   const host = document.getElementById("customVesselStage");
   if (!host || !state.mobileARCameraMode) return;
@@ -9810,29 +10253,73 @@ function renderMobileARCameraView() {
   const v = getVessel();
   const totalRealHmm = getARTotalHeightMm();
   const key = `${v.id}|${state.closureId}|${state.wrapType}|${state.skinId}|${state.finishId}|${state.filmId}|${state.labelMatId}|${l}`;
-  if (arActiveRenderedKey === key && document.getElementById("arLiveWebglCanvas") && arRenderer) {
+  if (arActiveRenderedKey === key && document.getElementById("arCamViewport")) {
     return;
   }
   arActiveRenderedKey = key;
-  resetARSurfaceScan();
+  arViewDisplayMode = "native";
+
+  const dimSpecText = (v.shape === "square_soft" || v.shape === "doypack")
+    ? `${v.wMm} × ${v.dMm} × ${totalRealHmm} mm`
+    : `Ø ${v.wMm} × H ${totalRealHmm} mm`;
 
   host.innerHTML = `
     <div class="ar-fullscreen-root" id="arCamViewport">
-      <video id="mobileArLiveVideo" class="ar-fs-video" autoplay playsinline muted></video>
-      <canvas id="arLiveWebglCanvas" class="ar-fs-webgl"></canvas>
+      <video id="mobileArLiveVideo" class="ar-fs-video" autoplay playsinline muted style="display:none;"></video>
+      <canvas id="arLiveWebglCanvas" class="ar-fs-webgl" style="display:none;"></canvas>
 
-      <div class="ar-fs-topbar">
+      <div class="ar-mv-stage" id="arMvStage">
+        <model-viewer
+          id="vcArModelViewer"
+          alt="${escapeHtml(l === "it" ? v.it : v.en)}"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          ar-scale="fixed"
+          ar-placement="floor"
+          camera-controls
+          touch-action="pan-y"
+          shadow-intensity="1.15"
+          shadow-softness="0.8"
+          exposure="1.04"
+          field-of-view="44deg"
+          camera-orbit="16deg 76deg 215%"
+          min-camera-orbit="auto auto 120%"
+          max-camera-orbit="auto auto 300%"
+        ></model-viewer>
+
+        <a id="arQuickLookLink" rel="ar" href="#ar-loading" style="display:none;">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="VesselCove AR Quick Look">
+        </a>
+
+        <div class="ar-native-footer">
+          <div class="ar-native-specs-badge" id="arNativeSpecsBadge">
+            1:1 REALE · ${escapeHtml(dimSpecText)} · ${l === "it" ? "Preparazione modello GLB/USDZ..." : "Preparing 1:1 GLB/USDZ..."}
+          </div>
+          <div class="ar-native-btn-row">
+            <button type="button" class="ar-native-launch-btn" id="btnLaunchNativeAR" style="white-space:nowrap;" disabled onclick="launchNativeARExperience()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              <span>${l === "it" ? "Vedi in casa (AR 1:1)" : "View in room (AR 1:1)"}</span>
+            </button>
+            <button type="button" class="ar-mode-pill-btn" id="btnSwitchLiveCam" onclick="requestIOSMotionPermissionIfNeeded(); switchARViewDisplayMode('camera')">
+              <span id="arModeSwitchLabel">${l === "it" ? "Camera Live" : "Live Camera"}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ar-fs-topbar" id="arCamTopbar">
         <div class="ar-fs-status-pill">
           <span class="ar-cam-dot" id="arCamDot" style="background:#F59E0B;"></span>
-          <span id="arCamBadgeText">${l === "it" ? "SCANSIONE AMBIENTE AR..." : "SCANNING AR SURFACE..."}</span>
+          <span id="arCamBadgeText">${l === "it" ? "GENERAZIONE MODELLO 1:1..." : "BUILDING 1:1 AR MODEL..."}</span>
         </div>
         <div class="ar-fs-actions-group">
-          <button type="button" class="ar-fs-icon-btn" id="btnArRescan" onclick="resetARSurfaceScan()" title="${l === "it" ? "Riscansiona piano" : "Rescan surface"}" aria-label="${l === "it" ? "Riscansiona piano" : "Rescan surface"}">↻</button>
+          <button type="button" class="ar-fs-icon-btn" id="btnArNativeBack" onclick="switchARViewDisplayMode('native')" title="${l === "it" ? "Vista 1:1 Nativa" : "Native 1:1 AR View"}" aria-label="${l === "it" ? "Vista 1:1 Nativa" : "Native 1:1 AR View"}" style="display:none;">3D</button>
+          <button type="button" class="ar-fs-icon-btn" id="btnArRescan" onclick="resetARSurfaceScan()" title="${l === "it" ? "Riscansiona piano" : "Rescan surface"}" aria-label="${l === "it" ? "Riscansiona piano" : "Rescan surface"}" style="display:none;">↻</button>
           <button type="button" class="ar-fs-icon-btn" id="btnArClose" onclick="closeMobileARCameraStudio()" title="${l === "it" ? "Chiudi AR" : "Close AR"}" aria-label="${l === "it" ? "Chiudi AR" : "Close AR"}">✕</button>
         </div>
       </div>
 
-      <div class="ar-fs-scan-coach" id="arScanCoachCard">
+      <div class="ar-fs-scan-coach" id="arScanCoachCard" style="display:none;">
         <svg class="ar-fs-scan-icon" viewBox="0 0 44 32" fill="none" stroke="#FFFFFF" stroke-width="1.8">
           <rect x="15" y="3" width="14" height="26" rx="3" fill="rgba(255,255,255,0.12)"/>
           <line x1="20" y1="25" x2="24" y2="25" stroke-linecap="round"/>
@@ -9858,14 +10345,38 @@ function renderMobileARCameraView() {
       </div>
 
       <div class="ar-fs-dim-pill" id="arFsDimPill" style="display:none;">
-        1:1 · ${escapeHtml(l === "it" ? v.subIt : v.subEn)} · ${l === "it" ? "Muoviti intorno al prodotto" : "Walk around 360°"}
+        1:1 · ${escapeHtml(dimSpecText)} · ${l === "it" ? "Muoviti intorno al prodotto" : "Walk around 360°"}
       </div>
     </div>
   `;
 
-  updateARScanDOMState();
-  initOrUpdateARWebGL();
-  requestARCameraStream();
+  exportConfiguredProductToAR().then(res => {
+    if (!state.mobileARCameraMode || !res) return;
+    const mv = document.getElementById("vcArModelViewer");
+    const qlLink = document.getElementById("arQuickLookLink");
+    const launchBtn = document.getElementById("btnLaunchNativeAR");
+    const specsBadge = document.getElementById("arNativeSpecsBadge");
+    const dotEl = document.getElementById("arCamDot");
+    const badgeTxt = document.getElementById("arCamBadgeText");
+
+    if (mv) {
+      mv.setAttribute("src", res.glbUrl);
+      mv.setAttribute("ios-src", `${res.usdzUrl}#allowsContentScaling=0`);
+    }
+    if (qlLink) {
+      qlLink.setAttribute("href", `${res.usdzUrl}#allowsContentScaling=0`);
+      qlLink.setAttribute("download", `${res.slug}.usdz`);
+    }
+    if (launchBtn) launchBtn.disabled = false;
+    if (specsBadge) {
+      const dm = res.dimsMeters;
+      specsBadge.textContent = `1:1 · ${Math.round(dm.w * 1000)} × ${Math.round(dm.h * 1000)} × ${Math.round(dm.d * 1000)} mm · GLB ${(res.glbBytes / 1024).toFixed(0)} KB · USDZ ${(res.usdzBytes / 1024).toFixed(0)} KB`;
+    }
+    if (arViewDisplayMode === "native") {
+      if (dotEl) dotEl.style.background = "#22C55E";
+      if (badgeTxt) badgeTxt.textContent = l === "it" ? "MODO AR NATIVO 1:1 (GLB / USDZ)" : "NATIVE 1:1 AR (GLB / USDZ)";
+    }
+  });
 }
 
 function copyARShareUrl(btnEl, urlStr) {
@@ -9899,27 +10410,33 @@ function toggleARModal(openVal) {
   const arUrl = buildARShareUrl();
   const qrSvg = buildRealScannableQRSVG(arUrl);
   const safeArUrl = escapeHtml(arUrl);
+  const totalRealHmm = getARTotalHeightMm();
   card.innerHTML = `
     <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
       <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--crimson); letter-spacing:0.1em;">${l === "it" ? "REALTÀ AUMENTATA · SCALA REALE 1:1" : "AUGMENTED REALITY · REAL 1:1 SCALE"}</span>
       <button type="button" style="border:none; background:transparent; cursor:pointer; font-size:16px; font-weight:800; color:var(--slate);" onclick="toggleARModal(false)">✕</button>
     </div>
-    <h3 style="font-size:17px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Visualizza il prodotto sul tuo tavolo" : "View the product on your desk"}</h3>
+    <h3 style="font-size:17px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Visualizza il prodotto nella tua stanza" : "View the product in your room"}</h3>
     <div style="font-family:var(--mono); font-size:12px; font-weight:700; color:var(--espresso); text-align:center; line-height:1.45;">
       <div>${escapeHtml(l === "it" ? v.it : v.en)}</div>
-      <div style="color:var(--slate); font-weight:600; margin-top:2px;">${escapeHtml(l === "it" ? v.subIt : v.subEn)}</div>
+      <div style="color:var(--slate); font-weight:600; margin-top:2px;">${v.wMm} × ${v.dMm || v.wMm} × ${totalRealHmm} mm (1:1)</div>
     </div>
     <div class="ar-qr-frame">${qrSvg}</div>
     <p style="font-size:12px; color:var(--charcoal); line-height:1.45;">
       ${l === "it"
-        ? "Inquadra questo QR code con la fotocamera dello smartphone per aprire la camera AR a tutto schermo, scansionare il piano e vedere il prodotto in scala reale 1:1."
-        : "Scan this QR code with your smartphone camera to launch fullscreen AR, scan your surface plane, and inspect the product at true 1:1 scale."}
+        ? "Inquadra il QR code con lo smartphone per aprire il visualizzatore AR nativo (ARKit / ARCore) in scala reale 1:1 senza installare app."
+        : "Scan this QR code on your smartphone to launch native AR (ARKit / ARCore) at locked true 1:1 real-world dimensions."}
     </p>
     <div class="ar-qr-actions">
       <button type="button" class="cta-btn white" style="flex:1;" onclick="copyARShareUrl(this, '${safeArUrl}')">${l === "it" ? "Copia link AR" : "Copy AR link"}</button>
-      <button type="button" class="cta-btn" style="flex:1;" onclick="requestIOSMotionPermissionIfNeeded(); openMobileARCameraStudio()">${l === "it" ? "Apri Camera AR" : "Open AR Camera"}</button>
+      <button type="button" class="cta-btn" style="flex:1;" onclick="requestIOSMotionPermissionIfNeeded(); openMobileARCameraStudio()">${l === "it" ? "Apri Vista AR" : "Open AR View"}</button>
+    </div>
+    <div class="ar-export-row">
+      <button type="button" class="ar-dl-pill" onclick="downloadARAsset('glb')">↓ .GLB (Android / WebXR)</button>
+      <button type="button" class="ar-dl-pill" onclick="downloadARAsset('usdz')">↓ .USDZ (Apple AR Quick Look)</button>
     </div>
   `;
+  exportConfiguredProductToAR();
 }
 
 // ==================== USER PROFILE, SAVED CUSTOM CONTAINERS, FAVORITES & REQUESTS ====================
@@ -13397,7 +13914,14 @@ window.addEventListener("DOMContentLoaded", () => {
 </body>
 </html>
 """
-    html = html.replace("__VC_LOGO__", logo_b64).replace("__VC_FAVICON__", favicon_b64).replace("__THREE_JS__", three_js)
+    html = (
+        html.replace("__VC_LOGO__", logo_b64)
+        .replace("__VC_FAVICON__", favicon_b64)
+        .replace("__THREE_JS__", three_js)
+        .replace("__FFLATE_JS__", fflate_js)
+        .replace("__GLTF_EXPORTER_JS__", gltf_exp_js)
+        .replace("__USDZ_EXPORTER_JS__", usdz_exp_js)
+    )
     out_file = BASE_DIR / "index.html"
     out_file.write_text(html, encoding="utf-8")
     print(f"Wrote {out_file} ({len(html)} bytes)")

@@ -1850,7 +1850,7 @@ def main():
     display: grid;
     grid-template-columns: 0.9fr 1.35fr;
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
   }
   .custom-bp-left {
     display: flex;
@@ -1880,14 +1880,22 @@ def main():
     border: 1.5px dashed #CBD5E1;
     border-radius: 14px;
     background: #F8FAFC;
-    padding: 16px 18px;
+    padding: 20px 18px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    text-align: center;
     gap: 12px;
     flex-wrap: wrap;
     cursor: pointer;
     transition: border-color 0.16s ease, background-color 0.16s ease;
+  }
+  .upload-datasheet-box.cv-datasheet-lg {
+    flex: 1 1 auto;
+    min-height: 170px;
+    padding: 22px;
+    gap: 14px;
   }
   .upload-datasheet-box:hover { border-color: var(--crimson); background: var(--crimson-soft); }
   .upload-datasheet-box.loaded { border-style: solid; border-color: var(--green); background: var(--green-soft); }
@@ -1895,6 +1903,7 @@ def main():
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    flex: 1 1 auto;
   }
   .upload-slot {
     border: 1.5px dashed #D5DAE2;
@@ -2952,17 +2961,20 @@ def main():
       grid-column: 1;
       grid-row: 2;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
     .dock-right {
       grid-column: 2;
       grid-row: 2;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
+    .inspector-tabs { border-radius: 20px 20px 0 0 !important; }
+    .checkout-footer { height: auto !important; gap: 10px; border-radius: 0 0 20px 20px !important; }
     .dock-scroll, .diag-scroll { overflow-y: visible !important; }
     .diag-row { flex: none !important; min-height: 86px !important; height: auto !important; }
-    .checkout-footer { height: auto !important; gap: 10px; }
     .cat-grid { grid-template-columns: 1fr !important; }
     .fav-prof-grid { grid-template-columns: 1fr !important; }
     .profile-grid { grid-template-columns: 1fr; }
@@ -3092,13 +3104,15 @@ def main():
       order: 2 !important;
       width: 100% !important;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
     .dock-right {
       order: 3 !important;
       width: 100% !important;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
     .floating-hud-top {
       top: 10px !important;
@@ -3302,17 +3316,573 @@ def main():
     border-radius: 999px;
     background: #EF4444;
   }
+
+  /* ==================== NAVBAR STEPPER ENTRY/EXIT ANIMATION & SAVE DRAFT ROW ==================== */
+  .brand-area {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .nav-tabs {
+    grid-column: 2;
+    justify-self: center;
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    transition:
+      display 0.36s,
+      opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+      translate 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+      scale 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-behavior: allow-discrete;
+  }
+  .hdr-right {
+    grid-column: 3;
+    justify-self: end;
+  }
+  @starting-style {
+    .nav-tabs {
+      opacity: 0;
+      translate: 0 -12px;
+      scale: 0.94;
+    }
+  }
+  .nav-tabs:where([hidden], [data-closing]) {
+    opacity: 0;
+    translate: 0 -12px;
+    scale: 0.94;
+    pointer-events: none;
+  }
+  .nav-tabs[hidden] {
+    display: none !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-tabs {
+      translate: none;
+      scale: none;
+      transition-duration: 0.12s;
+    }
+    @starting-style {
+      .nav-tabs {
+        translate: none;
+        scale: none;
+      }
+    }
+    .nav-tabs:where([hidden], [data-closing]) {
+      translate: none;
+      scale: none;
+    }
+  }
+
+  .checkout-cta-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+  }
+  .checkout-cta-row .cta-btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* ==================== HOME PAGE & B2B SUPPLIER DIRECTORY / COMPARATOR ==================== */
+  #viewHome.view-container {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  .home-view {
+    width: 100%;
+    padding: 20px 24px 48px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .home-hero-card {
+    background: #FAF8F5;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 24px;
+    padding: 28px 30px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .home-hero-top {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 26px;
+    align-items: center;
+  }
+  .home-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--crimson);
+    background: rgba(194, 24, 14, 0.08);
+    border: 1px solid rgba(194, 24, 14, 0.22);
+    padding: 5px 12px;
+    border-radius: 999px;
+    width: fit-content;
+  }
+  .home-title {
+    font-family: var(--display);
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    margin: 10px 0 0 0;
+  }
+  .home-lead {
+    font-size: 14.5px;
+    color: var(--charcoal);
+    line-height: 1.58;
+    margin: 12px 0 0 0;
+  }
+  .home-stats-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .home-stat-box {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+  .home-stat-val {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .home-stat-lbl {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-top: 2px;
+  }
+  .home-pathway-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .home-pathway-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.16s ease;
+  }
+  .home-pathway-card:hover {
+    border-color: var(--crimson);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+  }
+  .home-pathway-card.primary-path {
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF9F8 100%);
+    border-color: rgba(194, 24, 14, 0.35);
+  }
+  .home-pathway-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--crimson);
+    text-transform: uppercase;
+  }
+  .home-pathway-title {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .home-pathway-desc {
+    font-size: 12.5px;
+    color: var(--slate);
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+  .home-pillars-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-light);
+  }
+  .home-pillar-item {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 15px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .home-pillar-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--crimson);
+    letter-spacing: 0.08em;
+  }
+  .home-pillar-head {
+    font-family: var(--display);
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .home-pillar-body {
+    font-size: 12px;
+    color: var(--slate);
+    line-height: 1.45;
+  }
+
+  /* Supplier Directory & Comparison Hub */
+  .sup-hub-card {
+    background: #FAF8F5;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 24px;
+    padding: 24px 28px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .sup-hub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+  }
+  .sup-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .sup-cat-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .sup-cat-btn {
+    border: 1px solid var(--border);
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+  }
+  .sup-cat-btn:hover {
+    border-color: var(--ink);
+  }
+  .sup-cat-btn.active {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: #FFFFFF;
+  }
+  .sup-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .sup-search-inp {
+    height: 36px;
+    min-width: 340px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #FFFFFF;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink);
+  }
+  .sup-dir-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .sup-dir-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+  .sup-dir-card.comparing {
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 2px rgba(194, 24, 14, 0.12);
+  }
+  .sup-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .sup-work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .sup-work-chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink);
+    background: #F4F4F6;
+    border: 1px solid #E4E4E7;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .sup-cert-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    color: #147A3B;
+    background: #ECFDF3;
+    border: 1px solid #ABEFC6;
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+  .sup-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    background: #F8FAFC;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 11.5px;
+  }
+  .sup-contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .sup-contact-k {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .sup-contact-v {
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sup-contact-v a {
+    color: var(--crimson);
+    text-decoration: none;
+  }
+  .sup-contact-v a:hover {
+    text-decoration: underline;
+  }
+  .sup-reviews-box {
+    background: #FAF8F5;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sup-review-quote {
+    font-size: 11.5px;
+    color: var(--charcoal);
+    line-height: 1.42;
+    font-style: italic;
+  }
+  .sup-review-author {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--slate);
+    font-style: normal;
+  }
+  .sup-card-footer {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .sup-compare-toggle {
+    border: 1.5px solid var(--ink);
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 11.5px;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+  }
+  .sup-compare-toggle.active {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: #FFFFFF;
+  }
+
+  /* Responsive Comparison Table (modern-web-guidance: responsive-table) */
+  .sup-compare-panel {
+    background: #FFFFFF;
+    border: 2px solid var(--crimson);
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 26px rgba(194, 24, 14, 0.12);
+  }
+  .sup-compare-table-wrapper {
+    overflow: auto;
+    max-inline-size: 100%;
+    max-block-size: min(460px, 75vh);
+    container-type: inline-size;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .sup-compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12px;
+  }
+  .sup-compare-table caption {
+    text-align: left;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 800;
+    color: var(--crimson);
+    background: #FFF9F8;
+    border-bottom: 1px solid var(--border);
+  }
+  .sup-compare-table thead {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+  }
+  .sup-compare-table thead th {
+    background: #18181B;
+    color: #FFFFFF;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 800;
+    text-align: left;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+  .sup-compare-table tbody th {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 1;
+    background: #FAF8F5;
+    color: var(--ink);
+    font-weight: 800;
+    text-align: left;
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--border-light);
+    border-right: 1px solid var(--border-light);
+    min-width: 185px;
+  }
+  .sup-compare-table tbody td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--charcoal);
+    vertical-align: top;
+    background: #FFFFFF;
+  }
+  @container (width < 680px) {
+    .sup-compare-table,
+    .sup-compare-table thead,
+    .sup-compare-table tbody,
+    .sup-compare-table tr,
+    .sup-compare-table th,
+    .sup-compare-table td {
+      display: block;
+    }
+    .sup-compare-table thead {
+      display: none;
+    }
+    .sup-compare-table tr {
+      margin-block-end: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .sup-compare-table tbody th {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 2;
+      background: #F4F4F6;
+      border-right: none;
+    }
+    .sup-compare-table td:nth-child(2)::before { content: var(--label-2) ": "; font-weight: 800; color: var(--ink); }
+    .sup-compare-table td:nth-child(3)::before { content: var(--label-3) ": "; font-weight: 800; color: var(--ink); }
+    .sup-compare-table td:nth-child(4)::before { content: var(--label-4) ": "; font-weight: 800; color: var(--ink); }
+    .sup-compare-table td:nth-child(5)::before { content: var(--label-5) ": "; font-weight: 800; color: var(--ink); }
+    .sup-compare-table td:nth-child(6)::before { content: var(--label-6) ": "; font-weight: 800; color: var(--ink); }
+    .sup-compare-table td:nth-child(7)::before { content: var(--label-7) ": "; font-weight: 800; color: var(--ink); }
+  }
+
+  @media (max-width: 1180px) {
+    .home-hero-top { grid-template-columns: 1fr; }
+    .home-pillars-row { grid-template-columns: 1fr; }
+    .sup-dir-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    #viewHome.view-container { height: auto !important; overflow-y: visible !important; }
+    .home-view { padding: 14px 12px 28px 12px !important; }
+    .home-hero-card, .sup-hub-card { padding: 18px 16px !important; border-radius: 18px !important; }
+    .home-title { font-size: 24px !important; }
+    .home-pathway-grid { grid-template-columns: 1fr !important; }
+    .home-stats-strip { grid-template-columns: 1fr !important; }
+    .sup-contact-grid { grid-template-columns: 1fr !important; }
+  }
 </style>
 </head>
 <body>
 
 <!-- ==================== TOP HEADER ==================== -->
 <header class="app-header">
-  <div class="brand-area" style="cursor:pointer;" onclick="returnToMarketplaceAfterSubmit(true)">
+  <div class="brand-area" style="cursor:pointer;" onclick="goToHomePage()">
     <img src="__VC_LOGO__" alt="VesselCove">
   </div>
 
-  <nav class="nav-tabs">
+  <nav class="nav-tabs" id="mainNavTabs" hidden>
     <button class="nav-back-btn" id="navBackBtn" onclick="goStepBack()" title="Indietro">&lt;</button>
     <button class="nav-tab active" id="navCatalog" type="button">
       <span class="step-tag">01</span><span id="ui_nav_catalog">Marketplace</span>
@@ -3334,8 +3904,13 @@ def main():
   </div>
 </header>
 
+<!-- ==================== VIEW 00: HOME PAGE & SUPPLIER DIRECTORY ==================== -->
+<div class="view-container active" id="viewHome">
+  <div class="home-view" id="homePortalBody"></div>
+</div>
+
 <!-- ==================== VIEW 01: CONTAINER MARKETPLACE ==================== -->
-<div class="view-container active" id="viewCatalog">
+<div class="view-container" id="viewCatalog">
   <div class="catalog-view">
     <div class="cat-header-minimal">
       <div>
@@ -3346,7 +3921,6 @@ def main():
 
     <div class="cat-toolbar-minimal">
       <div class="pillar-pills" id="catPillarPills"></div>
-      <button class="p-pill red-cta" id="btnCustomVessel" onclick="openCustomVesselStudio()">Continua con il mio contenitore</button>
     </div>
 
     <div class="cat-grid" id="catGrid"></div>
@@ -3488,7 +4062,10 @@ def main():
           <span style="font-size:10px; color:var(--espresso);" id="ui_ship_note">Spedizioni escluse</span>
         </div>
         <div class="start-price-hero" id="val_sp_lot">Da €1,080</div>
-        <button class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
+        <div class="checkout-cta-row" id="checkoutCtaRow">
+          <button type="button" class="cta-btn white" id="btnSaveCustomVessel" onclick="saveCurrentCustomVesselToProfile()">Salva</button>
+          <button type="button" class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
+        </div>
       </div>
     </aside>
 
@@ -3901,7 +4478,7 @@ const FILL_TYPES = [
 // ==================== GLOBAL APP STATE ====================
 const state = {
   lang: "it",
-  mainView: "catalog", // 01 Marketplace -> 02 Studio 3D -> 03 Filiera
+  mainView: "home", // 00 Home & Albo Fornitori -> 01 Marketplace -> 02 Studio 3D -> 03 Filiera
   inspTab: 1,
   vesselId: "serum_250",
   finishId: "pet_gloss",
@@ -3932,9 +4509,15 @@ const state = {
   customDatasheetFile: "",
   customPhotoFiles: ["", "", "", "", "", ""],
   arModalOpen: false,
-  prevViewBeforeProfile: "catalog",
+  prevViewBeforeProfile: "home",
   submittedRequests: [],
   favoriteVessels: [],
+  savedCustomVessels: [],
+  currentDraftId: null,
+  // HOME PAGE B2B SUPPLIER DIRECTORY & COMPARATOR STATE
+  homeSupCategory: "all",
+  homeSupSearch: "",
+  homeComparedSuppliers: [],
   // STEP 03 MULTI-PACK BOX CONFIGURATOR
   boxMode: "grid",        // 'grid' | 'bulk' (bulk for plastic bottles only)
   boxQty: 1,              // 1, 2, 3, 6, 12
@@ -3958,7 +4541,20 @@ const state = {
   copackerFillType: "Liquidi"
 };
 
-function getVessel() { return VESSELS.find(v => v.id === state.vesselId); }
+function findVesselByIdAnywhere(vid) {
+  if (!vid) return null;
+  const fromCatalog = VESSELS.find(v => v.id === vid);
+  if (fromCatalog) return fromCatalog;
+  if (Array.isArray(state.savedCustomVessels)) {
+    const fromSaved = state.savedCustomVessels.find(v => v && v.id === vid);
+    if (fromSaved) return fromSaved;
+  }
+  return null;
+}
+
+function getVessel() {
+  return findVesselByIdAnywhere(state.vesselId) || VESSELS[0];
+}
 function getClosure() { return CLOSURES.find(c => c.id === state.closureId) || CLOSURES[0]; }
 function getFilm() { return FILMS.find(f => f.id === state.filmId); }
 function getLabelPaper() { return LABEL_PAPERS.find(p => p.id === state.labelMatId); }
@@ -6758,6 +7354,7 @@ function resetVesselConfigState(vid) {
 }
 
 function selectVesselFromMarketplace(vid) {
+  state.currentDraftId = null;
   state.customVesselMode = false;
   state.customGraphicMode = false;
   state.mobileARCameraMode = false;
@@ -6767,10 +7364,23 @@ function selectVesselFromMarketplace(vid) {
   renderAllUI();
 }
 
+function goToHomePage() {
+  const modal = document.getElementById("checkoutModal");
+  if (modal) modal.classList.remove("open");
+  state.customVesselMode = false;
+  state.customGraphicMode = false;
+  state.mobileARCameraMode = false;
+  switchMainView("home");
+}
+
 function goStepBack() {
   if (state.mainView === "profile") {
-    const backTarget = (state.prevViewBeforeProfile && state.prevViewBeforeProfile !== "profile") ? state.prevViewBeforeProfile : "catalog";
+    const backTarget = (state.prevViewBeforeProfile && state.prevViewBeforeProfile !== "profile") ? state.prevViewBeforeProfile : "home";
     switchMainView(backTarget);
+    return;
+  }
+  if (state.mainView === "catalog") {
+    switchMainView("home");
     return;
   }
   if (state.mainView === "pillars") {
@@ -6787,6 +7397,11 @@ function goStepBack() {
     }
     if (state.customGraphicMode) {
       closeCustomGraphicStudio();
+      return;
+    }
+    if (state.customVesselMode) {
+      state.customVesselMode = false;
+      switchMainView("home");
       return;
     }
     state.customVesselMode = false;
@@ -6909,6 +7524,7 @@ function stopMobileARCameraStream() {
 }
 
 function getRouteKey() {
+  if (state.mainView === "home") return "home";
   if (state.mainView === "studio" && state.customVesselMode) return "custom-vessel";
   if (state.mainView === "studio" && state.customGraphicMode) return `custom-graphic:${state.vesselId}`;
   if (state.mainView === "studio" && state.mobileARCameraMode) return `ar-camera:${state.vesselId}`;
@@ -6944,7 +7560,7 @@ function buildHistoryUrl(snap) {
       u.searchParams.set("view", "ar-camera");
       u.searchParams.set("vessel", snap.vesselId);
     } else {
-      u.searchParams.set("view", snap.mainView || "catalog");
+      u.searchParams.set("view", snap.mainView || "home");
       if (snap.mainView === "studio") {
         u.searchParams.set("vessel", snap.vesselId);
       } else if (snap.mainView === "pillars") {
@@ -6977,7 +7593,7 @@ window.addEventListener("popstate", e => {
   let snap = e.state;
   if (!snap || !snap.mainView) {
     const qs = new URLSearchParams(window.location.search);
-    const vParam = qs.get("view") || "catalog";
+    const vParam = qs.get("view") || "home";
     snap = {
       mainView: (vParam === "custom-vessel" || vParam === "custom-graphic" || vParam === "ar-camera") ? "studio" : vParam,
       customVesselMode: vParam === "custom-vessel",
@@ -6989,7 +7605,7 @@ window.addEventListener("popstate", e => {
   }
   isApplyingHistoryState = true;
   try {
-    if (snap.vesselId && VESSELS.some(v => v.id === snap.vesselId) && snap.vesselId !== state.vesselId) {
+    if (snap.vesselId && findVesselByIdAnywhere(snap.vesselId) && snap.vesselId !== state.vesselId) {
       resetVesselConfigState(snap.vesselId);
     }
     state.customVesselMode = !!snap.customVesselMode;
@@ -7008,11 +7624,53 @@ window.addEventListener("popstate", e => {
     if (snap.mainView === "studio" && !state.customVesselMode && !state.customGraphicMode && !state.mobileARCameraMode) {
       rebuild3DProduct();
     }
-    switchMainView(snap.mainView || "catalog");
+    switchMainView(snap.mainView || "home");
   } finally {
     isApplyingHistoryState = false;
   }
 });
+
+let supportsDisplayTransition;
+function canTransitionDisplay() {
+  if (supportsDisplayTransition !== undefined) return supportsDisplayTransition;
+  if (!window.CSS?.supports?.("transition-behavior", "allow-discrete") || !document.body) {
+    return false;
+  }
+  const probe = document.createElement("div");
+  probe.style.cssText = "transition: display 1s allow-discrete !important; display: block;";
+  document.body.appendChild(probe);
+  getComputedStyle(probe).display;
+  probe.style.display = "none";
+  supportsDisplayTransition = getComputedStyle(probe).display === "block";
+  probe.remove();
+  return supportsDisplayTransition;
+}
+
+async function hideNavTabsElement(el) {
+  if (!el || el.hidden) return;
+  if (canTransitionDisplay()) {
+    el.hidden = true;
+  } else {
+    el.setAttribute("data-closing", "");
+  }
+  const animations = typeof el.getAnimations === "function" ? el.getAnimations() : [];
+  if (animations.length > 0) {
+    await Promise.race([
+      Promise.allSettled(animations.map(a => a.finished)),
+      new Promise(r => setTimeout(r, 450))
+    ]);
+  }
+  if (el.hasAttribute("data-closing")) {
+    el.removeAttribute("data-closing");
+    el.hidden = true;
+  }
+}
+
+function showNavTabsElement(el) {
+  if (!el) return;
+  el.removeAttribute("data-closing");
+  el.hidden = false;
+}
 
 function switchMainView(v) {
   if (v !== "profile" && state.mainView !== "profile") {
@@ -7024,12 +7682,24 @@ function switchMainView(v) {
   const arOv = document.getElementById("arQrOverlay");
   if (arOv) arOv.classList.remove("open");
 
+  const navTabsEl = document.getElementById("mainNavTabs");
+  if (navTabsEl) {
+    const shouldHideStepper = (v === "home") || (v === "profile" && state.prevViewBeforeProfile === "home");
+    if (shouldHideStepper) {
+      hideNavTabsElement(navTabsEl);
+    } else {
+      showNavTabsElement(navTabsEl);
+    }
+  }
+
   document.getElementById("navCatalog").classList.toggle("active", v === "catalog");
   document.getElementById("navStudio").classList.toggle("active", v === "studio");
   document.getElementById("navPillars").classList.toggle("active", v === "pillars");
   const btnProf = document.getElementById("btnProfile");
   if (btnProf) btnProf.classList.toggle("active", v === "profile");
 
+  const vHome = document.getElementById("viewHome");
+  if (vHome) vHome.classList.toggle("active", v === "home");
   document.getElementById("viewCatalog").classList.toggle("active", v === "catalog");
   document.getElementById("viewStudio").classList.toggle("active", v === "studio");
   document.getElementById("viewPillars").classList.toggle("active", v === "pillars");
@@ -7255,21 +7925,15 @@ function renderCustomVesselView() {
               <p style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Necessaria per acquisire le quote esatte (altezza, diametro, filettatura collo, capacità e materiale)." : "Required to capture exact dimensions (height, diameter, neck finish, capacity and material)."}</p>
             </div>
 
-            <label class="upload-datasheet-box ${state.customDatasheetFile ? "loaded" : ""}">
+            <label class="upload-datasheet-box cv-datasheet-lg ${state.customDatasheetFile ? "loaded" : ""}">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="${state.customDatasheetFile ? "#147A3B" : "#C2180E"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               <div>
-                <div style="font-size:13px; font-weight:800; color:var(--ink);">${state.customDatasheetFile ? `✓ ${state.customDatasheetFile}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
-                <div style="font-size:11px; color:var(--slate); margin-top:2px;">${l === "it" ? "Formati supportati: JPG, PNG, PDF · Quote meccaniche e collo" : "Supported formats: JPG, PNG, PDF · Mechanical specs and neck"}</div>
+                <div style="font-size:15px; font-weight:800; color:var(--ink);">${state.customDatasheetFile ? `✓ ${state.customDatasheetFile}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
+                <div style="font-size:12px; color:var(--slate); margin-top:4px; line-height:1.45;">${l === "it" ? "Formati supportati: JPG, PNG, PDF · Quote meccaniche, altezza, diametro e filettatura collo" : "Supported formats: JPG, PNG, PDF · Mechanical specs, height, diameter and neck finish"}</div>
               </div>
-              <span class="spec-tag ${state.customDatasheetFile ? "ok" : ""}">${state.customDatasheetFile ? (l === "it" ? "CARICATA ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
+              <span class="spec-tag ${state.customDatasheetFile ? "ok" : ""}" style="font-size:11px; padding:6px 14px;">${state.customDatasheetFile ? (l === "it" ? "CARICATA ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
               <input type="file" accept="image/*,.pdf" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
             </label>
-
-            <div class="custom-spec-checklist">
-              <div style="font-weight:800; color:var(--ink); letter-spacing:0.06em;">${l === "it" ? "PIPELINE PARAMETRICA" : "PARAMETRIC PIPELINE"}</div>
-              <div>01 // ${l === "it" ? "Estrazione quote H × Ø e collo" : "Extract H × Ø dimensions and neck finish"}</div>
-              <div>02 // ${l === "it" ? "Calibrazione mesh WebGL e curve spalla" : "WebGL mesh calibration and shoulder curves"}</div>
-              <div>03 // ${l === "it" ? "Validazione TD% e filetti 1:1" : "TD% shrink physics and 1:1 thread lock"}</div>
-            </div>
           </div>
 
           <div class="custom-bp-right">
@@ -7305,8 +7969,8 @@ function renderCustomVesselView() {
         </p>
 
         <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; border-top:1.5px solid var(--border); padding-top:12px;">
-          <button class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="state.customVesselMode=false; switchMainView('catalog');">
-            ${l === "it" ? "Torna al Marketplace" : "Back to Marketplace"}
+          <button class="cta-btn white" style="width:auto; min-width:200px; padding:0 22px;" onclick="state.customVesselMode=false; switchMainView('home');">
+            ${l === "it" ? "Torna alla Home" : "Back to Home"}
           </button>
           <button class="cta-btn" id="btnCustomProceedDemo" style="width:auto; min-width:240px; padding:0 22px;" disabled>
             ${l === "it" ? "Ricrea nel Configuratore 3D" : "Recreate in 3D Configurator"}
@@ -7625,6 +8289,217 @@ function cancelSubmittedRequest(reqId) {
   renderProfileView();
 }
 
+const SAVED_CUSTOM_VESSELS_KEY = "vc_saved_custom_vessels_v31";
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function loadSavedCustomVessels() {
+  try {
+    const raw = localStorage.getItem(SAVED_CUSTOM_VESSELS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        state.savedCustomVessels = parsed;
+        parsed.forEach(cv => {
+          if (cv && cv.id && cv.thumbDataUrl) {
+            VESSEL_REALISTIC_THUMBS[cv.id] = cv.thumbDataUrl;
+          }
+        });
+      }
+    }
+  } catch (e) {}
+}
+
+function persistSavedCustomVessels() {
+  try {
+    const cleanList = (state.savedCustomVessels || []).map(item => ({ ...item }));
+    localStorage.setItem(SAVED_CUSTOM_VESSELS_KEY, JSON.stringify(cleanList));
+  } catch (e) {}
+}
+
+function captureStudioDraftSnapshot(v) {
+  try {
+    if (renderer && scene && camera && productGroup) {
+      const prevBg = scene.background;
+      renderer.render(scene, camera);
+      const srcCanvas = renderer.domElement;
+      if (srcCanvas && srcCanvas.width > 16 && srcCanvas.height > 16) {
+        const outC = document.createElement("canvas");
+        outC.width = 480;
+        outC.height = 480;
+        const octx = outC.getContext("2d");
+        const g = octx.createLinearGradient(0, 0, 0, 480);
+        g.addColorStop(0, "#F3F5F8");
+        g.addColorStop(1, "#E5E8EE");
+        octx.fillStyle = g;
+        octx.fillRect(0, 0, 480, 480);
+        const side = Math.min(srcCanvas.width, srcCanvas.height);
+        const sx = Math.max(0, (srcCanvas.width - side) * 0.5);
+        const sy = Math.max(0, (srcCanvas.height - side) * 0.5);
+        octx.drawImage(srcCanvas, sx, sy, side, side, 0, 0, 480, 480);
+        scene.background = prevBg;
+        return outC.toDataURL("image/png");
+      }
+    }
+  } catch (e) {}
+  return getVesselRealisticThumb(v) || "";
+}
+
+function buildDraftConfigSummary(v) {
+  const cl = getClosure();
+  const finList = [...RIGID_FINISHES, ...POUCH_FINISHES];
+  const fin = finList.find(f => f.id === state.finishId);
+  const skin = getSkin();
+  const phys = evaluateLivePhysics();
+
+  const partsIt = [];
+  const partsEn = [];
+  if (fin) { partsIt.push(fin.it); partsEn.push(fin.en); }
+  if (vesselHasClosureStep(v) && cl && cl.id !== "none") {
+    partsIt.push(cl.it);
+    partsEn.push(cl.en);
+  } else if (vesselHasClosureStep(v)) {
+    partsIt.push("Senza chiusura");
+    partsEn.push("No closure");
+  }
+  if (!hasWrap()) {
+    partsIt.push("Neutro senza grafica");
+    partsEn.push("No artwork wrap");
+  } else if (isDoypack()) {
+    partsIt.push(state.pouchPrintType === "flexo" ? "Stampa Flexo" : "Stampa Digitale");
+    partsEn.push(state.pouchPrintType === "flexo" ? "Flexo Print" : "Digital Print");
+    if (skin && skin.brand) { partsIt.push(skin.brand); partsEn.push(skin.brand); }
+  } else {
+    const modeIt = isSerigrafiaMode() ? "Serigrafia 360°" : (isLabelMode() ? "Etichetta" : "Sleeve 360°");
+    const modeEn = isSerigrafiaMode() ? "360° Silk-Screen" : (isLabelMode() ? "Label" : "360° Sleeve");
+    const skinLbl = skin ? skin.brand : "";
+    partsIt.push(skinLbl ? `${modeIt} (${skinLbl})` : modeIt);
+    partsEn.push(skinLbl ? `${modeEn} (${skinLbl})` : modeEn);
+  }
+  partsIt.push(phys.isBulk ? `Sparsi ${phys.packQty} pz` : `Scatola ${phys.packQty} pz`);
+  partsEn.push(phys.isBulk ? `Loose ${phys.packQty} pcs` : `Box ${phys.packQty} pcs`);
+
+  return {
+    it: partsIt.join(" · "),
+    en: partsEn.join(" · ")
+  };
+}
+
+function saveCurrentCustomVesselToProfile() {
+  const v = getVessel();
+  if (!v) return;
+  const baseVesselId = v.baseVesselId || v.id;
+  const targetDraftId = state.currentDraftId || `draft_${Date.now()}`;
+  state.currentDraftId = targetDraftId;
+
+  const snapUrl = captureStudioDraftSnapshot(v);
+  if (snapUrl) VESSEL_REALISTIC_THUMBS[targetDraftId] = snapUrl;
+  const summary = buildDraftConfigSummary(v);
+
+  const savedEntry = {
+    ...v,
+    id: targetDraftId,
+    baseVesselId,
+    isProductionDraft: true,
+    savedAt: new Date().toLocaleDateString(state.lang === "it" ? "it-IT" : "en-US"),
+    draftSummaryIt: summary.it,
+    draftSummaryEn: summary.en,
+    thumbDataUrl: snapUrl || getVesselRealisticThumb(v) || "",
+    savedConfig: {
+      finishId: state.finishId,
+      closureId: state.closureId,
+      wrapType: state.wrapType,
+      pouchPrintType: state.pouchPrintType,
+      filmId: state.filmId,
+      labelMatId: state.labelMatId,
+      serigrafiaInkId: state.serigrafiaInkId,
+      pouchMatId: state.pouchMatId,
+      skinId: state.skinId,
+      sleeveAngleDeg: state.sleeveAngleDeg,
+      sleeveHeightPct: state.sleeveHeightPct,
+      bcAngleDeg: state.bcAngleDeg,
+      bcHeightPct: state.bcHeightPct,
+      bcLadder: state.bcLadder,
+      bcDoypackSide: state.bcDoypackSide,
+      bcDoypackX: state.bcDoypackX,
+      boxMode: state.boxMode,
+      boxQty: state.boxQty,
+      bulkQty: state.bulkQty,
+      boxDivider: state.boxDivider,
+      boxBoard: state.boxBoard
+    }
+  };
+
+  if (!Array.isArray(state.savedCustomVessels)) state.savedCustomVessels = [];
+  const existIdx = state.savedCustomVessels.findIndex(item => item.id === savedEntry.id);
+  if (existIdx >= 0) {
+    state.savedCustomVessels[existIdx] = savedEntry;
+  } else {
+    state.savedCustomVessels.unshift(savedEntry);
+  }
+  persistSavedCustomVessels();
+
+  const btn = document.getElementById("btnSaveCustomVessel");
+  if (btn) {
+    btn.textContent = state.lang === "it" ? "Salvato ✓" : "Saved ✓";
+    setTimeout(() => {
+      if (btn) btn.textContent = state.lang === "it" ? "Salva" : "Save";
+    }, 1800);
+  }
+}
+
+function deleteSavedCustomVessel(vid, evt) {
+  if (evt && typeof evt.stopPropagation === "function") evt.stopPropagation();
+  state.savedCustomVessels = (state.savedCustomVessels || []).filter(item => item.id !== vid);
+  if (state.currentDraftId === vid) state.currentDraftId = null;
+  persistSavedCustomVessels();
+  if (state.mainView === "profile") renderProfileView();
+}
+
+function openSavedCustomVesselInStudio(draftId) {
+  const saved = (state.savedCustomVessels || []).find(item => item.id === draftId);
+  if (!saved) return;
+  const baseVid = saved.baseVesselId || (VESSELS.some(v => v.id === saved.id) ? saved.id : "serum_250");
+  state.currentDraftId = saved.id;
+  resetVesselConfigState(baseVid);
+
+  if (saved.savedConfig) {
+    const sc = saved.savedConfig;
+    state.finishId = sc.finishId || state.finishId;
+    state.closureId = sc.closureId || "none";
+    state.wrapType = sc.wrapType || "none";
+    state.pouchPrintType = sc.pouchPrintType || "none";
+    state.filmId = sc.filmId || state.filmId;
+    state.labelMatId = sc.labelMatId || state.labelMatId;
+    state.serigrafiaInkId = sc.serigrafiaInkId || state.serigrafiaInkId;
+    state.pouchMatId = sc.pouchMatId || state.pouchMatId;
+    state.skinId = sc.skinId || "none";
+    if (typeof sc.sleeveAngleDeg === "number") state.sleeveAngleDeg = sc.sleeveAngleDeg;
+    if (typeof sc.sleeveHeightPct === "number") state.sleeveHeightPct = sc.sleeveHeightPct;
+    if (typeof sc.bcAngleDeg === "number") state.bcAngleDeg = sc.bcAngleDeg;
+    if (typeof sc.bcHeightPct === "number") state.bcHeightPct = sc.bcHeightPct;
+    if (typeof sc.bcLadder === "boolean") state.bcLadder = sc.bcLadder;
+    if (sc.bcDoypackSide) state.bcDoypackSide = sc.bcDoypackSide;
+    if (typeof sc.bcDoypackX === "number") state.bcDoypackX = sc.bcDoypackX;
+    if (sc.boxMode) state.boxMode = sc.boxMode;
+    if (sc.boxQty) state.boxQty = sc.boxQty;
+    if (sc.bulkQty) state.bulkQty = sc.bulkQty;
+    if (typeof sc.boxDivider === "boolean") state.boxDivider = sc.boxDivider;
+    if (sc.boxBoard) state.boxBoard = sc.boxBoard;
+  }
+
+  switchMainView("studio");
+  rebuild3DProduct();
+  renderAllUI();
+}
+
 function renderProfileView() {
   const host = document.getElementById("profilePortalBody");
   if (!host) return;
@@ -7632,6 +8507,49 @@ function renderProfileView() {
   const reqs = state.submittedRequests;
   const favIds = Array.isArray(state.favoriteVessels) ? state.favoriteVessels : [];
   const favVessels = favIds.map(id => VESSELS.find(v => v.id === id)).filter(Boolean);
+  const savedCustoms = Array.isArray(state.savedCustomVessels) ? state.savedCustomVessels : [];
+
+  const customSavedHtml = savedCustoms.length === 0
+    ? `
+      <div style="text-align:center; padding:26px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
+        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessuna bozza salvata" : "No saved drafts yet"}</div>
+        <p style="font-size:12px; color:var(--slate); margin-top:5px;">
+          ${l === "it"
+            ? "Configura un contenitore nello Studio 3D e premi il tasto Salva accanto a Conferma per ritrovare qui la tua bozza con tutte le modifiche."
+            : "Configure any container in the 3D Studio and press Save next to Confirm to store your draft with all modifications here."}
+        </p>
+      </div>
+    `
+    : `
+      <div class="fav-prof-grid">
+        ${savedCustoms.map(v => {
+          const thumbSrc = v.thumbDataUrl || getVesselRealisticThumb(v);
+          const cfgLine = l === "it" ? (v.draftSummaryIt || "") : (v.draftSummaryEn || "");
+          return `
+          <div class="fav-prof-card" onclick="openSavedCustomVesselInStudio('${v.id}')" style="cursor:pointer;">
+            <div class="fav-prof-stage">
+              ${thumbSrc ? `<img class="cat-real-img" src="${thumbSrc}" alt="${escapeHtml(l === "it" ? v.it : v.en)}">` : renderCatalogThumbSVG(v)}
+            </div>
+            <div class="cat-meta-body">
+              <div class="cat-title-row">
+                <div class="cat-meta-title">${escapeHtml(l === "it" ? v.it : v.en)}</div>
+                <button type="button" class="fav-heart-btn" onclick="deleteSavedCustomVessel('${v.id}', event)" title="${l === "it" ? "Elimina bozza" : "Delete draft"}" aria-label="${l === "it" ? "Elimina bozza" : "Delete draft"}">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                </button>
+              </div>
+              ${cfgLine ? `<div style="font-size:11px; font-weight:700; color:var(--crimson); background:var(--crimson-soft); border:1px solid rgba(194,24,14,0.18); border-radius:8px; padding:5px 8px; line-height:1.35;">${escapeHtml(cfgLine)}</div>` : ""}
+              ${renderVesselTwoColSpecs(v, l)}
+              <div class="cat-meta-footer">
+                <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); openSavedCustomVesselInStudio('${v.id}')">
+                  ${l === "it" ? "Seleziona" : "Select"}
+                </button>
+              </div>
+            </div>
+          </div>
+          `;
+        }).join("")}
+      </div>
+    `;
 
   const favsHtml = favVessels.length === 0
     ? `
@@ -7799,6 +8717,24 @@ function renderProfileView() {
           </p>
 
           ${favsHtml}
+        </div>
+
+        <div class="profile-card" id="profileCustomVesselsCard">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "LE TUE BOZZE STUDIO 3D" : "YOUR 3D STUDIO DRAFTS"}</span>
+              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Bozze di Produzione" : "Production Drafts"}</h2>
+            </div>
+            <span class="spec-tag">${savedCustoms.length} ${savedCustoms.length === 1 ? (l === "it" ? "BOZZA" : "DRAFT") : (l === "it" ? "BOZZE" : "DRAFTS")}</span>
+          </div>
+
+          <p style="font-size:12px; color:var(--slate); line-height:1.4; margin:0;">
+            ${l === "it"
+              ? "Configurazioni e contenitori salvati nello Studio 3D con tutte le modifiche pronte per essere riprese."
+              : "Configurations and containers saved from 3D Studio with all modifications ready to resume."}
+          </p>
+
+          ${customSavedHtml}
         </div>
 
         <div class="profile-card">
@@ -8057,7 +8993,7 @@ function renderAllUI() {
 
   const backBtn = document.getElementById("navBackBtn");
   if (backBtn) {
-    backBtn.disabled = (state.mainView === "catalog");
+    backBtn.disabled = (state.mainView === "home");
     backBtn.title = t.backTitle;
   }
 
@@ -8133,6 +9069,7 @@ function renderAllUI() {
     updateFastTelemetryUI();
   }
   if (state.arModalOpen) toggleARModal(true);
+  if (state.mainView === "home") renderHomeView();
   if (state.mainView === "catalog") renderCatalogView();
   if (state.mainView === "pillars") renderPillarsView();
   if (state.mainView === "profile") renderProfileView();
@@ -9496,6 +10433,11 @@ function updateFastTelemetryUI() {
   document.getElementById("ui_ship_note").textContent = t.shipNote;
   document.getElementById("val_sp_lot").textContent = `${prefix}${formatEuro(chain.minBaseCost)}`;
 
+  const btnSaveDraft = document.getElementById("btnSaveCustomVessel");
+  if (btnSaveDraft && !btnSaveDraft.textContent.includes("✓")) {
+    btnSaveDraft.textContent = l === "it" ? "Salva" : "Save";
+  }
+
   const btnChk = document.getElementById("btnCheckout");
   if (phys.status === "r") {
     btnChk.disabled = true;
@@ -10386,10 +11328,996 @@ function openCheckoutModal() {
   submitTrialRequest();
 }
 
+// ==================== VIEW 00: HOME PAGE & B2B SUPPLIER DIRECTORY / COMPARATOR ====================
+const SUPPLIER_DIRECTORY = [
+  {
+    id: "sup_poliplast",
+    cat: "container",
+    catIt: "Produzione Contenitori Primari",
+    catEn: "Primary Container Production",
+    name: "PoliPlast Lombardia Srl (BG)",
+    city: "Stezzano (BG) · Lombardia",
+    address: "Via dell'Industria 42, 24040 Stezzano (BG)",
+    email: "commerciale@poliplastlombardia.it",
+    phone: "+39 035 454 1820",
+    website: "www.poliplastlombardia.it",
+    contactPerson: "Ing. Marco Rota — Resp. Lotti B2B",
+    rating: "4.9",
+    reviewsCount: 128,
+    onTimePct: "99.4%",
+    moqIt: "100 pz (Lotto Prova)",
+    moqEn: "100 pcs (Pilot Lot)",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 260,
+    certifications: ["ISO 9001", "ISO 15378", "BRCGS Packaging", "MOCA"],
+    processesIt: ["Soffiaggio PET / rPET", "Iniezione-soffiaggio IBM", "Colli 24/410 e 28/410", "Controllo ottico 100%"],
+    processesEn: ["PET / rPET Blow Molding", "IBM Injection Blow Molding", "24/410 & 28/410 Necks", "100% Optical QC"],
+    descIt: "Azienda bergamasca specializzata nello soffiaggio di flaconi cilindrici in PET lucido, rPET e HDPE per cosmetica, dermo-cura e detergenza.",
+    descEn: "Bergamo manufacturer specialized in glossy PET, rPET and HDPE blow-molded bottles for personal care and dermo-cosmetics.",
+    reviews: [
+      { author: "DermActive Milano Srl", textIt: "Tolleranze filettatura 24/410 impeccabili e trasparenza PET cristallina anche su piccoli lotti pre-serie.", textEn: "Flawless 24/410 thread tolerances and crystal-clear PET even on small pre-series runs." },
+      { author: "Botanica Lab Firenze", textIt: "Consegna in 4 giorni a Bergamo con certificato di conformità MOCA allegato.", textEn: "Delivered in 4 days with full food-contact compliance documentation." }
+    ]
+  },
+  {
+    id: "sup_emiliablow",
+    cat: "container",
+    catIt: "Produzione Contenitori Primari",
+    catEn: "Primary Container Production",
+    name: "Emilia BlowMold SpA (BO)",
+    city: "Crespellano (BO) · Emilia-Romagna",
+    address: "Via Provinciale 118, 40053 Valsamoggia (BO)",
+    email: "ordini@emiliablowmold.it",
+    phone: "+39 051 969 410",
+    website: "www.emiliablowmold.it",
+    contactPerson: "Dott.ssa Elena Ferri — Ufficio Tecnico",
+    rating: "4.8",
+    reviewsCount: 94,
+    onTimePct: "98.9%",
+    moqIt: "100 pz (Lotto Prova)",
+    moqEn: "100 pcs (Pilot Lot)",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 245,
+    certifications: ["ISO 9001", "ISO 14001", "BRCGS Packaging"],
+    processesIt: ["Estrusione-soffiaggio HDPE", "Flaconi quadri soft-touch", "Barriera coestrusa COEX", "Collo 28/410"],
+    processesEn: ["HDPE Extrusion Blow Molding", "Soft-touch square bottles", "COEX barrier walls", "28/410 Neck"],
+    descIt: "Stabilimento bolognese per stampaggio a estrusione-soffiaggio di contenitori sagomati e quadri in HDPE opaco riciclabile.",
+    descEn: "Bologna industrial extrusion blow-molding plant producing shaped recyclable matte HDPE containers.",
+    reviews: [
+      { author: "Aurelia Skincare Roma", textIt: "Superficie planare dei flaconi quadri perfetta per l'applicazione di etichette in carta cotone.", textEn: "Flat panel geometry on square bottles is ideal for cotton paper label application." }
+    ]
+  },
+  {
+    id: "sup_vetreriapadana",
+    cat: "container",
+    catIt: "Produzione Contenitori Primari",
+    catEn: "Primary Container Production",
+    name: "Vetreria Padana SpA (BS)",
+    city: "Montichiari (BS) · Lombardia",
+    address: "Viale Europa 85, 25018 Montichiari (BS)",
+    email: "b2b@vetreriapadana.it",
+    phone: "+39 030 965 0311",
+    website: "www.vetreriapadana.it",
+    contactPerson: "Geom. Davide Luzzardi — Key Account Vetro",
+    rating: "4.9",
+    reviewsCount: 156,
+    onTimePct: "99.2%",
+    moqIt: "80 pz (Lotto Prova)",
+    moqEn: "80 pcs (Pilot Lot)",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 290,
+    certifications: ["ISO 9001", "FSSC 22000", "BRCGS Packaging", "MOCA"],
+    processesIt: ["Vetro cavo UVAG verde antico", "Vetro ambrato farmaceutico", "Bocca Bague Cetie 29mm", "Trattamento anti-graffio a caldo"],
+    processesEn: ["Antique green UVAG hollow glass", "Amber pharma glass", "Bague Cetie 29mm finish", "Hot-end scratch coating"],
+    descIt: "Vetreria storica bresciana dedicata alla formatura di bottiglie bordolesi e contenitori in vetro cavo per vino, olio, spiriti e specialità liquide.",
+    descEn: "Historic Brescia glassworks producing Bordeaux bottles and hollow glass containers for wine, olive oil, and spirits.",
+    reviews: [
+      { author: "Tenuta Valpolicella Srl", textIt: "Spessore del vetro costante e picco sul fondo centrato al decimo di millimetro.", textEn: "Consistent glass wall distribution and perfectly centered punt." }
+    ]
+  },
+  {
+    id: "sup_vetreriabrianza",
+    cat: "container",
+    catIt: "Produzione Contenitori Primari",
+    catEn: "Primary Container Production",
+    name: "Vetreria Brianza Srl (MB)",
+    city: "Lissone (MB) · Lombardia",
+    address: "Via Cattaneo 19, 20851 Lissone (MB)",
+    email: "preventivi@vetreriabrianza.it",
+    phone: "+39 039 245 8890",
+    website: "www.vetreriabrianza.it",
+    contactPerson: "Arch. Giulia Colombo — Resp. Cosmesi & Pharma",
+    rating: "4.8",
+    reviewsCount: 112,
+    onTimePct: "99.0%",
+    moqIt: "100 pz (Lotto Prova)",
+    moqEn: "100 pcs (Pilot Lot)",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 275,
+    certifications: ["ISO 9001", "ISO 15378", "ISO 22716 GMP"],
+    processesIt: ["Vasi cosmetici fondo spesso", "Satinatura acida ed ecologica", "Bocca larga 58/400 e 70/400", "Verniciatura UV su vetro"],
+    processesEn: ["Heavy-wall cosmetic glass jars", "Acid & eco frosting", "58/400 & 70/400 wide mouth", "UV glass lacquering"],
+    descIt: "Produttore brianzolo di vasi in vetro spesso e finiture satinate per alta cosmesi, creme, integratori e alimentare gourmet.",
+    descEn: "Brianza producer of heavy-wall and frosted glass jars for luxury skincare, supplements, and gourmet food.",
+    reviews: [
+      { author: "Laboratori Estetici Brera", textIt: "Finitura satinata vellutata al tatto e accoppiamento perfetto con coperchi 58/400.", textEn: "Velvety frosted finish and airtight fit with 58/400 lids." }
+    ]
+  },
+  {
+    id: "sup_alucan",
+    cat: "container",
+    catIt: "Produzione Contenitori Primari",
+    catEn: "Primary Container Production",
+    name: "AluCan Packaging Italia SpA (MI)",
+    city: "Rho (MI) · Lombardia",
+    address: "Strada Statale del Sempione 64, 20017 Rho (MI)",
+    email: "sales@alucanitalia.it",
+    phone: "+39 02 931 6420",
+    website: "www.alucanitalia.it",
+    contactPerson: "Ing. Stefano Villa — Dir. Beverage Cans",
+    rating: "4.9",
+    reviewsCount: 141,
+    onTimePct: "99.5%",
+    moqIt: "150 pz (Lotto Prova)",
+    moqEn: "150 pcs (Pilot Lot)",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 250,
+    certifications: ["ISO 9001", "FSSC 22000", "BRCGS Packaging", "ALU 41"],
+    processesIt: ["Lattine Sleek 330ml DWI", "Vernice interna BPA-NI", "Coperchi Stay-On-Tab SOT 202", "Alluminio riciclato 75%"],
+    processesEn: ["330ml Sleek DWI Cans", "BPA-NI internal liner", "SOT 202 Stay-On-Tab ends", "75% recycled aluminum"],
+    descIt: "Impianto milanese ad alta velocità specializzato in lattine trafilate in alluminio alimentare con rivestimento interno BPA-NI.",
+    descEn: "High-speed Milan plant producing drawn food-grade aluminum cans with BPA-NI internal lining.",
+    reviews: [
+      { author: "Birrificio Artigianale Navigli", textIt: "Fornitura di lattine neutre e stampate pronta in 5 giorni con anelli SOT 202 inclusi.", textEn: "Blank and printed cans ready in 5 days including SOT 202 lids." }
+    ]
+  },
+  {
+    id: "sup_flexpack",
+    cat: "container",
+    catIt: "Produzione Contenitori Primari",
+    catEn: "Primary Container Production",
+    name: "FlexPack Lombardia Srl (MI)",
+    city: "Cernusco sul Naviglio (MI) · Lombardia",
+    address: "Via Torino 28, 20063 Cernusco sul Naviglio (MI)",
+    email: "info@flexpacklombardia.it",
+    phone: "+39 02 921 0451",
+    website: "www.flexpacklombardia.it",
+    contactPerson: "Dott. Andrea Galli — Resp. Flessibili & Doypack",
+    rating: "4.8",
+    reviewsCount: 108,
+    onTimePct: "99.1%",
+    moqIt: "100 pz (Lotto Prova)",
+    moqEn: "100 pcs (Pilot Lot)",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 235,
+    certifications: ["BRCGS Packaging", "ISO 9001", "FSSC 22000", "FSC"],
+    processesIt: ["Doypack Stand-Up con soffietto", "Triplice accoppiato PET/ALU/PE", "Monomateriale PE riciclabile", "Zip richiudibile a pressione"],
+    processesEn: ["Stand-Up Doypack with gusset", "Tri-layer PET/ALU/PE barrier", "Recyclable mono-PE", "Press-to-close zipper"],
+    descIt: "Trasformatore milanese di imballaggi flessibili stand-up ad alta barriera contro ossigeno e umidità per polveri, integratori e alimenti secchi.",
+    descEn: "Milan flexible packaging converter producing high-barrier stand-up pouches for supplements, powders, and dry foods.",
+    reviews: [
+      { author: "NutriSport Performance Srl", textIt: "Saldature laterali impeccabili e zip di chiusura resistentissima per proteine da 1 kg.", textEn: "Rock-solid side seals and smooth press-zipper for 1 kg protein pouches." }
+    ]
+  },
+  {
+    id: "sup_closuresitalia",
+    cat: "closure",
+    catIt: "Chiusure, Tappi & Dispenser",
+    catEn: "Closures, Caps & Dispensers",
+    name: "Closures Italia Srl (MB)",
+    city: "Vimercate (MB) · Lombardia",
+    address: "Via Energy Park 14, 20871 Vimercate (MB)",
+    email: "vendite@closuresitalia.it",
+    phone: "+39 039 608 3210",
+    website: "www.closuresitalia.it",
+    contactPerson: "Ing. Matteo Brambilla — Resp. Sistemi Dosaggio",
+    rating: "4.9",
+    reviewsCount: 96,
+    onTimePct: "99.3%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "4 gg lavorativi",
+    leadEn: "4 business days",
+    price: 195,
+    certifications: ["ISO 9001", "ISO 15378", "BRCGS Packaging"],
+    processesIt: ["Pompe dispenser 24/410 e 28/410", "Blocco rotazione Up-Lock", "Taglio pescante su misura", "Test tenuta sottovuoto"],
+    processesEn: ["24/410 & 28/410 Dispenser Pumps", "Up-Lock twist actuator", "Custom dip-tube cutting", "Vacuum leak testing"],
+    descIt: "Specialista italiano di sistemi di erogazione, pompe lozione, spray nebulizzatori e chiusure tecniche con taglio pescante calibrato.",
+    descEn: "Italian specialist in dispensing systems, lotion pumps, fine-mist sprayers, and custom dip-tube closures.",
+    reviews: [
+      { author: "Cosmetica Naturale Bergamo", textIt: "Pescanti tagliati esattamente sulla quota H del nostro flacone e zero perdite nei test di trasporto.", textEn: "Dip tubes trimmed to our exact bottle height with zero leakage during transit tests." }
+    ]
+  },
+  {
+    id: "sup_tecnocap",
+    cat: "closure",
+    catIt: "Chiusure, Tappi & Dispenser",
+    catEn: "Closures, Caps & Dispensers",
+    name: "Tecnocap Lombardia Srl (BG)",
+    city: "Dalmine (BG) · Lombardia",
+    address: "Via Bastone 31, 24044 Dalmine (BG)",
+    email: "info@tecnocaplombardia.it",
+    phone: "+39 035 561 904",
+    website: "www.tecnocaplombardia.it",
+    contactPerson: "Sig. Roberto Locatelli — Resp. Stampaggio",
+    rating: "4.6",
+    reviewsCount: 49,
+    onTimePct: "98.4%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "6 gg lavorativi",
+    leadEn: "6 business days",
+    price: 165,
+    certifications: ["ISO 9001", "ISO 14001"],
+    processesIt: ["Tappi a vite zigrinati", "Tappi Flip-Top e Disc-Top", "Coperchi vaso 58/400 con liner EPE", "Capsule alluminio 29mm"],
+    processesEn: ["Ribbed screw caps", "Flip-Top & Disc-Top caps", "58/400 jar lids with EPE liner", "29mm aluminum capsules"],
+    descIt: "Produttore lombardo di tappi a vite, flip-top, disc-top e coperchi per vasi con guarnizioni d'induzione ed EPE.",
+    descEn: "Lombardy producer of polypropylene screw caps, flip-tops, disc-tops, and lined jar lids.",
+    reviews: [
+      { author: "BioDetergenza Veneto", textIt: "Ottimo rapporto qualità/prezzo su tappi 28/410 per serie pilota.", textEn: "Great value on 28/410 caps for pilot production runs." }
+    ]
+  },
+  {
+    id: "sup_capmold",
+    cat: "closure",
+    catIt: "Chiusure, Tappi & Dispenser",
+    catEn: "Closures, Caps & Dispensers",
+    name: "CapMold Emilia Srl (MO)",
+    city: "Carpi (MO) · Emilia-Romagna",
+    address: "Via dei Trasporti 9, 41012 Carpi (MO)",
+    email: "tecnico@capmoldemilia.it",
+    phone: "+39 059 684 219",
+    website: "www.capmoldemilia.it",
+    contactPerson: "Ing. Federico Monti — Resp. Qualità Stampi",
+    rating: "4.7",
+    reviewsCount: 61,
+    onTimePct: "98.8%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "6 gg lavorativi",
+    leadEn: "6 business days",
+    price: 180,
+    certifications: ["ISO 9001", "ISO 22000"],
+    processesIt: ["Stampaggio iniezione multi-cavità", "Contagocce con pipetta in vetro", "Tappi Child-Proof ISO 8317", "Colorazione Masterbatch Pantone"],
+    processesEn: ["Multi-cavity injection molding", "Glass pipette droppers", "ISO 8317 Child-Proof caps", "Custom Pantone masterbatch"],
+    descIt: "Officina emiliana di stampaggio a iniezione multi-cavità per tappi standard, contagocce farmaceutici e chiusure di sicurezza.",
+    descEn: "Emilian multi-cavity injection molding workshop for standard caps, glass droppers, and child-resistant closures.",
+    reviews: [
+      { author: "FarmaDrop Bologna", textIt: "Contagocce 24/410 con ghiera e bulbo siliconico di altissima precisione.", textEn: "High-precision 24/410 glass dropper assemblies with silicone bulbs." }
+    ]
+  },
+  {
+    id: "sup_sleeveprint",
+    cat: "sleeve_label",
+    catIt: "Stampa Sleeve, Etichette & Flessibili",
+    catEn: "Sleeve, Label & Flexible Printing",
+    name: "SleevePrint Milano Srl (MI)",
+    city: "Segrate (MI) · Lombardia",
+    address: "Via Cassanese 210, 20054 Segrate (MI)",
+    email: "prepress@sleeveprintmilano.it",
+    phone: "+39 02 213 9840",
+    website: "www.sleeveprintmilano.it",
+    contactPerson: "Dott. Luca Santoro — Resp. Prepress & Anamorfosi",
+    rating: "4.9",
+    reviewsCount: 142,
+    onTimePct: "99.5%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 340,
+    certifications: ["BRCGS Packaging", "ISO 9001", "FSC"],
+    processesIt: ["Sleeve termoretraibili 360° PETG / OPS / rPET", "Pre-distorsione anamorfica CAD 3D", "HP Indigo digitale + Rotocalco 9 colori", "Saldatura tubolare laser"],
+    processesEn: ["360° PETG / OPS / rPET shrink sleeves", "3D CAD anamorphic pre-distortion", "HP Indigo digital + 9-color rotogravure", "Laser tubular seaming"],
+    descIt: "Stabilimento milanese leader nelle sleeve termoretraibili a 360° con reparto prestampa anamorfica e controllo curva di retrazione TD%.",
+    descEn: "Leading Milan shrink-sleeve converter with in-house 3D anamorphic prepress and TD% shrink-curve verification.",
+    reviews: [
+      { author: "Lumina Cosmetics Milano", textIt: "Pre-compensazione del codice a barre sulla spalla curva impeccabile: Grade A verificato su tutti i campioni.", textEn: "Impeccable barcode pre-compensation on the bottle shoulder: verified ANSI Grade A across all samples." }
+    ]
+  },
+  {
+    id: "sup_termopack",
+    cat: "sleeve_label",
+    catIt: "Stampa Sleeve, Etichette & Flessibili",
+    catEn: "Sleeve, Label & Flexible Printing",
+    name: "TermoPack Bergamo Srl (BG)",
+    city: "Seriate (BG) · Lombardia",
+    address: "Via Nazionale 77, 24068 Seriate (BG)",
+    email: "info@termopackbergamo.it",
+    phone: "+39 035 294 612",
+    website: "www.termopackbergamo.it",
+    contactPerson: "Ing. Chiara Belotti — Lab Tunnel Vapore",
+    rating: "4.8",
+    reviewsCount: 115,
+    onTimePct: "99.1%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 315,
+    certifications: ["ISO 9001", "BRCGS Packaging", "ISO 14001"],
+    processesIt: ["Sleeve termoretraibili con tunnel vapore interno", "Bande di garanzia tamper-evident", "Film rPET riciclato post-consumo", "Bianco coprente ad alta opacità"],
+    processesEn: ["Shrink sleeves with in-house steam tunnel", "Tamper-evident neck bands", "Post-consumer rPET shrink film", "High-opacity backing white"],
+    descIt: "Impresa industriale bergamasca dotata di tunnel di retrazione a vapore interno per testare fisicamente le sleeve su flaconi sagomati prima della spedizione.",
+    descEn: "Bergamo industrial converter equipped with an in-house steam shrink tunnel to physically test sleeves on shaped bottles.",
+    reviews: [
+      { author: "Olio & Essenze Garda", textIt: "Hanno testato il film PETG direttamente nel loro tunnel vapore inviandoci il video prima della tiratura.", textEn: "They tested the PETG film in their steam tunnel and sent us video proof prior to full production." }
+    ]
+  },
+  {
+    id: "sup_etichettificiolombardo",
+    cat: "sleeve_label",
+    catIt: "Stampa Sleeve, Etichette & Flessibili",
+    catEn: "Sleeve, Label & Flexible Printing",
+    name: "Etichettificio Lombardo Srl (MI)",
+    city: "Trezzano sul Naviglio (MI) · Lombardia",
+    address: "Via Leonardo da Vinci 53, 20090 Trezzano sul Naviglio (MI)",
+    email: "preventivi@etichettificiolombardo.it",
+    phone: "+39 02 484 0192",
+    website: "www.etichettificiolombardo.it",
+    contactPerson: "Dott. Paolo De Santis — Resp. Nobilitazioni",
+    rating: "4.9",
+    reviewsCount: 118,
+    onTimePct: "99.4%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "4 gg lavorativi",
+    leadEn: "4 business days",
+    price: 290,
+    certifications: ["BRCGS Packaging", "FSC", "ISO 9001"],
+    processesIt: ["Etichette in bobina su Carta Cotone Vergata", "Film PP e PET No-Label Look", "Lamina a caldo oro/argento & rilievo a secco", "Fustellatura laser senza impianto"],
+    processesEn: ["Roll labels on Laid Cotton Paper", "PP & No-Label Look PET films", "Hot-foil stamping & blind embossing", "Zero-die laser cutting"],
+    descIt: "Etichettificio milanese attivo dal 1984 con linee rotative e digitali per etichette autoadesive in bobina ad alta nobilitazione per vino, spiriti e cosmesi.",
+    descEn: "Milan label house operating since 1984 with rotary and digital roll-label finishing lines for wine, spirits, and skincare.",
+    reviews: [
+      { author: "Cantine Franciacorta Corte Alta", textIt: "Carta cotone vergata resistente al cestello del ghiaccio e lamina oro micro-incisa perfetta.", textEn: "Ice-bucket resistant laid cotton paper and razor-sharp micro gold hot-foil." }
+    ]
+  },
+  {
+    id: "sup_rotoflex",
+    cat: "sleeve_label",
+    catIt: "Stampa Sleeve, Etichette & Flessibili",
+    catEn: "Sleeve, Label & Flexible Printing",
+    name: "Rotoflex Packaging Srl (BG)",
+    city: "Grassobbio (BG) · Lombardia",
+    address: "Via Zanica 90, 24050 Grassobbio (BG)",
+    email: "stampa@rotoflexpackaging.it",
+    phone: "+39 035 335 710",
+    website: "www.rotoflexpackaging.it",
+    contactPerson: "Ing. Simone Vitali — Resp. Flessografia & Digitale",
+    rating: "4.9",
+    reviewsCount: 104,
+    onTimePct: "99.2%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 210,
+    certifications: ["BRCGS Packaging", "ISO 9001", "FSSC 22000"],
+    processesIt: ["Stampa Flessografica HD 10 colori", "Stampa Digitale bobina per Doypack", "Verniciatura opaca soft-touch", "Controllo spettrofotometrico Delta-E"],
+    processesEn: ["10-color HD Flexographic printing", "Roll-to-roll Digital pouch printing", "Soft-touch matte coating", "Inline Delta-E color control"],
+    descIt: "Converter flessibile bergamasco dotato di linee flessografiche e digitali fino a 10 colori per buste stand-up e film barriera.",
+    descEn: "Bergamo flexible converter running up to 10-color flexo and digital lines for stand-up pouches and barrier films.",
+    reviews: [
+      { author: "Roastery Specialty Milano", textIt: "Stampa digitale su buste doypack con neri profondi e registro perfetto senza costi di cliché.", textEn: "Rich blacks and spot-on registration on digital doypack runs with zero plate fees." }
+    ]
+  },
+  {
+    id: "sup_serican",
+    cat: "serigrafia",
+    catIt: "Serigrafia & Litografia Diretta",
+    catEn: "Direct Silk-Screen & Lithography",
+    name: "SeriCan Lombardia Srl (BG)",
+    city: "Treviglio (BG) · Lombardia",
+    address: "Via Bergamo 104, 24047 Treviglio (BG)",
+    email: "decorazione@sericanlombardia.it",
+    phone: "+39 0363 48912",
+    website: "www.sericanlombardia.it",
+    contactPerson: "Dott. Massimo Riva — Resp. Stampa Diretta 360°",
+    rating: "4.9",
+    reviewsCount: 89,
+    onTimePct: "99.1%",
+    moqIt: "120 pz",
+    moqEn: "120 pcs",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 240,
+    certifications: ["ISO 9001", "BRCGS Packaging"],
+    processesIt: ["Serigrafia UV diretta a 360° su lattine e vetro", "Rilievo tattile braille e spessorato", "Inchiostri metallizzati su alluminio nudo", "Polimerizzazione LED a freddo"],
+    processesEn: ["360° direct UV screen print on cans & glass", "High-build tactile & Braille relief", "Metallic inks on bare aluminum", "Cold LED UV curing"],
+    descIt: "Impresa specializzata nella decorazione serigrafica diretta UV a 360° su lattine in alluminio e flaconi cilindrici senza utilizzo di pellicole plastiche.",
+    descEn: "Specialist plant for 360° direct UV screen decoration on aluminum cans and cylindrical bottles with zero plastic film.",
+    reviews: [
+      { author: "Kombucha Lab Torino", textIt: "L'effetto tattile a rilievo direttamente sull'alluminio spazzolato della lattina è straordinario.", textEn: "The raised tactile ink directly on brushed aluminum cans looks and feels extraordinary." }
+    ]
+  },
+  {
+    id: "sup_decometalli",
+    cat: "serigrafia",
+    catIt: "Serigrafia & Litografia Diretta",
+    catEn: "Direct Silk-Screen & Lithography",
+    name: "DecoMetalli Piemonte Srl (TO)",
+    city: "Rivoli (TO) · Piemonte",
+    address: "Corso Allamano 132, 10098 Rivoli (TO)",
+    email: "ufficiotecnico@decometalli.it",
+    phone: "+39 011 957 4410",
+    website: "www.decometalli.it",
+    contactPerson: "Ing. Valeria Ghio — Resp. Litografia Metalli",
+    rating: "4.7",
+    reviewsCount: 58,
+    onTimePct: "98.7%",
+    moqIt: "150 pz",
+    moqEn: "150 pcs",
+    leadIt: "6 gg lavorativi",
+    leadEn: "6 business days",
+    price: 205,
+    certifications: ["ISO 9001", "ISO 14001"],
+    processesIt: ["Litografia e serigrafia su alluminio", "Vernici opache anti-condensa", "Inchiostri termocromici", "Verifica contrasto barcode su metallo"],
+    processesEn: ["Metal lithography & screen printing", "Anti-condensation matte coatings", "Thermochromic inks", "Barcode contrast verification on metal"],
+    descIt: "Decoratore industriale su metallo e vetro specializzato in vernici tattili, finiture opache anti-condensa e inchiostri metallizzati.",
+    descEn: "Industrial metal and glass decorator specialized in tactile coatings, anti-condensation matte finishes, and metallic inks.",
+    reviews: [
+      { author: "Craft Soda Langhe", textIt: "Vernice opaca resistente alla condensa da frigo e codice a barre perfettamente leggibile.", textEn: "Fridge-condensation resistant matte finish and crisp barcode readability." }
+    ]
+  },
+  {
+    id: "sup_scatolificionord",
+    cat: "carton",
+    catIt: "Cartotecnica & Imballi Secondari",
+    catEn: "Carton & Secondary Packaging",
+    name: "Scatolificio Nord Milano Srl (MB)",
+    city: "Cinisello Balsamo (MI) · Lombardia",
+    address: "Via Fulvio Testi 188, 20092 Cinisello Balsamo (MI)",
+    email: "cad@scatolificionordmilano.it",
+    phone: "+39 02 660 1450",
+    website: "www.scatolificionordmilano.it",
+    contactPerson: "Per. Ind. Giorgio Mauri — Progettazione Fustelle CAD",
+    rating: "4.9",
+    reviewsCount: 134,
+    onTimePct: "99.6%",
+    moqIt: "100 scatole",
+    moqEn: "100 boxes",
+    leadIt: "4 gg lavorativi",
+    leadEn: "4 business days",
+    price: 195,
+    certifications: ["FSC", "ISO 9001", "BRCGS Packaging"],
+    processesIt: ["Scatole su misura in Cartoncino Teso 350g", "Microonda E-Flute accoppiata", "Alveari interni fustellati", "Plotter da taglio CAD per prototipi"],
+    processesEn: ["Custom 350g Solid Board cartons", "Laminated E-Flute micro-corrugated", "Die-cut internal partitions", "CAD cutting plotter for prototypes"],
+    descIt: "Cartotecnica storica dell'area milanese con fustellatrici automatiche per astucci, scatole multipack e alveari su misura in cartone teso e microonda.",
+    descEn: "Established Milan box-maker operating automated die-cutters for custom solid board, E-flute cartons, and protective dividers.",
+    reviews: [
+      { author: "Profumeria Artistica Brera", textIt: "Alveare interno calcolato al millimetro sul diametro del nostro flacone: zero gioco durante la spedizione.", textEn: "Internal divider cut to the exact millimeter of our bottle diameter: zero rattle in transit." }
+    ]
+  },
+  {
+    id: "sup_cartotecnicaemiliana",
+    cat: "carton",
+    catIt: "Cartotecnica & Imballi Secondari",
+    catEn: "Carton & Secondary Packaging",
+    name: "Cartotecnica Emiliana SpA (MO)",
+    city: "Modena (MO) · Emilia-Romagna",
+    address: "Via Emilia Est 940, 41126 Modena (MO)",
+    email: "commerciale@cartotecnicaemiliana.it",
+    phone: "+39 059 371 800",
+    website: "www.cartotecnicaemiliana.it",
+    contactPerson: "Dott. Riccardo Vecchi — Div. Logistica & GDO",
+    rating: "4.8",
+    reviewsCount: 98,
+    onTimePct: "99.2%",
+    moqIt: "100 scatole",
+    moqEn: "100 boxes",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 180,
+    certifications: ["BRCGS Packaging", "FSC", "ISO 9001", "ISO 14001"],
+    processesIt: ["Master Carton omologati ISTA 3A", "Scatole multipack 6 e 12 bottiglie", "Cartone ondulato doppia onda", "Test ECT e resistenza a compressione"],
+    processesEn: ["ISTA 3A certified Master Cartons", "6 & 12 bottle multipack shippers", "Double-wall corrugated board", "ECT & box compression testing"],
+    descIt: "Gruppo cartotecnico emiliano dedicato a scatole multipack, scatoloni master logistici e soluzioni antiurto certificate per corrieri ed export.",
+    descEn: "Emilian carton group producing multipack boxes, master shippers, and drop-tested protective packaging for export.",
+    reviews: [
+      { author: "Acetaia Tradizionale Modenese", textIt: "Scatole 6 bottiglie con alveare in microonda: azzerate le rotture con i corrieri espressi.", textEn: "6-bottle E-flute partitioned shippers completely eliminated courier breakage." }
+    ]
+  },
+  {
+    id: "sup_greassleeves",
+    cat: "copacker",
+    catIt: "Co-Packing, Riempimento & Assemblaggio",
+    catEn: "Co-Packing, Filling & Assembly",
+    name: "Greas Sleeves Srl (MI)",
+    city: "Cusago (MI) · Lombardia",
+    address: "Viale Europa 36, 20047 Cusago (MI)",
+    email: "operativo@greassleeves.it",
+    phone: "+39 02 9039 4110",
+    website: "www.greassleeves.it",
+    contactPerson: "Dott. Thomas Lutaj — Direzione Operativa & Co-Packing",
+    rating: "5.0",
+    reviewsCount: 210,
+    onTimePct: "99.8%",
+    moqIt: "100 pz (Lotto Prova)",
+    moqEn: "100 pcs (Pilot Lot)",
+    leadIt: "4 gg lavorativi",
+    leadEn: "4 business days",
+    price: 280,
+    certifications: ["ISO 9001", "BRCGS Packaging", "ISO 22716 GMP", "HACCP"],
+    processesIt: ["Convergenza materiali da tutta la filiera", "Applicazione sleeve a vapore ed etichette in linea", "Riempimento conto terzi Liquidi, Polveri e Capsule", "Allestimento e collaudo lotti pre-serie"],
+    processesEn: ["Multi-supplier inbound convergence", "Inline steam sleeving & labeling", "Contract filling for Liquids, Powders & Capsules", "Pilot batch kitting & QA release"],
+    descIt: "Co-packer milanese specializzato nella convergenza multi-fornitore, applicazione sleeve/etichette, riempimento conto terzi e consegna del lotto finito pronto per il mercato.",
+    descEn: "Milan co-packer specialized in multi-supplier convergence, steam sleeving, labeling, contract filling, and turnkey pilot batch delivery.",
+    reviews: [
+      { author: "Vanguard Skincare Milano", textIt: "Ricevono flaconi, pompe, sleeve e scatole dai vari produttori e ci consegnano il lotto finito e riempito in meno di una settimana.", textEn: "They receive bottles, pumps, sleeves, and boxes from each factory and deliver the filled turnkey lot in under a week." },
+      { author: "PureNutri Italia Srl", textIt: "Precisione di dosaggio polveri e applicazione sleeve impeccabile, partner insostituibile per i lanci.", textEn: "Spot-on powder dosing and steam sleeve application—an indispensable launch partner." }
+    ]
+  },
+  {
+    id: "sup_lombardacopacking",
+    cat: "copacker",
+    catIt: "Co-Packing, Riempimento & Assemblaggio",
+    catEn: "Co-Packing, Filling & Assembly",
+    name: "Lombarda Co-Packing SpA (BG)",
+    city: "Calcinate (BG) · Lombardia",
+    address: "Via del Lavoro 15, 24050 Calcinate (BG)",
+    email: "terzismo@lombardacopacking.it",
+    phone: "+39 035 842 910",
+    website: "www.lombardacopacking.it",
+    contactPerson: "Dott.ssa Sara Gatti — Resp. Riempimento & Camera Bianca",
+    rating: "4.8",
+    reviewsCount: 112,
+    onTimePct: "99.3%",
+    moqIt: "100 pz",
+    moqEn: "100 pcs",
+    leadIt: "5 gg lavorativi",
+    leadEn: "5 business days",
+    price: 260,
+    certifications: ["ISO 9001", "ISO 22716 GMP", "ISO 13485", "Bio Cert"],
+    processesIt: ["Riempimento liquidi e sieri in camera bianca ISO 7", "Dosaggio polveri, capsule e compresse", "Serraggio dinamometrico chiusure e pompe", "Lottizzazione ink-jet e sigillatura induzione"],
+    processesEn: ["ISO 7 cleanroom liquid & serum filling", "Powder, capsule & tablet dosing", "Torque-controlled cap tightening", "Ink-jet batch coding & induction sealing"],
+    descIt: "Stabilimento conto terzi certificato GMP per il riempimento di liquidi cosmetici, polveri e capsule con serraggio controllato e tracciabilità di lotto.",
+    descEn: "GMP-certified contract facility for cosmetic liquids, powders, and capsules with torque-controlled capping and batch traceability.",
+    reviews: [
+      { author: "BioDerma Pharma Srl", textIt: "Camera bianca certificata ISO 22716 e report di coppia di serraggio fornito su ogni lotto.", textEn: "ISO 22716 cleanroom filling with torque inspection reports provided on every batch." }
+    ]
+  }
+];
+
+function setHomeSupCategory(catId) {
+  state.homeSupCategory = catId || "all";
+  renderHomeView();
+}
+
+function setHomeSupSearch(val) {
+  state.homeSupSearch = String(val || "");
+  renderHomeView(true);
+}
+
+function toggleCompareSupplier(supId) {
+  if (!Array.isArray(state.homeComparedSuppliers)) state.homeComparedSuppliers = [];
+  const idx = state.homeComparedSuppliers.indexOf(supId);
+  if (idx >= 0) {
+    state.homeComparedSuppliers.splice(idx, 1);
+  } else {
+    if (state.homeComparedSuppliers.length >= 4) {
+      state.homeComparedSuppliers.shift();
+    }
+    state.homeComparedSuppliers.push(supId);
+  }
+  renderHomeView();
+}
+
+function clearComparedSuppliers() {
+  state.homeComparedSuppliers = [];
+  renderHomeView();
+}
+
+function compareTopInCurrentCategory() {
+  const filtered = getFilteredHomeSuppliers();
+  state.homeComparedSuppliers = filtered.slice(0, 3).map(s => s.id);
+  renderHomeView();
+  requestAnimationFrame(() => {
+    const panel = document.getElementById("supComparePanel");
+    if (panel) panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+}
+
+function scrollToSupplierDirectory() {
+  const el = document.getElementById("homeSupplierDirectorySection");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function getFilteredHomeSuppliers() {
+  const cat = state.homeSupCategory || "all";
+  const q = (state.homeSupSearch || "").trim().toLowerCase();
+  return SUPPLIER_DIRECTORY.filter(sup => {
+    if (cat !== "all" && sup.cat !== cat) return false;
+    if (!q) return true;
+    const hay = [
+      sup.name,
+      sup.city,
+      sup.address,
+      sup.email,
+      sup.catIt,
+      sup.catEn,
+      ...(sup.certifications || []),
+      ...(sup.processesIt || []),
+      ...(sup.processesEn || [])
+    ].join(" ").toLowerCase();
+    return hay.includes(q);
+  });
+}
+
+function renderHomeView(preserveSearchFocus) {
+  const host = document.getElementById("homePortalBody");
+  if (!host) return;
+  const l = state.lang;
+
+  const categories = [
+    { id: "all", it: `Tutti i Fornitori (${SUPPLIER_DIRECTORY.length})`, en: `All Suppliers (${SUPPLIER_DIRECTORY.length})` },
+    { id: "container", it: "1. Produzione Contenitori", en: "1. Primary Containers" },
+    { id: "closure", it: "2. Chiusure & Dispenser", en: "2. Closures & Dispensers" },
+    { id: "sleeve_label", it: "3. Stampa Sleeve, Etichette & Buste", en: "3. Sleeves, Labels & Pouches" },
+    { id: "serigrafia", it: "4. Serigrafia & Litografia", en: "4. Silk-Screen & Litho" },
+    { id: "carton", it: "5. Cartotecnica & Imballi", en: "5. Cartons & Boxes" },
+    { id: "copacker", it: "6. Co-Packing & Riempimento", en: "6. Co-Packing & Filling" }
+  ];
+
+  const filteredSuppliers = getFilteredHomeSuppliers();
+  const comparedIds = Array.isArray(state.homeComparedSuppliers) ? state.homeComparedSuppliers : [];
+  const comparedSuppliers = comparedIds.map(id => SUPPLIER_DIRECTORY.find(s => s.id === id)).filter(Boolean);
+
+  const l2 = l === "it" ? "Fase / Lavorazioni" : "Stage / Processes";
+  const l3 = l === "it" ? "Rating & Affidabilità" : "Rating & Reliability";
+  const l4 = l === "it" ? "Certificazioni" : "Certifications";
+  const l5 = l === "it" ? "Lotto Prova & Tempi" : "Pilot Lot & Lead Time";
+  const l6 = l === "it" ? "Stabilimento" : "Plant Address";
+  const l7 = l === "it" ? "Contatti Diretti" : "Direct Contacts";
+
+  const comparePanelHtml = comparedSuppliers.length === 0 ? "" : `
+    <div class="sup-compare-panel" id="supComparePanel">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <div>
+          <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson); letter-spacing:0.08em;">
+            ${l === "it" ? `COMPARAZIONE DIRETTA FORNITORI (${comparedSuppliers.length}/4 SELEZIONATI)` : `DIRECT SUPPLIER COMPARISON (${comparedSuppliers.length}/4 SELECTED)`}
+          </span>
+          <h3 style="font-family:var(--display); font-size:17px; font-weight:800; color:var(--ink); margin-top:2px;">
+            ${l === "it" ? "Confronto Tecnico, Certificazioni, Tempi e Contatti Diretti" : "Technical, Certification, Lead Time & Direct Contact Comparison"}
+          </h3>
+        </div>
+        <button type="button" class="cta-btn white" style="width:auto; height:34px; padding:0 14px; font-size:11.5px;" onclick="clearComparedSuppliers()">
+          ${l === "it" ? "Svuota comparazione ✕" : "Clear comparison ✕"}
+        </button>
+      </div>
+
+      <div tabindex="0" role="region" aria-labelledby="supCompareCaption" class="sup-compare-table-wrapper">
+        <table class="sup-compare-table" style="--label-2:'${l2}'; --label-3:'${l3}'; --label-4:'${l4}'; --label-5:'${l5}'; --label-6:'${l6}'; --label-7:'${l7}';">
+          <caption id="supCompareCaption">
+            ${l === "it"
+              ? "Tabella comparativa fornitori B2B selezionati — scorri o contatta direttamente ogni stabilimento"
+              : "Selected B2B suppliers comparison table — scroll or contact each plant directly"}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">${l === "it" ? "Azienda Fornitrice" : "Supplier Company"}</th>
+              <th scope="col">${l2}</th>
+              <th scope="col">${l3}</th>
+              <th scope="col">${l4}</th>
+              <th scope="col">${l5}</th>
+              <th scope="col">${l6}</th>
+              <th scope="col">${l7}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${comparedSuppliers.map(sup => `
+              <tr>
+                <th scope="row">
+                  <div style="font-size:13px; font-weight:800; color:var(--ink);">${escapeHtml(sup.name)}</div>
+                  <div style="font-family:var(--mono); font-size:10px; color:var(--crimson); margin-top:2px;">${escapeHtml(l === "it" ? sup.catIt : sup.catEn)}</div>
+                </th>
+                <td>
+                  <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                    ${(l === "it" ? sup.processesIt : sup.processesEn).map(p => `<span class="sup-work-chip">${escapeHtml(p)}</span>`).join("")}
+                  </div>
+                </td>
+                <td>
+                  <div style="font-weight:800; color:var(--ink);">★ ${sup.rating} <span style="color:var(--slate); font-weight:600;">(${sup.reviewsCount} ${l === "it" ? "recensioni" : "reviews"})</span></div>
+                  <div style="font-size:11px; color:var(--green); font-weight:700; margin-top:3px;">${l === "it" ? "Puntualità:" : "On-time:"} ${sup.onTimePct}</div>
+                </td>
+                <td>
+                  <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                    ${sup.certifications.map(c => `<span class="sup-cert-chip">${escapeHtml(c)}</span>`).join("")}
+                  </div>
+                </td>
+                <td>
+                  <div style="font-family:var(--mono); font-weight:800; color:var(--ink);">${l === "it" ? "Da" : "From"} €${sup.price}</div>
+                  <div style="font-size:11px; color:var(--slate); margin-top:2px;">MOQ: ${escapeHtml(l === "it" ? sup.moqIt : sup.moqEn)}</div>
+                  <div style="font-size:11px; color:var(--ink); font-weight:700; margin-top:2px;">${escapeHtml(l === "it" ? sup.leadIt : sup.leadEn)}</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--ink);">${escapeHtml(sup.city)}</div>
+                  <div style="font-size:11px; color:var(--slate); margin-top:2px;">${escapeHtml(sup.address)}</div>
+                </td>
+                <td>
+                  <div style="font-weight:700;"><a href="mailto:${escapeHtml(sup.email)}" style="color:var(--crimson); text-decoration:none;">${escapeHtml(sup.email)}</a></div>
+                  <div style="font-family:var(--mono); font-size:11px; margin-top:2px;"><a href="tel:${escapeHtml(sup.phone.replace(/\\s+/g, ""))}" style="color:var(--ink); text-decoration:none;">${escapeHtml(sup.phone)}</a></div>
+                  <div style="font-size:10.5px; color:var(--slate); margin-top:2px;">${escapeHtml(sup.contactPerson)}</div>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  host.innerHTML = `
+    <!-- HERO SECTION: EXPLAINS VESSELCOVE & OFFERS THE TWO WORKFLOW ENTRY POINTS -->
+    <section class="home-hero-card">
+      <div class="home-hero-top">
+        <div>
+          <div class="home-kicker">
+            <span>ECOSISTEMA B2B PACKAGING INDUSTRIALE & FILIERA CERTIFICATA</span>
+          </div>
+          <h1 class="home-title">
+            ${l === "it"
+              ? "Progetta il tuo packaging in 3D, valida la compatibilità fisica e coordina la filiera produttiva."
+              : "Engineer your packaging in 3D, validate physical compatibility, and orchestrate your supply chain."}
+          </h1>
+          <p class="home-lead">
+            ${l === "it"
+              ? "VesselCove unisce in un'unica piattaforma tecnica il catalogo di contenitori primari certificati, lo Studio 3D con validazione meccanica e ottica in tempo reale (filettature collo, termoretrazione TD% delle sleeve, leggibilità ANSI dei codici a barre, imballo secondario) e l'Albo dei fornitori italiani per ogni singola lavorazione — utilizzabile sia per configurare un lotto chiavi in mano sia come portale per esplorare, comparare e contattare direttamente gli stabilimenti."
+              : "VesselCove unites a certified primary container catalog, a real-time 3D engineering Studio (neck thread locking, shrink-sleeve TD% physics, ANSI barcode grading, secondary carton sizing), and a verified Italian supplier directory for every manufacturing stage — built both for turnkey batch orchestration and direct B2B supplier discovery and comparison."}
+          </p>
+
+          <div class="home-stats-strip">
+            <div class="home-stat-box">
+              <div class="home-stat-val">${SUPPLIER_DIRECTORY.length} Stabilimenti</div>
+              <div class="home-stat-lbl">${l === "it" ? "Fornitori italiani verificati con contatti diretti" : "Verified Italian plants with direct contacts"}</div>
+            </div>
+            <div class="home-stat-box">
+              <div class="home-stat-val">3 Validatori 3D</div>
+              <div class="home-stat-lbl">${l === "it" ? "Accoppiamento filetto, curva TD% e grado ANSI barcode" : "Thread fit, TD% shrink curve & ANSI barcode grade"}</div>
+            </div>
+            <div class="home-stat-box">
+              <div class="home-stat-val">6 Lavorazioni</div>
+              <div class="home-stat-lbl">${l === "it" ? "Dal contenitore primario al riempimento conto terzi" : "From primary container to contract filling"}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-pathway-grid">
+          <div class="home-pathway-card primary-path">
+            <div>
+              <span class="home-pathway-tag">${l === "it" ? "PERCORSO 01 · CATALOGO CERTIFICATO" : "PATHWAY 01 · CERTIFIED CATALOG"}</span>
+              <div class="home-pathway-title">${l === "it" ? "Parti da un Contenitore del Marketplace" : "Start from a Marketplace Container"}</div>
+              <p class="home-pathway-desc">
+                ${l === "it"
+                  ? "Scegli tra flaconi cilindrici o quadri, bottiglie in vetro, vasi cosmetici, lattine in alluminio e buste doypack già quotati 1:1 per passare subito allo Studio 3D e alla Filiera."
+                  : "Choose from cylindrical or square bottles, glass bottles, cosmetic jars, aluminum cans, and stand-up pouches to enter the 3D Studio and Supply Chain."}
+              </p>
+            </div>
+            <button type="button" class="cta-btn" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
+              ${l === "it" ? "Inizia dal Marketplace Contenitori →" : "Start from Container Marketplace →"}
+            </button>
+          </div>
+
+          <div class="home-pathway-card">
+            <div>
+              <span class="home-pathway-tag">${l === "it" ? "PERCORSO 02 · CONTENITORE PROPRIO" : "PATHWAY 02 · YOUR OWN CONTAINER"}</span>
+              <div class="home-pathway-title">${l === "it" ? "Continua con il mio contenitore" : "Continue with my container"}</div>
+              <p class="home-pathway-desc">
+                ${l === "it"
+                  ? "Disponi già del tuo flacone o vasetto fisico? Carica la scheda tecnica e le 6 viste fotografiche per digitalizzarlo e configurare chiusure, rivestimento grafico e fornitori."
+                  : "Already have your own physical bottle or jar? Upload the technical datasheet and 6 multi-angle photos to digitize it and configure closures, graphics, and suppliers."}
+              </p>
+            </div>
+            <button type="button" class="cta-btn white" id="btnHomeCustomContainer" style="border-width:1.5px; border-color:var(--ink);" onclick="openCustomVesselStudio()">
+              ${l === "it" ? "Continua con il mio contenitore →" : "Continue with my container →"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-pillars-row">
+        <div class="home-pillar-item">
+          <span class="home-pillar-num">FASE 01 // SCELTA O DIGITALIZZAZIONE</span>
+          <div class="home-pillar-head">${l === "it" ? "Contenitore da Catalogo o Su Misura" : "Catalog or Custom Container"}</div>
+          <div class="home-pillar-body">
+            ${l === "it"
+              ? "Seleziona un contenitore primario dal Marketplace oppure avvia la procedura con il tuo contenitore personale partendo dalla scheda tecnica e dalle 6 viste."
+              : "Pick a certified primary container from the Marketplace or start with your own container via datasheet and 6-view capture."}
+          </div>
+        </div>
+        <div class="home-pillar-item">
+          <span class="home-pillar-num">FASE 02 // STUDIO 3D & BOZZE</span>
+          <div class="home-pillar-head">${l === "it" ? "Validazione Meccanica, Grafica e Salvataggio" : "Mechanical, Graphic Validation & Drafts"}</div>
+          <div class="home-pillar-body">
+            ${l === "it"
+              ? "Configura chiusure, sleeve 360°, etichette o serigrafia e imballo secondario verificando in tempo reale il semaforo fisico e salvando le bozze nel tuo Profilo."
+              : "Configure closures, 360° sleeves, labels or screen print and secondary boxes with real-time physics checks and save drafts to your Profile."}
+          </div>
+        </div>
+        <div class="home-pillar-item">
+          <span class="home-pillar-num">FASE 03 // FILIERA O CONTATTO DIRETTO</span>
+          <div class="home-pillar-head">${l === "it" ? "Orchestra la Filiera o Contatta i Fornitori" : "Orchestrate Supply Chain or Contact Directly"}</div>
+          <div class="home-pillar-body">
+            ${l === "it"
+              ? "Invia una richiesta unica coordinata a tutta la filiera oppure consulta qui sotto l'Albo Fornitori per comparare aziende, certificazioni e contattarle in autonomia."
+              : "Send a unified multi-supplier order request or use the Supplier Directory below to compare companies, certifications, and contact them directly."}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STANDALONE SUPPLIER DIRECTORY & COMPARATOR SECTION -->
+    <section class="sup-hub-card" id="homeSupplierDirectorySection">
+      <div class="sup-hub-header">
+        <div>
+          <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson); letter-spacing:0.08em;">
+            ${l === "it" ? "ALBO FORNITORI INDUSTRIALI & COMPARATORE INDIPENDENTE" : "INDUSTRIAL SUPPLIER DIRECTORY & INDEPENDENT COMPARATOR"}
+          </span>
+          <h2 style="font-family:var(--display); font-size:24px; font-weight:800; color:var(--ink); margin:4px 0 0 0;">
+            ${l === "it" ? "Esplora, Compara e Contatta Direttamente i Fornitori per Ogni Lavorazione" : "Explore, Compare, and Directly Contact Suppliers for Every Process"}
+          </h2>
+          <p style="font-size:13px; color:var(--slate); margin:4px 0 0 0;">
+            ${l === "it"
+              ? "Consulta liberamente tutte le aziende della piattaforma con email diretta, telefono, indirizzo dello stabilimento, referente tecnico, certificazioni, lavorazioni eseguite e recensioni verificate."
+              : "Freely browse every manufacturer on the platform with direct email, phone, plant address, technical contact, certifications, capabilities, and verified reviews."}
+          </p>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <button type="button" class="sup-compare-toggle ${comparedSuppliers.length > 0 ? "active" : ""}" id="btnCompareTopCategory" onclick="compareTopInCurrentCategory()">
+            ${l === "it" ? "⇄ Compara Fornitori della Categoria" : "⇄ Compare Category Suppliers"}
+          </button>
+        </div>
+      </div>
+
+      <div class="sup-toolbar">
+        <div class="sup-cat-pills" id="homeSupCatPills">
+          ${categories.map(c => `
+            <button type="button" class="sup-cat-btn ${state.homeSupCategory === c.id ? "active" : ""}" data-sup-cat="${c.id}" onclick="setHomeSupCategory('${c.id}')">
+              ${escapeHtml(l === "it" ? c.it : c.en)}
+            </button>
+          `).join("")}
+        </div>
+        <div class="sup-search-wrap">
+          <input
+            id="homeSupSearchInput"
+            type="search"
+            class="sup-search-inp"
+            placeholder="${l === "it" ? "Cerca azienda, città, lavorazione o certificazione..." : "Search company, city, process or certification..."}"
+            value="${escapeHtml(state.homeSupSearch || "")}"
+            oninput="setHomeSupSearch(this.value)"
+          >
+        </div>
+      </div>
+
+      ${comparePanelHtml}
+
+      <div class="sup-dir-grid" id="homeSupDirGrid">
+        ${filteredSuppliers.map(sup => {
+          const isComparing = comparedIds.includes(sup.id);
+          const procs = l === "it" ? sup.processesIt : sup.processesEn;
+          return `
+            <article class="sup-dir-card ${isComparing ? "comparing" : ""}" data-sup-id="${sup.id}">
+              <div class="sup-card-top">
+                <div>
+                  <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--crimson); letter-spacing:0.06em; text-transform:uppercase;">
+                    ${escapeHtml(l === "it" ? sup.catIt : sup.catEn)}
+                  </span>
+                  <h3 style="font-family:var(--display); font-size:17.5px; font-weight:800; color:var(--ink); margin:3px 0 0 0;">
+                    ${escapeHtml(sup.name)}
+                  </h3>
+                  <div style="font-size:12px; color:var(--slate); font-weight:600; margin-top:2px;">
+                    ${escapeHtml(sup.city)}
+                  </div>
+                </div>
+                <div style="text-align:right; flex-shrink:0;">
+                  <div style="display:inline-flex; align-items:center; gap:5px; background:#FFFBEB; border:1px solid #FDE68A; color:#92400E; font-family:var(--mono); font-size:11.5px; font-weight:800; padding:4px 10px; border-radius:999px;">
+                    <span>★ ${sup.rating}</span>
+                    <span style="opacity:0.75;">(${sup.reviewsCount})</span>
+                  </div>
+                  <div style="font-family:var(--mono); font-size:10px; font-weight:800; color:var(--green); margin-top:4px;">
+                    ${l === "it" ? "Puntualità" : "On-time"} ${sup.onTimePct}
+                  </div>
+                </div>
+              </div>
+
+              <p style="font-size:12.5px; color:var(--charcoal); line-height:1.48; margin:0;">
+                ${escapeHtml(l === "it" ? sup.descIt : sup.descEn)}
+              </p>
+
+              <div>
+                <div style="font-family:var(--mono); font-size:9.5px; font-weight:800; color:var(--slate); letter-spacing:0.06em; margin-bottom:5px;">
+                  ${l === "it" ? "LAVORAZIONI ESEGUITE & TECNOLOGIE" : "MANUFACTURING PROCESSES & TECHNOLOGIES"}
+                </div>
+                <div class="sup-work-tags">
+                  ${procs.map(p => `<span class="sup-work-chip">${escapeHtml(p)}</span>`).join("")}
+                </div>
+              </div>
+
+              <div>
+                <div style="font-family:var(--mono); font-size:9.5px; font-weight:800; color:var(--slate); letter-spacing:0.06em; margin-bottom:5px;">
+                  ${l === "it" ? "CERTIFICAZIONI DI STABILIMENTO" : "PLANT CERTIFICATIONS"}
+                </div>
+                <div class="sup-work-tags">
+                  ${sup.certifications.map(c => `<span class="sup-cert-chip">✓ ${escapeHtml(c)}</span>`).join("")}
+                </div>
+              </div>
+
+              <div class="sup-contact-grid">
+                <div class="sup-contact-item">
+                  <span class="sup-contact-k">${l === "it" ? "Email Diretta" : "Direct Email"}</span>
+                  <span class="sup-contact-v"><a href="mailto:${escapeHtml(sup.email)}">${escapeHtml(sup.email)}</a></span>
+                </div>
+                <div class="sup-contact-item">
+                  <span class="sup-contact-k">${l === "it" ? "Telefono Stabilimento" : "Plant Phone"}</span>
+                  <span class="sup-contact-v"><a href="tel:${escapeHtml(sup.phone.replace(/\\s+/g, ""))}">${escapeHtml(sup.phone)}</a></span>
+                </div>
+                <div class="sup-contact-item">
+                  <span class="sup-contact-k">${l === "it" ? "Indirizzo Sede Operativa" : "Plant Address"}</span>
+                  <span class="sup-contact-v" title="${escapeHtml(sup.address)}">${escapeHtml(sup.address)}</span>
+                </div>
+                <div class="sup-contact-item">
+                  <span class="sup-contact-k">${l === "it" ? "Referente & Sito Web" : "Contact & Website"}</span>
+                  <span class="sup-contact-v" title="${escapeHtml(sup.contactPerson)}">${escapeHtml(sup.contactPerson)} · ${escapeHtml(sup.website)}</span>
+                </div>
+              </div>
+
+              <div class="sup-reviews-box">
+                <div style="font-family:var(--mono); font-size:9.5px; font-weight:800; color:var(--crimson); letter-spacing:0.06em;">
+                  ${l === "it" ? `RECENSIONI VERIFICATE DEI BRAND (${sup.reviewsCount})` : `VERIFIED BRAND REVIEWS (${sup.reviewsCount})`}
+                </div>
+                ${sup.reviews.map(rv => `
+                  <div class="sup-review-quote">
+                    “${escapeHtml(l === "it" ? rv.textIt : rv.textEn)}”
+                    <span class="sup-review-author"> — ${escapeHtml(rv.author)}</span>
+                  </div>
+                `).join("")}
+              </div>
+
+              <div class="sup-card-footer">
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                  <div>
+                    <span style="font-family:var(--mono); font-size:9.5px; color:var(--slate); font-weight:700; display:block;">${l === "it" ? "LOTTO PROVA & TEMPI" : "PILOT LOT & LEAD TIME"}</span>
+                    <span style="font-family:var(--mono); font-size:13px; font-weight:800; color:var(--ink);">${l === "it" ? "Da" : "From"} €${sup.price}</span>
+                    <span style="font-size:11.5px; color:var(--slate); font-weight:600;"> · ${escapeHtml(l === "it" ? sup.moqIt : sup.moqEn)} · ${escapeHtml(l === "it" ? sup.leadIt : sup.leadEn)}</span>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <a href="mailto:${escapeHtml(sup.email)}?subject=${encodeURIComponent("Richiesta contatto diretto B2B tramite VesselCove — " + sup.name)}" class="cat-select-btn" style="text-decoration:none; display:inline-flex; align-items:center;">
+                    ${l === "it" ? "Contatta Direttamente" : "Contact Directly"}
+                  </a>
+                  <button type="button" class="sup-compare-toggle ${isComparing ? "active" : ""}" onclick="toggleCompareSupplier('${sup.id}')">
+                    ${isComparing ? (l === "it" ? "In Comparazione ✓" : "Comparing ✓") : (l === "it" ? "+ Compara" : "+ Compare")}
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `;
+
+  if (preserveSearchFocus) {
+    const inp = document.getElementById("homeSupSearchInput");
+    if (inp) {
+      inp.focus();
+      const len = inp.value.length;
+      try { inp.setSelectionRange(len, len); } catch (e) {}
+    }
+  }
+}
+
 // ==================== BOOTSTRAP & QUERY PARAM SUPPORT ====================
 window.addEventListener("DOMContentLoaded", () => {
   loadSubmittedRequests();
   loadFavoriteVessels();
+  loadSavedCustomVessels();
   initWebGL();
   generatePhotorealisticVesselThumbnails();
   updateFavoritesBadges();
@@ -10447,7 +12375,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     state.filieraStep = fTarget;
   }
-  const rawView = qs.get("view") || "catalog";
+  const rawView = qs.get("view") || "home";
   let initialView = rawView;
   if (rawView === "custom-vessel") {
     state.customVesselMode = true;

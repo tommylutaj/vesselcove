@@ -1850,12 +1850,12 @@ def main():
     display: grid;
     grid-template-columns: 0.9fr 1.35fr;
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
   }
   .custom-bp-left {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     border-right: 1px solid var(--border-light);
     padding-right: 22px;
   }
@@ -1880,14 +1880,22 @@ def main():
     border: 1.5px dashed #CBD5E1;
     border-radius: 14px;
     background: #F8FAFC;
-    padding: 16px 18px;
+    padding: 20px 18px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    text-align: center;
     gap: 12px;
     flex-wrap: wrap;
     cursor: pointer;
     transition: border-color 0.16s ease, background-color 0.16s ease;
+  }
+  .upload-datasheet-box.cv-datasheet-lg {
+    flex: 1 1 auto;
+    min-height: 230px;
+    padding: 28px 22px;
+    gap: 14px;
   }
   .upload-datasheet-box:hover { border-color: var(--crimson); background: var(--crimson-soft); }
   .upload-datasheet-box.loaded { border-style: solid; border-color: var(--green); background: var(--green-soft); }
@@ -2256,16 +2264,20 @@ def main():
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22) !important;
   }
   .p-pill.red-cta {
-    background: #FFFFFF !important;
-    border: 1px solid #FFFFFF !important;
-    color: #34251B !important;
+    background: var(--crimson) !important;
+    color: #FFFFFF !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.34) !important;
+    border-radius: 12px !important;
+    padding: 11px 18px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22) !important;
   }
   .p-pill.red-cta:hover {
-    background: var(--crimson) !important;
-    border-color: var(--crimson) !important;
+    background: var(--crimson-dark) !important;
+    border-color: rgba(255, 255, 255, 0.55) !important;
     color: #FFFFFF !important;
     transform: none !important;
-    box-shadow: none !important;
   }
 
   .cat-grid {
@@ -2952,17 +2964,20 @@ def main():
       grid-column: 1;
       grid-row: 2;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
     .dock-right {
       grid-column: 2;
       grid-row: 2;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
+    .inspector-tabs { border-radius: 20px 20px 0 0 !important; }
+    .checkout-footer { height: auto !important; gap: 10px; border-radius: 0 0 20px 20px !important; }
     .dock-scroll, .diag-scroll { overflow-y: visible !important; }
     .diag-row { flex: none !important; min-height: 86px !important; height: auto !important; }
-    .checkout-footer { height: auto !important; gap: 10px; }
     .cat-grid { grid-template-columns: 1fr !important; }
     .fav-prof-grid { grid-template-columns: 1fr !important; }
     .profile-grid { grid-template-columns: 1fr; }
@@ -3092,13 +3107,15 @@ def main():
       order: 2 !important;
       width: 100% !important;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
     .dock-right {
       order: 3 !important;
       width: 100% !important;
       height: auto !important;
-      overflow: visible !important;
+      overflow: hidden !important;
+      border-radius: 20px !important;
     }
     .floating-hud-top {
       top: 10px !important;
@@ -3517,8 +3534,10 @@ def main():
     font-family: var(--mono);
     font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    max-width: calc(100vw - 108px);
+    letter-spacing: 0.05em;
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: calc(100vw - 124px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -3814,7 +3833,7 @@ def main():
         </div>
         <div class="start-price-hero" id="val_sp_lot">Da €1,080</div>
         <div class="checkout-cta-row" id="checkoutCtaRow">
-          <button type="button" class="cta-btn white" id="btnSaveCustomVessel" style="display:none;" onclick="saveCurrentCustomVesselToProfile()">Salva</button>
+          <button type="button" class="cta-btn white" id="btnSaveCustomVessel" onclick="saveCurrentCustomVesselToProfile()">Salva</button>
           <button type="button" class="cta-btn" id="btnCheckout" onclick="proceedToPillars()"></button>
         </div>
       </div>
@@ -4274,6 +4293,7 @@ const state = {
   customPhotoImages: [null, null, null, null, null, null],
   customReconstructed: null,
   activeCustomVessel: null,
+  currentDraftId: null,
   savedCustomVessels: [],
   customSpecs: {
     nameIt: "Contenitore Personalizzato",
@@ -7347,6 +7367,7 @@ function resetVesselConfigState(vid) {
   state.customGraphicValidationMsg = "";
   const existingScoped = state.customGraphicsByVessel && state.customGraphicsByVessel[v.id];
   customUploadedImageObj = existingScoped ? (existingScoped.imageObj || null) : null;
+  state.currentDraftId = null;
   state.arModalOpen = false;
   state.boxMode = "grid";
   state.boxQty = 1;
@@ -8633,12 +8654,6 @@ function renderCustomVesselView() {
   const uploadedPhotos = state.customPhotoFiles.filter(Boolean).length;
   const hasDatasheet = Boolean(state.customDatasheetFile);
   const allReady = hasDatasheet && uploadedPhotos === 6;
-  const recon = state.customReconstructed;
-  const allF = [...RIGID_FINISHES, ...POUCH_FINISHES];
-  const reconFin = recon ? (allF.find(f => f.id === recon.finishId) || RIGID_FINISHES[0]) : null;
-  const reconDimStr = recon
-    ? ((recon.shape === "square_soft") ? `${recon.wMm} × ${recon.dMm} × ${recon.hMm} mm` : `Ø ${recon.wMm} × H ${recon.hMm} mm`)
-    : "";
 
   host.innerHTML = `
     <div class="custom-vessel-inner">
@@ -8663,32 +8678,18 @@ function renderCustomVesselView() {
               <input id="inpCustName" class="cv-input" type="text" maxlength="48" value="${escapeHtml(l === "it" ? s.nameIt : s.nameEn)}" oninput="state.customSpecs.nameIt=this.value; state.customSpecs.nameEn=this.value;">
             </div>
 
-            <label class="upload-datasheet-box ${hasDatasheet ? "loaded" : ""}">
-              ${state.customDatasheetDataUrl ? `<img class="upload-ds-thumb" src="${state.customDatasheetDataUrl}" alt="Datasheet">` : ""}
-              <div style="flex:1; min-inline-size:0;">
-                <div style="font-size:13px; font-weight:800; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${hasDatasheet ? `✓ ${escapeHtml(state.customDatasheetFile)}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
-                <div style="font-size:11px; color:var(--slate); margin-top:2px;">${l === "it" ? "JPG, PNG, PDF · Estrazione automatica quote meccaniche" : "JPG, PNG, PDF · Automatic mechanical spec extraction"}</div>
+            <label class="upload-datasheet-box cv-datasheet-lg ${hasDatasheet ? "loaded" : ""}">
+              ${state.customDatasheetDataUrl
+                ? `<img class="upload-ds-thumb" style="width:96px; height:96px;" src="${state.customDatasheetDataUrl}" alt="Datasheet">`
+                : `<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="${hasDatasheet ? "#147A3B" : "#C2180E"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>`}
+              <div style="width:100%; min-inline-size:0;">
+                <div style="font-size:15px; font-weight:800; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${hasDatasheet ? `✓ ${escapeHtml(state.customDatasheetFile)}` : (l === "it" ? "Carica foto o PDF della scheda tecnica" : "Upload datasheet photo or PDF")}</div>
+                <div style="font-size:12px; color:var(--slate); margin-top:5px; line-height:1.45;">${l === "it" ? "JPG, PNG, PDF · Estrazione automatica quote meccaniche, filettatura e sagoma 3D" : "JPG, PNG, PDF · Automatic extraction of mechanical dimensions, neck finish and 3D profile"}</div>
               </div>
-              <span class="spec-tag ${hasDatasheet ? "ok" : ""}">${hasDatasheet ? (l === "it" ? "CARICATA ✓" : "UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
+              <span class="spec-tag ${hasDatasheet ? "ok" : ""}" style="font-size:11px; padding:6px 14px;">${hasDatasheet ? (l === "it" ? "SCHEDA CARICATA ✓" : "DATASHEET UPLOADED ✓") : (l === "it" ? "SELEZIONA FILE" : "SELECT FILE")}</span>
               <input type="file" accept="image/*,.pdf,.txt" style="display:none;" onchange="handleCustomUpload('datasheet', 0, this)">
             </label>
 
-            <div class="cv-cv-summary">
-              <div class="cv-silhouette-box">${renderCustomSilhouettePreviewSVG(recon)}</div>
-              <div style="flex:1; min-inline-size:0; display:flex; flex-direction:column; gap:4px;">
-                <span style="font-family:var(--mono); font-size:10px; font-weight:800; color:${allReady ? "var(--green)" : "var(--crimson)"};">
-                  ${allReady ? (l === "it" ? "RICOSTRUZIONE 3D PRONTA ✓" : "3D RECONSTRUCTION READY ✓") : (l === "it" ? "ANALISI MULTI-VISTA AUTOMATICA" : "AUTOMATIC MULTI-VIEW ANALYSIS")}
-                </span>
-                ${recon ? `
-                  <div style="font-size:12.5px; font-weight:800; color:var(--ink);">${reconDimStr} · ${recon.vol}</div>
-                  <div style="font-size:11px; color:var(--slate);">${l === "it" ? "Collo rilevato:" : "Detected neck:"} <strong>${recon.neck}</strong> · ${reconFin ? (l === "it" ? reconFin.it : reconFin.en) : ""}</div>
-                  <div style="font-size:11px; color:var(--slate);">${l === "it" ? `Profilo estratto da ${recon.photoCount} viste · Sezione ${recon.superellipseN > 2.6 ? "quadra/ovale" : "cilindrica"}` : `Profile extracted from ${recon.photoCount} views · ${recon.superellipseN > 2.6 ? "Square/oval" : "Circular"} section`}</div>
-                ` : `
-                  <div style="font-size:12px; font-weight:700; color:var(--ink);">${l === "it" ? "In attesa di scheda tecnica e 6 foto" : "Waiting for datasheet and 6 photos"}</div>
-                  <div style="font-size:11px; color:var(--slate);">${l === "it" ? "La sagoma 3D verrà calcolata direttamente dalle immagini caricate senza parametri manuali." : "3D shape is extracted directly from uploaded photos with no manual dimension entry."}</div>
-                `}
-              </div>
-            </div>
             <div id="cvValidationMsg" role="status" aria-live="polite" style="font-size:11.5px; font-weight:700; color:var(--crimson);"></div>
           </div>
 
@@ -9139,32 +9140,95 @@ function buildARShareUrl() {
   return u.toString();
 }
 
-// ==================== DEDICATED FULLSCREEN SPATIAL PLANE-SCANNING 1:1 AR ENGINE ====================
+// ==================== DEDICATED FULLSCREEN SPATIAL PLANE-SCANNING 1:1 AR ENGINE (REAR CAMERA ONLY) ====================
 let arRenderer = null, arScene = null, arCamera = null, arProductGroup = null, arReticleGroup = null, arSleeveTexture = null, arRafId = null;
 let arReticlePulseMesh = null, arReticlePoints = [];
-let arWorldBBox = { minY: -1.25, maxY: 1.30, height: 2.55 };
-let arBaseSensorAlpha = null, arGyroYawRad = 0.22, arGyroPitchRad = 1.24, arOpticalOffset = { x: 0, y: 0, distCm: 44 };
+let arWorldBBox = { minY: -1.25, maxY: 1.30, height: 2.55, width: 0.8 };
+let arAnchorAlpha = null, arAnchorBeta = null, arLatestAlpha = null, arLatestBeta = null;
+let arCamOrbitYaw = 0.22, arCamElevPhi = 1.24, arCamLookYawOffset = 0, arCamLookPitchOffset = 0, arCamDistCm = 44;
+let arGyroYawOffset = 0, arGyroPitchOffset = 0, arOpticalYawOffset = 0, arOpticalPitchOffset = 0;
+let arHasLiveGyro = false, arVelX = 0, arVelZ = 0, arLastMotionMs = 0;
+let arLockedFacingMode = "environment", arLockedCameraLabel = "";
 let arActiveRenderedKey = "";
 let arSensorBound = false;
 let arOpticalCanvas = null, arOpticalCtx = null, arPrevLuma = null;
 let arLastTickMs = 0, arPlaceAnimStartMs = 0;
+let arLastInFrameState = true;
+
+function clampArVal(val, minV, maxV) {
+  return Math.max(minV, Math.min(maxV, val));
+}
+
+function lockARSpatialAnchor() {
+  state.arScanPhase = "placed";
+  arPlaceAnimStartMs = performance.now();
+  arAnchorAlpha = arLatestAlpha;
+  arAnchorBeta = arLatestBeta;
+  arCamLookYawOffset = 0;
+  arCamLookPitchOffset = 0;
+  arGyroYawOffset = 0;
+  arGyroPitchOffset = 0;
+  arOpticalYawOffset = 0;
+  arOpticalPitchOffset = 0;
+  arVelX = 0;
+  arVelZ = 0;
+  arLastMotionMs = performance.now();
+  if (arProductGroup) {
+    arProductGroup.position.set(0, 0, 0);
+    arProductGroup.visible = true;
+  }
+  if (arReticleGroup) arReticleGroup.visible = false;
+  arLastInFrameState = true;
+  updateARScanDOMState();
+}
 
 function onARDeviceOrientation(e) {
   if (!state.mobileARCameraMode) return;
   if (typeof e.alpha === "number") {
-    if (arBaseSensorAlpha === null) arBaseSensorAlpha = e.alpha;
-    const dAlpha = ((e.alpha - arBaseSensorAlpha + 540) % 360) - 180;
-    const targetYaw = (dAlpha * Math.PI) / 180 + 0.22;
-    arGyroYawRad += (targetYaw - arGyroYawRad) * 0.25;
+    arLatestAlpha = e.alpha;
+    arHasLiveGyro = true;
+    if (state.arScanPhase === "placed") {
+      if (arAnchorAlpha === null) arAnchorAlpha = e.alpha;
+      const dAlpha = ((e.alpha - arAnchorAlpha + 540) % 360) - 180;
+      const targetYawAway = -(dAlpha * Math.PI) / 180;
+      arGyroYawOffset += (targetYawAway - arGyroYawOffset) * 0.45;
+    }
   }
   if (typeof e.beta === "number") {
-    // Map phone pitch tilt (beta ~30° looking down at table .. 85° eye-level) to camera polar phi
-    const clampedBeta = Math.max(15, Math.min(95, e.beta));
-    const targetPhi = 0.72 + ((clampedBeta - 15) / 80) * 0.78;
-    arGyroPitchRad += (targetPhi - arGyroPitchRad) * 0.22;
+    arLatestBeta = e.beta;
+    arHasLiveGyro = true;
+    if (state.arScanPhase === "scanning") {
+      const clampedBeta = clampArVal(e.beta, 15, 95);
+      const targetPhi = 0.72 + ((clampedBeta - 15) / 80) * 0.78;
+      arCamElevPhi += (targetPhi - arCamElevPhi) * 0.22;
+    } else if (state.arScanPhase === "placed") {
+      if (arAnchorBeta === null) arAnchorBeta = e.beta;
+      const dBeta = e.beta - arAnchorBeta;
+      const targetPitchAway = (dBeta * Math.PI) / 180;
+      arGyroPitchOffset += (targetPitchAway - arGyroPitchOffset) * 0.45;
+    }
   }
   if (state.arScanPhase === "scanning") {
     state.arScanProgress = Math.min(100, state.arScanProgress + 0.85);
+  }
+}
+
+function onARDeviceMotion(e) {
+  if (!state.mobileARCameraMode || state.arScanPhase !== "placed") return;
+  const now = performance.now();
+  const dt = clampArVal((now - (arLastMotionMs || now)) / 1000, 0.005, 0.08);
+  arLastMotionMs = now;
+  const acc = e.acceleration;
+  if (!acc) return;
+  const ax = typeof acc.x === "number" && Math.abs(acc.x) > 0.42 ? acc.x : 0;
+  const az = typeof acc.z === "number" && Math.abs(acc.z) > 0.42 ? acc.z : 0;
+  arVelX = (arVelX + ax * dt) * 0.88;
+  arVelZ = (arVelZ + az * dt) * 0.88;
+  if (Math.abs(arVelX) > 0.02) {
+    arCamOrbitYaw += arVelX * dt * 1.15;
+  }
+  if (Math.abs(arVelZ) > 0.02) {
+    arCamDistCm = clampArVal(arCamDistCm + arVelZ * dt * 28, 12, 240);
   }
 }
 
@@ -9172,6 +9236,7 @@ function attachARSensorListeners() {
   if (arSensorBound) return;
   arSensorBound = true;
   window.addEventListener("deviceorientation", onARDeviceOrientation, true);
+  window.addEventListener("devicemotion", onARDeviceMotion, true);
 }
 
 function requestIOSMotionPermissionIfNeeded() {
@@ -9182,6 +9247,9 @@ function requestIOSMotionPermissionIfNeeded() {
       }).catch(() => {});
     } else {
       attachARSensorListeners();
+    }
+    if (typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function") {
+      DeviceMotionEvent.requestPermission().catch(() => {});
     }
   } catch (e) {
     attachARSensorListeners();
@@ -9225,19 +9293,34 @@ function resetARSurfaceScan() {
   state.arScanPhase = "scanning";
   state.arScanProgress = 0;
   state.arScanPointsCount = 0;
-  arBaseSensorAlpha = null;
-  arGyroYawRad = 0.22;
-  arGyroPitchRad = 1.24;
-  arOpticalOffset = { x: 0, y: 0, distCm: 44 };
+  arAnchorAlpha = null;
+  arAnchorBeta = null;
+  arHasLiveGyro = false;
+  arCamOrbitYaw = 0.22;
+  arCamElevPhi = 1.24;
+  arCamLookYawOffset = 0;
+  arCamLookPitchOffset = 0;
+  arGyroYawOffset = 0;
+  arGyroPitchOffset = 0;
+  arOpticalYawOffset = 0;
+  arOpticalPitchOffset = 0;
+  arCamDistCm = 44;
+  arVelX = 0;
+  arVelZ = 0;
+  arLastInFrameState = true;
   arLastTickMs = performance.now();
-  if (arProductGroup) arProductGroup.visible = false;
+  if (arProductGroup) {
+    arProductGroup.position.set(0, 0, 0);
+    arProductGroup.visible = false;
+  }
   if (arReticleGroup) arReticleGroup.visible = true;
   updateARScanDOMState();
 }
 
-function updateARScanDOMState() {
+function updateARScanDOMState(isInFrameOverride) {
   const l = state.lang;
   const isPlaced = state.arScanPhase === "placed";
+  const inFrame = isInFrameOverride !== undefined ? !!isInFrameOverride : arLastInFrameState;
   const badgeTxt = document.getElementById("arCamBadgeText");
   const dotEl = document.getElementById("arCamDot");
   const coachCard = document.getElementById("arScanCoachCard");
@@ -9252,13 +9335,19 @@ function updateARScanDOMState() {
       : `Surface scanning: ${pct}% · ${state.arScanPointsCount} plane points`;
   }
   if (coachCard) coachCard.style.display = isPlaced ? "none" : "flex";
-  if (dimPill) dimPill.style.display = isPlaced ? "block" : "none";
+  if (dimPill) dimPill.style.display = (isPlaced && inFrame) ? "block" : "none";
   if (badgeTxt) {
-    badgeTxt.textContent = isPlaced
-      ? (l === "it" ? "PIANO RILEVATO · SCALA REALE 1:1" : "SURFACE LOCKED · TRUE 1:1 SCALE")
-      : (l === "it" ? "SCANSIONE AMBIENTE AR..." : "SCANNING AR SURFACE...");
+    if (!isPlaced) {
+      badgeTxt.textContent = l === "it" ? "SCANSIONE AMBIENTE AR..." : "SCANNING AR SURFACE...";
+    } else if (!inFrame) {
+      badgeTxt.textContent = l === "it" ? "FUORI CAMPO · TORNA SUL PIANO" : "OUT OF FRAME · RETURN TO SPOT";
+    } else {
+      badgeTxt.textContent = l === "it" ? "ANCORATO 1:1 · MUOVITI ATTORNO" : "LOCKED 1:1 · WALK AROUND";
+    }
   }
-  if (dotEl) dotEl.style.background = isPlaced ? "#22C55E" : "#F59E0B";
+  if (dotEl) {
+    dotEl.style.background = !isPlaced ? "#F59E0B" : (inFrame ? "#22C55E" : "#F59E0B");
+  }
 }
 
 function analyzeARVideoFrameForPlane(dtSec) {
@@ -9277,7 +9366,6 @@ function analyzeARVideoFrameForPlane(dtSec) {
       const px = arOpticalCtx.getImageData(0, 0, 48, 36).data;
       const luma = new Float32Array(48 * 36);
       let gradSum = 0;
-      let cxSum = 0, cySum = 0, wSum = 0;
       for (let y = 0; y < 36; y++) {
         for (let x = 0; x < 48; x++) {
           const i = y * 48 + x;
@@ -9285,9 +9373,7 @@ function analyzeARVideoFrameForPlane(dtSec) {
           const lVal = 0.299 * px[idx] + 0.587 * px[idx + 1] + 0.114 * px[idx + 2];
           luma[i] = lVal;
           if (y >= 16 && x > 0) {
-            const g = Math.abs(lVal - luma[i - 1]);
-            gradSum += g;
-            if (g > 12) { cxSum += x * g; cySum += y * g; wSum += g; }
+            gradSum += Math.abs(lVal - luma[i - 1]);
           }
         }
       }
@@ -9296,31 +9382,59 @@ function analyzeARVideoFrameForPlane(dtSec) {
       if (arPrevLuma) {
         let diffSum = 0;
         let flowDx = 0, flowDy = 0, flowN = 0;
-        for (let y = 16; y < 35; y += 2) {
-          for (let x = 2; x < 46; x += 2) {
+        const sampleFlow = [];
+        for (let y = 4; y < 33; y += 2) {
+          for (let x = 4; x < 44; x += 2) {
             const i = y * 48 + x;
             const dT = Math.abs(luma[i] - arPrevLuma[i]);
             diffSum += dT;
             const gx = luma[i + 1] - luma[i - 1];
             const gy = luma[i + 48] - luma[i - 48];
             const gMag = gx * gx + gy * gy;
-            if (gMag > 140) {
+            if (gMag > 130) {
               const dt = luma[i] - arPrevLuma[i];
-              flowDx -= (dt * gx) / (gMag + 80);
-              flowDy -= (dt * gy) / (gMag + 80);
+              const vx = clampArVal(-(dt * gx) / (gMag + 85), -1.2, 1.2);
+              const vy = clampArVal(-(dt * gy) / (gMag + 85), -1.2, 1.2);
+              flowDx += vx;
+              flowDy += vy;
               flowN++;
+              sampleFlow.push({ x, y, vx, vy });
             }
           }
         }
-        motionEnergy = Math.min(1.0, (diffSum / 400) / 14.0 + 0.18);
+        motionEnergy = Math.min(1.0, (diffSum / 600) / 14.0 + 0.18);
         if (state.arScanPhase === "placed" && flowN > 10) {
-          const avgDx = Math.max(-0.45, Math.min(0.45, flowDx / flowN));
-          const avgDy = Math.max(-0.45, Math.min(0.45, flowDy / flowN));
-          arOpticalOffset.x = Math.max(-0.55, Math.min(0.55, arOpticalOffset.x + avgDx * 0.035));
-          arOpticalOffset.y = Math.max(-0.22, Math.min(0.22, arOpticalOffset.y - avgDy * 0.02));
-          if (wSum > 50) {
-            const cNorm = Math.max(-0.5, Math.min(0.5, (cxSum / wSum) / 48 - 0.5));
-            arGyroYawRad += cNorm * 0.004;
+          const avgVx = clampArVal(flowDx / flowN, -0.85, 0.85);
+          const avgVy = clampArVal(flowDy / flowN, -0.85, 0.85);
+
+          // 1. Panning camera across scene shifts background opposite to camera look direction
+          const aspect = (vid.videoWidth || 16) / Math.max(1, vid.videoHeight || 9);
+          const fovYRad = (42 * Math.PI) / 180;
+          const fovXRad = 2 * Math.atan(Math.tan(fovYRad * 0.5) * Math.max(0.42, aspect));
+          if (!arHasLiveGyro) {
+            arOpticalYawOffset = clampArVal(arOpticalYawOffset - (avgVx / 48) * fovXRad * 1.15, -Math.PI, Math.PI);
+            arOpticalPitchOffset = clampArVal(arOpticalPitchOffset + (avgVy / 36) * fovYRad * 1.15, -Math.PI * 0.45, Math.PI * 0.45);
+          }
+
+          // 2. Radial background divergence measures forward/backward approach toward anchored spot
+          let radSum = 0, radWeightSum = 0;
+          for (let k = 0; k < sampleFlow.length; k++) {
+            const s = sampleFlow[k];
+            const rx = (s.x - 24) / 24;
+            const ry = (s.y - 18) / 18;
+            const r2 = rx * rx + ry * ry;
+            if (r2 > 0.12) {
+              const resVx = s.vx - avgVx;
+              const resVy = s.vy - avgVy;
+              radSum += (resVx * rx + resVy * ry);
+              radWeightSum += r2;
+            }
+          }
+          if (radWeightSum > 0.5) {
+            const divRate = clampArVal(radSum / radWeightSum, -0.35, 0.35);
+            if (Math.abs(divRate) > 0.018) {
+              arCamDistCm = clampArVal(arCamDistCm * (1 - divRate * 0.18), 12, 240);
+            }
           }
         }
       }
@@ -9329,17 +9443,14 @@ function analyzeARVideoFrameForPlane(dtSec) {
   }
 
   if (state.arScanPhase === "scanning") {
-    // Accumulate real plane detection confidence across ~1.8s of surface sweep
     const rate = 38 + 26 * featureScore + 18 * motionEnergy;
     state.arScanProgress = Math.min(100, state.arScanProgress + rate * dtSec);
     state.arScanPointsCount = Math.min(24, Math.floor((state.arScanProgress / 100) * 24));
     if (state.arScanProgress >= 100) {
-      state.arScanPhase = "placed";
-      arPlaceAnimStartMs = performance.now();
-      if (arProductGroup) arProductGroup.visible = true;
-      if (arReticleGroup) arReticleGroup.visible = false;
+      lockARSpatialAnchor();
+    } else {
+      updateARScanDOMState();
     }
-    updateARScanDOMState();
   }
 }
 
@@ -9378,32 +9489,104 @@ function buildARFloorReticleGroup() {
   return rGrp;
 }
 
-function requestARCameraStream() {
+function isFrontCameraLabel(label) {
+  return /front|user|selfie|facetime|anterior/i.test(String(label || ""));
+}
+
+function isRearCameraLabel(label) {
+  return /back|rear|environment|posteriore|world/i.test(String(label || ""));
+}
+
+async function requestARCameraStream() {
   const retryBtn = document.getElementById("arCamEnableBtn");
   attachARSensorListeners();
   if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
     if (retryBtn) retryBtn.style.display = "none";
     return;
   }
-  const onStream = (stream) => {
+
+  const acceptRearStream = async (stream) => {
     if (!state.mobileARCameraMode) {
       stream.getTracks().forEach(t => t.stop());
-      return;
+      return true;
     }
+    const vTrack = stream.getVideoTracks()[0];
+    const settings = (vTrack && typeof vTrack.getSettings === "function") ? vTrack.getSettings() : {};
+    const tLabel = vTrack ? (vTrack.label || "") : "";
+    const facing = settings.facingMode || "";
+
+    // Strictly reject front/selfie camera if another non-front camera is available
+    let devices = [];
+    try {
+      if (navigator.mediaDevices.enumerateDevices) {
+        devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
+      }
+    } catch (e) {}
+    const nonFrontDevices = devices.filter(d => !isFrontCameraLabel(d.label));
+    if ((facing === "user" || isFrontCameraLabel(tLabel)) && nonFrontDevices.length > 0) {
+      stream.getTracks().forEach(t => t.stop());
+      return false;
+    }
+
+    arLockedFacingMode = facing === "user" ? "rear-only-enforced" : (facing || "environment");
+    arLockedCameraLabel = tLabel;
     mobileARStream = stream;
     const vidEl = document.getElementById("mobileArLiveVideo");
     if (vidEl) vidEl.srcObject = stream;
     if (retryBtn) retryBtn.style.display = "none";
+    return true;
   };
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
-    .then(onStream)
-    .catch(() => {
-      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-        .then(onStream)
-        .catch(() => {
-          if (retryBtn) retryBtn.style.display = "inline-flex";
-        });
+
+  try {
+    // 1. Strict exact rear camera constraint (Android / iOS smartphones)
+    try {
+      const sExactHi = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: "environment" }, width: { ideal: 1920 }, height: { ideal: 1080 } },
+        audio: false
+      });
+      if (await acceptRearStream(sExactHi)) return;
+    } catch (e) {}
+
+    try {
+      const sExactAny = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: "environment" } },
+        audio: false
+      });
+      if (await acceptRearStream(sExactAny)) return;
+    } catch (e) {}
+
+    // 2. Enumerate video devices and pick rear camera explicitly (never front/selfie)
+    if (navigator.mediaDevices.enumerateDevices) {
+      const allDevs = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
+      const rearExplicit = allDevs.find(d => isRearCameraLabel(d.label));
+      const nonFront = allDevs.filter(d => !isFrontCameraLabel(d.label));
+      const candidate = rearExplicit || (nonFront.length > 0 ? nonFront[nonFront.length - 1] : null);
+      if (candidate && candidate.deviceId) {
+        try {
+          const sDev = await navigator.mediaDevices.getUserMedia({
+            video: { deviceId: { exact: candidate.deviceId } },
+            audio: false
+          });
+          if (await acceptRearStream(sDev)) return;
+        } catch (e) {}
+      }
+      // If only front cameras were enumerated on mobile viewport, block instead of opening selfie camera
+      if (allDevs.length > 0 && nonFront.length === 0 && window.innerWidth <= 768) {
+        arLockedFacingMode = "environment-required";
+        if (retryBtn) retryBtn.style.display = "inline-flex";
+        return;
+      }
+    }
+
+    // 3. Soft environment preference for single-camera / desktop test runners (e.g. headless verification)
+    const sEnv = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false
     });
+    if (await acceptRearStream(sEnv)) return;
+  } catch (e) {}
+
+  if (retryBtn) retryBtn.style.display = "inline-flex";
 }
 
 function initOrUpdateARWebGL() {
@@ -9435,7 +9618,7 @@ function initOrUpdateARWebGL() {
   rim.position.set(-5, 3, -4);
   arScene.add(rim);
 
-  arCamera = new THREE.PerspectiveCamera(42, 1, 0.1, 60);
+  arCamera = new THREE.PerspectiveCamera(42, 1, 0.1, 80);
   arSleeveTexture = new THREE.CanvasTexture(texCanvas);
   arSleeveTexture.encoding = THREE.sRGBEncoding;
   arSleeveTexture.wrapS = THREE.RepeatWrapping;
@@ -9458,6 +9641,7 @@ function initOrUpdateARWebGL() {
   });
   arProductGroup = built.group;
   arProductGroup.visible = state.arScanPhase === "placed";
+  arProductGroup.position.set(0, 0, 0);
 
   // Soft grounded contact shadow on the detected physical tabletop plane
   const shC = document.createElement("canvas");
@@ -9482,8 +9666,21 @@ function initOrUpdateARWebGL() {
 
   const box = new THREE.Box3().setFromObject(arProductGroup);
   const sz = box.getSize(new THREE.Vector3());
-  arWorldBBox = { minY: box.min.y, maxY: box.max.y, height: Math.max(0.8, sz.y), width: Math.max(0.8, sz.x) };
+  arWorldBBox = {
+    minY: box.min.y,
+    maxY: box.max.y,
+    height: Math.max(0.8, sz.y),
+    width: Math.max(0.5, sz.x),
+    halfW: Math.max(0.25, sz.x * 0.45),
+    halfD: Math.max(0.25, sz.z * 0.45)
+  };
   arLastTickMs = performance.now();
+
+  const worldUp = new THREE.Vector3(0, 1, 0);
+  const anchorCenter = new THREE.Vector3();
+  const fwdVec = new THREE.Vector3();
+  const camRight = new THREE.Vector3();
+  const projTmp = new THREE.Vector3();
 
   const renderARFrame = () => {
     if (!state.mobileARCameraMode || !arRenderer || !arScene || !arCamera || !arProductGroup) return;
@@ -9514,12 +9711,11 @@ function initOrUpdateARWebGL() {
       });
     }
 
-    // Physical 1:1 camera framing driven by real sensors & walk-around parallax
+    // Physical 1:1 world-anchored perspective (no artificial size clamp; object remains locked at origin)
     const totalRealHmm = getARTotalHeightMm();
-    const effDistCm = Math.max(28, Math.min(72, arOpticalOffset.distCm));
-    const frameFrac = Math.max(0.14, Math.min(0.62, totalRealHmm / (effDistCm * 10.5)));
-    const halfTan = Math.tan((42 * Math.PI) / 360);
-    const radius = arWorldBBox.height / (2 * halfTan * frameFrac);
+    const effDistCm = clampArVal(arCamDistCm, 12, 240);
+    const worldPerMm = arWorldBBox.height / Math.max(30, totalRealHmm);
+    const radius = Math.max(0.65, (effDistCm * 10 * 1.15) * worldPerMm);
     const midY = (arWorldBBox.minY + arWorldBBox.maxY) * 0.5;
 
     if (arProductGroup.visible && arPlaceAnimStartMs > 0) {
@@ -9527,12 +9723,80 @@ function initOrUpdateARWebGL() {
       const sPop = 0.72 + 0.28 * (1 - Math.pow(1 - tPop, 3));
       arProductGroup.scale.setScalar(sPop);
     }
+    // Keep the product rigidly locked to its scanned tabletop anchor (0, 0, 0)
+    arProductGroup.position.set(0, 0, 0);
 
-    arProductGroup.position.set(arOpticalOffset.x, arOpticalOffset.y, 0);
-    arCamera.position.x = radius * Math.sin(arGyroPitchRad) * Math.sin(arGyroYawRad);
-    arCamera.position.y = radius * Math.cos(arGyroPitchRad) + midY;
-    arCamera.position.z = radius * Math.sin(arGyroPitchRad) * Math.cos(arGyroYawRad);
-    arCamera.lookAt(arOpticalOffset.x * 0.25, midY, 0);
+    // Combine gyro + optical camera look offsets when placed (looking away moves bottle out of frame!)
+    if (state.arScanPhase === "placed") {
+      arCamLookYawOffset = clampArVal(arGyroYawOffset + arOpticalYawOffset, -Math.PI, Math.PI);
+      arCamLookPitchOffset = clampArVal(arGyroPitchOffset + arOpticalPitchOffset, -Math.PI * 0.48, Math.PI * 0.48);
+    } else {
+      arCamLookYawOffset = 0;
+      arCamLookPitchOffset = 0;
+    }
+
+    arCamera.position.x = radius * Math.sin(arCamElevPhi) * Math.sin(arCamOrbitYaw);
+    arCamera.position.y = radius * Math.cos(arCamElevPhi) + midY;
+    arCamera.position.z = radius * Math.sin(arCamElevPhi) * Math.cos(arCamOrbitYaw);
+
+    anchorCenter.set(0, midY, 0);
+    fwdVec.subVectors(anchorCenter, arCamera.position).normalize();
+    if (Math.abs(arCamLookYawOffset) > 0.0001) {
+      fwdVec.applyAxisAngle(worldUp, -arCamLookYawOffset);
+    }
+    if (Math.abs(arCamLookPitchOffset) > 0.0001) {
+      camRight.crossVectors(fwdVec, worldUp).normalize();
+      if (camRight.lengthSq() > 0.0001) {
+        fwdVec.applyAxisAngle(camRight, arCamLookPitchOffset);
+      }
+    }
+    arCamera.lookAt(arCamera.position.x + fwdVec.x, arCamera.position.y + fwdVec.y, arCamera.position.z + fwdVec.z);
+    arCamera.updateMatrixWorld();
+
+    // Evaluate frustum bounds so moving the camera away hides/exits the product cleanly out of frame
+    let inFrame = true;
+    let minScreenY = Infinity, maxScreenY = -Infinity;
+    if (state.arScanPhase === "placed") {
+      const samplePts = [
+        [0, arWorldBBox.minY, 0],
+        [0, arWorldBBox.maxY, 0],
+        [-arWorldBBox.halfW, midY, 0],
+        [arWorldBBox.halfW, midY, 0],
+        [0, midY, -arWorldBBox.halfD],
+        [0, midY, arWorldBBox.halfD]
+      ];
+      let anyVisible = false;
+      for (let i = 0; i < samplePts.length; i++) {
+        projTmp.set(samplePts[i][0], samplePts[i][1], samplePts[i][2]);
+        const vView = projTmp.clone().applyMatrix4(arCamera.matrixWorldInverse);
+        projTmp.project(arCamera);
+        const sy = (1 - projTmp.y) * 0.5 * h;
+        if (vView.z < -0.05) {
+          if (sy < minScreenY) minScreenY = sy;
+          if (sy > maxScreenY) maxScreenY = sy;
+          if (Math.abs(projTmp.x) <= 1.04 && Math.abs(projTmp.y) <= 1.04) {
+            anyVisible = true;
+          }
+        }
+      }
+      inFrame = anyVisible;
+      if (inFrame !== arLastInFrameState) {
+        arLastInFrameState = inFrame;
+        updateARScanDOMState(inFrame);
+      }
+    }
+
+    window.__vcArDebug = {
+      scanPhase: state.arScanPhase,
+      facingLocked: arLockedFacingMode,
+      cameraLabel: arLockedCameraLabel,
+      inFrame,
+      distCm: Math.round(effDistCm * 10) / 10,
+      lookYawDeg: Math.round((arCamLookYawOffset * 180) / Math.PI * 10) / 10,
+      lookPitchDeg: Math.round((arCamLookPitchOffset * 180) / Math.PI * 10) / 10,
+      orbitYawDeg: Math.round((arCamOrbitYaw * 180) / Math.PI * 10) / 10,
+      projectedHeightPx: (inFrame && Number.isFinite(minScreenY) && Number.isFinite(maxScreenY)) ? Math.round(maxScreenY - minScreenY) : 0
+    };
 
     arRenderer.render(arScene, arCamera);
   };
@@ -9673,20 +9937,23 @@ function loadSavedCustomVessels() {
         state.savedCustomVessels = parsed;
         parsed.forEach(cv => {
           if (cv.thumbDataUrl) VESSEL_REALISTIC_THUMBS[cv.id] = cv.thumbDataUrl;
+          const targetVid = cv.isCustomVessel ? cv.id : (cv.baseVesselId || cv.id);
           if (cv.customGraphic && cv.customGraphic.dataUrl) {
             if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
             const cgImg = new Image();
             const cgRec = { ...cv.customGraphic, imageObj: null };
             cgImg.onload = () => {
               cgRec.imageObj = cgImg;
-              if (state.vesselId === cv.id && state.skinId === "custom_user_skin") {
+              if (state.vesselId === targetVid && state.skinId === "custom_user_skin") {
                 customUploadedImageObj = cgImg;
                 rebuild3DProduct();
               }
             };
             cgImg.src = cv.customGraphic.dataUrl;
             cgRec.imageObj = cgImg;
-            state.customGraphicsByVessel[cv.id] = cgRec;
+            if (!state.customGraphicsByVessel[targetVid]) {
+              state.customGraphicsByVessel[targetVid] = cgRec;
+            }
           }
         });
       }
@@ -9715,27 +9982,151 @@ function persistSavedCustomVessels() {
   } catch {}
 }
 
+function captureStudioDraftSnapshot(v) {
+  try {
+    if (typeof THREE !== "undefined" && renderer && scene && camera) {
+      const tmpW = 360, tmpH = 360;
+      const offC = document.createElement("canvas");
+      offC.width = tmpW;
+      offC.height = tmpH;
+      const offR = new THREE.WebGLRenderer({ canvas: offC, antialias: true, alpha: true, preserveDrawingBuffer: true });
+      offR.setPixelRatio(1);
+      offR.setSize(tmpW, tmpH, false);
+      offR.toneMapping = THREE.ACESFilmicToneMapping;
+      offR.toneMappingExposure = 1.08;
+      offR.outputEncoding = THREE.sRGBEncoding;
+
+      const offS = new THREE.Scene();
+      offS.environment = createPackshotEnvironment(offR);
+      const amb = new THREE.AmbientLight(0xF1F5F9, 0.34);
+      offS.add(amb);
+      const key = new THREE.DirectionalLight(0xFFFFFF, 1.25);
+      key.position.set(4.5, 6.2, 5.2);
+      offS.add(key);
+      const fill = new THREE.DirectionalLight(0xCBD5E1, 0.45);
+      fill.position.set(-4.8, 2.0, 2.5);
+      offS.add(fill);
+
+      const snapTex = new THREE.CanvasTexture(texCanvas);
+      snapTex.encoding = THREE.sRGBEncoding;
+      snapTex.wrapS = THREE.RepeatWrapping;
+      snapTex.wrapT = THREE.ClampToEdgeWrapping;
+      renderSleeveUVTexture();
+      snapTex.needsUpdate = true;
+
+      const cl = getClosure();
+      const phys = evaluateLivePhysics();
+      const built = buildConfiguredProductGroup(v, cl, phys, {
+        mapTexture: snapTex,
+        wireframe: false,
+        hideClashRing: true
+      });
+      offS.add(built.group);
+
+      const box = new THREE.Box3().setFromObject(built.group);
+      const center = box.getCenter(new THREE.Vector3());
+      const sz = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(sz.x, sz.y, sz.z, 1.5);
+      const offCam = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+      const dist = maxDim * 2.18;
+      const theta = camSpherical ? camSpherical.theta : 0.32;
+      const phi = 1.32;
+      offCam.position.set(
+        dist * Math.sin(phi) * Math.sin(theta),
+        center.y + dist * Math.cos(phi),
+        dist * Math.sin(phi) * Math.cos(theta)
+      );
+      offCam.lookAt(center);
+      offR.clear();
+      offR.render(offS, offCam);
+
+      const dataUrl = offC.toDataURL("image/png");
+      offS.remove(built.group);
+      built.group.traverse(obj => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) obj.material.dispose();
+      });
+      snapTex.dispose();
+      offR.dispose();
+      return dataUrl;
+    }
+  } catch (e) {}
+  return getVesselRealisticThumb(v) || "";
+}
+
+function buildDraftConfigSummary(v) {
+  const cl = getClosure();
+  const finList = [...RIGID_FINISHES, ...POUCH_FINISHES];
+  const fin = finList.find(f => f.id === state.finishId);
+  const skin = getSkin();
+  const phys = evaluateLivePhysics();
+
+  const partsIt = [];
+  const partsEn = [];
+  if (fin) { partsIt.push(fin.it); partsEn.push(fin.en); }
+  if (vesselHasClosureStep(v) && cl && cl.id !== "none") {
+    partsIt.push(cl.it);
+    partsEn.push(cl.en);
+  } else if (vesselHasClosureStep(v)) {
+    partsIt.push("Senza chiusura");
+    partsEn.push("No closure");
+  }
+  if (!hasWrap()) {
+    partsIt.push("Neutro senza grafica");
+    partsEn.push("No artwork wrap");
+  } else if (isDoypack()) {
+    partsIt.push(state.pouchPrintType === "flexo" ? "Stampa Flexo" : "Stampa Digitale");
+    partsEn.push(state.pouchPrintType === "flexo" ? "Flexo Print" : "Digital Print");
+    if (skin && skin.brand) { partsIt.push(skin.brand); partsEn.push(skin.brand); }
+  } else {
+    const modeIt = isSerigrafiaMode() ? "Serigrafia 360°" : (isLabelMode() ? "Etichetta" : "Sleeve 360°");
+    const modeEn = isSerigrafiaMode() ? "360° Silk-Screen" : (isLabelMode() ? "Label" : "360° Sleeve");
+    const skinLbl = skin ? skin.brand : "";
+    partsIt.push(skinLbl ? `${modeIt} (${skinLbl})` : modeIt);
+    partsEn.push(skinLbl ? `${modeEn} (${skinLbl})` : modeEn);
+  }
+  partsIt.push(phys.isBulk ? `Sparsi ${phys.packQty} pz` : `Scatola ${phys.packQty} pz`);
+  partsEn.push(phys.isBulk ? `Loose ${phys.packQty} pcs` : `Box ${phys.packQty} pcs`);
+
+  return {
+    it: partsIt.join(" · "),
+    en: partsEn.join(" · ")
+  };
+}
+
 function saveCurrentCustomVesselToProfile() {
   const v = getVessel();
-  if (!v || !v.isCustomVessel) return;
-  const oldId = v.id;
-  const targetId = (oldId === "custom_active" || !oldId.startsWith("custom_saved_"))
-    ? `custom_saved_${Date.now()}`
-    : oldId;
+  if (!v) return;
+  const oldVid = v.id;
+  const isCustom = !!v.isCustomVessel;
+  const baseVesselId = v.baseVesselId || v.id;
+  const targetDraftId = state.currentDraftId || `draft_${Date.now()}`;
+  state.currentDraftId = targetDraftId;
 
-  if (oldId !== targetId && state.customGraphicsByVessel && state.customGraphicsByVessel[oldId]) {
-    state.customGraphicsByVessel[targetId] = state.customGraphicsByVessel[oldId];
-    delete state.customGraphicsByVessel[oldId];
+  const activeCustomGraphic = state.customGraphicsByVessel ? (state.customGraphicsByVessel[oldVid] || state.customGraphicsByVessel[baseVesselId]) : null;
+  if (isCustom && oldVid === "custom_active") {
+    v.id = targetDraftId;
+    state.vesselId = targetDraftId;
+    if (activeCustomGraphic && state.customGraphicsByVessel) {
+      state.customGraphicsByVessel[targetDraftId] = activeCustomGraphic;
+      delete state.customGraphicsByVessel[oldVid];
+    }
   }
-  const activeCustomGraphic = state.customGraphicsByVessel ? state.customGraphicsByVessel[targetId] : null;
-  v.id = targetId;
-  state.vesselId = targetId;
-  generatePhotorealisticVesselThumbnails([targetId]);
+
+  const snapUrl = captureStudioDraftSnapshot(v);
+  if (snapUrl) VESSEL_REALISTIC_THUMBS[targetDraftId] = snapUrl;
+  const summary = buildDraftConfigSummary(v);
 
   const savedEntry = {
     ...v,
+    id: targetDraftId,
+    baseVesselId: isCustom ? targetDraftId : baseVesselId,
+    isCustomVessel: isCustom,
+    isProductionDraft: true,
     savedAt: new Date().toLocaleDateString(state.lang === "it" ? "it-IT" : "en-US"),
-    thumbDataUrl: VESSEL_REALISTIC_THUMBS[targetId] || VESSEL_REALISTIC_THUMBS[oldId] || "",
+    draftSummaryIt: summary.it,
+    draftSummaryEn: summary.en,
+    thumbDataUrl: snapUrl || getVesselRealisticThumb(v) || "",
     savedConfig: {
       finishId: state.finishId,
       closureId: state.closureId,
@@ -9769,20 +10160,25 @@ function saveCurrentCustomVesselToProfile() {
       embeddedBc: activeCustomGraphic.embeddedBc
     } : null
   };
+
   if (!Array.isArray(state.savedCustomVessels)) state.savedCustomVessels = [];
-  const exIdx = state.savedCustomVessels.findIndex(item => item.id === targetId);
+  const exIdx = state.savedCustomVessels.findIndex(item => item.id === targetDraftId);
   if (exIdx >= 0) state.savedCustomVessels[exIdx] = savedEntry;
   else state.savedCustomVessels.unshift(savedEntry);
-  state.activeCustomVessel = savedEntry;
+  if (isCustom) state.activeCustomVessel = savedEntry;
   persistSavedCustomVessels();
 
   const btn = document.getElementById("btnSaveCustomVessel");
   if (btn) {
     const l = state.lang;
+    btn.dataset.justSaved = "1";
     btn.textContent = l === "it" ? "Salvato ✓" : "Saved ✓";
     setTimeout(() => {
       const bNow = document.getElementById("btnSaveCustomVessel");
-      if (bNow) bNow.textContent = state.lang === "it" ? "Salva" : "Save";
+      if (bNow) {
+        delete bNow.dataset.justSaved;
+        bNow.textContent = state.lang === "it" ? "Salva" : "Save";
+      }
     }, 1800);
   }
 }
@@ -9796,6 +10192,9 @@ function deleteSavedCustomVessel(vid, evt) {
   if (state.activeCustomVessel && state.activeCustomVessel.id === vid) {
     state.activeCustomVessel = null;
   }
+  if (state.currentDraftId === vid) {
+    state.currentDraftId = null;
+  }
   if (state.vesselId === vid) {
     resetVesselConfigState("serum_250");
   }
@@ -9803,33 +10202,36 @@ function deleteSavedCustomVessel(vid, evt) {
   renderProfileView();
 }
 
-function openSavedCustomVesselInStudio(vid) {
-  const saved = (state.savedCustomVessels || []).find(item => item.id === vid);
+function openSavedCustomVesselInStudio(draftId) {
+  const saved = (state.savedCustomVessels || []).find(item => item.id === draftId);
   if (!saved) return;
-  state.activeCustomVessel = saved;
+  const isCustom = !!saved.isCustomVessel;
+  const targetVid = isCustom ? saved.id : (saved.baseVesselId || "serum_250");
+  state.activeCustomVessel = isCustom ? saved : null;
   if (saved.customGraphic && saved.customGraphic.dataUrl) {
     if (!state.customGraphicsByVessel) state.customGraphicsByVessel = {};
-    if (!state.customGraphicsByVessel[vid] || !state.customGraphicsByVessel[vid].imageObj) {
-      const cgImg = new Image();
-      const cgRec = { ...saved.customGraphic, imageObj: null };
-      cgImg.onload = () => {
-        cgRec.imageObj = cgImg;
-        if (state.vesselId === vid && state.skinId === "custom_user_skin") {
-          customUploadedImageObj = cgImg;
-          rebuild3DProduct();
-        }
-      };
-      cgImg.src = saved.customGraphic.dataUrl;
+    const cgImg = new Image();
+    const cgRec = { ...saved.customGraphic, imageObj: null };
+    cgImg.onload = () => {
       cgRec.imageObj = cgImg;
-      state.customGraphicsByVessel[vid] = cgRec;
-    }
-    customUploadedImageObj = state.customGraphicsByVessel[vid].imageObj || null;
+      if (state.vesselId === targetVid && state.skinId === "custom_user_skin") {
+        customUploadedImageObj = cgImg;
+        rebuild3DProduct();
+      }
+    };
+    cgImg.src = saved.customGraphic.dataUrl;
+    cgRec.imageObj = cgImg;
+    state.customGraphicsByVessel[targetVid] = cgRec;
+    customUploadedImageObj = cgImg;
   }
-  resetVesselConfigState(vid);
+  resetVesselConfigState(targetVid);
+  state.currentDraftId = saved.id;
   if (saved.savedConfig) {
     Object.assign(state, saved.savedConfig);
-    state.vesselId = vid;
+    state.vesselId = targetVid;
   }
+  state.selectedSuppliers = isCustom ? {} : { container: 0 };
+  state.filieraStep = 1;
   switchMainView("studio");
   rebuild3DProduct();
   renderAllUI();
@@ -9998,31 +10400,34 @@ function renderProfileView() {
   const customSavedHtml = savedCustoms.length === 0
     ? `
       <div style="text-align:center; padding:26px 18px; border:1.5px dashed var(--border); border-radius:16px; background:#F8F9FA;">
-        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessun contenitore personalizzato salvato" : "No custom containers saved yet"}</div>
+        <div style="font-size:14px; font-weight:700; color:var(--ink);">${l === "it" ? "Nessuna bozza di produzione salvata" : "No production drafts saved yet"}</div>
         <p style="font-size:12px; color:var(--slate); margin-top:5px;">
           ${l === "it"
-            ? "Digitalizza il tuo contenitore da 'Continua con il mio contenitore' e usa il tasto Salva nello Studio 3D per ritrovarlo qui."
-            : "Digitize your container via 'Continue with my container' and click Save inside 3D Studio to store it here."}
+            ? "Configura qualsiasi contenitore nello Studio 3D e clicca su Salva accanto a Conferma per ritrovarlo qui con tutte le modifiche."
+            : "Configure any container in 3D Studio and click Save beside Confirm to find it here with all modifications."}
         </p>
       </div>
     `
     : `
       <div class="fav-prof-grid">
         ${savedCustoms.map(v => {
-          const thumbSrc = getVesselRealisticThumb(v) || v.thumbDataUrl || "";
+          const fallbackBase = !v.isCustomVessel ? findVesselByIdAnywhere(v.baseVesselId) : null;
+          const thumbSrc = v.thumbDataUrl || getVesselRealisticThumb(v) || (fallbackBase ? getVesselRealisticThumb(fallbackBase) : "") || "";
           const visualTag = thumbSrc
             ? `<img class="cat-real-img" src="${thumbSrc}" alt="${escapeHtml(l === "it" ? v.it : v.en)}">`
             : renderCatalogThumbSVG(v);
+          const draftLine = l === "it" ? (v.draftSummaryIt || "") : (v.draftSummaryEn || "");
           return `
             <div class="fav-prof-card" onclick="openSavedCustomVesselInStudio('${v.id}')" style="cursor:pointer;">
               <div class="fav-prof-stage">${visualTag}</div>
               <div class="cat-meta-body">
                 <div class="cat-title-row">
                   <div class="cat-meta-title">${escapeHtml(l === "it" ? v.it : v.en)}</div>
-                  <button type="button" class="fav-heart-btn" data-del-custom="${v.id}" onclick="deleteSavedCustomVessel('${v.id}', event)" title="${l === "it" ? "Elimina contenitore personalizzato" : "Delete custom container"}" aria-label="${l === "it" ? "Elimina contenitore personalizzato" : "Delete custom container"}">
+                  <button type="button" class="fav-heart-btn" data-del-custom="${v.id}" onclick="deleteSavedCustomVessel('${v.id}', event)" title="${l === "it" ? "Elimina bozza" : "Delete draft"}" aria-label="${l === "it" ? "Elimina bozza" : "Delete draft"}">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                   </button>
                 </div>
+                ${draftLine ? `<div style="font-size:11px; font-weight:700; color:var(--crimson); background:var(--crimson-soft); border:1px solid rgba(194,24,14,0.18); padding:4px 9px; border-radius:8px; line-height:1.35;">${escapeHtml(draftLine)}</div>` : ""}
                 ${renderVesselTwoColSpecs(v, l)}
                 <div class="cat-meta-footer">
                   <button type="button" class="cat-select-btn" onclick="event.stopPropagation(); openSavedCustomVesselInStudio('${v.id}')">
@@ -10170,16 +10575,16 @@ function renderProfileView() {
         <div class="profile-card" id="profileCustomVesselsCard">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
             <div>
-              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "I TUOI CONTENITORI" : "YOUR CONTAINERS"}</span>
-              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Contenitori Personalizzati" : "Custom Containers"}</h2>
+              <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "LE TUE BOZZE STUDIO 3D" : "YOUR 3D STUDIO DRAFTS"}</span>
+              <h2 style="font-size:18px; font-weight:800; color:var(--ink); margin-top:2px;">${l === "it" ? "Bozze di Produzione" : "Production Drafts"}</h2>
             </div>
-            <span class="spec-tag">${savedCustoms.length} ${savedCustoms.length === 1 ? (l === "it" ? "SALVATO" : "SAVED") : (l === "it" ? "SALVATI" : "SAVED")}</span>
+            <span class="spec-tag">${savedCustoms.length} ${savedCustoms.length === 1 ? (l === "it" ? "BOZZA" : "DRAFT") : (l === "it" ? "BOZZE" : "DRAFTS")}</span>
           </div>
 
           <p style="font-size:12px; color:var(--slate); line-height:1.4; margin:0;">
             ${l === "it"
-              ? "Contenitori digitalizzati dalle tue foto e salvati nello Studio 3D con le relative modifiche."
-              : "Containers reconstructed from your photos and saved from 3D Studio with all custom edits."}
+              ? "Configurazioni e contenitori salvati nello Studio 3D con tutte le modifiche pronte per essere riprese."
+              : "Configurations and containers saved from 3D Studio with all modifications ready to resume."}
           </p>
 
           ${customSavedHtml}
@@ -10306,8 +10711,9 @@ function swapSupplier() {
 function proceedToPillars() {
   const phys = evaluateLivePhysics();
   if (phys.status === "r") return;
+  const v = getVessel();
   state.filieraStep = 1;
-  state.selectedSuppliers = { container: 0 };
+  state.selectedSuppliers = (v && v.isCustomVessel) ? {} : { container: 0 };
   switchMainView("pillars");
 }
 
@@ -11113,32 +11519,34 @@ function buildSupplyChainSteps(phys) {
     en: "Certified European primary container manufacturer with inline dimensional control."
   };
 
-  // STEP 1 (LOCKED / NON-MODIFICABILE): Container Factory already selected in Marketplace
-  steps.push({
-    key: "container",
-    lockedFixed: true,
-    tagIt: "CONTENITORE PRIMARIO",
-    tagEn: "PRIMARY CONTAINER",
-    labelIt: "Contenitore primario",
-    labelEn: "Primary container",
-    cls: "ok",
-    badge: `${v.neck} · ${v.vol}`,
-    title: l === "it" ? v.it : v.en,
-    spec: `${l === "it" ? v.matIt : v.matEn} · ${l === "it" ? v.subIt : v.subEn}`,
-    options: [
-      {
-        name: v.vendor,
-        sponsored: false,
-        price: 260,
-        rating: "4.9",
-        reviews: 128,
-        cert: "ISO 9001 · ISO 15378 · BRCGS",
-        leadIt: "5 gg",
-        leadEn: "5 days",
-        sub: l === "it" ? vProf.it : vProf.en
-      }
-    ]
-  });
+  // STEP 1 (LOCKED / NON-MODIFICABILE): Container Factory — omitted when user brings their own custom container
+  if (!v.isCustomVessel) {
+    steps.push({
+      key: "container",
+      lockedFixed: true,
+      tagIt: "CONTENITORE PRIMARIO",
+      tagEn: "PRIMARY CONTAINER",
+      labelIt: "Contenitore primario",
+      labelEn: "Primary container",
+      cls: "ok",
+      badge: `${v.neck} · ${v.vol}`,
+      title: l === "it" ? v.it : v.en,
+      spec: `${l === "it" ? v.matIt : v.matEn} · ${l === "it" ? v.subIt : v.subEn}`,
+      options: [
+        {
+          name: v.vendor,
+          sponsored: false,
+          price: 260,
+          rating: "4.9",
+          reviews: 128,
+          cert: "ISO 9001 · ISO 15378 · BRCGS",
+          leadIt: "5 gg",
+          leadEn: "5 days",
+          sub: l === "it" ? vProf.it : vProf.en
+        }
+      ]
+    });
+  }
 
   // STEP 2 (if closure selected): [0]=Sponsored, [1]=Lowest Price, [2..3]=Others
   if (cl.id !== "none" && !pouchMode && v.shape !== "alu_can") {
@@ -11884,11 +12292,12 @@ function updateFastTelemetryUI() {
   document.getElementById("ui_ship_note").textContent = t.shipNote;
   document.getElementById("val_sp_lot").textContent = `${prefix}${formatEuro(chain.minBaseCost)}`;
 
-  const vCur = getVessel();
   const btnSaveCustom = document.getElementById("btnSaveCustomVessel");
   if (btnSaveCustom) {
-    btnSaveCustom.style.display = vCur && vCur.isCustomVessel ? "flex" : "none";
-    btnSaveCustom.textContent = l === "it" ? "Salva" : "Save";
+    btnSaveCustom.style.display = "flex";
+    btnSaveCustom.textContent = btnSaveCustom.dataset.justSaved === "1"
+      ? (l === "it" ? "Salvato ✓" : "Saved ✓")
+      : (l === "it" ? "Salva" : "Save");
   }
   const btnChk = document.getElementById("btnCheckout");
   if (phys.status === "r") {
@@ -12359,8 +12768,10 @@ function renderPillarsView() {
   if (!canFill && state.copackerFilling) state.copackerFilling = false;
   const fillingConflict = phys.isBulk && state.copackerFilling;
 
-  // Step 1 (container) is always fixed/pre-selected at index 0
-  if (state.selectedSuppliers.container === undefined) state.selectedSuppliers.container = 0;
+  // Step 1 (container) is pre-selected only for Marketplace containers (custom containers skip primary container factory)
+  if (!v.isCustomVessel && state.selectedSuppliers.container === undefined) {
+    state.selectedSuppliers.container = 0;
+  }
 
   const maxUnlocked = getFilieraMaxUnlocked(steps);
   if (!state.filieraStep || state.filieraStep < 1) state.filieraStep = 1;
@@ -12516,8 +12927,8 @@ function renderPillarsView() {
 
           <div class="supplier-list-rich" id="activeSupplierList">${optsHtml}</div>
 
-          <div class="filiera-nav-row">
-            <button id="btnFilieraPrev" class="cta-btn white" style="width:auto; min-width:200px; padding:0 24px;" onclick="prevFilieraStep()">${l === "it" ? "Torna indietro" : "Go back"}</button>
+          <div class="filiera-nav-row" ${cur === 1 ? 'style="justify-content:flex-end;"' : ""}>
+            ${cur > 1 ? `<button id="btnFilieraPrev" class="cta-btn white" style="width:auto; min-width:200px; padding:0 24px;" onclick="prevFilieraStep()">${l === "it" ? "Torna indietro" : "Go back"}</button>` : ""}
             <button id="btnFilieraNext" class="cta-btn" style="width:auto; min-width:220px; padding:0 24px;" ${hasSel ? "" : "disabled"} onclick="nextFilieraStep()">
               ${l === "it" ? "Conferma" : "Confirm"}
             </button>
@@ -12550,6 +12961,25 @@ function renderPillarsView() {
           ? `${allowedFillTypes.slice(0, -1).map(f => f.en.toLowerCase()).join(", ")}, or ${allowedFillTypes[allowedFillTypes.length - 1].en.toLowerCase()}`
           : "");
     const minFillCost = canFill ? Math.min(...allowedFillTypes.map(f => f.cost)) : 220;
+
+    const copackerTargetName = copackerChosen ? copackerChosen.name : (l === "it" ? "il Co-Packer" : "Co-Packer");
+    const opNoteStyle = "font-size:11.5px; color:var(--crimson-dark); line-height:1.4; background:#FFFFFF; border:1px solid var(--border-light); padding:8px 10px; border-radius:5px;";
+    const opNoteCustomEmptyHtml = v.isCustomVessel
+      ? `<div id="filieraOpNote" style="${opNoteStyle}">
+          ${l === "it"
+            ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerTargetName}</strong> i flaconi da lavorare.`
+            : `Operational note: you must manually ship to <strong>${copackerTargetName}</strong> the containers to be processed.`}
+        </div>`
+      : "";
+    const opNoteFillingHtml = `<div id="filieraOpNote" style="${opNoteStyle}">
+      ${v.isCustomVessel
+        ? (l === "it"
+            ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerTargetName}</strong> i flaconi da lavorare e il contenuto sfuso da imbottigliare/dosare.`
+            : `Operational note: you must manually ship to <strong>${copackerTargetName}</strong> the containers to be processed and the bulk contents to be bottled/dosed.`)
+        : (l === "it"
+            ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerTargetName}</strong> il contenuto sfuso da imbottigliare/dosare.`
+            : `Operational note: you must manually ship bulk contents to <strong>${copackerTargetName}</strong>.`)}
+    </div>`;
 
     const fillingControlsHtml = `
       <div class="filling-mode-grid">
@@ -12600,6 +13030,7 @@ function renderPillarsView() {
                         ? "Riempimento non disponibile: seleziona una chiusura nello Studio 3D per poter sigillare il contenitore."
                         : "Filling unavailable: select a closure in the 3D Studio to seal the container.")))}
         </p>
+        ${opNoteCustomEmptyHtml}
       ` : (state.copackerFilling ? `
         <div class="filling-box">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -12616,13 +13047,9 @@ function renderPillarsView() {
               `;
             }).join("")}
           </div>
-          <div style="font-size:11.5px; color:var(--crimson-dark); line-height:1.4; background:#FFFFFF; border:1px solid var(--border-light); padding:8px 10px; border-radius:5px;">
-            ${l === "it"
-              ? `Nota operativa: dovrai spedire manualmente a <strong>${copackerChosen ? copackerChosen.name : "il Co-Packer"}</strong> il contenuto sfuso da imbottigliare/dosare.`
-              : `Operational note: you must manually ship bulk contents to <strong>${copackerChosen ? copackerChosen.name : "Co-Packer"}</strong>.`}
-          </div>
+          ${opNoteFillingHtml}
         </div>
-      ` : "")}
+      ` : opNoteCustomEmptyHtml)}
     `;
 
     const allProdSelected = steps.every(s => s.lockedFixed || state.selectedSuppliers[s.key] !== undefined);

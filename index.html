@@ -3991,16 +3991,37 @@
   .lp-hero { min-height: calc(100vh - 54px); display: flex; align-items: center; }
   .lp-hero > .lp-wrap { width: 100%; }
 
-  /* Profile split layout: left header+card stay fixed, right cards scroll */
+  /* Profile split layout: left card aligns with right column top and stretches longer; right column scrolls */
   @media (min-width: 1025px) {
     #viewProfile .profile-view { overflow: hidden !important; height: 100% !important; padding: 0 !important; }
     #viewProfile .profile-grid { height: 100%; align-items: stretch; gap: 0; grid-template-columns: 380px 1fr; }
-    #viewProfile .profile-left-col { padding: 16px 14px 32px 24px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+    #viewProfile .profile-left-col { padding: 28px 14px 48px 24px; display: flex; flex-direction: column; overflow: hidden; }
+    #viewProfile .profile-account-card { min-height: 460px; justify-content: space-between; }
     #viewProfile .profile-right-col { height: 100%; overflow-y: auto; padding: 28px 24px 48px 14px; }
   }
   @media (max-width: 1024px) {
     #viewProfile .profile-left-col { display: flex; flex-direction: column; gap: 12px; }
   }
+
+  /* Redesigned Hero Entry Cards & Single-Line Headings */
+  .lp-entry { gap: 16px; }
+  .lp-entry-card { display: flex; flex-direction: column; align-items: flex-start; width: 100%; text-align: left; padding: 26px 28px; border-radius: 24px; cursor: pointer; font-family: var(--sans); position: relative; overflow: hidden; transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease, border-color .22s ease, background-color .22s ease; }
+  .lp-entry-card:hover { transform: translateY(-4px); }
+  .lp-entry-card.main { background: linear-gradient(135deg, #D92318 0%, #9E130B 100%); color: #FFF8F1; border: 1px solid rgba(255, 255, 255, 0.22); box-shadow: 0 22px 48px -12px rgba(194, 24, 14, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+  .lp-entry-card.main:hover { box-shadow: 0 28px 56px -10px rgba(194, 24, 14, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+  .lp-entry-card.alt { background: linear-gradient(145deg, rgba(255, 248, 241, 0.09) 0%, rgba(255, 248, 241, 0.03) 100%); color: #FFF8F1; border: 1px solid rgba(245, 237, 228, 0.2); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+  .lp-entry-card.alt:hover { border-color: rgba(240, 137, 127, 0.55); background: linear-gradient(145deg, rgba(255, 248, 241, 0.13) 0%, rgba(255, 248, 241, 0.05) 100%); }
+  .lp-entry-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 14px; }
+  .lp-entry-badge { font-family: var(--mono); font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em; padding: 5px 11px; border-radius: 999px; background: rgba(0, 0, 0, 0.22); color: rgba(255, 248, 241, 0.92); }
+  .lp-entry-card.alt .lp-entry-badge { background: rgba(194, 24, 14, 0.22); color: #F49B92; }
+  .lp-entry-circle { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; font-size: 17px; font-weight: 800; background: rgba(255, 255, 255, 0.18); color: #FFF8F1; transition: transform .22s ease, background-color .22s ease; }
+  .lp-entry-card:hover .lp-entry-circle { transform: translateX(4px); background: rgba(255, 255, 255, 0.28); }
+  .lp-entry-card .lp-entry-t { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; }
+  .lp-entry-card .lp-entry-d { font-size: 13.5px; opacity: 0.82; margin-top: 6px; line-height: 1.45; max-width: 380px; }
+
+  .lp-h2.lp-nowrap { max-width: none; }
+  @media (min-width: 960px) { .lp-h2.lp-nowrap { white-space: nowrap; } }
+  .lp-li-hi { color: #FFF8F1 !important; font-weight: 700; }
 
   .lp-section.lp-light { background: #FFFFFF; border-top: none !important; }
   .lp-section.lp-light + .lp-section { border-top: none; }
@@ -7710,7 +7731,10 @@ function stopMobileARCameraStream() {
 }
 
 function getRouteKey() {
-  if (state.mainView === "home") return "home";
+  if (state.mainView === "home") {
+    if (state.homePage === "suppliers") return "suppliers:" + (state.homeSupCategory || "");
+    return "home";
+  }
   if (state.mainView === "studio" && state.customVesselMode) return "custom-vessel";
   if (state.mainView === "studio" && state.customGraphicMode) return `custom-graphic:${state.vesselId}`;
   if (state.mainView === "studio" && state.mobileARCameraMode) return `ar-camera:${state.vesselId}`;
@@ -7724,6 +7748,8 @@ function buildHistoryStateSnapshot() {
   return {
     routeKey: getRouteKey(),
     mainView: state.mainView,
+    homePage: state.homePage || "landing",
+    homeSupCategory: state.homeSupCategory || null,
     customVesselMode: !!state.customVesselMode,
     customGraphicMode: !!state.customGraphicMode,
     mobileARCameraMode: !!state.mobileARCameraMode,
@@ -7745,6 +7771,9 @@ function buildHistoryUrl(snap) {
     } else if (snap.mobileARCameraMode && snap.mainView === "studio") {
       u.searchParams.set("view", "ar-camera");
       u.searchParams.set("vessel", snap.vesselId);
+    } else if ((snap.mainView || "home") === "home" && snap.homePage === "suppliers") {
+      u.searchParams.set("view", "suppliers");
+      if (snap.homeSupCategory) u.searchParams.set("cat", snap.homeSupCategory);
     } else {
       u.searchParams.set("view", snap.mainView || "home");
       if (snap.mainView === "studio") {
@@ -7781,7 +7810,9 @@ window.addEventListener("popstate", e => {
     const qs = new URLSearchParams(window.location.search);
     const vParam = qs.get("view") || "home";
     snap = {
-      mainView: (vParam === "custom-vessel" || vParam === "custom-graphic" || vParam === "ar-camera") ? "studio" : vParam,
+      mainView: (vParam === "custom-vessel" || vParam === "custom-graphic" || vParam === "ar-camera") ? "studio" : (vParam === "suppliers" ? "home" : vParam),
+      homePage: vParam === "suppliers" ? "suppliers" : "landing",
+      homeSupCategory: vParam === "suppliers" ? (qs.get("cat") || null) : null,
       customVesselMode: vParam === "custom-vessel",
       customGraphicMode: vParam === "custom-graphic",
       mobileARCameraMode: vParam === "ar-camera",
@@ -7794,6 +7825,10 @@ window.addEventListener("popstate", e => {
     if (snap.vesselId && findVesselByIdAnywhere(snap.vesselId) && snap.vesselId !== state.vesselId) {
       resetVesselConfigState(snap.vesselId);
     }
+    state.homePage = snap.homePage || "landing";
+    state.homeSupCategory = snap.homeSupCategory || null;
+    state.homeComparedSuppliers = [];
+    state.homeSupSearch = "";
     state.customVesselMode = !!snap.customVesselMode;
     state.customGraphicMode = !!snap.customGraphicMode;
     state.mobileARCameraMode = !!snap.mobileARCameraMode;
@@ -7869,8 +7904,8 @@ function updateNavStepperSteps() {
 }
 
 function switchMainView(v) {
-  if (v === "catalog" || v === "home") state.skipMarketplaceNav = false;
-  updateNavStepperSteps();
+  if (v === "catalog") state.skipMarketplaceNav = false;
+  if (v !== "home") updateNavStepperSteps();
   if (v !== "profile" && state.mainView !== "profile") {
     state.prevViewBeforeProfile = v;
   }
@@ -7883,7 +7918,7 @@ function switchMainView(v) {
 
   const navTabsEl = document.getElementById("mainNavTabs");
   if (navTabsEl) {
-    const shouldHideStepper = (v === "home") || (v === "profile" && state.prevViewBeforeProfile === "home");
+    const shouldHideStepper = (v === "home") || (v === "studio" && state.customVesselMode) || (v === "profile" && (state.prevViewBeforeProfile === "home" || (state.prevViewBeforeProfile === "studio" && state.customVesselMode)));
     if (shouldHideStepper) {
       hideNavTabsElement(navTabsEl);
     } else {
@@ -8854,14 +8889,11 @@ function renderProfileView() {
   host.innerHTML = `
     <div class="profile-grid">
       <div class="profile-left-col">
-        <div class="brown-hdr-bar">
-          <div>
-            <div class="lp-eyebrow vc-eyebrow">${l === "it" ? "Il tuo account" : "Your account"}</div>
-            <h1 class="brown-hdr-title">${l === "it" ? "Area personale" : "Personal area"}</h1>
-            <p class="cat-sub-minimal">${l === "it" ? "Preferiti, bozze di produzione e richieste inviate." : "Favorites, production drafts and sent requests."}</p>
-          </div>
+        <div class="profile-card profile-account-card">
+        <div style="border-bottom:1px solid var(--border-light); padding-bottom:14px;">
+          <span style="font-family:var(--mono); font-size:10.5px; font-weight:800; color:var(--crimson);">${l === "it" ? "IL TUO ACCOUNT" : "YOUR ACCOUNT"}</span>
+          <h1 style="font-size:20px; font-weight:800; color:var(--ink); margin:3px 0 0 0;">${l === "it" ? "Area Personale" : "Personal Area"}</h1>
         </div>
-        <div class="profile-card">
         <div style="display:flex; align-items:center; gap:12px;">
           <div class="profile-avatar-lg">TL</div>
           <div>
@@ -12097,6 +12129,8 @@ function setHomeSupCategory(catId) {
   state.homeSupCategory = next;
   state.homeSupSearch = "";
   renderHomeView();
+  scrollHomeTop();
+  syncBrowserHistory(false);
 }
 
 function setHomeSupSearch(val) {
@@ -12174,12 +12208,15 @@ function openSupplierDirectoryPage(catId) {
   if (state.mainView !== "home") switchMainView("home");
   renderHomeView();
   scrollHomeTop();
+  syncBrowserHistory(false);
 }
 
 function closeSupplierDirectoryPage() {
   state.homePage = "landing";
+  state.homeSupCategory = null;
   renderHomeView();
   scrollHomeTop();
+  syncBrowserHistory(false);
 }
 
 function scrollToLandingSection(id) {
@@ -12216,7 +12253,7 @@ function renderLandingPage(l) {
     [t("Personalizza in 3D", "Customize in 3D"), t("Sleeve, etichetta o serigrafia, tappi, pompe e scatola — tutto in tempo reale.", "Sleeve, label or screen print, caps, pumps and box — all in real time.")],
     [t("Scegli la filiera", "Choose your supply chain"), t("Per ogni lavorazione confronti prezzo, qualità e certificazioni.", "Compare price, quality and certifications for every step.")],
     [t("Paga la campionatura", "Pay for samples"), t("Quando tutti i produttori accettano, paghi direttamente sul sito.", "Once every supplier accepts, pay directly on the platform.")],
-    [t("Segui e ricevi", "Track & receive"), t("Monitori ogni fase e ricevi le tue prove (da 100 pz) a casa.", "Track every stage and get your samples (from 100 pcs) delivered.")]
+    [t("Segui e ricevi", "Track & receive"), t("Monitori ogni fase e ricevi le tue prove (a partire da 100 pezzi) a casa.", "Track every stage and get your samples (starting from 100 pcs) delivered.")]
   ];
 
   const feats = [
@@ -12234,8 +12271,8 @@ function renderLandingPage(l) {
       <div class="lp-wrap lp-hero-grid">
         <div>
           <div class="lp-eyebrow">${t("Packaging B2B · Dal concept al campione", "B2B Packaging · From concept to sample")}</div>
-          <h1 class="lp-title">${t("Il ponte tra <em>brand</em> e fornitori.", "The bridge between <em>brands</em> and suppliers.")}</h1>
-          <p class="lp-lead">${t("Progetta il tuo packaging in 3D, scegli chi lo produce e ricevi le prove a casa. In giorni, non in settimane.", "Design your packaging in 3D, choose who makes it and get samples delivered. In days, not weeks.")}</p>
+          <h1 class="lp-title">${t("Il ponte tra <em>brand</em> e <em>fornitori</em>.", "The bridge between <em>brands</em> and <em>suppliers</em>.")}</h1>
+          <p class="lp-lead">${t("Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.", "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks.")}</p>
           <div class="lp-hero-meta">
             <div><div class="lp-meta-val">${supCount}+</div><div class="lp-meta-lbl">${t("produttori verificati", "verified manufacturers")}</div></div>
             <div><div class="lp-meta-val">6</div><div class="lp-meta-lbl">${t("lavorazioni coperte", "process stages")}</div></div>
@@ -12244,18 +12281,22 @@ function renderLandingPage(l) {
         </div>
 
         <div class="lp-entry">
-          <div class="lp-entry-lbl">${t("Inizia subito", "Start now")}</div>
-          <button type="button" class="lp-entry-btn main" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
-            <span class="lp-entry-ico">${LP_ICONS.grid}</span>
-            <span><div class="lp-entry-t">${t("Entra nel Marketplace", "Open the Marketplace")}</div><div class="lp-entry-d">${t("Parti da zero: scegli un contenitore e personalizzalo.", "Start from scratch: pick a container and customize it.")}</div></span>
-            <span class="lp-entry-arrow">→</span>
+          <button type="button" class="lp-entry-card main" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
+            <div class="lp-entry-top">
+              <span class="lp-entry-badge">${t("01 · PARTI DA ZERO", "01 · START FROM ZERO")}</span>
+              <span class="lp-entry-circle">→</span>
+            </div>
+            <div class="lp-entry-t">${t("Entra nel Marketplace", "Open the Marketplace")}</div>
+            <div class="lp-entry-d">${t("Scegli un contenitore dal catalogo e configuralo nello Studio 3D.", "Pick a container from the catalog and configure it in the 3D Studio.")}</div>
           </button>
-          <button type="button" class="lp-entry-btn alt" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
-            <span class="lp-entry-ico">${LP_ICONS.upload}</span>
-            <span><div class="lp-entry-t">${t("Continua con il mio contenitore", "Continue with my container")}</div><div class="lp-entry-d">${t("Hai già i tuoi flaconi? Carica scheda tecnica e foto.", "Already have bottles? Upload datasheet and photos.")}</div></span>
-            <span class="lp-entry-arrow">→</span>
+          <button type="button" class="lp-entry-card alt" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
+            <div class="lp-entry-top">
+              <span class="lp-entry-badge">${t("02 · HAI GIÀ LO STOCK", "02 · ALREADY IN STOCK")}</span>
+              <span class="lp-entry-circle">→</span>
+            </div>
+            <div class="lp-entry-t">${t("Continua con il mio contenitore", "Continue with my container")}</div>
+            <div class="lp-entry-d">${t("Hai già i tuoi contenitori? Carica scheda tecnica e foto.", "Already have your containers? Upload datasheet and photos.")}</div>
           </button>
-          <button type="button" class="lp-entry-link" onclick="scrollToLandingSection('lpHow')">${t("Scopri come funziona ↓", "See how it works ↓")}</button>
         </div>
       </div>
     </section>
@@ -12280,25 +12321,27 @@ function renderLandingPage(l) {
     <section class="lp-section">
       <div class="lp-wrap">
         <div class="lp-eyebrow">${t("Due modi per partire", "Two ways to start")}</div>
-        <h2 class="lp-h2">${t("Hai già il contenitore? Oppure parti da zero?", "Already have a container? Or starting from zero?")}</h2>
+        <h2 class="lp-h2 lp-nowrap">${t("Hai già il contenitore? Oppure parti da zero?", "Already have a container? Or starting from zero?")}</h2>
         <div class="lp-split">
-          <div>
+          <div class="lp-path-col">
             <span class="lp-path-tag">${t("PARTI DA ZERO", "START FROM ZERO")}</span>
             <div class="lp-path-t">${t("Marketplace", "Marketplace")}</div>
             <ul class="lp-path-list">
-              <li>${t("Flaconi, vetro, vasetti, lattine e buste doypack.", "Bottles, glass, jars, cans and stand-up pouches.")}</li>
-              <li>${t("Per ogni contenitore le lavorazioni compatibili: sleeve, etichetta adesiva, serigrafia.", "Compatible finishes for each container: sleeve, adhesive label, screen print.")}</li>
-              <li>${t("Tappi, pompe, spray e ogni tipo di chiusura.", "Caps, pumps, sprayers and every kind of closure.")}</li>
+              <li>${t("Flaconi, vetro, vasetti, lattine, buste doypack...", "Bottles, glass, jars, cans, stand-up pouches...")}</li>
+              <li>${t("Sleeve, etichette adesive, serigrafia...", "Sleeves, adhesive labels, screen print...")}</li>
+              <li>${t("Tappi, pompe, spray...", "Caps, pumps, sprayers...")}</li>
+              <li>${t("Inscatolamento, riempimento...", "Boxing, filling...")}</li>
             </ul>
             <button type="button" class="lp-btn primary" style="margin-top:26px;" onclick="switchMainView('catalog')">${t("Apri il Marketplace →", "Open Marketplace →")}</button>
           </div>
-          <div>
-            <span class="lp-path-tag">${t("HAI GIÀ LO STOCK", "ALREADY IN STOCK")}</span>
+          <div class="lp-path-col">
+            <span class="lp-path-tag">${t("HAI GIÀ LO STOCK · SALTI LA FASE 1", "ALREADY IN STOCK · SKIP STEP 1")}</span>
             <div class="lp-path-t">${t("Il tuo contenitore", "Your container")}</div>
             <ul class="lp-path-list">
-              <li>${t("Carica la scheda tecnica e le foto dalle varie angolazioni.", "Upload the datasheet and multi-angle photos.")}</li>
-              <li>${t("Lo ricreiamo nello Studio 3D con le dimensioni reali.", "We rebuild it in the 3D Studio at real dimensions.")}</li>
-              <li>${t("Poi lo vesti e scegli la filiera come per qualsiasi altro prodotto.", "Then dress it and pick the supply chain like any other product.")}</li>
+              <li class="lp-li-hi">${t("Carica scheda tecnica e foto → ricreato in 3D 1:1", "Upload datasheet & photos → rebuilt in 1:1 3D")}</li>
+              <li>${t("Sleeve, etichette adesive, serigrafia...", "Sleeves, adhesive labels, screen print...")}</li>
+              <li>${t("Tappi, pompe, spray...", "Caps, pumps, sprayers...")}</li>
+              <li>${t("Inscatolamento, riempimento...", "Boxing, filling...")}</li>
             </ul>
             <button type="button" class="lp-btn ghost" style="margin-top:26px;" onclick="openCustomVesselStudio()">${t("Carica il mio contenitore →", "Upload my container →")}</button>
           </div>
@@ -12310,7 +12353,7 @@ function renderLandingPage(l) {
     <section class="lp-section lp-light">
       <div class="lp-wrap">
         <div class="lp-eyebrow">${t("La tecnologia", "The technology")}</div>
-        <h2 class="lp-h2">${t("Vedi il prodotto finito prima ancora di produrlo.", "See the finished product before it's made.")}</h2>
+        <h2 class="lp-h2 lp-nowrap">${t("Vedi il prodotto finito prima ancora di produrlo.", "See the finished product before it's made.")}</h2>
         <div class="lp-feat-grid">
           ${feats.map(f => `
             <div>
@@ -12329,9 +12372,9 @@ function renderLandingPage(l) {
         <h2 class="lp-h2">${t("Brucia le settimane perse tra mail, preventivi e prove.", "Burn through the weeks lost on emails, quotes and trials.")}</h2>
         <p class="lp-sub">${t("Nessun fornitore da rincorrere: tutta la filiera lavora in parallelo e tu segui ogni fase in tempo reale.", "No suppliers to chase: the whole chain works in parallel while you follow every stage live.")}</p>
         <div class="lp-compare">
-          <div><div class="lp-compare-val old">${t("8 sett.", "8 wks")}</div><div class="lp-compare-lbl">${t("processo tradizionale", "traditional process")}</div></div>
+          <div><div class="lp-compare-val old">${t("2 mesi", "2 months")}</div><div class="lp-compare-lbl">${t("processo tradizionale", "traditional process")}</div></div>
           <div class="lp-compare-arrow">→</div>
-          <div><div class="lp-compare-val new">${t("pochi giorni", "a few days")}</div><div class="lp-compare-lbl">${t("con VesselCove", "with VesselCove")}</div></div>
+          <div><div class="lp-compare-val new">${t("max 2 settimane", "max 2 weeks")}</div><div class="lp-compare-lbl">${t("con VesselCove", "with VesselCove")}</div></div>
         </div>
       </div>
     </section>
@@ -12730,7 +12773,11 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   const rawView = qs.get("view") || "home";
   let initialView = rawView;
-  if (rawView === "custom-vessel") {
+  if (rawView === "suppliers") {
+    state.homePage = "suppliers";
+    state.homeSupCategory = qs.get("cat") || null;
+    initialView = "home";
+  } else if (rawView === "custom-vessel") {
     state.customVesselMode = true;
     initialView = "studio";
   } else if (rawView === "custom-graphic") {

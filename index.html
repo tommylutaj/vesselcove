@@ -3978,6 +3978,11 @@
     .lp-section { padding: 60px 0; }
     .lp-hero { padding: 40px 0 56px; }
     .lp-lead { font-size: 16px; }
+    .lp-hero-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; flex-wrap: nowrap; }
+    .lp-meta-val { font-size: 22px; }
+    .lp-meta-lbl { font-size: 11px; line-height: 1.25; }
+    .lp-compare { flex-direction: column; align-items: center; gap: 18px; }
+    .lp-compare-arrow { display: inline-block; transform: rotate(90deg); line-height: 1; }
     .lp-steps, .lp-feat-grid { grid-template-columns: 1fr; gap: 28px; }
     .lp-entry-btn { padding: 18px; }
     .lp-dirpage .sup-search-inp { min-width: 0; width: 100%; }
@@ -12357,7 +12362,7 @@ function renderLandingPage(l) {
     <!-- FEATURES -->
     <section class="lp-section lp-light">
       <div class="lp-wrap">
-        <div class="lp-eyebrow">${t("La tecnologia", "The technology")}</div>
+        <div class="lp-eyebrow">${t("La piattaforma", "The platform")}</div>
         <h2 class="lp-h2 lp-nowrap">${t("Vedi il prodotto finito prima ancora di produrlo.", "See the finished product before it's made.")}</h2>
         <div class="lp-feat-grid">
           ${feats.map(f => `

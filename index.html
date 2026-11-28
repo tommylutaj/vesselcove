@@ -4008,209 +4008,247 @@
     #viewProfile .profile-left-col { display: flex; flex-direction: column; gap: 12px; }
   }
 
-  /* ==================== V38 CINEMATIC 3D PACKSHOT RUNWAY HERO ==================== */
+  /* ==================== V39 MONUMENTAL CENTERED HERO + INTERACTIVE CURSOR ATMOSPHERE ==================== */
   .lp-hero {
+    --mx: 50%;
+    --my: 44%;
+    --rx: 0px;
+    --ry: 0px;
     min-height: calc(100vh - 54px);
-    padding: 40px 0 34px;
+    padding: 56px 0 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    position: relative;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse 68% 48% at 50% 62%, rgba(194, 24, 14, 0.30) 0%, rgba(194, 24, 14, 0.08) 46%, transparent 74%),
-      radial-gradient(ellipse 90% 50% at 50% 0%, rgba(255, 240, 225, 0.06) 0%, transparent 65%),
-      linear-gradient(180deg, #2B1E15 0%, #34251B 52%, #241911 100%);
+    background: #231710;
   }
   .lp-hero::before, .lp-hero::after { display: none; }
-  .lp-runway-hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1180px;
-    min-height: calc(100vh - 134px);
-    margin: 0 auto;
-    gap: 18px;
+
+  /* Multi-layered atmospheric backdrop */
+  .lp-hero-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 85% 70% at 50% 42%, #3D2A1E 0%, #2B1D14 54%, #1C120C 100%);
   }
-  .lp-runway-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 960px;
-    z-index: 3;
+  .lp-hero-aurora {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(70px);
+    opacity: 0.75;
+    will-change: transform;
   }
-  .lp-runway-title {
-    font-family: var(--display);
-    font-size: clamp(44px, 6.2vw, 84px);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    line-height: 0.96;
-    color: #FFF8F1;
-    margin: 0;
+  .lp-hero-aurora.a1 {
+    width: 680px;
+    height: 440px;
+    left: calc(50% - 340px);
+    top: 8%;
+    background: radial-gradient(circle, rgba(194, 24, 14, 0.34) 0%, rgba(194, 24, 14, 0) 70%);
+    animation: vcAuroraDrift 14s ease-in-out infinite alternate;
   }
-  .lp-runway-title em {
-    font-style: normal;
-    color: #F0897F;
+  .lp-hero-aurora.a2 {
+    width: 560px;
+    height: 380px;
+    left: calc(50% - 120px);
+    bottom: 4%;
+    background: radial-gradient(circle, rgba(235, 155, 110, 0.18) 0%, rgba(235, 155, 110, 0) 72%);
+    animation: vcAuroraDrift 18s ease-in-out infinite alternate-reverse;
   }
-  .lp-runway-lead {
-    font-size: clamp(15.5px, 1.3vw, 18px);
-    line-height: 1.58;
-    color: rgba(245, 237, 228, 0.72);
-    max-width: 670px;
-    margin: 18px auto 0 auto;
+  @keyframes vcAuroraDrift {
+    0% { transform: translate3d(-40px, -18px, 0) scale(0.96); }
+    100% { transform: translate3d(45px, 22px, 0) scale(1.06); }
   }
-  .lp-runway-actions {
+
+  /* Interactive cursor-following spotlight */
+  .lp-hero-cursor-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(560px circle at var(--mx) var(--my), rgba(224, 52, 40, 0.27), rgba(232, 140, 100, 0.08) 42%, transparent 72%);
+    transition: opacity .3s ease;
+  }
+
+  /* Base subtle architectural grid */
+  .lp-hero-arch-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255, 245, 235, 0.032) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 245, 235, 0.032) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 75% 68% at 50% 48%, #000 20%, transparent 82%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 68% at 50% 48%, #000 20%, transparent 82%);
+  }
+
+  /* Cursor-illuminated grid that lights up under the mouse arrow */
+  .lp-hero-cursor-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(244, 145, 134, 0.22) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(244, 145, 134, 0.22) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(320px circle at var(--mx) var(--my), #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(320px circle at var(--mx) var(--my), #000 0%, transparent 78%);
+  }
+
+  /* Subtle architectural rings with gentle cursor parallax */
+  .lp-hero-rings {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    margin-top: 26px;
-    flex-wrap: wrap;
+    transform: translate3d(var(--rx), var(--ry), 0);
+    transition: transform .12s cubic-bezier(.2,.8,.2,1);
   }
-  .lp-runway-btn {
-    height: 52px;
-    padding: 0 28px;
-    font-size: 15px;
-    letter-spacing: -0.01em;
+  .lp-hr {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 244, 234, 0.065);
+  }
+  .lp-hr.r1 {
+    width: min(820px, 86vw);
+    height: min(820px, 86vw);
+  }
+  .lp-hr.r2 {
+    width: min(1140px, 115vw);
+    height: min(1140px, 115vw);
+    border-color: rgba(255, 244, 234, 0.04);
   }
 
-  /* 3D Photorealistic Packshot Stage */
-  .lp-runway-stage {
+  .lp-hero-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 85% at 50% 50%, transparent 48%, rgba(20, 12, 8, 0.58) 100%),
+      linear-gradient(180deg, rgba(24, 15, 10, 0.35) 0%, transparent 22%, transparent 78%, rgba(36, 24, 17, 0.65) 100%);
+  }
+
+  /* Perfectly balanced centered typography & layout */
+  .lp-center-hero {
     position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 1020px;
-    height: 300px;
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    align-items: end;
-    justify-items: center;
-    padding: 0 12px 14px;
-    z-index: 2;
+    margin: 0 auto;
   }
-  .lp-runway-glow {
-    position: absolute;
-    left: 50%;
-    bottom: 8px;
-    transform: translateX(-50%);
-    width: 86%;
-    height: 220px;
-    background: radial-gradient(ellipse 55% 65% at 50% 70%, rgba(232, 121, 111, 0.24) 0%, rgba(194, 24, 14, 0.06) 55%, transparent 80%);
-    pointer-events: none;
-    z-index: 0;
+  .lp-center-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 7.8vw, 104px);
+    font-weight: 800;
+    letter-spacing: -0.052em;
+    line-height: 0.94;
+    color: #FFF9F3;
+    margin: 0;
+    text-shadow: 0 18px 48px rgba(10, 5, 2, 0.45);
   }
-  .lp-runway-floor {
-    position: absolute;
-    left: 50%;
-    bottom: 6px;
-    transform: translateX(-50%);
-    width: 94%;
-    height: 36px;
-    border-radius: 999px;
-    background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(12, 7, 4, 0.75) 0%, rgba(12, 7, 4, 0.25) 55%, transparent 82%);
-    border-top: 1px solid rgba(255, 248, 241, 0.10);
-    pointer-events: none;
-    z-index: 0;
+  .lp-center-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #FF9E94 0%, #E86A5E 55%, #C92A1D 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  .lp-runway-item {
-    appearance: none;
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    position: relative;
-    z-index: 2;
-    width: 100%;
+  .lp-center-lead {
+    font-size: clamp(16.5px, 1.4vw, 19.5px);
+    line-height: 1.64;
+    color: rgba(248, 239, 230, 0.76);
+    max-width: 680px;
+    margin: 28px auto 0 auto;
+    font-weight: 450;
+  }
+  .lp-center-actions {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    transition: transform .36s cubic-bezier(.2,.8,.2,1), filter .36s ease;
-    filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.55));
+    gap: 16px;
+    margin-top: 42px;
+    flex-wrap: wrap;
   }
-  .lp-runway-img {
-    width: 140%;
-    max-width: 220px;
-    object-fit: contain;
-    display: block;
-    pointer-events: none;
+  .lp-center-btn {
+    height: 56px;
+    padding: 0 32px;
+    font-size: 15.5px;
+    letter-spacing: -0.01em;
+    position: relative;
   }
-  /* Sculpted depth hierarchy across the 6 real 3D vessels */
-  .lp-runway-item.pos-0 .lp-runway-img { height: 205px; }
-  .lp-runway-item.pos-1 .lp-runway-img { height: 242px; }
-  .lp-runway-item.pos-2 .lp-runway-img { height: 282px; }
-  .lp-runway-item.pos-3 .lp-runway-img { height: 292px; }
-  .lp-runway-item.pos-4 .lp-runway-img { height: 236px; }
-  .lp-runway-item.pos-5 .lp-runway-img { height: 198px; }
+  .lp-center-btn.primary {
+    background: linear-gradient(180deg, #D92318 0%, #B8160C 100%);
+    box-shadow: 0 14px 36px -6px rgba(194, 24, 14, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  }
+  .lp-center-btn.primary:hover {
+    background: linear-gradient(180deg, #E42B1F 0%, #C2180E 100%);
+    box-shadow: 0 20px 44px -6px rgba(194, 24, 14, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  }
+  .lp-center-btn.ghost {
+    background: rgba(255, 248, 241, 0.045);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 0 1.5px rgba(245, 237, 228, 0.32), 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+  }
+  .lp-center-btn.ghost:hover {
+    background: rgba(255, 248, 241, 0.09);
+    box-shadow: inset 0 0 0 1.5px #FFF8F1, 0 16px 34px -10px rgba(0, 0, 0, 0.55);
+  }
+  .lp-btn-arr {
+    display: inline-block;
+    transition: transform .2s cubic-bezier(.2,.8,.2,1);
+  }
+  .lp-center-btn:hover .lp-btn-arr {
+    transform: translateX(4px);
+  }
 
-  .lp-runway-item.pos-0, .lp-runway-item.pos-5 { opacity: 0.88; }
-  .lp-runway-item:hover {
-    transform: translateY(-14px) scale(1.06);
-    opacity: 1;
-    z-index: 5;
-    filter: drop-shadow(0 30px 38px rgba(0, 0, 0, 0.72)) drop-shadow(0 0 28px rgba(232, 121, 111, 0.28));
-  }
-
-  /* Bottom stats bar */
-  .lp-runway-stats {
+  .lp-center-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
-    max-width: 680px;
-    padding-top: 18px;
+    max-width: 720px;
+    margin-top: 68px;
+    padding-top: 28px;
     border-top: 1px solid rgba(245, 237, 228, 0.14);
     gap: 16px;
-    z-index: 3;
   }
-  .lp-runway-stat {
+  .lp-center-stat {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 5px;
   }
-  .lp-runway-stat + .lp-runway-stat {
+  .lp-center-stat + .lp-center-stat {
     border-left: 1px solid rgba(245, 237, 228, 0.12);
   }
-  .lp-runway-stat-val {
+  .lp-center-stat-val {
     font-family: var(--display);
-    font-size: clamp(24px, 2.4vw, 32px);
+    font-size: clamp(28px, 2.8vw, 36px);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1;
     color: #FFF8F1;
   }
-  .lp-runway-stat-lbl {
-    font-size: 12px;
-    color: rgba(245, 237, 228, 0.56);
-    line-height: 1.25;
+  .lp-center-stat-lbl {
+    font-size: 12.5px;
+    color: rgba(245, 237, 228, 0.58);
+    line-height: 1.3;
   }
 
-  @media (max-width: 960px) {
-    .lp-runway-stage { height: 235px; }
-    .lp-runway-item.pos-0 .lp-runway-img { height: 160px; }
-    .lp-runway-item.pos-1 .lp-runway-img { height: 188px; }
-    .lp-runway-item.pos-2 .lp-runway-img { height: 218px; }
-    .lp-runway-item.pos-3 .lp-runway-img { height: 226px; }
-    .lp-runway-item.pos-4 .lp-runway-img { height: 184px; }
-    .lp-runway-item.pos-5 .lp-runway-img { height: 155px; }
-  }
   @media (max-width: 640px) {
-    .lp-hero { padding: 26px 0 24px; min-height: calc(100svh - 48px); }
-    .lp-runway-hero { min-height: calc(100svh - 98px); gap: 14px; }
-    .lp-runway-title { font-size: clamp(38px, 11vw, 54px); }
-    .lp-runway-lead { font-size: 14.5px; margin-top: 12px; }
-    .lp-runway-actions { flex-direction: column; width: 100%; gap: 10px; margin-top: 18px; }
-    .lp-runway-btn { width: 100%; height: 48px; }
-    .lp-runway-stage { grid-template-columns: repeat(4, minmax(0, 1fr)); height: 185px; padding: 0 4px 8px; }
-    .lp-runway-item.pos-0, .lp-runway-item.pos-5 { display: none; }
-    .lp-runway-img { width: 155%; }
-    .lp-runway-item.pos-1 .lp-runway-img { height: 142px; }
-    .lp-runway-item.pos-2 .lp-runway-img { height: 168px; }
-    .lp-runway-item.pos-3 .lp-runway-img { height: 175px; }
-    .lp-runway-item.pos-4 .lp-runway-img { height: 140px; }
-    .lp-runway-stats { padding-top: 14px; gap: 8px; }
-    .lp-runway-stat-val { font-size: 21px; }
-    .lp-runway-stat-lbl { font-size: 10.5px; }
+    .lp-hero { padding: 36px 0 36px; min-height: calc(100svh - 48px); }
+    .lp-center-title { font-size: clamp(42px, 12.2vw, 60px); }
+    .lp-center-lead { font-size: 15.5px; margin-top: 20px; }
+    .lp-center-actions { flex-direction: column; width: 100%; gap: 12px; margin-top: 32px; }
+    .lp-center-btn { width: 100%; height: 52px; }
+    .lp-center-stats { margin-top: 44px; padding-top: 22px; gap: 8px; }
+    .lp-center-stat-val { font-size: 22px; }
+    .lp-center-stat-lbl { font-size: 11px; }
   }
 
   .lp-split { gap: 56px; }
@@ -12465,59 +12503,56 @@ function renderLandingPage(l) {
   ];
 
   return `
-    <!-- HERO: CINEMATIC 3D PACKSHOT RUNWAY -->
-    <section class="lp-section lp-hero">
-      <div class="lp-wrap lp-runway-hero">
-        <div class="lp-runway-copy">
-          <h1 class="lp-runway-title">
-            ${t("Il ponte tra <em>brand</em> e <em>fornitori</em>.", "The bridge between <em>brands</em> and <em>suppliers</em>.")}
-          </h1>
+    <!-- HERO: MONUMENTAL CENTERED WITH INTERACTIVE CURSOR LIGHT & ARCHITECTURAL BACKDROP -->
+    <section class="lp-section lp-hero" id="lpHeroSection">
+      <div class="lp-hero-canvas" aria-hidden="true">
+        <div class="lp-hero-aurora a1"></div>
+        <div class="lp-hero-aurora a2"></div>
+        <div class="lp-hero-cursor-glow" id="lpHeroCursorGlow"></div>
+        <div class="lp-hero-arch-grid"></div>
+        <div class="lp-hero-cursor-grid" id="lpHeroCursorGrid"></div>
+        <div class="lp-hero-rings" id="lpHeroRings">
+          <span class="lp-hr r1"></span>
+          <span class="lp-hr r2"></span>
+        </div>
+        <div class="lp-hero-vignette"></div>
+      </div>
 
-          <p class="lp-runway-lead">
-            ${t(
-              "Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.",
-              "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks."
-            )}
-          </p>
+      <div class="lp-wrap lp-center-hero" id="lpHeroContent">
+        <h1 class="lp-center-title">
+          ${t("Il ponte tra <em>brand</em><br>e <em>fornitori</em>.", "The bridge between <em>brands</em><br>and <em>suppliers</em>.")}
+        </h1>
 
-          <div class="lp-runway-actions">
-            <button type="button" class="lp-btn primary lp-runway-btn" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
-              <span>${t("Entra nel Marketplace", "Open the Marketplace")}</span>
-              <span aria-hidden="true">→</span>
-            </button>
-            <button type="button" class="lp-btn ghost lp-runway-btn" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
-              <span>${t("Continua con il mio contenitore", "Continue with my container")}</span>
-              <span aria-hidden="true">→</span>
-            </button>
-          </div>
+        <p class="lp-center-lead">
+          ${t(
+            "Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.",
+            "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks."
+          )}
+        </p>
+
+        <div class="lp-center-actions">
+          <button type="button" class="lp-btn primary lp-center-btn" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
+            <span>${t("Entra nel Marketplace", "Open the Marketplace")}</span>
+            <span class="lp-btn-arr" aria-hidden="true">→</span>
+          </button>
+          <button type="button" class="lp-btn ghost lp-center-btn" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
+            <span>${t("Continua con il mio contenitore", "Continue with my container")}</span>
+            <span class="lp-btn-arr" aria-hidden="true">→</span>
+          </button>
         </div>
 
-        <div class="lp-runway-stage" role="list" aria-label="${t("Contenitori 3D", "3D Containers")}">
-          <div class="lp-runway-glow" aria-hidden="true"></div>
-          <div class="lp-runway-floor" aria-hidden="true"></div>
-          ${["doypack_1000", "square_500", "serum_250", "wine_750", "can_330", "jar_100"].map((vid, idx) => {
-            const v = VESSELS.find(x => x.id === vid) || VESSELS[0];
-            const src = VESSEL_REALISTIC_THUMBS[v.id] || "";
-            return `
-              <button type="button" class="lp-runway-item pos-${idx}" onclick="selectVesselFromMarketplace('${v.id}')" title="${escapeHtml(l === "it" ? v.it : v.en)}">
-                ${src ? `<img class="lp-runway-img" src="${src}" alt="${escapeHtml(l === "it" ? v.it : v.en)}">` : renderCatalogThumbSVG(v)}
-              </button>
-            `;
-          }).join("")}
-        </div>
-
-        <div class="lp-runway-stats">
-          <div class="lp-runway-stat">
-            <div class="lp-runway-stat-val">${supCount}+</div>
-            <div class="lp-runway-stat-lbl">${t("produttori verificati", "verified manufacturers")}</div>
+        <div class="lp-center-stats">
+          <div class="lp-center-stat">
+            <div class="lp-center-stat-val">${supCount}+</div>
+            <div class="lp-center-stat-lbl">${t("produttori verificati", "verified manufacturers")}</div>
           </div>
-          <div class="lp-runway-stat">
-            <div class="lp-runway-stat-val">6</div>
-            <div class="lp-runway-stat-lbl">${t("lavorazioni coperte", "process stages")}</div>
+          <div class="lp-center-stat">
+            <div class="lp-center-stat-val">6</div>
+            <div class="lp-center-stat-lbl">${t("lavorazioni coperte", "process stages")}</div>
           </div>
-          <div class="lp-runway-stat">
-            <div class="lp-runway-stat-val">1:1</div>
-            <div class="lp-runway-stat-lbl">${t("anteprima 3D & AR", "3D & AR preview")}</div>
+          <div class="lp-center-stat">
+            <div class="lp-center-stat-val">1:1</div>
+            <div class="lp-center-stat-lbl">${t("anteprima 3D & AR", "3D & AR preview")}</div>
           </div>
         </div>
       </div>
@@ -12651,11 +12686,36 @@ function updateHeaderRaise() {
   hdr.classList.toggle("hdr-raised", raised);
 }
 (function () {
+  let targetX = 0.5, targetY = 0.44, curX = 0.5, curY = 0.44, rafId = 0;
+  function tickHeroCursor() {
+    rafId = 0;
+    const hero = document.getElementById("lpHeroSection");
+    if (!hero) return;
+    curX += (targetX - curX) * 0.14;
+    curY += (targetY - curY) * 0.14;
+    hero.style.setProperty("--mx", (curX * 100).toFixed(2) + "%");
+    hero.style.setProperty("--my", (curY * 100).toFixed(2) + "%");
+    hero.style.setProperty("--rx", ((curX - 0.5) * -28).toFixed(1) + "px");
+    hero.style.setProperty("--ry", ((curY - 0.5) * -22).toFixed(1) + "px");
+    if (Math.abs(targetX - curX) > 0.001 || Math.abs(targetY - curY) > 0.001) {
+      rafId = requestAnimationFrame(tickHeroCursor);
+    }
+  }
+  function onHeroPointerMove(e) {
+    const hero = document.getElementById("lpHeroSection");
+    if (!hero || state.mainView !== "home" || state.homePage === "suppliers") return;
+    const r = hero.getBoundingClientRect();
+    if (r.height <= 0 || e.clientY > r.bottom + 40) return;
+    targetX = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    targetY = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+    if (!rafId) rafId = requestAnimationFrame(tickHeroCursor);
+  }
   const bind = () => {
     const v = document.getElementById("viewHome");
     if (v) v.addEventListener("scroll", updateHeaderRaise, { passive: true });
     window.addEventListener("scroll", updateHeaderRaise, { passive: true });
     window.addEventListener("resize", updateHeaderRaise);
+    window.addEventListener("pointermove", onHeroPointerMove, { passive: true });
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind); else bind();
 })();

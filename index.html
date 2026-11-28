@@ -4008,197 +4008,231 @@
     #viewProfile .profile-left-col { display: flex; flex-direction: column; gap: 12px; }
   }
 
-  /* ==================== V35 SHOWCASE HERO STAGE & DIRECT CTAs ==================== */
+  /* ==================== V36 ARCHITECTURAL EDITORIAL HERO (MAGAZINE SPREAD, ZERO BOXES) ==================== */
   .lp-hero {
+    min-height: calc(100vh - 54px);
+    padding: 36px 0 42px;
+    display: flex;
+    align-items: stretch;
     background:
-      radial-gradient(ellipse 60% 70% at 74% 48%, rgba(194, 24, 14, 0.28) 0%, rgba(194, 24, 14, 0.06) 48%, transparent 74%),
-      radial-gradient(ellipse 50% 60% at 14% 18%, rgba(235, 165, 115, 0.11) 0%, transparent 65%),
-      linear-gradient(180deg, #271B13 0%, #34251B 52%, #241811 100%);
+      radial-gradient(ellipse 55% 65% at 88% 12%, rgba(194, 24, 14, 0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 55% at 10% 90%, rgba(232, 160, 110, 0.08) 0%, transparent 70%),
+      #34251B;
   }
-  .lp-hero-bg-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(to right, rgba(255, 248, 241, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 248, 241, 0.035) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 75% at 62% 50%, #000 25%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 75% at 62% 50%, #000 25%, transparent 80%);
-    pointer-events: none;
+  .lp-hero::before, .lp-hero::after { display: none; }
+  .lp-ed-spread {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 140px);
+    width: 100%;
+    gap: 28px;
   }
-  .lp-hero-grid { grid-template-columns: 1.08fr 0.92fr; gap: 44px; }
-  .lp-kicker-pill {
-    display: inline-flex;
+
+  /* Top architectural index bar */
+  .lp-ed-topbar {
+    display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 7px 14px;
-    border-radius: 999px;
-    background: rgba(255, 248, 241, 0.055);
-    border: 1px solid rgba(255, 248, 241, 0.14);
+    gap: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(245, 237, 228, 0.16);
     font-family: var(--mono);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: #F3D9C6;
+    letter-spacing: 0.16em;
+    color: rgba(245, 237, 228, 0.62);
   }
-  .lp-kicker-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--crimson);
-    box-shadow: 0 0 0 4px rgba(194, 24, 14, 0.25);
+  .lp-ed-index { color: #E8796F; white-space: nowrap; }
+  .lp-ed-rule { flex: 1; height: 1px; background: rgba(245, 237, 228, 0.1); }
+  .lp-ed-spec { white-space: nowrap; }
+
+  /* Center monumental typography & editorial aside */
+  .lp-ed-main {
+    display: grid;
+    grid-template-columns: 1.32fr 0.68fr;
+    gap: 56px;
+    align-items: end;
+    padding: 12px 0;
   }
-  .lp-hero .lp-title {
-    font-size: clamp(44px, 5.6vw, 76px);
-    line-height: 0.97;
-    margin-top: 20px;
+  .lp-ed-title {
+    font-family: var(--display);
+    font-size: clamp(54px, 8.2vw, 112px);
+    font-weight: 800;
+    letter-spacing: -0.052em;
+    line-height: 0.91;
+    color: #FFF8F1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
   }
-  .lp-hero .lp-title em {
-    background: linear-gradient(135deg, #FF9B91 0%, #E03A2E 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .lp-ed-title em {
+    font-style: normal;
+    color: #E8796F;
   }
-  .lp-hero .lp-lead {
-    font-size: 17px;
-    line-height: 1.58;
-    color: rgba(245, 237, 228, 0.76);
-    margin-top: 20px;
-    max-width: 540px;
+  .lp-ed-aside-col {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-bottom: 6px;
   }
-  .lp-hero-ctas {
+  .lp-ed-lead {
+    font-size: 16.5px;
+    line-height: 1.62;
+    color: rgba(245, 237, 228, 0.74);
+    margin: 0;
+  }
+  .lp-ed-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid rgba(245, 237, 228, 0.16);
+    padding-top: 18px;
+    gap: 18px;
+  }
+  .lp-ed-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .lp-ed-stat + .lp-ed-stat {
+    border-left: 1px solid rgba(245, 237, 228, 0.12);
+    padding-left: 16px;
+  }
+  .lp-ed-stat-num {
+    font-family: var(--display);
+    font-size: clamp(26px, 2.5vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #FFF8F1;
+  }
+  .lp-ed-stat-lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: rgba(245, 237, 228, 0.54);
+    line-height: 1.3;
+  }
+
+  /* Bottom 50/50 Architectural Ledger Portals (no boxes, no rounded borders) */
+  .lp-ed-portals {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 30px;
-    max-width: 610px;
+    border-top: 1px solid rgba(245, 237, 228, 0.22);
+    border-bottom: 1px solid rgba(245, 237, 228, 0.22);
   }
-  .lp-hero-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
+  .lp-ed-portal {
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     text-align: left;
-    padding: 16px 20px;
-    border-radius: 16px;
+    padding: 28px 32px 28px 0;
     cursor: pointer;
+    color: #FFF8F1;
     font-family: var(--sans);
-    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
-  }
-  .lp-hero-btn:hover { transform: translateY(-2px); }
-  .lp-hero-btn.primary {
-    background: var(--crimson);
-    color: #FFF8F1;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 16px 36px -10px rgba(194, 24, 14, 0.65);
-  }
-  .lp-hero-btn.primary:hover { background: #D62217; box-shadow: 0 20px 42px -10px rgba(194, 24, 14, 0.8); }
-  .lp-hero-btn.secondary {
-    background: rgba(255, 248, 241, 0.055);
-    color: #FFF8F1;
-    border: 1px solid rgba(255, 248, 241, 0.22);
-    backdrop-filter: blur(8px);
-  }
-  .lp-hero-btn.secondary:hover { background: rgba(255, 248, 241, 0.1); border-color: rgba(255, 248, 241, 0.42); }
-  .lp-hero-btn-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .lp-hero-btn-lbl { font-family: var(--display); font-size: 15.5px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
-  .lp-hero-btn-sub { font-size: 11.5px; opacity: 0.78; line-height: 1.3; }
-  .lp-hero-btn-arr {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    background: rgba(255, 255, 255, 0.16);
-    font-size: 15px;
-    font-weight: 800;
-    transition: transform .2s ease;
-  }
-  .lp-hero-btn:hover .lp-hero-btn-arr { transform: translateX(3px); }
-  .lp-hero .lp-hero-meta {
-    margin-top: 32px;
-    padding-top: 22px;
-    border-top: 1px solid rgba(245, 237, 228, 0.12);
-    max-width: 540px;
-  }
-
-  /* 3D STUDIO SHOWCASE STAGE */
-  .lp-hero-stage {
-    position: relative;
-    height: 540px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-  }
-  .lp-stage-halo {
-    position: absolute;
-    width: 420px;
-    height: 420px;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(194, 24, 14, 0.34) 0%, rgba(194, 24, 14, 0.08) 48%, transparent 72%);
-    filter: blur(12px);
-  }
-  .lp-stage-ring {
-    position: absolute;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 248, 241, 0.11);
-  }
-  .lp-stage-ring.r1 { width: 430px; height: 430px; }
-  .lp-stage-ring.r2 { width: 320px; height: 320px; border-style: dashed; border-color: rgba(232, 121, 111, 0.24); }
-  .lp-stage-axis-v { position: absolute; top: 24px; bottom: 24px; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, rgba(255,248,241,0.14), transparent); }
-  .lp-stage-axis-h { position: absolute; left: 24px; right: 24px; top: 50%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,248,241,0.14), transparent); }
-  .lp-stage-svg {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 440px;
-    height: auto;
-    filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.55));
-  }
-  .lp-hud-chip {
-    position: absolute;
-    z-index: 3;
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
-    padding: 10px 14px;
-    border-radius: 14px;
-    background: rgba(24, 16, 11, 0.78);
-    border: 1px solid rgba(255, 248, 241, 0.16);
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
+    position: relative;
+    transition: padding-left .24s cubic-bezier(.2,.8,.2,1), background-color .24s ease;
   }
-  .lp-hud-chip.c1 { top: 54px; left: 0; }
-  .lp-hud-chip.c2 { top: 230px; right: -8px; }
-  .lp-hud-chip.c3 { bottom: 68px; left: 8px; }
-  .lp-hud-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
-  .lp-hud-dot.ok { background: #34D399; box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2); }
-  .lp-hud-dot.crimson { background: #F87171; box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.22); }
-  .lp-hud-dot.amber { background: #FBBF24; box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2); }
-  .lp-hud-k { font-family: var(--mono); font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; color: rgba(245, 237, 228, 0.58); }
-  .lp-hud-v { font-family: var(--display); font-size: 12.5px; font-weight: 700; color: #FFF8F1; margin-top: 1px; white-space: nowrap; }
+  .lp-ed-portal + .lp-ed-portal {
+    border-left: 1px solid rgba(245, 237, 228, 0.18);
+    padding-left: 36px;
+    padding-right: 0;
+  }
+  .lp-ed-portal::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--crimson);
+    transition: width .28s cubic-bezier(.2,.8,.2,1);
+  }
+  .lp-ed-portal:first-child::before { width: 64px; }
+  .lp-ed-portal:hover::before { width: 100%; }
+  .lp-ed-portal:first-child:hover { padding-left: 12px; }
+  .lp-ed-portal + .lp-ed-portal:hover { padding-left: 46px; }
+  .lp-ed-portal-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+  .lp-ed-portal-num {
+    color: #E8796F;
+  }
+  .lp-ed-portal-tag {
+    color: rgba(245, 237, 228, 0.52);
+  }
+  .lp-ed-portal-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 2px;
+  }
+  .lp-ed-portal-title {
+    font-family: var(--display);
+    font-size: clamp(24px, 2.4vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    color: #FFF8F1;
+    transition: color .2s ease;
+  }
+  .lp-ed-portal:hover .lp-ed-portal-title {
+    color: #FF9B91;
+  }
+  .lp-ed-portal-arrow {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+    color: #E8796F;
+    transition: transform .24s cubic-bezier(.2,.8,.2,1), color .2s ease;
+  }
+  .lp-ed-portal:hover .lp-ed-portal-arrow {
+    transform: translate(5px, -5px);
+    color: #FFF8F1;
+  }
+  .lp-ed-portal-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(245, 237, 228, 0.62);
+    margin: 0;
+    max-width: 460px;
+  }
 
   @media (max-width: 1080px) {
-    .lp-hero-grid { grid-template-columns: 1fr; gap: 36px; }
-    .lp-hero-stage { height: 440px; }
-    .lp-hud-chip.c2 { right: 0; }
+    .lp-ed-main { grid-template-columns: 1fr; gap: 28px; }
+    .lp-ed-spec { display: none; }
   }
-  @media (max-width: 640px) {
-    .lp-kicker-pill { font-size: 9.5px; padding: 6px 12px; letter-spacing: 0.09em; }
-    .lp-hero-ctas { grid-template-columns: 1fr; }
-    .lp-hero-stage { height: 340px; margin-top: -8px; }
-    .lp-stage-ring.r1 { width: 280px; height: 280px; }
-    .lp-stage-ring.r2 { width: 210px; height: 210px; }
-    .lp-stage-svg { max-width: 270px; }
-    .lp-hud-chip { padding: 6px 10px; }
-    .lp-hud-k { font-size: 8px; }
-    .lp-hud-v { font-size: 10.5px; }
-    .lp-hud-chip.c1 { top: 10px; left: 0; }
-    .lp-hud-chip.c2 { top: 150px; right: 0; }
-    .lp-hud-chip.c3 { bottom: 14px; left: 0; }
+  @media (max-width: 680px) {
+    .lp-hero { padding: 22px 0 32px; min-height: calc(100svh - 48px); }
+    .lp-ed-spread { min-height: calc(100svh - 104px); gap: 22px; }
+    .lp-ed-topbar { font-size: 9.5px; letter-spacing: 0.12em; padding-bottom: 12px; }
+    .lp-ed-title { font-size: clamp(44px, 13vw, 64px); line-height: 0.94; }
+    .lp-ed-lead { font-size: 15px; }
+    .lp-ed-stats { gap: 10px; padding-top: 14px; }
+    .lp-ed-stat + .lp-ed-stat { padding-left: 10px; }
+    .lp-ed-stat-num { font-size: 22px; }
+    .lp-ed-stat-lbl { font-size: 9.5px; }
+    .lp-ed-portals { grid-template-columns: 1fr; }
+    .lp-ed-portal { padding: 20px 0; }
+    .lp-ed-portal + .lp-ed-portal {
+      border-left: none;
+      border-top: 1px solid rgba(245, 237, 228, 0.18);
+      padding-left: 0;
+    }
+    .lp-ed-portal + .lp-ed-portal:hover { padding-left: 10px; }
+    .lp-ed-portal-title { font-size: 22px; }
+    .lp-ed-portal-desc { font-size: 13px; }
   }
 
   .lp-split { gap: 56px; }
@@ -12453,156 +12487,76 @@ function renderLandingPage(l) {
   ];
 
   return `
-    <!-- HERO -->
+    <!-- HERO: ARCHITECTURAL EDITORIAL SPREAD -->
     <section class="lp-section lp-hero">
-      <div class="lp-hero-bg-grid" aria-hidden="true"></div>
-      <div class="lp-wrap lp-hero-grid">
-        <div class="lp-hero-left">
-          <div class="lp-kicker-pill">
-            <span class="lp-kicker-dot"></span>
-            <span>${t("Packaging B2B · Dal concept al campione", "B2B Packaging · From concept to sample")}</span>
-          </div>
-          <h1 class="lp-title">${t("Il ponte tra <em>brand</em> e <em>fornitori</em>.", "The bridge between <em>brands</em> and <em>suppliers</em>.")}</h1>
-          <p class="lp-lead">${t("Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.", "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks.")}</p>
+      <div class="lp-wrap lp-ed-spread">
+        <!-- Top Issue / Ledger Bar -->
+        <div class="lp-ed-topbar">
+          <span class="lp-ed-index">${t("00 // PIATTAFORMA B2B PACKAGING INDUSTRIALE", "00 // INDUSTRIAL B2B PACKAGING PLATFORM")}</span>
+          <span class="lp-ed-rule"></span>
+          <span class="lp-ed-spec">${t("STUDIO 3D 1:1 · FILIERA CERTIFICATA · AR LIVE", "1:1 3D STUDIO · CERTIFIED SUPPLY CHAIN · LIVE AR")}</span>
+        </div>
 
-          <div class="lp-hero-ctas">
-            <button type="button" class="lp-hero-btn primary" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
-              <span class="lp-hero-btn-main">
-                <span class="lp-hero-btn-lbl">${t("Entra nel Marketplace", "Open the Marketplace")}</span>
-                <span class="lp-hero-btn-sub">${t("Parti da zero · Scegli dal catalogo", "Start from zero · Pick from catalog")}</span>
-              </span>
-              <span class="lp-hero-btn-arr">→</span>
-            </button>
-            <button type="button" class="lp-hero-btn secondary" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
-              <span class="lp-hero-btn-main">
-                <span class="lp-hero-btn-lbl">${t("Continua con il mio contenitore", "Continue with my container")}</span>
-                <span class="lp-hero-btn-sub">${t("Hai già i tuoi contenitori? Carica scheda e foto", "Have your containers? Upload datasheet & photos")}</span>
-              </span>
-              <span class="lp-hero-btn-arr">→</span>
-            </button>
+        <!-- Monumental Editorial Title & Lead -->
+        <div class="lp-ed-main">
+          <div class="lp-ed-headline-col">
+            <h1 class="lp-ed-title">
+              <span>${t("Il ponte", "The bridge")}</span>
+              <span>${t("tra <em>brand</em>", "between <em>brands</em>")}</span>
+              <span>${t("e <em>fornitori</em>.", "and <em>suppliers</em>.")}</span>
+            </h1>
           </div>
 
-          <div class="lp-hero-meta">
-            <div><div class="lp-meta-val">${supCount}+</div><div class="lp-meta-lbl">${t("produttori verificati", "verified manufacturers")}</div></div>
-            <div><div class="lp-meta-val">6</div><div class="lp-meta-lbl">${t("lavorazioni coperte", "process stages")}</div></div>
-            <div><div class="lp-meta-val">1:1</div><div class="lp-meta-lbl">${t("anteprima 3D & AR", "3D & AR preview")}</div></div>
+          <div class="lp-ed-aside-col">
+            <p class="lp-ed-lead">
+              ${t(
+                "Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.",
+                "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks."
+              )}
+            </p>
+
+            <div class="lp-ed-stats">
+              <div class="lp-ed-stat">
+                <div class="lp-ed-stat-num">${supCount}+</div>
+                <div class="lp-ed-stat-lbl">${t("produttori verificati", "verified manufacturers")}</div>
+              </div>
+              <div class="lp-ed-stat">
+                <div class="lp-ed-stat-num">06</div>
+                <div class="lp-ed-stat-lbl">${t("lavorazioni coperte", "process stages")}</div>
+              </div>
+              <div class="lp-ed-stat">
+                <div class="lp-ed-stat-num">1:1</div>
+                <div class="lp-ed-stat-lbl">${t("anteprima 3D & AR", "3D & AR preview")}</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="lp-hero-stage" aria-hidden="true">
-          <div class="lp-stage-halo"></div>
-          <div class="lp-stage-ring r1"></div>
-          <div class="lp-stage-ring r2"></div>
-          <div class="lp-stage-axis-v"></div>
-          <div class="lp-stage-axis-h"></div>
-
-          <div class="lp-hud-chip c1">
-            <span class="lp-hud-dot ok"></span>
-            <div>
-              <div class="lp-hud-k">${t("STUDIO 3D · SCALA 1:1", "3D STUDIO · 1:1 SCALE")}</div>
-              <div class="lp-hud-v">${t("Filetto 24/410 · Ø 54 × 188 mm", "Neck 24/410 · Ø 54 × 188 mm")}</div>
+        <!-- Bottom Architectural Ledger: 2 Direct Portals (Zero Rounded Boxes) -->
+        <div class="lp-ed-portals">
+          <button type="button" class="lp-ed-portal" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
+            <div class="lp-ed-portal-meta">
+              <span class="lp-ed-portal-num">01</span>
+              <span class="lp-ed-portal-tag">${t("PARTI DA ZERO · CATALOGO CERTIFICATO", "START FROM ZERO · CERTIFIED CATALOG")}</span>
             </div>
-          </div>
-
-          <div class="lp-hud-chip c2">
-            <span class="lp-hud-dot crimson"></span>
-            <div>
-              <div class="lp-hud-k">${t("GRAFICA & RIVESTIMENTO", "ARTWORK & FINISH")}</div>
-              <div class="lp-hud-v">${t("Sleeve 360° · Etichetta · Serigrafia", "360° Sleeve · Label · Screen print")}</div>
+            <div class="lp-ed-portal-row">
+              <span class="lp-ed-portal-title">${t("Entra nel Marketplace", "Open the Marketplace")}</span>
+              <span class="lp-ed-portal-arrow" aria-hidden="true">↗</span>
             </div>
-          </div>
+            <p class="lp-ed-portal-desc">${t("Scegli un contenitore dal catalogo e configuralo nello Studio 3D.", "Pick a container from the catalog and configure it in the 3D Studio.")}</p>
+          </button>
 
-          <div class="lp-hud-chip c3">
-            <span class="lp-hud-dot amber"></span>
-            <div>
-              <div class="lp-hud-k">${t("FILIERA COORDINATA", "UNIFIED SUPPLY CHAIN")}</div>
-              <div class="lp-hud-v">${t("Lotto prova da 100 pz · AR Live", "Pilot lot from 100 pcs · Live AR")}</div>
+          <button type="button" class="lp-ed-portal" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
+            <div class="lp-ed-portal-meta">
+              <span class="lp-ed-portal-num">02</span>
+              <span class="lp-ed-portal-tag">${t("HAI GIÀ LO STOCK · DIGITALIZZAZIONE 1:1", "ALREADY IN STOCK · 1:1 DIGITIZATION")}</span>
             </div>
-          </div>
-
-          <svg class="lp-stage-svg" viewBox="0 0 460 540" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="vcStageFloor" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#C2180E" stop-opacity="0.42"/>
-                <stop offset="55%" stop-color="#120B07" stop-opacity="0.65"/>
-                <stop offset="100%" stop-color="#120B07" stop-opacity="0"/>
-              </radialGradient>
-              <linearGradient id="vcGlassBody" x1="130" y1="150" x2="330" y2="450" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#FFF8F1" stop-opacity="0.30"/>
-                <stop offset="22%" stop-color="#F5E1D3" stop-opacity="0.12"/>
-                <stop offset="68%" stop-color="#2A1A11" stop-opacity="0.55"/>
-                <stop offset="100%" stop-color="#FFF8F1" stop-opacity="0.24"/>
-              </linearGradient>
-              <linearGradient id="vcSleeveGrad" x1="145" y1="225" x2="315" y2="415" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#E0281C"/>
-                <stop offset="52%" stop-color="#B8160C"/>
-                <stop offset="100%" stop-color="#6E0B05"/>
-              </linearGradient>
-              <linearGradient id="vcCapMetal" x1="185" y1="55" x2="275" y2="145" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#3A2B22"/>
-                <stop offset="35%" stop-color="#1B130E"/>
-                <stop offset="70%" stop-color="#4E3B30"/>
-                <stop offset="100%" stop-color="#160F0B"/>
-              </linearGradient>
-              <linearGradient id="vcGoldRing" x1="188" y1="125" x2="272" y2="125" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#E7B98A"/>
-                <stop offset="50%" stop-color="#FFF1DF"/>
-                <stop offset="100%" stop-color="#B98554"/>
-              </linearGradient>
-            </defs>
-
-            <!-- Studio pedestal & perspective grid rings -->
-            <ellipse cx="230" cy="472" rx="168" ry="34" fill="url(#vcStageFloor)"/>
-            <ellipse cx="230" cy="468" rx="142" ry="22" stroke="#FFF8F1" stroke-opacity="0.16" stroke-dasharray="4 6"/>
-            <ellipse cx="230" cy="468" rx="102" ry="15" stroke="#E8796F" stroke-opacity="0.34"/>
-
-            <!-- CAD dimension guides -->
-            <g opacity="0.48" stroke="#F5EDE4" stroke-width="1">
-              <line x1="96" y1="74" x2="96" y2="456" stroke-dasharray="3 4"/>
-              <line x1="88" y1="74" x2="112" y2="74"/>
-              <line x1="88" y1="456" x2="112" y2="456"/>
-              <text x="82" y="270" fill="#F5EDE4" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end" transform="rotate(-90 82 270)">H 188 mm</text>
-            </g>
-
-            <!-- Exploded closure / dispenser pump -->
-            <g class="lp-svg-cap">
-              <path d="M212 58 H258 C264 58 268 62 268 67 V73 C268 76 265 78 261 78 H247 V92 H213 V67 C213 61 212 58 212 58 Z" fill="url(#vcCapMetal)" stroke="#FFF8F1" stroke-opacity="0.28"/>
-              <path d="M248 64 H284 C289 64 292 67 292 71 C292 74 289 76 284 76 H258" fill="url(#vcCapMetal)" stroke="#FFF8F1" stroke-opacity="0.28"/>
-              <rect x="192" y="92" width="76" height="42" rx="7" fill="url(#vcCapMetal)" stroke="#FFF8F1" stroke-opacity="0.32" stroke-width="1.2"/>
-              <rect x="192" y="124" width="76" height="7" rx="2" fill="url(#vcGoldRing)"/>
-              <line x1="202" y1="98" x2="202" y2="120" stroke="#FFF8F1" stroke-opacity="0.28" stroke-width="2" stroke-linecap="round"/>
-            </g>
-
-            <!-- Neck & threads -->
-            <rect x="198" y="134" width="64" height="22" rx="4" fill="url(#vcGlassBody)" stroke="#FFF8F1" stroke-opacity="0.35"/>
-            <line x1="202" y1="141" x2="258" y2="141" stroke="#FFF8F1" stroke-opacity="0.35" stroke-width="1.5"/>
-            <line x1="202" y1="148" x2="258" y2="148" stroke="#FFF8F1" stroke-opacity="0.35" stroke-width="1.5"/>
-
-            <!-- Dip tube inside bottle -->
-            <path d="M230 156 Q232 300 242 438" stroke="#FFF8F1" stroke-opacity="0.26" stroke-width="3" stroke-linecap="round"/>
-
-            <!-- Primary bottle body (glass/PET with Fresnel highlights) -->
-            <path d="M198 156 C198 176 146 184 146 226 V428 C146 446 160 456 182 456 H278 C300 456 314 446 314 428 V226 C314 184 262 176 262 156 Z" fill="url(#vcGlassBody)" stroke="#FFF8F1" stroke-opacity="0.48" stroke-width="1.6"/>
-            <ellipse cx="230" cy="448" rx="74" ry="8" fill="#FFF8F1" fill-opacity="0.14"/>
-
-            <!-- 360° shrink-sleeve / graphic wrap layer -->
-            <path d="M147 232 C185 242 275 242 313 232 V404 C275 414 185 414 147 404 Z" fill="url(#vcSleeveGrad)" stroke="#FFF8F1" stroke-opacity="0.38" stroke-width="1.2"/>
-            <!-- UV mesh latitude lines on sleeve -->
-            <path d="M147 274 C185 284 275 284 313 274" stroke="#FFF8F1" stroke-opacity="0.16" stroke-dasharray="3 4"/>
-            <path d="M147 362 C185 372 275 372 313 362" stroke="#FFF8F1" stroke-opacity="0.16" stroke-dasharray="3 4"/>
-
-            <!-- Brand typography on sleeve -->
-            <text x="230" y="298" fill="#FFF8F1" fill-opacity="0.65" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="3" text-anchor="middle">STUDIO 3D · 1:1</text>
-            <text x="230" y="328" fill="#FFF8F1" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="22" letter-spacing="1.5" text-anchor="middle">VESSELCOVE</text>
-            <rect x="196" y="341" width="68" height="1.5" fill="#FFF8F1" fill-opacity="0.5"/>
-            <text x="230" y="357" fill="#FFF8F1" fill-opacity="0.78" font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="2" text-anchor="middle">250 ML · PETG 50μm</text>
-
-            <!-- Specular studio softbox reflections -->
-            <path d="M162 204 C162 194 176 184 190 180" stroke="#FFF8F1" stroke-opacity="0.55" stroke-width="3.5" stroke-linecap="round"/>
-            <path d="M160 218 V424" stroke="#FFF8F1" stroke-opacity="0.52" stroke-width="5" stroke-linecap="round"/>
-            <path d="M170 228 V418" stroke="#FFF8F1" stroke-opacity="0.18" stroke-width="2" stroke-linecap="round"/>
-            <path d="M300 224 V422" stroke="#FFF8F1" stroke-opacity="0.22" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
+            <div class="lp-ed-portal-row">
+              <span class="lp-ed-portal-title">${t("Continua con il mio contenitore", "Continue with my container")}</span>
+              <span class="lp-ed-portal-arrow" aria-hidden="true">↗</span>
+            </div>
+            <p class="lp-ed-portal-desc">${t("Hai già i tuoi contenitori? Carica scheda tecnica e foto.", "Already have your containers? Upload datasheet and photos.")}</p>
+          </button>
         </div>
       </div>
     </section>

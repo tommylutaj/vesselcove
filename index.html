@@ -4008,231 +4008,124 @@
     #viewProfile .profile-left-col { display: flex; flex-direction: column; gap: 12px; }
   }
 
-  /* ==================== V36 ARCHITECTURAL EDITORIAL HERO (MAGAZINE SPREAD, ZERO BOXES) ==================== */
+  /* ==================== V37 MONUMENTAL CENTERED HERO ==================== */
   .lp-hero {
     min-height: calc(100vh - 54px);
-    padding: 36px 0 42px;
+    padding: 56px 0 48px;
     display: flex;
-    align-items: stretch;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     background:
-      radial-gradient(ellipse 55% 65% at 88% 12%, rgba(194, 24, 14, 0.22) 0%, transparent 70%),
-      radial-gradient(ellipse 45% 55% at 10% 90%, rgba(232, 160, 110, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 65% 55% at 50% 38%, rgba(194, 24, 14, 0.22) 0%, rgba(194, 24, 14, 0.04) 52%, transparent 76%),
       #34251B;
   }
   .lp-hero::before, .lp-hero::after { display: none; }
-  .lp-ed-spread {
+  .lp-center-hero {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: calc(100vh - 140px);
-    width: 100%;
-    gap: 28px;
-  }
-
-  /* Top architectural index bar */
-  .lp-ed-topbar {
-    display: flex;
     align-items: center;
-    gap: 18px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid rgba(245, 237, 228, 0.16);
+    justify-content: center;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .lp-center-eyebrow {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
-    letter-spacing: 0.16em;
-    color: rgba(245, 237, 228, 0.62);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #E8796F;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
   }
-  .lp-ed-index { color: #E8796F; white-space: nowrap; }
-  .lp-ed-rule { flex: 1; height: 1px; background: rgba(245, 237, 228, 0.1); }
-  .lp-ed-spec { white-space: nowrap; }
-
-  /* Center monumental typography & editorial aside */
-  .lp-ed-main {
-    display: grid;
-    grid-template-columns: 1.32fr 0.68fr;
-    gap: 56px;
-    align-items: end;
-    padding: 12px 0;
+  .lp-center-eyebrow::before,
+  .lp-center-eyebrow::after {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(232, 121, 111, 0.45);
   }
-  .lp-ed-title {
+  .lp-center-title {
     font-family: var(--display);
-    font-size: clamp(54px, 8.2vw, 112px);
+    font-size: clamp(50px, 7.6vw, 102px);
     font-weight: 800;
-    letter-spacing: -0.052em;
-    line-height: 0.91;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
     color: #FFF8F1;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+    margin: 26px 0 0 0;
   }
-  .lp-ed-title em {
+  .lp-center-title em {
     font-style: normal;
     color: #E8796F;
   }
-  .lp-ed-aside-col {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    padding-bottom: 6px;
-  }
-  .lp-ed-lead {
-    font-size: 16.5px;
+  .lp-center-lead {
+    font-size: clamp(16.5px, 1.45vw, 19.5px);
     line-height: 1.62;
-    color: rgba(245, 237, 228, 0.74);
-    margin: 0;
+    color: rgba(245, 237, 228, 0.72);
+    max-width: 680px;
+    margin: 28px auto 0 auto;
   }
-  .lp-ed-stats {
+  .lp-center-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .lp-center-btn {
+    height: 56px;
+    padding: 0 32px;
+    font-size: 15.5px;
+    letter-spacing: -0.01em;
+  }
+  .lp-center-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid rgba(245, 237, 228, 0.16);
-    padding-top: 18px;
-    gap: 18px;
+    width: 100%;
+    max-width: 680px;
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(245, 237, 228, 0.14);
+    gap: 16px;
   }
-  .lp-ed-stat {
+  .lp-center-stat {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 4px;
   }
-  .lp-ed-stat + .lp-ed-stat {
+  .lp-center-stat + .lp-center-stat {
     border-left: 1px solid rgba(245, 237, 228, 0.12);
-    padding-left: 16px;
   }
-  .lp-ed-stat-num {
+  .lp-center-stat-val {
     font-family: var(--display);
-    font-size: clamp(26px, 2.5vw, 34px);
+    font-size: clamp(28px, 2.8vw, 36px);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1;
     color: #FFF8F1;
   }
-  .lp-ed-stat-lbl {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.04em;
-    color: rgba(245, 237, 228, 0.54);
+  .lp-center-stat-lbl {
+    font-size: 12.5px;
+    color: rgba(245, 237, 228, 0.56);
     line-height: 1.3;
   }
 
-  /* Bottom 50/50 Architectural Ledger Portals (no boxes, no rounded borders) */
-  .lp-ed-portals {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-top: 1px solid rgba(245, 237, 228, 0.22);
-    border-bottom: 1px solid rgba(245, 237, 228, 0.22);
-  }
-  .lp-ed-portal {
-    appearance: none;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    text-align: left;
-    padding: 28px 32px 28px 0;
-    cursor: pointer;
-    color: #FFF8F1;
-    font-family: var(--sans);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: relative;
-    transition: padding-left .24s cubic-bezier(.2,.8,.2,1), background-color .24s ease;
-  }
-  .lp-ed-portal + .lp-ed-portal {
-    border-left: 1px solid rgba(245, 237, 228, 0.18);
-    padding-left: 36px;
-    padding-right: 0;
-  }
-  .lp-ed-portal::before {
-    content: "";
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--crimson);
-    transition: width .28s cubic-bezier(.2,.8,.2,1);
-  }
-  .lp-ed-portal:first-child::before { width: 64px; }
-  .lp-ed-portal:hover::before { width: 100%; }
-  .lp-ed-portal:first-child:hover { padding-left: 12px; }
-  .lp-ed-portal + .lp-ed-portal:hover { padding-left: 46px; }
-  .lp-ed-portal-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-  }
-  .lp-ed-portal-num {
-    color: #E8796F;
-  }
-  .lp-ed-portal-tag {
-    color: rgba(245, 237, 228, 0.52);
-  }
-  .lp-ed-portal-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 2px;
-  }
-  .lp-ed-portal-title {
-    font-family: var(--display);
-    font-size: clamp(24px, 2.4vw, 32px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
-    color: #FFF8F1;
-    transition: color .2s ease;
-  }
-  .lp-ed-portal:hover .lp-ed-portal-title {
-    color: #FF9B91;
-  }
-  .lp-ed-portal-arrow {
-    font-family: var(--display);
-    font-size: 28px;
-    font-weight: 400;
-    line-height: 1;
-    color: #E8796F;
-    transition: transform .24s cubic-bezier(.2,.8,.2,1), color .2s ease;
-  }
-  .lp-ed-portal:hover .lp-ed-portal-arrow {
-    transform: translate(5px, -5px);
-    color: #FFF8F1;
-  }
-  .lp-ed-portal-desc {
-    font-size: 14px;
-    line-height: 1.5;
-    color: rgba(245, 237, 228, 0.62);
-    margin: 0;
-    max-width: 460px;
-  }
-
-  @media (max-width: 1080px) {
-    .lp-ed-main { grid-template-columns: 1fr; gap: 28px; }
-    .lp-ed-spec { display: none; }
-  }
-  @media (max-width: 680px) {
-    .lp-hero { padding: 22px 0 32px; min-height: calc(100svh - 48px); }
-    .lp-ed-spread { min-height: calc(100svh - 104px); gap: 22px; }
-    .lp-ed-topbar { font-size: 9.5px; letter-spacing: 0.12em; padding-bottom: 12px; }
-    .lp-ed-title { font-size: clamp(44px, 13vw, 64px); line-height: 0.94; }
-    .lp-ed-lead { font-size: 15px; }
-    .lp-ed-stats { gap: 10px; padding-top: 14px; }
-    .lp-ed-stat + .lp-ed-stat { padding-left: 10px; }
-    .lp-ed-stat-num { font-size: 22px; }
-    .lp-ed-stat-lbl { font-size: 9.5px; }
-    .lp-ed-portals { grid-template-columns: 1fr; }
-    .lp-ed-portal { padding: 20px 0; }
-    .lp-ed-portal + .lp-ed-portal {
-      border-left: none;
-      border-top: 1px solid rgba(245, 237, 228, 0.18);
-      padding-left: 0;
-    }
-    .lp-ed-portal + .lp-ed-portal:hover { padding-left: 10px; }
-    .lp-ed-portal-title { font-size: 22px; }
-    .lp-ed-portal-desc { font-size: 13px; }
+  @media (max-width: 640px) {
+    .lp-hero { padding: 36px 0 36px; min-height: calc(100svh - 48px); }
+    .lp-center-eyebrow { font-size: 10px; letter-spacing: 0.15em; gap: 10px; }
+    .lp-center-eyebrow::before, .lp-center-eyebrow::after { width: 16px; }
+    .lp-center-title { font-size: clamp(42px, 12vw, 60px); margin-top: 20px; }
+    .lp-center-lead { font-size: 15.5px; margin-top: 20px; }
+    .lp-center-actions { flex-direction: column; width: 100%; gap: 12px; margin-top: 30px; }
+    .lp-center-btn { width: 100%; height: 52px; }
+    .lp-center-stats { margin-top: 42px; padding-top: 22px; gap: 8px; }
+    .lp-center-stat-val { font-size: 22px; }
+    .lp-center-stat-lbl { font-size: 11px; }
   }
 
   .lp-split { gap: 56px; }
@@ -12487,76 +12380,48 @@ function renderLandingPage(l) {
   ];
 
   return `
-    <!-- HERO: ARCHITECTURAL EDITORIAL SPREAD -->
+    <!-- HERO: MONUMENTAL CENTERED -->
     <section class="lp-section lp-hero">
-      <div class="lp-wrap lp-ed-spread">
-        <!-- Top Issue / Ledger Bar -->
-        <div class="lp-ed-topbar">
-          <span class="lp-ed-index">${t("00 // PIATTAFORMA B2B PACKAGING INDUSTRIALE", "00 // INDUSTRIAL B2B PACKAGING PLATFORM")}</span>
-          <span class="lp-ed-rule"></span>
-          <span class="lp-ed-spec">${t("STUDIO 3D 1:1 · FILIERA CERTIFICATA · AR LIVE", "1:1 3D STUDIO · CERTIFIED SUPPLY CHAIN · LIVE AR")}</span>
+      <div class="lp-wrap lp-center-hero">
+        <div class="lp-center-eyebrow">
+          <span>${t("PIATTAFORMA B2B PACKAGING INDUSTRIALE", "INDUSTRIAL B2B PACKAGING PLATFORM")}</span>
         </div>
 
-        <!-- Monumental Editorial Title & Lead -->
-        <div class="lp-ed-main">
-          <div class="lp-ed-headline-col">
-            <h1 class="lp-ed-title">
-              <span>${t("Il ponte", "The bridge")}</span>
-              <span>${t("tra <em>brand</em>", "between <em>brands</em>")}</span>
-              <span>${t("e <em>fornitori</em>.", "and <em>suppliers</em>.")}</span>
-            </h1>
-          </div>
+        <h1 class="lp-center-title">
+          ${t("Il ponte tra <em>brand</em><br>e <em>fornitori</em>.", "The bridge between <em>brands</em><br>and <em>suppliers</em>.")}
+        </h1>
 
-          <div class="lp-ed-aside-col">
-            <p class="lp-ed-lead">
-              ${t(
-                "Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.",
-                "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks."
-              )}
-            </p>
+        <p class="lp-center-lead">
+          ${t(
+            "Progetta in 3D e scegli tutta la filiera in pochi minuti, invece di perdere mesi tra un produttore e l'altro: le prove fisiche ti arrivano a casa in poche settimane.",
+            "Design in 3D and line up every supplier in minutes instead of losing months chasing plants: physical samples arrive at your door in a couple of weeks."
+          )}
+        </p>
 
-            <div class="lp-ed-stats">
-              <div class="lp-ed-stat">
-                <div class="lp-ed-stat-num">${supCount}+</div>
-                <div class="lp-ed-stat-lbl">${t("produttori verificati", "verified manufacturers")}</div>
-              </div>
-              <div class="lp-ed-stat">
-                <div class="lp-ed-stat-num">06</div>
-                <div class="lp-ed-stat-lbl">${t("lavorazioni coperte", "process stages")}</div>
-              </div>
-              <div class="lp-ed-stat">
-                <div class="lp-ed-stat-num">1:1</div>
-                <div class="lp-ed-stat-lbl">${t("anteprima 3D & AR", "3D & AR preview")}</div>
-              </div>
-            </div>
-          </div>
+        <div class="lp-center-actions">
+          <button type="button" class="lp-btn primary lp-center-btn" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
+            <span>${t("Entra nel Marketplace", "Open the Marketplace")}</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <button type="button" class="lp-btn ghost lp-center-btn" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
+            <span>${t("Continua con il mio contenitore", "Continue with my container")}</span>
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
 
-        <!-- Bottom Architectural Ledger: 2 Direct Portals (Zero Rounded Boxes) -->
-        <div class="lp-ed-portals">
-          <button type="button" class="lp-ed-portal" id="btnHomeStartMarketplace" onclick="switchMainView('catalog')">
-            <div class="lp-ed-portal-meta">
-              <span class="lp-ed-portal-num">01</span>
-              <span class="lp-ed-portal-tag">${t("PARTI DA ZERO · CATALOGO CERTIFICATO", "START FROM ZERO · CERTIFIED CATALOG")}</span>
-            </div>
-            <div class="lp-ed-portal-row">
-              <span class="lp-ed-portal-title">${t("Entra nel Marketplace", "Open the Marketplace")}</span>
-              <span class="lp-ed-portal-arrow" aria-hidden="true">↗</span>
-            </div>
-            <p class="lp-ed-portal-desc">${t("Scegli un contenitore dal catalogo e configuralo nello Studio 3D.", "Pick a container from the catalog and configure it in the 3D Studio.")}</p>
-          </button>
-
-          <button type="button" class="lp-ed-portal" id="btnHomeCustomContainer" onclick="openCustomVesselStudio()">
-            <div class="lp-ed-portal-meta">
-              <span class="lp-ed-portal-num">02</span>
-              <span class="lp-ed-portal-tag">${t("HAI GIÀ LO STOCK · DIGITALIZZAZIONE 1:1", "ALREADY IN STOCK · 1:1 DIGITIZATION")}</span>
-            </div>
-            <div class="lp-ed-portal-row">
-              <span class="lp-ed-portal-title">${t("Continua con il mio contenitore", "Continue with my container")}</span>
-              <span class="lp-ed-portal-arrow" aria-hidden="true">↗</span>
-            </div>
-            <p class="lp-ed-portal-desc">${t("Hai già i tuoi contenitori? Carica scheda tecnica e foto.", "Already have your containers? Upload datasheet and photos.")}</p>
-          </button>
+        <div class="lp-center-stats">
+          <div class="lp-center-stat">
+            <div class="lp-center-stat-val">${supCount}+</div>
+            <div class="lp-center-stat-lbl">${t("produttori verificati", "verified manufacturers")}</div>
+          </div>
+          <div class="lp-center-stat">
+            <div class="lp-center-stat-val">6</div>
+            <div class="lp-center-stat-lbl">${t("lavorazioni coperte", "process stages")}</div>
+          </div>
+          <div class="lp-center-stat">
+            <div class="lp-center-stat-val">1:1</div>
+            <div class="lp-center-stat-lbl">${t("anteprima 3D & AR", "3D & AR preview")}</div>
+          </div>
         </div>
       </div>
     </section>
